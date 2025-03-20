@@ -1,0 +1,44 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\Domain\ValueObjects;
+
+use AqWiki\Domain\{ValueObjects, Exceptions, Enums};
+use PHPUnit\Framework\Attributes\Test;
+use AqWiki\Tests\TestCase;
+
+final class GameCurrencyTest extends TestCase
+{
+    const int NEGATIVE_PRICE = -10;
+    const int POSITIVE_PRICE = 10;
+
+    #[Test]
+    public function should_fail_because_price_value_is_negative_from_start()
+    {
+        $this->expectException(Exceptions\InvalidGameCurrencyException::class);
+        $this->expectExceptionMessage("The price of an item can't be negative.");
+
+        new ValueObjects\GameCurrency(self::NEGATIVE_PRICE, Enums\CurrencyType::AdventureCoins);
+    }
+
+    #[Test]
+    public function should_fail_when_price_change_to_negative()
+    {
+        $this->expectException(Exceptions\InvalidGameCurrencyException::class);
+        $this->expectExceptionMessage("The price of an item can't be negative.");
+
+        $price = new ValueObjects\GameCurrency(self::POSITIVE_PRICE, Enums\CurrencyType::AdventureCoins);
+
+        $price->changeValue(self::NEGATIVE_PRICE);
+    }
+
+    #[Test]
+    public function should_can_change_currency_type()
+    {
+        $price = new ValueObjects\GameCurrency(self::POSITIVE_PRICE, Enums\CurrencyType::AdventureCoins);
+        $price->changeType(Enums\CurrencyType::Coins);
+
+        $this->assertSame(Enums\CurrencyType::Coins, $price->getType());
+    }
+}

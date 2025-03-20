@@ -1,0 +1,27 @@
+{
+    "name": "dayvsonspacca/aq-wiki",
+    "type": "project",
+    "scripts": {
+        "test": "./vendor/bin/pest"
+    },
+    "autoload": {
+        "psr-4": {
+            "AqWiki\\": "src/",
+            "AqWiki\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Dayvson Spacca",
+            "email": "spacca.dayvson@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "pestphp/pest": "^3.7"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
