@@ -27,6 +27,6 @@ final class FakeWeaponRepository implements Repositories\WeaponRepositoryInterfa
             'necrotic-sword-of-doom' => $necrotic,
         ];
 
-        return isset($database[$guid]) ? $database[$guid] : null;
+        return $database[$guid] ?? null;
     }
 }

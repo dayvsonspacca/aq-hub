@@ -8,10 +8,15 @@ use AqWiki\Domain\{ValueObjects, Abstractions};
 
 final class Quest extends Abstractions\Entity
 {
+    /**
+     * @var ValueObjects\QuestReward[] $rewards
+     **/
+
     public function __construct(
         public readonly string $name,
         public readonly ?string $location,
-        public readonly ValueObjects\QuestRequirements $requirements
+        public readonly ValueObjects\QuestRequirements $requirements,
+        public readonly array $rewards = []
     ) {
     }
 }

@@ -11,11 +11,7 @@ final class FakeQuestRepository implements Repositories\QuestRepositoryInterface
 {
     public function getById(string $guid): ?Entities\Quest
     {
-        return new Entities\Quest(
-            name: 'A Dark Knight',
-            location: 'Hollowdeep',
-            requirements: $this->findRequirements($guid)
-        );
+        return $this->fakeDatabase($guid);
     }
 
     public function findRequirements(string $guid): QuestRequirements
@@ -27,5 +23,18 @@ final class FakeQuestRepository implements Repositories\QuestRepositoryInterface
         }
 
         return $requirements;
+    }
+
+    private function fakeDatabase(string $guid): ?Entities\Quest
+    {
+        $quests = [
+            'a-dark-knight' => new Entities\Quest(
+                name: 'A Dark Knight',
+                location: 'Hollowdeep',
+                requirements: $this->findRequirements('a-dark-knight')
+            )
+        ];
+
+        return $quests[$guid] ?? null;
     }
 }
