@@ -10,14 +10,14 @@ use AqWiki\Tests\TestCase;
 
 final class AqwItemTest extends TestCase
 {
-    const ITEM_NAME        = 'Abyssal Angel Naval Commander';
-    const ITEM_DESCRIPTION = 'Abyssal Angel Commanders sail the Celestial Seas, and are feared across the realms for the cutthroat way they have of taking their opponents down.';
+    public const ITEM_NAME        = 'Abyssal Angel Naval Commander';
+    public const ITEM_DESCRIPTION = 'Abyssal Angel Commanders sail the Celestial Seas, and are feared across the realms for the cutthroat way they have of taking their opponents down.';
 
     private Entities\AqwItem $item;
 
     protected function setUp(): void
     {
-        $this->item = new class(
+        $this->item = new class (
             self::ITEM_NAME,
             Enums\ItemRarity::RareRarity,
             new ValueObjects\GameCurrency(0, Enums\CurrencyType::AdventureCoins),

@@ -25,7 +25,7 @@ final class ItemTagsTest extends TestCase
     {
         $this->expectException(Exceptions\DuplicateItemTagException::class);
         $this->expectExceptionMessage('The tag `Legend` is already in the item tags.');
-        
+
         $tags = new ValueObjects\ItemTags([Enums\TagType::Legend]);
         $tags->add(Enums\TagType::Legend);
     }

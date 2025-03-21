@@ -19,7 +19,11 @@ class Weapon extends AqwItem
     public function changeBaseDamage(string $newBaseDamage)
     {
         if (empty($newBaseDamage)) {
-            throw new Exceptions\InvalidItemAttributeException('The weapon base damge needs to be in pattern `min-max`.');
+            throw new Exceptions\InvalidItemAttributeException('The weapon base damage can not be empty.');
+        }
+        $parts = explode('-', $newBaseDamage);
+        if (!(count($parts) === 2)) {
+            throw new Exceptions\InvalidItemAttributeException('The weapon base damage needs to be in pattern `min-max`.');
         }
 
         $this->baseDamage = $newBaseDamage;

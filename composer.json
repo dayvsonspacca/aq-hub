@@ -2,7 +2,8 @@
     "name": "dayvsonspacca/aq-wiki",
     "type": "project",
     "scripts": {
-        "test": "./vendor/bin/pest"
+        "test": "./vendor/bin/pest",
+        "fmt": "./vendor/bin/php-cs-fixer fix --allow-risky=yes"
     },
     "autoload": {
         "psr-4": {
@@ -17,7 +18,8 @@
         }
     ],
     "require-dev": {
-        "pestphp/pest": "^3.7"
+        "pestphp/pest": "^3.7",
+        "friendsofphp/php-cs-fixer": "^3.73"
     },
     "config": {
         "allow-plugins": {

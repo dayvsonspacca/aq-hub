@@ -29,7 +29,7 @@ final class ItemTags implements \Countable
 
     public function has(Enums\TagType $tag)
     {
-        return in_array($tag, $this->tags);
+        return in_array($tag, $this->tags, true);
     }
 
     public function count(): int

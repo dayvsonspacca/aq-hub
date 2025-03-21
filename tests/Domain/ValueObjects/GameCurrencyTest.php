@@ -10,8 +10,8 @@ use AqWiki\Tests\TestCase;
 
 final class GameCurrencyTest extends TestCase
 {
-    const int NEGATIVE_PRICE = -10;
-    const int POSITIVE_PRICE = 10;
+    private const int NEGATIVE_PRICE = -10;
+    private const int POSITIVE_PRICE = 10;
 
     #[Test]
     public function should_fail_because_price_value_is_negative_from_start()
