@@ -8,12 +8,12 @@ use AqWiki\Domain\{Contracts, Entities};
 
 final class LevelRequirement implements Contracts\QuestRequirementInterface
 {
-    public function __construct(private readonly int $required)
+    public function __construct(private readonly int $level)
     {
     }
 
     public function pass(Entities\Player $player): bool
     {
-        return $player->level >= $this->required;
+        return $player->level >= $this->level;
     }
 }

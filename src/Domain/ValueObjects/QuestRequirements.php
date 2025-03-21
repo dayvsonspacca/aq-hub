@@ -4,30 +4,39 @@ declare(strict_types=1);
 
 namespace AqWiki\Domain\ValueObjects;
 
-use AqWiki\Domain\{Contracts};
+use AqWiki\Domain\{Contracts, ValueObjects, Exceptions};
 
-final class QuestRequirements implements \Countable
+final class QuestRequirements implements \Countable, \IteratorAggregate
 {
-    /** @var Contracts\QuestRequirementInterface[] $ */
-    private array $requirements;
+    /** @var array<string, Contracts\QuestRequirementInterface> $ */
+    private array $requirements = [];
 
     public function add(Contracts\QuestRequirementInterface $requirement)
     {
-        $this->requirements[] = $requirement;
+        if ($requirement instanceof ValueObjects\LevelRequirement && $this->has($requirement)) {
+            throw Exceptions\DuplicateQuestRequirement::level();
+        }
+
+        $this->requirements[md5(serialize($requirement))] = $requirement;
     }
 
     public function remove(Contracts\QuestRequirementInterface $requirement)
     {
-        unset($this->requirements[$requirement]);
+        unset($this->requirements[md5(serialize($requirement))]);
     }
 
     public function has(Contracts\QuestRequirementInterface  $requirement): bool
     {
-        return in_array($requirement, $this->requirements, true);
+        return in_array(md5(serialize($requirement)), array_keys($this->requirements), true);
     }
 
     public function count(): int
     {
         return count($this->requirements);
+    }
+
+    public function getIterator(): \ArrayIterator
+    {
+        return new \ArrayIterator($this->requirements);
     }
 }
