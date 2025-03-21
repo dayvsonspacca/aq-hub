@@ -23,7 +23,7 @@ final class ItemTagsTest extends TestCase
     #[Test]
     public function should_fail_because_tag_already_exists()
     {
-        $this->expectException(Exceptions\DuplicateItemTagException::class);
+        $this->expectException(Exceptions\AqwItemException::class);
         $this->expectExceptionMessage('The tag `Legend` is already in the item tags.');
 
         $tags = new ValueObjects\ItemTags([Enums\TagType::Legend]);

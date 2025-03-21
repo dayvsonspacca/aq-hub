@@ -21,8 +21,9 @@ final class ItemTags implements \Countable
     public function add(Enums\TagType $tag): self
     {
         if ($this->has($tag)) {
-            throw new Exceptions\DuplicateItemTagException('The tag `'. $tag->name .'` is already in the item tags.');
+            throw Exceptions\AqwItemException::duplicateItemTag($tag);
         }
+
         $this->tags[] = $tag;
         return $this;
     }
