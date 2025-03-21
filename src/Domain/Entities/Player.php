@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace AqWiki\Domain\Entities;
 
-final class Player
+use AqWiki\Domain\Abstractions;
+
+final class Player extends Abstractions\Entity
 {
-    /** @var Entities\AqwItem[] $items */
+    /** @var Abstractions\AqwItem[] $items */
     public array $items;
 
     public function __construct(

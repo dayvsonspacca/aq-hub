@@ -41,4 +41,13 @@ final class GameCurrencyTest extends TestCase
 
         $this->assertSame(Enums\CurrencyType::Coins, $price->getType());
     }
+
+    #[Test]
+    public function should_change_value()
+    {
+        $price = new ValueObjects\GameCurrency(self::POSITIVE_PRICE, Enums\CurrencyType::AdventureCoins);
+        $price->changeValue(50);
+
+        $this->assertSame(50, $price->getValue());
+    }
 }

@@ -9,11 +9,16 @@ use AqWiki\Domain\{Contracts};
 final class QuestRequirements implements \Countable
 {
     /** @var Contracts\QuestRequirementInterface[] $ */
-    private readonly array $requirements;
+    private array $requirements;
 
     public function add(Contracts\QuestRequirementInterface $requirement)
     {
         $this->requirements[] = $requirement;
+    }
+
+    public function remove(Contracts\QuestRequirementInterface $requirement)
+    {
+        unset($this->requirements[$requirement]);
     }
 
     public function has(Contracts\QuestRequirementInterface  $requirement): bool

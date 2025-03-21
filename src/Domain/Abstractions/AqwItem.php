@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Domain\Entities;
+namespace AqWiki\Domain\Abstractions;
 
-use AqWiki\Domain\{ValueObjects, Enums};
+use AqWiki\Domain\{ValueObjects, Enums, Abstractions};
 
-abstract class AqwItem
+abstract class AqwItem extends Abstractions\Entity
 {
     public ValueObjects\ItemTags $tags;
 
