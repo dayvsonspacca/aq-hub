@@ -8,5 +8,6 @@ enum ItemRarity
 {
     case WeirdRarity;
     case RareRarity;
+    case EpicRarity;
     case LegendaryItemRarity;
 }

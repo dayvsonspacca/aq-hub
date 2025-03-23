@@ -5,36 +5,32 @@ declare(strict_types=1);
 namespace AqWiki\Infrastructure\Repositories;
 
 use AqWiki\Domain\{Entities, Repositories, ValueObjects};
-use AqWiki\Domain\ValueObjects\QuestRequirements;
+use AqWiki\Domain\Entities\Quest;
 
 final class FakeQuestRepository implements Repositories\QuestRepositoryInterface
 {
-    public function getById(string $guid): ?Entities\Quest
+    private array $database;
+
+    public function __construct()
     {
-        return $this->fakeDatabase($guid);
-    }
-
-    public function findRequirements(string $guid): QuestRequirements
-    {
-        $requirements = new ValueObjects\QuestRequirements();
-
-        foreach ([new ValueObjects\LevelRequirement(65)] as $requirement) {
-            $requirements->add($requirement);
-        }
-
-        return $requirements;
-    }
-
-    private function fakeDatabase(string $guid): ?Entities\Quest
-    {
-        $quests = [
+        $this->database = [
             'a-dark-knight' => new Entities\Quest(
                 name: 'A Dark Knight',
                 location: 'Hollowdeep',
-                requirements: $this->findRequirements('a-dark-knight')
+                requirements: (new ValueObjects\QuestRequirements([new ValueObjects\LevelRequirement(65)]))
             )
         ];
+    }
 
-        return $quests[$guid] ?? null;
+    public function getById(string $guid): ?Entities\Quest
+    {
+        return isset($this->database[$guid])
+            ? $this->database[$guid]
+            : null;
+    }
+
+    public function persist(Quest $quest)
+    {
+        $this->database[$quest->name] = $quest;
     }
 }

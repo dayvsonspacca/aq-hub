@@ -29,7 +29,7 @@ final class ItemRequirementTest extends TestCase
     #[Test]
     public function should_fail_when_player_dont_have_item()
     {
-        $itemRequirement = new ValueObjects\ItemRequirement($this->item);
+        $itemRequirement = new ValueObjects\ItemRequirement($this->item, 1);
 
         $this->assertSame(false, $itemRequirement->pass(
             new Entities\Player(
@@ -43,7 +43,7 @@ final class ItemRequirementTest extends TestCase
     #[Test]
     public function should_pass_when_player_have_item()
     {
-        $itemRequirement = new ValueObjects\ItemRequirement($this->item);
+        $itemRequirement = new ValueObjects\ItemRequirement($this->item, 1);
 
         $this->assertSame(true, $itemRequirement->pass(
             new Entities\Player(

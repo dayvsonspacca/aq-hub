@@ -40,8 +40,8 @@ final class QuestRequirementsTest extends TestCase
     #[Test]
     public function find_requirement_should_return_true()
     {
-        $this->requirements->add(new ValueObjects\ItemRequirement($this->weaponRepository->getById('necrotic-sword-of-doom')));
-        $this->assertSame(true, $this->requirements->has(new ValueObjects\ItemRequirement($this->weaponRepository->getById('necrotic-sword-of-doom'))));
+        $this->requirements->add(new ValueObjects\ItemRequirement($this->weaponRepository->getById('necrotic-sword-of-doom'), 1));
+        $this->assertSame(true, $this->requirements->has(new ValueObjects\ItemRequirement($this->weaponRepository->getById('necrotic-sword-of-doom'), 1)));
     }
 
     #[Test]

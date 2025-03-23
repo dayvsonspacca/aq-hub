@@ -1,3 +1,4 @@
 vendor
 .php-cs-fixer.cache
 .vscode
+.database.sqlite
