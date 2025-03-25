@@ -21,16 +21,16 @@ final class QuestRepositoryTest extends TestCase
     #[Test]
     public function should_returns_a_quest()
     {
-        $weapon = $this->questRepository->getById('a-dark-knight');
+        $quest = $this->questRepository->getById('a-dark-knight');
 
-        $this->assertInstanceOf(Entities\Quest::class, $weapon);
+        $this->assertInstanceOf(Entities\Quest::class, $quest);
     }
 
     #[Test]
     public function should_returns_null_when_not_found()
     {
-        $weapon = $this->questRepository->getById('Juggernaut Items of Nulgath');
+        $quest = $this->questRepository->getById('Juggernaut Items of Nulgath');
 
-        $this->assertNull($weapon);
+        $this->assertNull($quest);
     }
 }
