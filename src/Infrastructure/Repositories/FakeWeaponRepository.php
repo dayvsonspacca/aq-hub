@@ -8,25 +8,27 @@ use AqWiki\Domain\{Entities, Repositories, Enums, ValueObjects};
 
 final class FakeWeaponRepository implements Repositories\WeaponRepositoryInterface
 {
-    public function getById(string $guid): ?Entities\Weapon
+    private array $database;
+
+    public function __construct()
     {
-        return $this->fakeDatabase($guid);
+        $this->database = [
+            'necrotic-sword-of-doom' => (new Entities\Weapon(
+                name: 'Necrotic Sword of Doom',
+                price: null,
+                sellback: new ValueObjects\GameCurrency(0, Enums\CurrencyType::AdventureCoins),
+                description: 'The darkness compels… DOOOOOOOOOOOM!!!'
+            ))->changeBaseDamage('30-37')
+        ];
     }
 
-    private function fakeDatabase(string $guid): ?Entities\Weapon
+    public function getById(string $guid): ?Entities\Weapon
     {
-        $necrotic = (new Entities\Weapon(
-            name: 'Necrotic Sword of Doom',
-            rarity: Enums\ItemRarity::LegendaryItemRarity,
-            price: null,
-            sellback: new ValueObjects\GameCurrency(0, Enums\CurrencyType::AdventureCoins),
-            description: 'The darkness compels… DOOOOOOOOOOOM!!!'
-        ))->changeBaseDamage('30-37');
+        return $this->database[$guid] ?? null;
+    }
 
-        $database = [
-            'necrotic-sword-of-doom' => $necrotic,
-        ];
-
-        return $database[$guid] ?? null;
+    public function persist(Entities\Weapon $weapon): void
+    {
+        $this->database[$weapon->name] = $weapon;
     }
 }

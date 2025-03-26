@@ -12,7 +12,6 @@ abstract class AqwItem extends Abstractions\Entity
 
     public function __construct(
         public readonly string $name,
-        public readonly ?Enums\ItemRarity $rarity,
         public readonly ?ValueObjects\GameCurrency $price,
         public readonly ValueObjects\GameCurrency $sellback,
         public readonly string $description

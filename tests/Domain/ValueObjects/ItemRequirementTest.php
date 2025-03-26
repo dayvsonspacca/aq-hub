@@ -4,26 +4,20 @@ declare(strict_types=1);
 
 namespace Tests\Domain\ValueObjects;
 
-use AqWiki\Domain\{ValueObjects, Entities, Enums, Abstractions};
+use AqWiki\Domain\{ValueObjects, Entities, Abstractions, Repositories};
+use AqWiki\Infrastructure\Repositories\FakeWeaponRepository;
 use PHPUnit\Framework\Attributes\Test;
 use AqWiki\Tests\TestCase;
 
 final class ItemRequirementTest extends TestCase
 {
-    public const ITEM_NAME        = 'Abyssal Angel Naval Commander';
-    public const ITEM_DESCRIPTION = 'Abyssal Angel Commanders sail the Celestial Seas, and are feared across the realms for the cutthroat way they have of taking their opponents down.';
-
     private Abstractions\AqwItem $item;
+    private Repositories\WeaponRepositoryInterface $weaponRepository;
 
     protected function setUp(): void
     {
-        $this->item = new class (
-            self::ITEM_NAME,
-            Enums\ItemRarity::RareRarity,
-            new ValueObjects\GameCurrency(0, Enums\CurrencyType::AdventureCoins),
-            new ValueObjects\GameCurrency(0, Enums\CurrencyType::AdventureCoins),
-            self::ITEM_DESCRIPTION
-        ) extends Abstractions\AqwItem {};
+        $this->weaponRepository = new FakeWeaponRepository();
+        $this->item = $this->weaponRepository->getById('necrotic-sword-of-doom');
     }
 
     #[Test]

@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace AqWiki\Infrastructure\Repositories;
 
-use AqWiki\Domain\{Entities, Repositories, ValueObjects};
-use AqWiki\Domain\Entities\Quest;
+use AqWiki\Domain\{Entities, Repositories};
 
 final class PDOSqliteQuestRepository implements Repositories\QuestRepositoryInterface
 {
@@ -35,7 +34,7 @@ final class PDOSqliteQuestRepository implements Repositories\QuestRepositoryInte
             );
     }
 
-    public function persist(Quest $quest)
+    public function persist(Entities\Quest $quest)
     {
         $statement = $this->database->prepare(
             'INSERT INTO quests (name, location, requirements, rewards) VALUES (:name, :location, :requirements, :rewards)'
