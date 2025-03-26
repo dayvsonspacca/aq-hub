@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace AqWiki\Domain\Entities;
 
-use AqWiki\Domain\{Enums, Exceptions, Abstractions};
+use AqWiki\Domain\{Enums, Exceptions, Abstractions, Traits};
 
 class Weapon extends Abstractions\AqwItem
 {
+    use Traits\HasRarity;
+
     private string $baseDamage;
     private Enums\WeaponType $type;
 
