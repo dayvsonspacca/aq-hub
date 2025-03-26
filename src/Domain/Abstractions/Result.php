@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Aqwiki\Domain\Abstractions;
+namespace AqWiki\Domain\Abstractions;
 
 abstract class Result
 {

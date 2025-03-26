@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AqWiki\Application\UseCases\Weapon\GetById;
 
-use Aqwiki\Domain\Repositories\WeaponRepositoryInterface;
+use AqWiki\Domain\Repositories\WeaponRepositoryInterface;
 
 final class Handler
 {

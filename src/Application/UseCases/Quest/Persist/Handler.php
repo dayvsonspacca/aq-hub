@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AqWiki\Application\UseCases\Quest\Persist;
 
-use Aqwiki\Domain\Repositories\QuestRepositoryInterface;
+use AqWiki\Domain\Repositories\QuestRepositoryInterface;
 
 final class Handler
 {

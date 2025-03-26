@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Aqwiki\Domain\Repositories;
+namespace AqWiki\Domain\Repositories;
 
 use AqWiki\Domain\{Entities, ValueObjects};
 
