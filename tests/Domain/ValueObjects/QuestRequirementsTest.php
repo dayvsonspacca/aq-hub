@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Domain\ValueObjects;
 
-use AqWiki\Infrastructure\Repositories\FakeWeaponRepository;
 use AqWiki\Domain\{ValueObjects, Repositories, Exceptions};
+use AqWiki\Infrastructure\Repositories\Fakes\FakeWeaponRepository;
 use PHPUnit\Framework\Attributes\Test;
 use AqWiki\Tests\TestCase;
 
@@ -47,7 +47,7 @@ final class QuestRequirementsTest extends TestCase
     #[Test]
     public function should_throw_error_when_add_two_level_requirement()
     {
-        $this->expectException(Exceptions\DuplicateQuestRequirement::level()::class);
+        $this->expectException(Exceptions\QuestException::tooManyLevelRequirements()::class);
         $this->expectExceptionMessage('A quest can not have 2 Level Requirements');
 
         $this->requirements->add(new ValueObjects\LevelRequirement(20));

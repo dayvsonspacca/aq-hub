@@ -20,7 +20,7 @@ final class QuestRequirements implements \Countable, \IteratorAggregate
     public function add(Contracts\QuestRequirementInterface $requirement)
     {
         if ($requirement instanceof ValueObjects\LevelRequirement && $this->has($requirement)) {
-            throw Exceptions\DuplicateQuestRequirement::level();
+            throw Exceptions\QuestException::tooManyLevelRequirements();
         }
 
         $this->requirements[md5(serialize($requirement))] = $requirement;

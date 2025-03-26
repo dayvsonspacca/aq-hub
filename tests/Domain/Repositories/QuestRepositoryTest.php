@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Domain\ValueObjects;
 
-use AqWiki\Infrastructure\Repositories\FakeQuestRepository;
 use AqWiki\Domain\{Repositories, Entities};
+use AqWiki\Infrastructure\Repositories\Fakes\FakeQuestRepository;
 use PHPUnit\Framework\Attributes\Test;
 use AqWiki\Tests\TestCase;
 

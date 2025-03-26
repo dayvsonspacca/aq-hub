@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Infrastructure\Repositories;
+namespace AqWiki\Infrastructure\Repositories\Fakes;
 
 use AqWiki\Domain\{Entities, Repositories, ValueObjects};
 use AqWiki\Domain\Entities\Quest;

@@ -16,14 +16,14 @@ class Weapon extends Abstractions\AqwItem
         return $this->baseDamage;
     }
 
-    public function changeBaseDamage(string $newBaseDamage)
+    public function defineBaseDamage(string $newBaseDamage)
     {
         if (empty($newBaseDamage)) {
-            throw new Exceptions\InvalidItemAttributeException('The weapon base damage can not be empty.');
+            throw Exceptions\AqwItemException::invalidAttribute('The weapon base damage can not be empty.');
         }
         $parts = explode('-', $newBaseDamage);
         if (!(count($parts) === 2)) {
-            throw new Exceptions\InvalidItemAttributeException('The weapon base damage needs to be in pattern `min-max`.');
+            throw Exceptions\AqwItemException::invalidAttribute('The weapon base damage needs to be in pattern `min-max`.');
         }
 
         $this->baseDamage = $newBaseDamage;

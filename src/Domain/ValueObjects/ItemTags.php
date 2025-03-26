@@ -13,7 +13,7 @@ final class ItemTags implements \Countable
 
 
     /** @param Enums\TagType[] $tags */
-    public function __construct(array $tags)
+    public function __construct(array $tags = [])
     {
         $this->tags = $tags;
     }

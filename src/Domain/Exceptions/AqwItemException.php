@@ -13,4 +13,9 @@ final class AqwItemException extends Exception
     {
         return new self('The tag `'. $tag->name .'` is already in the item tags.');
     }
+
+    public static function invalidAttribute(string $message): self
+    {
+        return new self($message);
+    }
 }

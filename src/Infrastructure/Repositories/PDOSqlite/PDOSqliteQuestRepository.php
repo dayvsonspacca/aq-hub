@@ -8,11 +8,11 @@ use AqWiki\Domain\{Entities, Repositories};
 
 final class PDOSqliteQuestRepository implements Repositories\QuestRepositoryInterface
 {
-    private \PDO\Sqlite $database;
+    private \PDO $database;
 
     public function __construct()
     {
-        $this->database = new \PDO\Sqlite('database.sqlite');
+        $this->database = new \PDO('sqlite:database.sqlite');
     }
 
     public function getById(string $guid): ?Entities\Quest
