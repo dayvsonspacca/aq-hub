@@ -17,6 +17,9 @@
             "email": "spacca.dayvson@gmail.com"
         }
     ],
+    "require": {
+        "php": "^8.3"
+    },
     "require-dev": {
         "pestphp/pest": "^3.7",
         "friendsofphp/php-cs-fixer": "^3.73"
