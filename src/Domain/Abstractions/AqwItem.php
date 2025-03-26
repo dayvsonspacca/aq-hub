@@ -21,10 +21,10 @@ abstract class AqwItem extends Abstractions\Entity
 
     public function defineName(string $name): self
     {
-        if (empty($name)) {
+        if (empty(trim($name))) {
             throw Exceptions\AqwItemException::invalidAttribute('The name of an item can not be empty.');
         }
-        $this->name = $name;
+        $this->name = trim($name);
         return $this;
     }
 
