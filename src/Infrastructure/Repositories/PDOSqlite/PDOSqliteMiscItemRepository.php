@@ -18,7 +18,7 @@ final class PDOSqliteMiscItemRepository implements Repositories\MiscItemReposito
     public function persist(Entities\MiscItem $miscItem)
     {
         if ($this->findByName($miscItem->getName())) {
-            throw Exceptions\RepositoryException::alreadyExists(__CLASS__);
+            throw Exceptions\RepositoryException::alreadyExists('PDOSqliteMiscItemRepository');
         }
 
         $statement = $this->database->prepare(
