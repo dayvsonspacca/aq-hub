@@ -31,6 +31,6 @@ final class FakeWeaponRepository implements Repositories\WeaponRepositoryInterfa
 
     public function persist(Entities\Weapon $weapon): void
     {
-        $this->database[$weapon->name] = $weapon;
+        $this->database[$weapon->getName()] = $weapon;
     }
 }
