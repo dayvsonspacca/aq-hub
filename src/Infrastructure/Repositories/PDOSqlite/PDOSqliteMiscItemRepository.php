@@ -22,21 +22,22 @@ final class PDOSqliteMiscItemRepository implements Repositories\MiscItemReposito
         }
 
         $statement = $this->database->prepare(
-            'INSERT INTO misc_items (name, description, price, sellback) VALUES (:name, :description, :price, :sellback);'
+            'INSERT INTO items_tb (name, type, description, price, sellback) VALUES (:name, :type, :description, :price, :sellback);'
         );
 
         $statement->execute([
-           'name' => $miscItem->getName(),
+           'name'        => $miscItem->getName(),
+           'type'        => 1,
            'description' => $miscItem->getDescription(),
-           'price' => $miscItem->getPrice() ? serialize($miscItem->getPrice()) : null,
-           'sellback' => serialize($miscItem->getSellback())
+           'price'       => $miscItem->getPrice() ? serialize($miscItem->getPrice()) : null,
+           'sellback'    => serialize($miscItem->getSellback())
         ]);
     }
 
     public function findByName(string $name): ?Entities\MiscItem
     {
         $statement = $this->database->prepare(
-            'SELECT * FROM misc_items WHERE name = :name;'
+            'SELECT * FROM items_tb WHERE name = :name;'
         );
         $statement->execute([
             'name' => $name
