@@ -2,22 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Tests\Domain\ValueObjects;
+namespace Tests\Unit\Domain\ValueObjects;
 
-use AqWiki\Domain\{ValueObjects, Entities, Abstractions, Repositories};
-use AqWiki\Infrastructure\Repositories\Fakes\FakeWeaponRepository;
+use AqWiki\Domain\{ValueObjects, Entities, Abstractions};
+use AqWiki\Domain\Entities\Weapon;
 use PHPUnit\Framework\Attributes\Test;
-use AqWiki\Tests\TestCase;
+use AqWiki\Tests\Unit\TestCase;
 
 final class ItemRequirementTest extends TestCase
 {
     private Abstractions\AqwItem $item;
-    private Repositories\WeaponRepositoryInterface $weaponRepository;
 
     protected function setUp(): void
     {
-        $this->weaponRepository = new FakeWeaponRepository();
-        $this->item = $this->weaponRepository->getById('necrotic-sword-of-doom');
+        $this->item = $this->createMock(Weapon::class);
     }
 
     #[Test]

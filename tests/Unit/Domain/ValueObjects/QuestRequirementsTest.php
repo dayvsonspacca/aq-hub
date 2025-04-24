@@ -2,22 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Tests\Domain\ValueObjects;
+namespace Tests\Unit\Domain\ValueObjects;
 
-use AqWiki\Domain\{ValueObjects, Repositories, Exceptions};
-use AqWiki\Infrastructure\Repositories\Fakes\FakeWeaponRepository;
+use AqWiki\Domain\{ValueObjects, Entities, Exceptions};
 use PHPUnit\Framework\Attributes\Test;
-use AqWiki\Tests\TestCase;
+use AqWiki\Tests\Unit\TestCase;
 
 final class QuestRequirementsTest extends TestCase
 {
     private ValueObjects\QuestRequirements $requirements;
-    private Repositories\WeaponRepositoryInterface $weaponRepository;
+    private Entities\MiscItem $miscItem;
 
     protected function setUp(): void
     {
         $this->requirements = new ValueObjects\QuestRequirements();
-        $this->weaponRepository = new FakeWeaponRepository();
+        $this->miscItem = $this->createMock(Entities\MiscItem::class);
     }
 
     #[Test]
@@ -40,8 +39,8 @@ final class QuestRequirementsTest extends TestCase
     #[Test]
     public function find_requirement_should_return_true()
     {
-        $this->requirements->add(new ValueObjects\ItemRequirement($this->weaponRepository->getById('necrotic-sword-of-doom'), 1));
-        $this->assertSame(true, $this->requirements->has(new ValueObjects\ItemRequirement($this->weaponRepository->getById('necrotic-sword-of-doom'), 1)));
+        $this->requirements->add(new ValueObjects\ItemRequirement($this->miscItem, 1));
+        $this->assertSame(true, $this->requirements->has(new ValueObjects\ItemRequirement($this->miscItem, 1)));
     }
 
     #[Test]

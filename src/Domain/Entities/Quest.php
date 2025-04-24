@@ -6,7 +6,7 @@ namespace AqWiki\Domain\Entities;
 
 use AqWiki\Domain\{ValueObjects, Abstractions};
 
-final class Quest extends Abstractions\Entity
+class Quest extends Abstractions\Entity
 {
     /**
      * @var ValueObjects\QuestReward[] $rewards

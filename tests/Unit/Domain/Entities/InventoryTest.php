@@ -2,29 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Tests\Domain\ValueObjects;
+namespace Tests\Unit\Domain\ValueObjects;
 
-use AqWiki\Domain\{Entities, Exceptions, Repositories};
-use AqWiki\Infrastructure\Repositories\Fakes\FakeWeaponRepository;
+use AqWiki\Domain\{Entities, Exceptions};
 use PHPUnit\Framework\Attributes\Test;
-use AqWiki\Tests\TestCase;
+use AqWiki\Tests\Unit\TestCase;
 
 final class InventoryTest extends TestCase
 {
     private Entities\Inventory $inventory;
-    private Repositories\WeaponRepositoryInterface $weaponRepository;
 
     protected function setUp(): void
     {
         $this->inventory = new Entities\Inventory();
-        $this->weaponRepository = new FakeWeaponRepository();
     }
 
     #[Test]
     public function should_can_add_a_item()
     {
         $this->assertSame(0, $this->inventory->count());
-        $this->inventory->addItem($this->weaponRepository->getById('necrotic-sword-of-doom'));
+
+        $this->inventory->addItem($this->createMock(Entities\Weapon::class));
+
         $this->assertSame(1, $this->inventory->count());
     }
 
@@ -34,8 +33,8 @@ final class InventoryTest extends TestCase
         $this->expectException(Exceptions\InventoryException::class);
         $this->expectExceptionMessage('An inventory can not have more than one instance of item.');
 
-        $this->inventory->addItem($this->weaponRepository->getById('necrotic-sword-of-doom'));
-        $this->inventory->addItem($this->weaponRepository->getById('necrotic-sword-of-doom'));
+        $this->inventory->addItem($this->createMock(Entities\Weapon::class));
+        $this->inventory->addItem($this->createMock(Entities\Weapon::class));
     }
 
     #[Test]
@@ -46,7 +45,7 @@ final class InventoryTest extends TestCase
 
         $this->inventory->defineSpaces(0);
 
-        $this->inventory->addItem($this->weaponRepository->getById('necrotic-sword-of-doom'));
+        $this->inventory->addItem($this->createMock(Entities\Weapon::class));
     }
 
     #[Test]

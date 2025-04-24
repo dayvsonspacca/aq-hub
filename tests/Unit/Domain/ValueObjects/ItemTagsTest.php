@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Domain\ValueObjects;
+namespace Tests\Unit\Domain\ValueObjects;
 
 use AqWiki\Domain\{ValueObjects, Enums, Exceptions};
 use PHPUnit\Framework\Attributes\Test;
-use AqWiki\Tests\TestCase;
+use AqWiki\Tests\Unit\TestCase;
 
 final class ItemTagsTest extends TestCase
 {

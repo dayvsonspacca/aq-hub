@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Domain\ValueObjects;
+namespace Tests\Unit\Domain\ValueObjects;
 
 use AqWiki\Domain\{Entities, Exceptions};
-use AqWiki\Infrastructure\Repositories\Fakes\FakeWeaponRepository;
 use PHPUnit\Framework\Attributes\Test;
-use AqWiki\Tests\TestCase;
+use AqWiki\Tests\Unit\TestCase;
 
 final class WeaponTest extends TestCase
 {
@@ -15,9 +14,7 @@ final class WeaponTest extends TestCase
 
     protected function setUp(): void
     {
-        $weaponRepository = new FakeWeaponRepository();
-
-        $this->weapon = $weaponRepository->getById('necrotic-sword-of-doom');
+        $this->weapon = new Entities\Weapon();
     }
 
     #[Test]

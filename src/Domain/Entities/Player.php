@@ -6,7 +6,7 @@ namespace AqWiki\Domain\Entities;
 
 use AqWiki\Domain\Abstractions;
 
-final class Player extends Abstractions\Entity
+class Player extends Abstractions\Entity
 {
     /** @var Abstractions\AqwItem[] $items */
     public array $items;

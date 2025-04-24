@@ -9,7 +9,7 @@ use AqWiki\Domain\{Contracts, ValueObjects, Exceptions};
 final class QuestRequirements implements \Countable, \IteratorAggregate
 {
     /** @var array<string, Contracts\QuestRequirementInterface> $requirements */
-    private array $requirements;
+    private array $requirements = [];
 
     /** @var array<string, Contracts\QuestRequirementInterface> $requirements */
     public function __construct(array $requirements = [])

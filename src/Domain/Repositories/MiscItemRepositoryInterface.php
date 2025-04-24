@@ -8,6 +8,6 @@ use AqWiki\Domain\Entities;
 
 interface MiscItemRepositoryInterface
 {
+    public function findById(string $guid): ?Entities\MiscItem;
     public function persist(Entities\MiscItem $miscItem);
-    public function findByName(string $name): ?Entities\MiscItem;
 }

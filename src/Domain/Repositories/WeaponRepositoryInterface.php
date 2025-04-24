@@ -8,5 +8,7 @@ use AqWiki\Domain\Entities;
 
 interface WeaponRepositoryInterface
 {
-    public function getById(string $guid): ?Entities\Weapon;
+    public function findById(string $guid): ?Entities\Weapon;
+    public function persist(Entities\Weapon $weapon);
+
 }

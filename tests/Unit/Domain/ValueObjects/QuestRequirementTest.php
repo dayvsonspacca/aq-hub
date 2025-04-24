@@ -2,33 +2,36 @@
 
 declare(strict_types=1);
 
-namespace Tests\Domain\ValueObjects;
+namespace Tests\Unit\Domain\ValueObjects;
 
-use AqWiki\Domain\{ValueObjects, Entities, Repositories};
-use AqWiki\Infrastructure\Repositories\Fakes\FakeQuestRepository;
+use AqWiki\Domain\{ValueObjects, Entities};
 use PHPUnit\Framework\Attributes\Test;
-use AqWiki\Tests\TestCase;
+use AqWiki\Tests\Unit\TestCase;
 
 final class QuestRequirementTest extends TestCase
 {
     private Entities\Player $player;
-    private Repositories\QuestRepositoryInterface $repository;
+    private Entities\Quest $quest;
 
     protected function setUp(): void
     {
         $this->player = new Entities\Player(65, []);
-        $this->repository = new FakeQuestRepository();
+        $this->quest = new Entities\Quest(
+            name: 'Awesome Quest',
+            location: null,
+            requirements: new ValueObjects\QuestRequirements([])
+        );
     }
 
     #[Test]
     public function fails_when_player_does_not_meet_first_requirement()
     {
         $requirements = new ValueObjects\QuestRequirements();
-        $requirements->add(new ValueObjects\QuestRequirement($this->repository->getById('a-dark-knight')));
+        $requirements->add(new ValueObjects\QuestRequirement($this->quest));
         $requirements->add(new ValueObjects\LevelRequirement(75));
 
         $quest = new Entities\Quest(
-            name: 'A Dark Knight Rises',
+            name: 'Another Awesome Quest',
             location: null,
             requirements: $requirements
         );
@@ -47,7 +50,7 @@ final class QuestRequirementTest extends TestCase
     public function pass_when_player_does_meet_requirements()
     {
         $requirements = new ValueObjects\QuestRequirements();
-        $requirements->add(new ValueObjects\QuestRequirement($this->repository->getById('a-dark-knight')));
+        $requirements->add(new ValueObjects\QuestRequirement($this->quest));
         $requirements->add(new ValueObjects\LevelRequirement(65));
 
         $quest = new Entities\Quest(

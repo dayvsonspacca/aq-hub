@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Tests;
+namespace AqWiki\Tests\Unit;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
