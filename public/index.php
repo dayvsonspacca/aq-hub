@@ -1,18 +1,13 @@
 <?php
 
 require __DIR__ . '/../vendor/autoload.php';
-use Symfony\Component\Routing\{Route, RouteCollection, RequestContext};
+
+use Symfony\Component\Routing\{RouteCollection, RequestContext};
 use Symfony\Component\HttpFoundation\{Request, Response};
-use AqWiki\Application\Controllers\MiscItemController;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 
 
 $routes = new RouteCollection();
-$routes->add('misc_item_add', new Route(
-    path: '/misc-item/add',
-    methods: ['POST'],
-    defaults: ['_controller' => [new MiscItemController(), 'add']]
-));
 
 $request = Request::createFromGlobals();
 $context = new RequestContext();
