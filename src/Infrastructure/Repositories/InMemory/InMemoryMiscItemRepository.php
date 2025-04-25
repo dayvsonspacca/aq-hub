@@ -6,7 +6,7 @@ namespace AqWiki\Infrastructure\Repositories\InMemory;
 
 use AqWiki\Domain\{Entities, Repositories, Exceptions};
 
-final class InMemoryMiscItemsRepository implements Repositories\MiscItemRepositoryInterface
+final class InMemoryMiscItemRepository implements Repositories\MiscItemRepositoryInterface
 {
     private array $database = [];
 
@@ -18,7 +18,7 @@ final class InMemoryMiscItemsRepository implements Repositories\MiscItemReposito
     public function persist(Entities\MiscItem $miscItem)
     {
         if (isset($this->database[$miscItem->guid])) {
-            throw Exceptions\RepositoryException::alreadyExists('InMemoryMiscItemsRepository');
+            throw Exceptions\RepositoryException::alreadyExists('InMemoryMiscItemRepository');
         }
 
         $this->database[$miscItem->guid] = $miscItem;
