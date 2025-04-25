@@ -20,7 +20,7 @@ final class GameCurrency
     public function changeValue(int $value): self
     {
         if ($value < 0) {
-            throw Exceptions\InvalidGameCurrencyException::negativePrice();
+            throw Exceptions\GameCurrencyException::negativePrice();
         }
 
         $this->value = $value;

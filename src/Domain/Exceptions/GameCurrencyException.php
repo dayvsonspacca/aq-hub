@@ -6,7 +6,7 @@ namespace AqWiki\Domain\Exceptions;
 
 use Exception;
 
-final class InvalidGameCurrencyException extends Exception
+final class GameCurrencyException extends Exception
 {
     public static function negativePrice(): self
     {
