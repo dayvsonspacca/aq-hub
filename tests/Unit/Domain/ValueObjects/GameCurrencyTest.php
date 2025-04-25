@@ -16,7 +16,7 @@ final class GameCurrencyTest extends TestCase
     #[Test]
     public function should_fail_because_price_value_is_negative_from_start()
     {
-        $this->expectException(Exceptions\InvalidGameCurrencyException::class);
+        $this->expectException(Exceptions\GameCurrencyException::class);
         $this->expectExceptionMessage("The price of an item can't be negative.");
 
         new ValueObjects\GameCurrency(self::NEGATIVE_PRICE, Enums\CurrencyType::AdventureCoins);
@@ -25,7 +25,7 @@ final class GameCurrencyTest extends TestCase
     #[Test]
     public function should_fail_when_price_change_to_negative()
     {
-        $this->expectException(Exceptions\InvalidGameCurrencyException::class);
+        $this->expectException(Exceptions\GameCurrencyException::class);
         $this->expectExceptionMessage("The price of an item can't be negative.");
 
         $price = new ValueObjects\GameCurrency(self::POSITIVE_PRICE, Enums\CurrencyType::AdventureCoins);

@@ -18,8 +18,13 @@ final class InventoryException extends Exception
         return new self('An inventory can not have negative spaces.');
     }
 
-    public static function unavaliableSpace(): self
+    public static function unavaliableSpace(string $inventory): self
     {
-        return new self("There's no space avaliable.");
+        return new self("There's no space avaliable in " . $inventory);
+    }
+
+    public static function cantDelete()
+    {
+        return new self('You can not delete this item.');
     }
 }
