@@ -2,43 +2,82 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Domain\ValueObjects;
+namespace Tests\Unit\Domain\Entities;
 
-use AqWiki\Domain\{Entities, Exceptions};
+use AqWiki\Domain\{ValueObjects, Entities, Enums};
 use PHPUnit\Framework\Attributes\Test;
 use AqWiki\Tests\Unit\TestCase;
 
 final class WeaponTest extends TestCase
 {
     private Entities\Weapon $weapon;
+    private string $name = 'ShadowReaper of Doom';
+    private string $description = 'A cursed blade with unimaginable power.';
+    private string $baseDamage = '45-60';
+    private Enums\WeaponType $type;
+    private ValueObjects\GameCurrency $price;
+    private ValueObjects\GameCurrency $sellback;
+    private ValueObjects\ItemTags $tags;
 
     protected function setUp(): void
     {
-        $this->weapon = new Entities\Weapon();
+        parent::setUp();
+
+        $this->price = $this->createMock(ValueObjects\GameCurrency::class);
+        $this->sellback = $this->createMock(ValueObjects\GameCurrency::class);
+        $this->tags = $this->createMock(ValueObjects\ItemTags::class);
+        $this->type = Enums\WeaponType::Sword;
+
+        $this->weapon = new Entities\Weapon(
+            $this->name,
+            $this->description,
+            $this->price,
+            $this->sellback,
+            $this->tags,
+            $this->baseDamage,
+            $this->type
+        );
     }
 
     #[Test]
-    public function should_change_base_damage()
+    public function it_stores_and_returns_the_name(): void
     {
-        $this->weapon->defineBaseDamage('30-36');
-        $this->assertSame('30-36', $this->weapon->getBaseDamage());
+        $this->assertSame($this->name, $this->weapon->getName());
     }
 
     #[Test]
-    public function should_fail_because_base_damage_is_empty()
+    public function it_stores_and_returns_the_description(): void
     {
-        $this->expectException(Exceptions\AqwItemException::class);
-        $this->expectExceptionMessage('The weapon base damage can not be empty.');
-
-        $this->weapon->defineBaseDamage('');
+        $this->assertSame($this->description, $this->weapon->getDescription());
     }
 
     #[Test]
-    public function should_fail_because_invalid_base_damage()
+    public function it_stores_and_returns_the_price(): void
     {
-        $this->expectException(Exceptions\AqwItemException::class);
-        $this->expectExceptionMessage('The weapon base damage needs to be in pattern `min-max`.');
+        $this->assertSame($this->price, $this->weapon->getPrice());
+    }
 
-        $this->weapon->defineBaseDamage('30');
+    #[Test]
+    public function it_stores_and_returns_the_sellback(): void
+    {
+        $this->assertSame($this->sellback, $this->weapon->getSellback());
+    }
+
+    #[Test]
+    public function it_stores_and_returns_the_tags(): void
+    {
+        $this->assertSame($this->tags, $this->weapon->getTags());
+    }
+
+    #[Test]
+    public function it_stores_and_returns_the_base_damage(): void
+    {
+        $this->assertSame($this->baseDamage, $this->weapon->getBaseDamage());
+    }
+
+    #[Test]
+    public function it_stores_and_returns_the_weapon_type(): void
+    {
+        $this->assertSame($this->type, $this->weapon->getType());
     }
 }

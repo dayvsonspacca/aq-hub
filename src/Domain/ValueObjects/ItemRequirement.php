@@ -6,7 +6,7 @@ namespace AqWiki\Domain\ValueObjects;
 
 use AqWiki\Domain\{Contracts, Entities, Abstractions};
 
-final class ItemRequirement implements Contracts\QuestRequirementInterface
+class ItemRequirement implements Contracts\QuestRequirementInterface
 {
     public function __construct(private readonly Abstractions\AqwItem $item, private readonly int $amount)
     {

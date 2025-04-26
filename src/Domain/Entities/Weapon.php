@@ -4,31 +4,35 @@ declare(strict_types=1);
 
 namespace AqWiki\Domain\Entities;
 
-use AqWiki\Domain\{Enums, Exceptions, Abstractions, Traits};
+use AqWiki\Domain\{Enums, ValueObjects, Abstractions, Traits};
 
 class Weapon extends Abstractions\AqwItem
 {
-    use Traits\HasRarity;
+    private readonly string $baseDamage;
+    private readonly Enums\WeaponType $type;
 
-    private string $baseDamage;
-    private Enums\WeaponType $type;
+    public function __construct(
+        string $name,
+        string $description,
+        ValueObjects\GameCurrency $price,
+        ValueObjects\GameCurrency $sellback,
+        ValueObjects\ItemTags $tags,
+        string $baseDamage,
+        Enums\WeaponType $type
+    ) {
+        parent::__construct($name, $description, $price, $sellback, $tags);
+
+        $this->baseDamage = $baseDamage;
+        $this->type = $type;
+    }
 
     public function getBaseDamage(): string
     {
         return $this->baseDamage;
     }
 
-    public function defineBaseDamage(string $newBaseDamage)
+    public function getType(): Enums\WeaponType
     {
-        if (empty($newBaseDamage)) {
-            throw Exceptions\AqwItemException::invalidAttribute('The weapon base damage can not be empty.');
-        }
-        $parts = explode('-', $newBaseDamage);
-        if (!(count($parts) === 2)) {
-            throw Exceptions\AqwItemException::invalidAttribute('The weapon base damage needs to be in pattern `min-max`.');
-        }
-
-        $this->baseDamage = $newBaseDamage;
-        return $this;
+        return $this->type;
     }
 }

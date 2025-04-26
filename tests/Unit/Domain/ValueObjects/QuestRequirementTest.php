@@ -15,16 +15,17 @@ final class QuestRequirementTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->player = new Entities\Player(65, []);
         $this->quest = new Entities\Quest(
             name: 'Awesome Quest',
-            location: null,
             requirements: new ValueObjects\QuestRequirements([])
         );
     }
 
     #[Test]
-    public function fails_when_player_does_not_meet_first_requirement()
+    public function fails_when_player_does_not_meet_first_requirement(): void
     {
         $requirements = new ValueObjects\QuestRequirements();
         $requirements->add(new ValueObjects\QuestRequirement($this->quest));
@@ -32,22 +33,21 @@ final class QuestRequirementTest extends TestCase
 
         $quest = new Entities\Quest(
             name: 'Another Awesome Quest',
-            location: null,
             requirements: $requirements
         );
 
-        foreach ($quest->requirements as $requeriment) {
-            if (!$requeriment->pass($this->player)) {
+        foreach ($quest->getRequirements() as $requirement) {
+            if (!$requirement->pass($this->player)) {
                 $this->assertTrue(true);
                 return;
             }
         }
 
-        $this->fail();
+        $this->fail('Expected at least one requirement to fail.');
     }
 
     #[Test]
-    public function pass_when_player_does_meet_requirements()
+    public function pass_when_player_does_meet_requirements(): void
     {
         $requirements = new ValueObjects\QuestRequirements();
         $requirements->add(new ValueObjects\QuestRequirement($this->quest));
@@ -55,13 +55,12 @@ final class QuestRequirementTest extends TestCase
 
         $quest = new Entities\Quest(
             name: 'A Dark Knight Rises',
-            location: null,
             requirements: $requirements
         );
 
-        foreach ($quest->requirements as $requeriment) {
-            if (!$requeriment->pass($this->player)) {
-                $this->fail();
+        foreach ($quest->getRequirements() as $requirement) {
+            if (!$requirement->pass($this->player)) {
+                $this->fail('A requirement failed when it should have passed.');
             }
         }
 

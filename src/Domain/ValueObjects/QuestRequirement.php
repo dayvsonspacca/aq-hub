@@ -6,7 +6,7 @@ namespace AqWiki\Domain\ValueObjects;
 
 use AqWiki\Domain\{Contracts, Entities};
 
-final class QuestRequirement implements Contracts\QuestRequirementInterface
+class QuestRequirement implements Contracts\QuestRequirementInterface
 {
     public function __construct(private readonly Entities\Quest $quest)
     {
@@ -14,7 +14,7 @@ final class QuestRequirement implements Contracts\QuestRequirementInterface
 
     public function pass(Entities\Player $player): bool
     {
-        foreach ($this->quest->requirements as $requirement) {
+        foreach ($this->quest->getRequirements() as $requirement) {
             if (!$requirement->pass($player)) {
                 return false;
             }
