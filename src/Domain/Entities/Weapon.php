@@ -12,6 +12,7 @@ class Weapon extends Abstractions\AqwItem
     private readonly Enums\WeaponType $type;
 
     public function __construct(
+        string $guid,
         string $name,
         string $description,
         ValueObjects\GameCurrency $price,
@@ -20,7 +21,7 @@ class Weapon extends Abstractions\AqwItem
         string $baseDamage,
         Enums\WeaponType $type
     ) {
-        parent::__construct($name, $description, $price, $sellback, $tags);
+        parent::__construct($guid, $name, $description, $price, $sellback, $tags);
 
         $this->baseDamage = $baseDamage;
         $this->type = $type;

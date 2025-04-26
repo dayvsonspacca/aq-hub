@@ -6,5 +6,15 @@ namespace AqWiki\Domain\Abstractions;
 
 abstract class Entity
 {
-    public string $guid;
+    protected string $guid;
+
+    public function __construct(string $guid)
+    {
+        $this->guid = $guid;
+    }
+
+    public function getGuid(): string
+    {
+        return $this->guid;
+    }
 }

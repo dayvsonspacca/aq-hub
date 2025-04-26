@@ -11,6 +11,7 @@ use AqWiki\Tests\Unit\TestCase;
 final class WeaponTest extends TestCase
 {
     private Entities\Weapon $weapon;
+    private string $weaponId = 'awesome-weapon-id';
     private string $name = 'ShadowReaper of Doom';
     private string $description = 'A cursed blade with unimaginable power.';
     private string $baseDamage = '45-60';
@@ -29,6 +30,7 @@ final class WeaponTest extends TestCase
         $this->type = Enums\WeaponType::Sword;
 
         $this->weapon = new Entities\Weapon(
+            $this->weaponId,
             $this->name,
             $this->description,
             $this->price,
@@ -37,6 +39,12 @@ final class WeaponTest extends TestCase
             $this->baseDamage,
             $this->type
         );
+    }
+
+    #[Test]
+    public function it_stores_and_returns_the_weapon_id(): void
+    {
+        $this->assertSame($this->weaponId, $this->weapon->getGuid());
     }
 
     #[Test]

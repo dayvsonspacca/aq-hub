@@ -15,12 +15,14 @@ abstract class AqwItem extends Abstractions\Entity
     private readonly ValueObjects\ItemTags $tags;
 
     public function __construct(
+        string $guid,
         string $name,
         string $description,
         ValueObjects\GameCurrency $price,
         ValueObjects\GameCurrency $sellback,
         ValueObjects\ItemTags $tags
     ) {
+        $this->guid = Utils\Strings::ifEmptyThrow($guid, Exceptions\AqwItemException::invalidAttribute('The item id can not be empty.'));
         $this->name = Utils\Strings::ifEmptyThrow($name, Exceptions\AqwItemException::invalidAttribute('The name of an item can not be empty.'));
         $this->description = Utils\Strings::ifEmptyThrow($description, Exceptions\AqwItemException::invalidAttribute('The name of an item can not be empty.'));
 

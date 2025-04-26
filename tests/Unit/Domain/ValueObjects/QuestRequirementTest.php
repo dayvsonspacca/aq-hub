@@ -19,6 +19,7 @@ final class QuestRequirementTest extends TestCase
 
         $this->player = new Entities\Player(65, []);
         $this->quest = new Entities\Quest(
+            guid: 'awesome-quest-id',
             name: 'Awesome Quest',
             requirements: new ValueObjects\QuestRequirements([])
         );
@@ -32,6 +33,7 @@ final class QuestRequirementTest extends TestCase
         $requirements->add(new ValueObjects\LevelRequirement(75));
 
         $quest = new Entities\Quest(
+            guid: 'awesome-quest-id',
             name: 'Another Awesome Quest',
             requirements: $requirements
         );
@@ -54,6 +56,7 @@ final class QuestRequirementTest extends TestCase
         $requirements->add(new ValueObjects\LevelRequirement(65));
 
         $quest = new Entities\Quest(
+            guid: 'awesome-quest-id',
             name: 'A Dark Knight Rises',
             requirements: $requirements
         );

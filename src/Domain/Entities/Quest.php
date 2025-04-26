@@ -12,9 +12,11 @@ class Quest extends Abstractions\Entity
     private ValueObjects\QuestRequirements $requirements;
 
     public function __construct(
+        string $guid,
         string $name,
         ValueObjects\QuestRequirements $requirements
     ) {
+        $this->guid = Utils\Strings::ifEmptyThrow($guid, new Exceptions\QuestException('The quest id can not be empty.'));
         $this->name = Utils\Strings::ifEmptyThrow($name, new Exceptions\QuestException('The name of a quest can not be empty.'));
         $this->requirements = $requirements;
     }

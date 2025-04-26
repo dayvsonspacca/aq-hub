@@ -11,12 +11,12 @@ use AqWiki\Tests\Unit\TestCase;
 final class QuestRequirementsTest extends TestCase
 {
     private ValueObjects\QuestRequirements $requirements;
-    private Entities\MiscItem $miscItem;
+    private Entities\Weapon $weapon;
 
     protected function setUp(): void
     {
         $this->requirements = new ValueObjects\QuestRequirements();
-        $this->miscItem = $this->createMock(Entities\MiscItem::class);
+        $this->weapon = $this->createMock(Entities\Weapon::class);
     }
 
     #[Test]
@@ -39,8 +39,8 @@ final class QuestRequirementsTest extends TestCase
     #[Test]
     public function find_requirement_should_return_true()
     {
-        $this->requirements->add(new ValueObjects\ItemRequirement($this->miscItem, 1));
-        $this->assertSame(true, $this->requirements->has(new ValueObjects\ItemRequirement($this->miscItem, 1)));
+        $this->requirements->add(new ValueObjects\ItemRequirement($this->weapon, 1));
+        $this->assertSame(true, $this->requirements->has(new ValueObjects\ItemRequirement($this->weapon, 1)));
     }
 
     #[Test]

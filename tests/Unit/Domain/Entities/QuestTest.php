@@ -11,6 +11,7 @@ use AqWiki\Tests\Unit\TestCase;
 final class QuestTest extends TestCase
 {
     private Entities\Quest $quest;
+    private string $questId = 'awesome-quest-id';
     private string $name = 'Awesome Quest';
     private ValueObjects\QuestRequirements $requirements;
 
@@ -21,9 +22,16 @@ final class QuestTest extends TestCase
         $this->requirements = $this->createMock(ValueObjects\QuestRequirements::class);
 
         $this->quest = new Entities\Quest(
+            $this->questId,
             $this->name,
             $this->requirements
         );
+    }
+
+    #[Test]
+    public function it_stores_and_returns_the_quest_id(): void
+    {
+        $this->assertSame($this->questId, $this->quest->getGuid());
     }
 
     #[Test]
