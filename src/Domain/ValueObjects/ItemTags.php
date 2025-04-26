@@ -6,7 +6,7 @@ namespace AqWiki\Domain\ValueObjects;
 
 use AqWiki\Domain\{Enums, Exceptions};
 
-final class ItemTags implements \Countable
+class ItemTags implements \Countable
 {
     /** @var Enums\TagType[] $tags */
     private array $tags = [];

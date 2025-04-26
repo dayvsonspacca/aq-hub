@@ -4,19 +4,28 @@ declare(strict_types=1);
 
 namespace AqWiki\Domain\Entities;
 
-use AqWiki\Domain\{ValueObjects, Abstractions};
+use AqWiki\Domain\{ValueObjects, Abstractions, Utils, Exceptions};
 
 class Quest extends Abstractions\Entity
 {
-    /**
-     * @var ValueObjects\QuestReward[] $rewards
-     **/
+    private readonly string $name;
+    private ValueObjects\QuestRequirements $requirements;
 
     public function __construct(
-        public readonly string $name,
-        public readonly ?string $location,
-        public readonly ValueObjects\QuestRequirements $requirements,
-        public readonly array $rewards = []
+        string $name,
+        ValueObjects\QuestRequirements $requirements
     ) {
+        $this->name = Utils\Strings::ifEmptyThrow($name, new Exceptions\QuestException('The name of a quest can not be empty.'));
+        $this->requirements = $requirements;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getRequirements(): ValueObjects\QuestRequirements
+    {
+        return $this->requirements;
     }
 }

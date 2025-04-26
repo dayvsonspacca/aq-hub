@@ -6,7 +6,7 @@ namespace AqWiki\Domain\ValueObjects;
 
 use AqWiki\Domain\{Contracts, Entities};
 
-final class LevelRequirement implements Contracts\QuestRequirementInterface
+class LevelRequirement implements Contracts\QuestRequirementInterface
 {
     public function __construct(private readonly int $level)
     {

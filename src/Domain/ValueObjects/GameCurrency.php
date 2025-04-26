@@ -6,7 +6,7 @@ namespace AqWiki\Domain\ValueObjects;
 
 use AqWiki\Domain\{Exceptions, Enums};
 
-final class GameCurrency
+class GameCurrency
 {
     private int $value;
     private Enums\CurrencyType $type;
