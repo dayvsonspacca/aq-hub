@@ -8,8 +8,11 @@ use AqWiki\Shared\Domain\ValueObjects\GameCurrency;
 
 class ItemCurrencyInfo
 {
-    private GameCurrency $sellback;
-    private GameCurrency $price;
+    public function __construct(
+        private GameCurrency $sellback,
+        private GameCurrency $price
+    ) {
+    }
 
     public function getSellback(): GameCurrency
     {

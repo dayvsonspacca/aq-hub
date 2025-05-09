@@ -15,6 +15,11 @@ class LevelRequirement implements QuestRequirementInterface
 
     public function pass(Player $player): bool
     {
-        return $player->level >= $this->level;
+        return $player->getLevel() >= $this->level;
+    }
+
+    public function getLevel(): int
+    {
+        return $this->level;
     }
 }

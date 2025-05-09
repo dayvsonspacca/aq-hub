@@ -22,7 +22,7 @@ class ItemTags implements Countable, IteratorAggregate
         $this->tags = $tags;
     }
 
-    /** @return Result<self> */
+    /** @return Result<null> */
     public function add(TagType $tag)
     {
         if ($this->has($tag)) {
@@ -30,7 +30,7 @@ class ItemTags implements Countable, IteratorAggregate
         }
 
         $this->tags[] = $tag;
-        return new Result(ResultStatus::Success, null, $this);
+        return new Result(ResultStatus::Success, null, null);
     }
 
     public function has(TagType $tag)

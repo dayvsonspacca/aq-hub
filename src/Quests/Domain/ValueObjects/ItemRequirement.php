@@ -11,13 +11,17 @@ use AqWiki\Player\Domain\Entities\Player;
 class ItemRequirement implements QuestRequirementInterface
 {
     public function __construct(
-        private readonly AqwItem $item,
-        private readonly int $amount
+        private readonly AqwItem $item
     ) {
     }
 
     public function pass(Player $player): bool
     {
-        return in_array($this->item, $player->items, true);
+        return $player->getInventory()->has($this->item);
+    }
+
+    public function getItem(): AqwItem
+    {
+        return $this->item;
     }
 }

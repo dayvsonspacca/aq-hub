@@ -10,7 +10,7 @@ use AqWiki\Shared\Domain\Abstractions\Entity;
 
 abstract class AqwItem extends Entity
 {
-    protected readonly ItemInfo $info;
+    protected ItemInfo $info;
 
     public function getName(): string
     {

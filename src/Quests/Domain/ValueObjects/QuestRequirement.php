@@ -24,4 +24,9 @@ class QuestRequirement implements QuestRequirementInterface
 
         return true;
     }
+
+    public function getQuest(): Quest
+    {
+        return $this->quest;
+    }
 }

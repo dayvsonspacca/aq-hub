@@ -23,10 +23,10 @@ class Quest extends Entity
         $name = trim($name);
 
         if (empty($guid)) {
-            return new Result(ResultStatus::Error, 'The quest id can not be empty.', null);
+            return new Result(ResultStatus::Error, 'The quest GUID cant be empty.', null);
         }
         if (empty($name)) {
-            return new Result(ResultStatus::Error, 'The name of a quest can not be empty.', null);
+            return new Result(ResultStatus::Error, 'The name of a quest cant be empty.', null);
         }
 
         return new Result(ResultStatus::Success, null, new self($guid, $name, $requirements));

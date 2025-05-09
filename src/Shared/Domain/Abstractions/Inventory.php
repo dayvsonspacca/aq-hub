@@ -5,22 +5,28 @@ declare(strict_types=1);
 namespace AqWiki\Shared\Domain\Abstractions;
 
 use AqWiki\Items\Domain\Abstractions\AqwItem;
+use IteratorAggregate;
+use ArrayIterator;
 use Countable;
 
-abstract class Inventory extends Entity implements Countable
+abstract class Inventory implements Countable, IteratorAggregate
 {
+    protected array $items = [];
+
+    /** @param array<string, AqwItem> $items */
     public function __construct(
-        /** @var array<string, AqwItem> $items */
-        protected array $items = [],
-        protected int $maxSpaces,
-        protected int $avaliableSpaces
+        array $items,
+        protected int $maxSpaces
     ) {
+        foreach ($items as $item) {
+            $this->items[md5($item->getGuid())] = $item;
+        }
     }
 
-    /** @return Result<Inventory> */
+    /** @return Result<null> */
     abstract public function add(AqwItem $item);
 
-    /** @return Result<Inventory> */
+    /** @return Result<null> */
     abstract public function delete(AqwItem $item);
 
     public function has(AqwItem $item): bool
@@ -38,14 +44,16 @@ abstract class Inventory extends Entity implements Countable
         return $this->maxSpaces;
     }
 
-    public function getAvaliableSpaces(): int
-    {
-        return $this->avaliableSpaces;
-    }
+    abstract public function getAvaliableSpaces(): int;
 
     /** @return array<string, AqwItem> */
     public function getItems(): array
     {
         return $this->items;
+    }
+
+    public function getIterator(): ArrayIterator
+    {
+        return new ArrayIterator($this->items);
     }
 }

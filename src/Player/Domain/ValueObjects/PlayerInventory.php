@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Player\Domain\Entities;
+namespace AqWiki\Player\Domain\ValueObjects;
 
 use AqWiki\Shared\Domain\Enums\{ResultStatus, TagType};
 use AqWiki\Shared\Domain\Abstractions\Inventory;
@@ -11,31 +11,35 @@ use AqWiki\Items\Domain\Abstractions\AqwItem;
 
 class PlayerInventory extends Inventory
 {
+    /** @return Result<null> */
     public function add(AqwItem $item)
     {
-        if (($this->avaliableSpaces - 1) < 0) {
+        if (($this->getAvaliableSpaces() - 1) < 0) {
             return new Result(ResultStatus::Error, 'There is no space avaliable in the player inventory.', null);
         }
 
         if ($this->has($item)) {
-            return new Result(ResultStatus::Error, 'The player inventory alread has that item.', null);
+            return new Result(ResultStatus::Error, 'The player inventory already has that item.', null);
         }
 
-        $this->items[$item->guid] = $item;
-        $this->avaliableSpaces -= 1;
+        $this->items[md5($item->getGuid())] = $item;
 
-        return new Result(ResultStatus::Success, null, $this);
+        return new Result(ResultStatus::Success, null, null);
     }
 
+    /** @return Result<null> */
     public function delete(AqwItem $item)
     {
         if ($item->getTags()->has(TagType::AdventureCoins)) {
             return new Result(ResultStatus::Error, 'You cant delete that item, AC tag present.', null);
         }
 
-        unset($this->items[$item->guid]);
-        $this->avaliableSpaces += 1;
+        unset($this->items[md5($item->getGuid())]);
+        return new Result(ResultStatus::Success, null, null);
+    }
 
-        return new Result(ResultStatus::Success, null, $this);
+    public function getAvaliableSpaces(): int
+    {
+        return $this->maxSpaces - $this->count();
     }
 }

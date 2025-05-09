@@ -7,19 +7,18 @@ namespace AqWiki\Shared\Domain\ValueObjects;
 use AqWiki\Shared\Domain\Enums\ResultStatus;
 use DomainException;
 
+/**
+ * @template T
+ */
 final class Result
 {
     private ResultStatus $status;
     private ?string $message;
 
-    /**
-     * @var T|null
-     */
+    /** @var T */
     private $data;
 
-    /**
-     * @param T|null $data
-     */
+    /** @param T $data */
     public function __construct(
         ResultStatus $status,
         ?string $message,
@@ -41,7 +40,7 @@ final class Result
     }
 
     /**
-     * @return T|null
+     * @return T
      * @throws DomainException
      */
     public function unwrap()
@@ -50,7 +49,7 @@ final class Result
             throw new DomainException($this->message);
         }
 
-        return $this->getData();
+        return $this->data;
     }
 
     public function getMessage(): string
@@ -59,7 +58,7 @@ final class Result
     }
 
     /**
-     * @return T|null
+     * @return T
      */
     public function getData()
     {
