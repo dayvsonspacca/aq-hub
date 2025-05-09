@@ -14,3 +14,15 @@ Currently, all systems in the game are immutable and do not have behaviors like 
 An item is immutable in the end, so I don’t need a setter method for the name.
 
 > Conclusion: Let's use constructor methods only. That way, we ensure immutability and cohesion.
+
+# #2 Control Error Flow Using Exceptions or Result Methods?
+
+This question came up when I noticed that a `UseCase` can result in many exceptions—an exception when building an item, 
+or another when using some service. This introduces a break in the `Input -> Process -> Output` flow of a `UseCase`,
+and creates the need to add many `try-catch` blocks within the `UseCase`.
+
+On the other hand, using Result methods protects the `UseCase` logic, but now I need to check `isSuccess` on all Result objects.
+
+Looking at these two options, I decided to use the Result methods. This choice was made entirely to avoid breaking the `UseCase` flow.
+
+> Conclusion: Let's use Result methods. That way, once again, we ensure immutability, cohesion, and a consistent process flow.
