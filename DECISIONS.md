@@ -26,3 +26,12 @@ On the other hand, using Result methods protects the `UseCase` logic, but now I 
 Looking at these two options, I decided to use the Result methods. This choice was made entirely to avoid breaking the `UseCase` flow.
 
 > Conclusion: Let's use Result methods. That way, once again, we ensure immutability, cohesion, and a consistent process flow.
+
+# #3 How Will Unit Tests Be Done?
+
+Currently, I’m already writing unit tests, but I decided to define a standard for how these tests will be structured. 
+They will follow these simple rules:
+
+1. **Test if you can create an instance of a class.**  
+2. **Test if the class can store and retrieve data correctly.**  
+3. **Force errors and test how they are handled.**
