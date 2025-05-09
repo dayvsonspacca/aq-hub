@@ -1,4 +1,4 @@
-# #1 Building Entities Using Setters or Constructor Methods?
+# #1 Building Entities Using Setters or Constructor Methods? 2025-04-25
 
 This question came up at the beginning of the construction of the `Weapon` entity, where things got confusing when the `setBaseDamage`
 method returned an instance of `Weapon`, but other setters like `setName` returned an `AqwItem`. This introduces strange behavior 
@@ -15,7 +15,7 @@ An item is immutable in the end, so I don’t need a setter method for the name.
 
 > Conclusion: Let's use constructor methods only. That way, we ensure immutability and cohesion.
 
-# #2 Control Error Flow Using Exceptions or Result Methods?
+# #2 Control Error Flow Using Exceptions or Result Methods? 2025-05-06
 
 This question came up when I noticed that a `UseCase` can result in many exceptions—an exception when building an item, 
 or another when using some service. This introduces a break in the `Input -> Process -> Output` flow of a `UseCase`,
@@ -27,7 +27,7 @@ Looking at these two options, I decided to use the Result methods. This choice w
 
 > Conclusion: Let's use Result methods. That way, once again, we ensure immutability, cohesion, and a consistent process flow.
 
-# #3 How Will Unit Tests Be Done?
+# #3 How Will Unit Tests Be Done? 2025-05-08
 
 Currently, I’m already writing unit tests, but I decided to define a standard for how these tests will be structured. 
 They will follow these simple rules:
