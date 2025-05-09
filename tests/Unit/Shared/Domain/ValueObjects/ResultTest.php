@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Domain\ValueObjects;
+namespace Tests\Unit\Shared\Domain\ValueObjects;
 
-use AqWiki\Domain\ValueObjects\Result;
+use AqWiki\Shared\Domain\ValueObjects\Result;
+use AqWiki\Shared\Domain\Enums\ResultStatus;
 use PHPUnit\Framework\Attributes\Test;
-use AqWiki\Domain\Enums\ResultStatus;
 use AqWiki\Tests\Unit\TestCase;
 
 final class ResultTest extends TestCase
