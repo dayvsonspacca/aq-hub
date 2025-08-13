@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AqWiki\Items\Domain\ValueObjects;
 
-use AqWiki\Shared\Domain\Enums\{ResultStatus, TagType};
 use AqWiki\Shared\Domain\ValueObjects\Result;
+use AqWiki\Shared\Domain\Enums\TagType;
 use IteratorAggregate;
 use ArrayIterator;
 use Countable;
@@ -26,11 +26,11 @@ class ItemTags implements Countable, IteratorAggregate
     public function add(TagType $tag)
     {
         if ($this->has($tag)) {
-            return new Result(ResultStatus::Error, 'That item already have this tag.', null);
+            return Result::error('That item already have this tag.', null);
         }
 
         $this->tags[] = $tag;
-        return new Result(ResultStatus::Success, null, null);
+        return Result::success(null, null);
     }
 
     public function has(TagType $tag)

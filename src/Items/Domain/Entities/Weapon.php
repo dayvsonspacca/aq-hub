@@ -7,7 +7,6 @@ namespace AqWiki\Items\Domain\Entities;
 use AqWiki\Items\Domain\ValueObjects\ItemInfo;
 use AqWiki\Items\Domain\Abstractions\AqwItem;
 use AqWiki\Shared\Domain\ValueObjects\Result;
-use AqWiki\Shared\Domain\Enums\ResultStatus;
 use AqWiki\Items\Domain\Enums\WeaponType;
 
 class Weapon extends AqwItem
@@ -34,9 +33,9 @@ class Weapon extends AqwItem
     ) {
         $guid = trim($guid);
         if (empty($guid)) {
-            return new Result(ResultStatus::Error, 'The GUID of an weapon cant be empty.', null);
+            return Result::error('The GUID of an weapon cant be empty.', null);
         }
 
-        return new Result(ResultStatus::Success, null, new self($guid, $info, $type));
+        return Result::success(null, new self($guid, $info, $type));
     }
 }

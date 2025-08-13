@@ -7,7 +7,6 @@ namespace AqWiki\Player\Domain\Entities;
 use AqWiki\Player\Domain\ValueObjects\PlayerInventory;
 use AqWiki\Shared\Domain\Abstractions\Entity;
 use AqWiki\Shared\Domain\ValueObjects\Result;
-use AqWiki\Shared\Domain\Enums\ResultStatus;
 
 class Player extends Entity
 {
@@ -27,13 +26,13 @@ class Player extends Entity
     ) {
         $guid = trim($guid);
         if (empty($guid)) {
-            return new Result(ResultStatus::Error, 'The GUID of a player cant be empty.', null);
+            return Result::error('The GUID of a player cant be empty.', null);
         }
         if ($level < 0) {
-            return new Result(ResultStatus::Error, 'The level of a player cant be negative.', null);
+            return Result::error('The level of a player cant be negative.', null);
         }
 
-        return new Result(ResultStatus::Success, null, new self($guid, $level, $inventory));
+        return Result::success(null, new self($guid, $level, $inventory));
     }
 
     public function getLevel(): int

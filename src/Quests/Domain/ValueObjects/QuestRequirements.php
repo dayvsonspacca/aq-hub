@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AqWiki\Quests\Domain\ValueObjects;
 
 use AqWiki\Quests\Domain\Contracts\QuestRequirementInterface;
-use AqWiki\Shared\Domain\Enums\ResultStatus;
 use AqWiki\Shared\Domain\ValueObjects\Result;
 use IteratorAggregate;
 use ArrayIterator;
@@ -28,11 +27,11 @@ class QuestRequirements implements Countable, IteratorAggregate
     public function add(QuestRequirementInterface $requirement)
     {
         if ($requirement instanceof LevelRequirement && $this->has($requirement)) {
-            return new Result(ResultStatus::Error, 'A quest cant have more than one level requirement.', null);
+            return Result::error('A quest cant have more than one level requirement.', null);
         }
 
         $this->requirements[md5(serialize($requirement))] = $requirement;
-        return new Result(ResultStatus::Success, null, null);
+        return Result::success(null, null);
     }
 
     public function remove(QuestRequirementInterface $requirement)

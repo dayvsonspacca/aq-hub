@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AqWiki\Items\Domain\ValueObjects;
 
 use AqWiki\Shared\Domain\ValueObjects\Result;
-use AqWiki\Shared\Domain\Enums\ResultStatus;
 
 class ItemInfo
 {
@@ -23,13 +22,13 @@ class ItemInfo
         $description = trim($description);
 
         if (empty($name)) {
-            return new Result(ResultStatus::Error, 'The name of an item cant be empty.', null);
+            return Result::error('The name of an item cant be empty.', null);
         }
         if (empty($description)) {
-            return new Result(ResultStatus::Error, 'The description of an item cant be empty.', null);
+            return Result::error('The description of an item cant be empty.', null);
         }
 
-        return new Result(ResultStatus::Success, null, new self($name, $description, $tags));
+        return Result::success(null, new self($name, $description, $tags));
     }
 
     public function getName(): string

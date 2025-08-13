@@ -15,7 +15,7 @@ final class ResultTest extends TestCase
     public function test_result_success(): void
     {
         $data = ['id' => 1, 'name' => 'Test'];
-        $result = new Result(ResultStatus::Success, 'Operation successful', $data);
+        $result = Result::success('Operation successful', $data);
 
         $this->assertTrue($result->isSuccess());
         $this->assertFalse($result->isError());
@@ -26,7 +26,7 @@ final class ResultTest extends TestCase
     #[Test]
     public function test_result_error(): void
     {
-        $result = new Result(ResultStatus::Error, 'Something went wrong', null);
+        $result = Result::error('Something went wrong', null);
 
         $this->assertFalse($result->isSuccess());
         $this->assertTrue($result->isError());
