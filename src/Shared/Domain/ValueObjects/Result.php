@@ -64,4 +64,14 @@ final class Result
     {
         return $this->data;
     }
+
+    public static function success(?string $message, $data)
+    {
+        return new self(ResultStatus::Success, $message, $data);
+    }
+
+    public static function error(?string $message, $data)
+    {
+        return new self(ResultStatus::Error, $message, $data);
+    }
 }
