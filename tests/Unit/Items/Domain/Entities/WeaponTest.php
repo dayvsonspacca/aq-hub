@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Items\Domain\Entities;
 
-use AqWiki\Items\Domain\ValueObjects\{ItemTags, ItemInfo};
+use AqWiki\Items\Domain\ValueObjects\{ItemTags, ItemInfo, Name};
 use AqWiki\Shared\Domain\ValueObjects\Identifier;
 use AqWiki\Items\Domain\Enums\WeaponType;
 use AqWiki\Items\Domain\Entities\Weapon;
@@ -23,7 +23,7 @@ final class WeaponTest extends TestCase
         $tags = new ItemTags([TagType::AdventureCoins]);
         $type = WeaponType::Sword;
 
-        $itemInfo = ItemInfo::create($name, $description, $tags)->unwrap();
+        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), $description, $tags)->unwrap();
 
         $weapon = Weapon::create(
             $id,

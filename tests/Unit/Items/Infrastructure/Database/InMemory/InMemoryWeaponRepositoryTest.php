@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Items\Domain\ValueObjects;
 
 use AqWiki\Items\Infrastructure\Database\InMemory\InMemoryWeaponRepository;
-use AqWiki\Items\Domain\ValueObjects\{ItemTags, ItemInfo};
+use AqWiki\Items\Domain\ValueObjects\{ItemTags, ItemInfo, Name};
 use AqWiki\Shared\Domain\ValueObjects\Identifier;
 use AqWiki\Items\Domain\Enums\WeaponType;
 use AqWiki\Items\Domain\Entities\Weapon;
@@ -24,7 +24,7 @@ final class InMemoryWeaponRepositoryTest extends TestCase
         $description = 'The darkness compels… DOOOOOOOOOOOM!!!';
         $tags = new ItemTags([TagType::AdventureCoins]);
 
-        $itemInfo = ItemInfo::create($name, $description, $tags)->unwrap();
+        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), $description, $tags)->unwrap();
 
         $weaponType = WeaponType::Sword;
 
@@ -44,7 +44,7 @@ final class InMemoryWeaponRepositoryTest extends TestCase
         $description = 'The darkness compels… DOOOOOOOOOOOM!!!';
         $tags = new ItemTags([TagType::AdventureCoins]);
 
-        $itemInfo = ItemInfo::create($name, $description, $tags)->unwrap();
+        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), $description, $tags)->unwrap();
 
         $weaponType = WeaponType::Sword;
 
@@ -64,7 +64,7 @@ final class InMemoryWeaponRepositoryTest extends TestCase
         $name = 'Necrotic Sword of Doom';
         $description = 'The darkness compels… DOOOOOOOOOOOM!!!';
         $tags = new ItemTags([TagType::AdventureCoins]);
-        $itemInfo = ItemInfo::create($name, $description, $tags)->unwrap();
+        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), $description, $tags)->unwrap();
         $weaponType = WeaponType::Sword;
         $repository->persist($itemInfo, $weaponType);
 
