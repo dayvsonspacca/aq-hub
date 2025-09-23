@@ -1,5 +1,4 @@
 vendor
 .php-cs-fixer.cache
 .vscode
-database.sqlite
-database.sqlite-journal
+database/db.*

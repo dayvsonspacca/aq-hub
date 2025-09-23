@@ -41,14 +41,14 @@ class AddItemCommand extends Command
 
         $itemType = $helper->ask($input, $output, $itemTypeQuestion);
         $itemInfo = $this->buildItemInfo($helper, $input, $output);
-        
+
         $output->writeln('You selected: <info>' . $itemType . '</info>');
         $output->writeln('<comment>-== Item info ==-</comment>');
         $output->writeln('Name: <info>' . $itemInfo->getName() . '</info>');
         $output->writeln('Description: <info>' . $itemInfo->getDescription() . '</info>');
         $output->writeln('Tags: <info>' . implode(', ', $itemInfo->getTags()->toArray()) . '</info>');
         $output->writeln('<comment>-== Item info ==-</comment>');
-        
+
         if ($itemType === 'Weapon') {
             $weaponTypeChoices = [];
             foreach (WeaponType::cases() as $weaponType) {
@@ -70,7 +70,15 @@ class AddItemCommand extends Command
 
             $weaponType = $helper->ask($input, $output, $weaponTypeQuestion);
 
-            $this->weaponRepository->persist($itemInfo, $weaponType);
+            $result = $this->weaponRepository->persist($itemInfo, $weaponType);
+
+            if ($result->isError()) {
+                $output->writeln('<error>' . $result->getMessage() . '</error>');
+
+                return Command::FAILURE;
+            }
+
+            $output->writeln('<info>New Weapon added!</info>');
         }
 
         return Command::SUCCESS;
