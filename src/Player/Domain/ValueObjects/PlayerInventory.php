@@ -22,7 +22,7 @@ class PlayerInventory extends Inventory
             return Result::error('The player inventory already has that item.', null);
         }
 
-        $this->items[md5($item->getGuid())] = $item;
+        $this->items[md5($item->getName())] = $item;
 
         return Result::success(null, null);
     }
@@ -34,7 +34,7 @@ class PlayerInventory extends Inventory
             return Result::error('You cant delete that item, AC tag present.', null);
         }
 
-        unset($this->items[md5($item->getGuid())]);
+        unset($this->items[md5($item->getName())]);
         return Result::success(null, null);
     }
 

@@ -19,7 +19,7 @@ abstract class Inventory implements Countable, IteratorAggregate
         protected int $maxSpaces
     ) {
         foreach ($items as $item) {
-            $this->items[md5($item->getGuid())] = $item;
+            $this->items[md5($item->getName())] = $item;
         }
     }
 
