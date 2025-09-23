@@ -19,13 +19,13 @@ enum TagType
      */
     public static function fromString(string $tag): Result
     {
-        return match($tag) {
+        return match ($tag) {
             'Legend'          => Result::success(null, self::Legend),
             'Adventure Coins' => Result::success(null, self::AdventureCoins),
             'Rare'            => Result::success(null, self::Rare),
             'Pseudo Rare'     => Result::success(null, self::PseudoRare),
             'Seasonal'        => Result::success(null, self::Seasonal),
-            default           => Result::error('Tag not defined', null)
+            default           => Result::error('Tag not defined: ' . $tag, null)
         };
     }
 
