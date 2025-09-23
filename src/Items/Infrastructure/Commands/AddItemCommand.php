@@ -6,11 +6,11 @@ namespace AqWiki\Items\Infrastructure\Commands;
 
 use AqWiki\Items\Domain\ValueObjects\{ItemInfo, ItemTags, Description, Name};
 use Symfony\Component\Console\Question\{Question, ChoiceQuestion};
-use AqWiki\Items\Domain\Repositories\WeaponRepository;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Command\Command;
+use AqWiki\Items\Application\Weapon\AddWeapon;
 use AqWiki\Items\Domain\Enums\WeaponType;
 use AqWiki\Shared\Domain\Enums\TagType;
 use RuntimeException;
@@ -18,7 +18,7 @@ use RuntimeException;
 class AddItemCommand extends Command
 {
     public function __construct(
-        private readonly WeaponRepository $weaponRepository
+        private readonly AddWeapon $addWeapon
     ) {
         parent::__construct();
     }
@@ -70,7 +70,7 @@ class AddItemCommand extends Command
 
             $weaponType = $helper->ask($input, $output, $weaponTypeQuestion);
 
-            $result = $this->weaponRepository->persist($itemInfo, $weaponType);
+            $result = $this->addWeapon->execute($itemInfo, $weaponType);
 
             if ($result->isError()) {
                 $output->writeln('<error>' . $result->getMessage() . '</error>');
