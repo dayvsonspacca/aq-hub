@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Items\Infrastructure\Database\InMemory;
+namespace AqWiki\Items\Infrastructure\Repositories\InMemory;
 
 use AqWiki\Shared\Domain\ValueObjects\{Identifier, Result};
 use AqWiki\Items\Domain\Repositories\WeaponRepository;

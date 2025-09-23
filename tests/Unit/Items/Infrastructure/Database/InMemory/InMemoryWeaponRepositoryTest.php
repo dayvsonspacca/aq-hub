@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Items\Domain\ValueObjects;
 
 use AqWiki\Items\Domain\ValueObjects\{Description, ItemTags, ItemInfo, Name};
-use AqWiki\Items\Infrastructure\Database\InMemory\InMemoryWeaponRepository;
+use AqWiki\Items\Infrastructure\Repositories\InMemory\InMemoryWeaponRepository;
 use AqWiki\Shared\Domain\ValueObjects\Identifier;
 use AqWiki\Items\Domain\Enums\WeaponType;
 use AqWiki\Items\Domain\Entities\Weapon;

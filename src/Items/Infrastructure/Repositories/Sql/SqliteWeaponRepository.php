@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Items\Infrastructure\Database\Sql;
+namespace AqWiki\Items\Infrastructure\Repositories\Sql;
 
 use AqWiki\Items\Domain\ValueObjects\{Description, Name, ItemTags, ItemInfo};
 use AqWiki\Shared\Domain\ValueObjects\{Identifier, Result};

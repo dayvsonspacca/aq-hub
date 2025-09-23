@@ -2,7 +2,7 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use AqWiki\Items\Infrastructure\Database\Sql\SqliteWeaponRepository;
+use AqWiki\Items\Infrastructure\Repositories\Sql\SqliteWeaponRepository;
 use AqWiki\Items\Infrastructure\Commands\AddItemCommand;
 use AqWiki\Shared\Infrastructure\Database\Connection;
 use Symfony\Component\Console\Application;
