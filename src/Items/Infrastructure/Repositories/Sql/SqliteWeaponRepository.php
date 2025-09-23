@@ -11,12 +11,11 @@ use AqWiki\Shared\Infrastructure\Database\Connection;
 use AqWiki\Items\Domain\Enums\WeaponType;
 use AqWiki\Items\Domain\Entities\Weapon;
 use AqWiki\Shared\Domain\Enums\TagType;
+use DomainException;
 
 class SqliteWeaponRepository implements WeaponRepository
 {
-    public function __construct(private readonly Connection $db)
-    {
-    }
+    public function __construct(private readonly Connection $db) {}
 
     /**
      * @return Result<Identifier|null>
@@ -27,7 +26,7 @@ class SqliteWeaponRepository implements WeaponRepository
             $this->db->getConnection()->beginTransaction();
 
             if ($this->findByName($itemInfo->getName())->isSuccess()) {
-                return Result::error('A Weapon with same name already exists: ' . $itemInfo->getName(), null);
+                throw new DomainException('A Weapon with same name already exists: ' . $itemInfo->getName());
             }
 
             $query = 'INSERT INTO weapons (name, description, type) VALUES (:name, :description, :type)';
@@ -71,7 +70,7 @@ class SqliteWeaponRepository implements WeaponRepository
         $tagsQuery = 'SELECT tag FROM weapon_tags WHERE weapon_id = :weapon_id';
         $tagsData  = $this->db->fetchAll($tagsQuery, ['weapon_id' => $weaponData['id']]);
 
-        $tags = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+        $tags = new ItemTags(array_map(fn($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
 
         $name        = Name::create($weaponData['name'])->unwrap();
         $description = Description::create($weaponData['description'])->unwrap();
