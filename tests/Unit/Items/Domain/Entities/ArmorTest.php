@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Items\Domain\Entities;
 
-use AqWiki\Items\Domain\ValueObjects\{ItemTags, ItemInfo, Name};
+use AqWiki\Items\Domain\ValueObjects\{Description, ItemTags, ItemInfo, Name};
 use AqWiki\Shared\Domain\ValueObjects\Identifier;
 use AqWiki\Items\Domain\Entities\Armor;
 use AqWiki\Shared\Domain\Enums\TagType;
@@ -21,7 +21,7 @@ final class ArmorTest extends TestCase
         $description = "Not even the dark magic of the Shadowscythe is enough to satisfy this soul's lust for power.";
         $tags = new ItemTags([TagType::AdventureCoins]);
 
-        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), $description, $tags)->unwrap();
+        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
 
         $armor = Armor::create(
             $id,
