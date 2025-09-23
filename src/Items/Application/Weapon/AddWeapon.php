@@ -11,7 +11,9 @@ use AqWiki\Items\Domain\Enums\WeaponType;
 
 class AddWeapon
 {
-    public function __construct(private readonly WeaponRepository $weaponRepository) {}
+    public function __construct(private readonly WeaponRepository $weaponRepository)
+    {
+    }
 
     public function execute(ItemInfo $itemInfo, WeaponType $type): Result
     {
