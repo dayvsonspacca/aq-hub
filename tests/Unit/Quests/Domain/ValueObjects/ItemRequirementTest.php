@@ -17,7 +17,7 @@ final class ItemRequirementTest extends TestCase
     #[Test]
     public function should_create_item_requirement_instance_and_stores_it_data()
     {
-        $weapon = $this->createMock(Weapon::class);
+        $weapon          = $this->createMock(Weapon::class);
         $itemRequirement = new ItemRequirement($weapon);
 
         $this->assertInstanceOf(ItemRequirement::class, $itemRequirement);
@@ -27,9 +27,9 @@ final class ItemRequirementTest extends TestCase
     #[Test]
     public function should_pass_when_player_meet_item_requirement()
     {
-        $weapon = $this->createMock(Weapon::class);
-        $id = Identifier::create(1)->getData();
-        $level = 100;
+        $weapon    = $this->createMock(Weapon::class);
+        $id        = Identifier::create(1)->getData();
+        $level     = 100;
         $inventory = new PlayerInventory([$weapon], 10);
 
         $player = Player::create(
@@ -46,9 +46,9 @@ final class ItemRequirementTest extends TestCase
     #[Test]
     public function should_fail_when_player_does_not_meet_item_requirement()
     {
-        $weapon = $this->createMock(Weapon::class);
-        $id = Identifier::create(1)->getData();
-        $level = 100;
+        $weapon    = $this->createMock(Weapon::class);
+        $id        = Identifier::create(1)->getData();
+        $level     = 100;
         $inventory = new PlayerInventory([$weapon], 10);
 
         $player = Player::create(

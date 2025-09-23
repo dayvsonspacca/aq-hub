@@ -16,7 +16,7 @@ class Weapon extends AqwItem
         ItemInfo $info,
         private readonly WeaponType $type
     ) {
-        $this->id = $id;
+        $this->id   = $id;
         $this->info = $info;
     }
 

@@ -13,7 +13,7 @@ final class QuestRequirementsTest extends TestCase
     #[Test]
     public function should_create_quest_requirements_instance_and_stores_it_data()
     {
-        $levelRequirement = $this->createMock(LevelRequirement::class);
+        $levelRequirement  = $this->createMock(LevelRequirement::class);
         $questRequirements = new QuestRequirements([$levelRequirement]);
 
         $this->assertInstanceOf(QuestRequirements::class, $questRequirements);
@@ -24,9 +24,9 @@ final class QuestRequirementsTest extends TestCase
     #[Test]
     public function should_can_add_a_requirement()
     {
-        $levelRequirement = $this->createMock(LevelRequirement::class);
+        $levelRequirement  = $this->createMock(LevelRequirement::class);
         $questRequirements = new QuestRequirements([$levelRequirement]);
-        $itemRequirement = $this->createMock(ItemRequirement::class);
+        $itemRequirement   = $this->createMock(ItemRequirement::class);
 
         $result = $questRequirements->add($itemRequirement);
 
@@ -40,8 +40,8 @@ final class QuestRequirementsTest extends TestCase
     #[Test]
     public function should_fail_when_add_two_level_requirement()
     {
-        $levelRequirement = $this->createMock(LevelRequirement::class);
-        $questRequirements = new QuestRequirements([$levelRequirement]);
+        $levelRequirement    = $this->createMock(LevelRequirement::class);
+        $questRequirements   = new QuestRequirements([$levelRequirement]);
         $newLevelRequirement = $this->createMock(LevelRequirement::class);
 
         $result = $questRequirements->add($newLevelRequirement);

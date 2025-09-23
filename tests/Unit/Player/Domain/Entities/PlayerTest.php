@@ -15,8 +15,8 @@ final class PlayerTest extends TestCase
     #[Test]
     public function should_create_player_instance_and_stores_it_data()
     {
-        $id = Identifier::create(1)->getData();
-        $level = 100;
+        $id        = Identifier::create(1)->getData();
+        $level     = 100;
         $inventory = $this->createMock(PlayerInventory::class);
 
         $player = Player::create(
@@ -34,8 +34,8 @@ final class PlayerTest extends TestCase
     #[Test]
     public function should_fail_because_player_level_is_negative()
     {
-        $id = Identifier::create(1)->getData();
-        $level = -10;
+        $id        = Identifier::create(1)->getData();
+        $level     = -10;
         $inventory = $this->createMock(PlayerInventory::class);
 
         $result = Player::create(

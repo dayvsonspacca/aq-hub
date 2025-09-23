@@ -8,7 +8,9 @@ use AqWiki\Shared\Domain\ValueObjects\Result;
 
 class Description
 {
-    private function __construct(public readonly string $value) {}
+    private function __construct(public readonly string $value)
+    {
+    }
 
     /**
      * @return Result<Description|null>

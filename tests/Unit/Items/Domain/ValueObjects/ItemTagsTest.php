@@ -34,7 +34,7 @@ final class ItemTagsTest extends TestCase
     #[Test]
     public function should_fail_when_add_same_tag()
     {
-        $tags = new ItemTags([TagType::AdventureCoins]);
+        $tags   = new ItemTags([TagType::AdventureCoins]);
         $result = $tags->add(TagType::Legend);
 
         $this->assertTrue($result->isSuccess());

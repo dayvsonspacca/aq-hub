@@ -30,7 +30,8 @@ class Identifier
      */
     private function __construct(
         private readonly int $value
-    ) {}
+    ) {
+    }
 
     /**
      * Creates a new Identifier instance while validating business rules.

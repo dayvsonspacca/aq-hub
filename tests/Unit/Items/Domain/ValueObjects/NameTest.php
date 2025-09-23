@@ -13,7 +13,7 @@ final class NameTest extends TestCase
     #[Test]
     public function should_create_name_and_store_it_data()
     {
-        $name = 'Necrotic Sword of Doom';
+        $name   = 'Necrotic Sword of Doom';
         $result = Name::create($name);
 
         $this->assertTrue($result->isSuccess());
@@ -24,7 +24,7 @@ final class NameTest extends TestCase
     #[Test]
     public function should_fail_when_name_empty()
     {
-        $name = '';
+        $name   = '';
         $result = Name::create($name);
 
         $this->assertTrue($result->isError());

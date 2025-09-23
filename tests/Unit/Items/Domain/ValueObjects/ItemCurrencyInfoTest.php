@@ -16,7 +16,7 @@ final class ItemCurrencyInfoTest extends TestCase
     public function should_create_item_game_currency_info_instance_and_stores_it_data()
     {
         $sellback = GameCurrency::create(100, CurrencyType::AdventureCoins)->unwrap();
-        $price = GameCurrency::create(0, CurrencyType::Gold)->unwrap();
+        $price    = GameCurrency::create(0, CurrencyType::Gold)->unwrap();
 
         $currencyInfo = new ItemCurrencyInfo($sellback, $price);
 

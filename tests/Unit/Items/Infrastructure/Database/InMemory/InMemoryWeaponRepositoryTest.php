@@ -19,10 +19,10 @@ final class InMemoryWeaponRepositoryTest extends TestCase
     public function should_persist_an_weapon()
     {
         $repository = new InMemoryWeaponRepository();
-        
-        $name = 'Necrotic Sword of Doom';
+
+        $name        = 'Necrotic Sword of Doom';
         $description = 'The darkness compels… DOOOOOOOOOOOM!!!';
-        $tags = new ItemTags([TagType::AdventureCoins]);
+        $tags        = new ItemTags([TagType::AdventureCoins]);
 
         $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
 
@@ -39,10 +39,10 @@ final class InMemoryWeaponRepositoryTest extends TestCase
     public function should_fail_when_persist_an_weapon_with_same_name()
     {
         $repository = new InMemoryWeaponRepository();
-        
-        $name = 'Necrotic Sword of Doom';
+
+        $name        = 'Necrotic Sword of Doom';
         $description = 'The darkness compels… DOOOOOOOOOOOM!!!';
-        $tags = new ItemTags([TagType::AdventureCoins]);
+        $tags        = new ItemTags([TagType::AdventureCoins]);
 
         $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
 
@@ -60,12 +60,12 @@ final class InMemoryWeaponRepositoryTest extends TestCase
     public function should_find_weapon_by_name()
     {
         $repository = new InMemoryWeaponRepository();
-        
-        $name = 'Necrotic Sword of Doom';
+
+        $name        = 'Necrotic Sword of Doom';
         $description = 'The darkness compels… DOOOOOOOOOOOM!!!';
-        $tags = new ItemTags([TagType::AdventureCoins]);
-        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
-        $weaponType = WeaponType::Sword;
+        $tags        = new ItemTags([TagType::AdventureCoins]);
+        $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
+        $weaponType  = WeaponType::Sword;
         $repository->persist($itemInfo, $weaponType);
 
         $result = $repository->findByName($name);
@@ -75,11 +75,11 @@ final class InMemoryWeaponRepositoryTest extends TestCase
         $this->assertSame($name, $result->unwrap()->getName());
     }
 
-     #[Test]
+    #[Test]
     public function should_return_null_when_weapon_not_found_by_name()
     {
         $repository = new InMemoryWeaponRepository();
-        
+
         $name = 'Necrotic Sword of Doom';
 
         $result = $repository->findByName($name);

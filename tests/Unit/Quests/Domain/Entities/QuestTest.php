@@ -15,8 +15,8 @@ final class QuestTest extends TestCase
     #[Test]
     public function should_create_quest_instance_and_stores_it_data()
     {
-        $id = Identifier::create(1)->getData();
-        $name = 'Awesome Quest';
+        $id           = Identifier::create(1)->getData();
+        $name         = 'Awesome Quest';
         $requirements = $this->createMock(QuestRequirements::class);
 
         $quest = Quest::create($id, $name, $requirements)->unwrap();
@@ -30,8 +30,8 @@ final class QuestTest extends TestCase
     #[Test]
     public function should_fail_because_quest_name_is_empty()
     {
-        $id = Identifier::create(1)->getData();
-        $name = '';
+        $id           = Identifier::create(1)->getData();
+        $name         = '';
         $requirements = $this->createMock(QuestRequirements::class);
 
         $result = Quest::create($id, $name, $requirements);

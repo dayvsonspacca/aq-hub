@@ -17,7 +17,7 @@ final class QuestRequirementTest extends TestCase
     #[Test]
     public function should_create_quest_requirement_instance_and_stores_it_data()
     {
-        $quest = $this->createMock(Quest::class);
+        $quest            = $this->createMock(Quest::class);
         $questRequirement = new QuestRequirement($quest);
 
         $this->assertInstanceOf(QuestRequirement::class, $questRequirement);
@@ -35,8 +35,8 @@ final class QuestRequirementTest extends TestCase
 
         $questRequirement = new QuestRequirement($quest);
 
-        $id = Identifier::create(1)->getData();
-        $level = 100;
+        $id        = Identifier::create(1)->getData();
+        $level     = 100;
         $inventory = $this->createMock(PlayerInventory::class);
 
         $player = Player::create(
@@ -59,8 +59,8 @@ final class QuestRequirementTest extends TestCase
 
         $questRequirement = new QuestRequirement($quest);
 
-        $id = Identifier::create(1)->getData();
-        $level = 6;
+        $id        = Identifier::create(1)->getData();
+        $level     = 6;
         $inventory = $this->createMock(PlayerInventory::class);
 
         $player = Player::create(

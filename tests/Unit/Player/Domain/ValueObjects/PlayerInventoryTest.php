@@ -14,7 +14,7 @@ final class PlayerInventoryTest extends TestCase
     #[Test]
     public function should_create_player_inventory_instance_and_stores_it_data()
     {
-        $items = [];
+        $items     = [];
         $maxSpaces = 50;
 
         $playerInventory = new PlayerInventory($items, $maxSpaces);
@@ -29,9 +29,9 @@ final class PlayerInventoryTest extends TestCase
     #[Test]
     public function should_can_add_an_item_to_player_inventory()
     {
-        $items = [];
+        $items     = [];
         $maxSpaces = 50;
-        $weapon = $this->createMock(Weapon::class);
+        $weapon    = $this->createMock(Weapon::class);
 
         $playerInventory = new PlayerInventory($items, $maxSpaces);
 
@@ -48,8 +48,8 @@ final class PlayerInventoryTest extends TestCase
     public function should_can_delete_an_item_from_player_inventory()
     {
         $maxSpaces = 50;
-        $weapon = $this->createMock(Weapon::class);
-        $items = [$weapon];
+        $weapon    = $this->createMock(Weapon::class);
+        $items     = [$weapon];
 
         $playerInventory = new PlayerInventory($items, $maxSpaces);
 
@@ -66,8 +66,8 @@ final class PlayerInventoryTest extends TestCase
     public function should_fail_when_add_sam_item_in_player_inventory()
     {
         $maxSpaces = 50;
-        $weapon = $this->createMock(Weapon::class);
-        $items = [$weapon];
+        $weapon    = $this->createMock(Weapon::class);
+        $items     = [$weapon];
 
         $playerInventory = new PlayerInventory($items, $maxSpaces);
 
@@ -85,8 +85,8 @@ final class PlayerInventoryTest extends TestCase
     public function should_fail_when_there_is_no_space_in_player_inventory()
     {
         $maxSpaces = 1;
-        $weapon = $this->createMock(Weapon::class);
-        $items = [$weapon];
+        $weapon    = $this->createMock(Weapon::class);
+        $items     = [$weapon];
 
         $playerInventory = new PlayerInventory($items, $maxSpaces);
 

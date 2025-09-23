@@ -15,7 +15,7 @@ final class GameCurrencyTest extends TestCase
     public function should_create_game_currency_instance_and_stores_it_data()
     {
         $value = 100;
-        $type = CurrencyType::AdventureCoins;
+        $type  = CurrencyType::AdventureCoins;
 
         $gameCurrency = GameCurrency::create($value, $type)->unwrap();
 
@@ -28,7 +28,7 @@ final class GameCurrencyTest extends TestCase
     public function should_fail_because_price_value_is_negative()
     {
         $value = -100;
-        $type = CurrencyType::AdventureCoins;
+        $type  = CurrencyType::AdventureCoins;
 
         $result = GameCurrency::create($value, $type);
 

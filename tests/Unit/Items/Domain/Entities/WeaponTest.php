@@ -17,11 +17,11 @@ final class WeaponTest extends TestCase
     #[Test]
     public function should_create_weapon_instance_and_stores_it_data()
     {
-        $id = Identifier::create(1)->getData();
-        $name = 'Necrotic Sword of Doom';
+        $id          = Identifier::create(1)->getData();
+        $name        = 'Necrotic Sword of Doom';
         $description = 'The darkness compels… DOOOOOOOOOOOM!!!';
-        $tags = new ItemTags([TagType::AdventureCoins]);
-        $type = WeaponType::Sword;
+        $tags        = new ItemTags([TagType::AdventureCoins]);
+        $type        = WeaponType::Sword;
 
         $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
 

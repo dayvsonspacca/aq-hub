@@ -16,7 +16,7 @@ final class LevelRequirementTest extends TestCase
     #[Test]
     public function should_create_level_requirement_instance_and_stores_it_data()
     {
-        $level = 5;
+        $level            = 5;
         $levelRequirement = new LevelRequirement($level);
 
         $this->assertInstanceOf(LevelRequirement::class, $levelRequirement);
@@ -26,8 +26,8 @@ final class LevelRequirementTest extends TestCase
     #[Test]
     public function should_pass_when_player_meet_level_requirement()
     {
-        $id = Identifier::create(1)->getData();
-        $level = 100;
+        $id        = Identifier::create(1)->getData();
+        $level     = 100;
         $inventory = $this->createMock(PlayerInventory::class);
 
         $player = Player::create(
@@ -36,7 +36,7 @@ final class LevelRequirementTest extends TestCase
             $inventory
         )->unwrap();
 
-        $level = 5;
+        $level            = 5;
         $levelRequirement = new LevelRequirement($level);
 
         $this->assertTrue($levelRequirement->pass($player));
@@ -44,8 +44,8 @@ final class LevelRequirementTest extends TestCase
 
     public function should_fail_when_player_does_not_meet_level_requirement()
     {
-        $id = Identifier::create(1)->getData();
-        $level = 10;
+        $id        = Identifier::create(1)->getData();
+        $level     = 10;
         $inventory = $this->createMock(PlayerInventory::class);
 
         $player = Player::create(
@@ -54,7 +54,7 @@ final class LevelRequirementTest extends TestCase
             $inventory
         )->unwrap();
 
-        $level = 50;
+        $level            = 50;
         $levelRequirement = new LevelRequirement($level);
 
         $this->assertFalse($levelRequirement->pass($player));

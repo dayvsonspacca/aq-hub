@@ -16,10 +16,10 @@ final class ArmorTest extends TestCase
     #[Test]
     public function should_create_armor_instance_and_stores_it_data()
     {
-        $id = Identifier::create(1)->getData();
-        $name = 'ArchFiend DoomLord';
+        $id          = Identifier::create(1)->getData();
+        $name        = 'ArchFiend DoomLord';
         $description = "Not even the dark magic of the Shadowscythe is enough to satisfy this soul's lust for power.";
-        $tags = new ItemTags([TagType::AdventureCoins]);
+        $tags        = new ItemTags([TagType::AdventureCoins]);
 
         $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
 

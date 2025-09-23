@@ -14,9 +14,9 @@ final class ItemInfoTest extends TestCase
     #[Test]
     public function should_create_item_info_instance_and_stores_it_data()
     {
-        $name = 'Necrotic Sword of Doom';
+        $name        = 'Necrotic Sword of Doom';
         $description = 'The darkness compels… DOOOOOOOOOOOM!!!';
-        $tags = new ItemTags([TagType::AdventureCoins]);
+        $tags        = new ItemTags([TagType::AdventureCoins]);
 
         $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
 

@@ -14,7 +14,7 @@ final class ResultTest extends TestCase
     #[Test]
     public function test_result_success(): void
     {
-        $data = ['id' => 1, 'name' => 'Test'];
+        $data   = ['id' => 1, 'name' => 'Test'];
         $result = Result::success('Operation successful', $data);
 
         $this->assertTrue($result->isSuccess());

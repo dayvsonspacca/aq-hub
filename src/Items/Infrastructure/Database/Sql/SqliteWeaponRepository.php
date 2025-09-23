@@ -14,7 +14,9 @@ use AqWiki\Shared\Domain\Enums\TagType;
 
 class SqliteWeaponRepository implements WeaponRepository
 {
-    public function __construct(private readonly Connection $db) {}
+    public function __construct(private readonly Connection $db)
+    {
+    }
 
     /**
      * @return Result<Identifier|null>
@@ -28,20 +30,20 @@ class SqliteWeaponRepository implements WeaponRepository
                 return Result::error('A Weapon with same name already exists: ' . $itemInfo->getName(), null);
             }
 
-            $query = "INSERT INTO weapons (name, description, type) VALUES (:name, :description, :type)";
+            $query = 'INSERT INTO weapons (name, description, type) VALUES (:name, :description, :type)';
             $this->db->execute($query, [
-                'name'        => $itemInfo->getName(),
+                'name' => $itemInfo->getName(),
                 'description' => $itemInfo->getDescription(),
-                'type'        => $type->toString(),
+                'type' => $type->toString(),
             ]);
 
             $weaponId = $this->db->getConnection()->lastInsertId();
 
             foreach ($itemInfo->getTags()->toArray() as $tag) {
-                $tagQuery = "INSERT INTO weapon_tags (weapon_id, tag) VALUES (:weapon_id, :tag)";
+                $tagQuery = 'INSERT INTO weapon_tags (weapon_id, tag) VALUES (:weapon_id, :tag)';
                 $this->db->execute($tagQuery, [
                     'weapon_id' => $weaponId,
-                    'tag'       => $tag,
+                    'tag' => $tag,
                 ]);
             }
 
@@ -59,17 +61,17 @@ class SqliteWeaponRepository implements WeaponRepository
      */
     public function findByName(string $name): Result
     {
-        $query = "SELECT * FROM weapons WHERE name = :name LIMIT 1";
+        $query      = 'SELECT * FROM weapons WHERE name = :name LIMIT 1';
         $weaponData = $this->db->fetchOne($query, ['name' => $name]);
 
         if (!$weaponData) {
             return Result::error(null, null);
         }
 
-        $tagsQuery = "SELECT tag FROM weapon_tags WHERE weapon_id = :weapon_id";
-        $tagsData = $this->db->fetchAll($tagsQuery, ['weapon_id' => $weaponData['id']]);
+        $tagsQuery = 'SELECT tag FROM weapon_tags WHERE weapon_id = :weapon_id';
+        $tagsData  = $this->db->fetchAll($tagsQuery, ['weapon_id' => $weaponData['id']]);
 
-        $tags = new ItemTags(array_map(fn($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+        $tags = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
 
         $name        = Name::create($weaponData['name'])->unwrap();
         $description = Description::create($weaponData['description'])->unwrap();

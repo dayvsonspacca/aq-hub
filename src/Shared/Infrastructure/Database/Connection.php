@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AqWiki\Shared\Infrastructure\Database;
 
 use AqWiki\Shared\Domain\ValueObjects\Result;
@@ -29,7 +31,7 @@ class Connection
                     if (empty($path)) {
                         return Result::error('To use sqlite you must specify the path.', null);
                     }
-                    $pdo = new PDO("sqlite:" . $path);
+                    $pdo = new PDO('sqlite:' . $path);
                     break;
 
                 default:

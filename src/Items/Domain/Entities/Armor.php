@@ -14,7 +14,7 @@ class Armor extends AqwItem
         Identifier $id,
         ItemInfo $info
     ) {
-        $this->id = $id;
+        $this->id   = $id;
         $this->info = $info;
     }
 

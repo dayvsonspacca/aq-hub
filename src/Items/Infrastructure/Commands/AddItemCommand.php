@@ -112,7 +112,7 @@ class AddItemCommand extends Command
         /** @var Description $itemDescription */
         $itemDescription = $helper->ask($input, $output, $question);
 
-        $tagChoices = array_map(fn(TagType $tag) => $tag->toString(), TagType::cases());
+        $tagChoices = array_map(fn (TagType $tag) => $tag->toString(), TagType::cases());
 
         $question = new ChoiceQuestion(
             'Please select one or more tags (comma separated):',

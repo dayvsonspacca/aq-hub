@@ -42,12 +42,12 @@ class InMemoryWeaponRepository implements WeaponRepository
      */
     public function findByName(string $name): Result
     {
-        $weapons = array_filter($this->memory, fn($weapon) => $weapon->getName() === $name);
+        $weapons = array_filter($this->memory, fn ($weapon) => $weapon->getName() === $name);
 
         if (empty($weapons)) {
             return Result::error(null, null);
         }
-        
+
         return Result::success(null, end($weapons));
     }
 }
