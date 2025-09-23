@@ -4,38 +4,34 @@ declare(strict_types=1);
 
 namespace AqWiki\Items\Domain\Entities;
 
+use AqWiki\Shared\Domain\ValueObjects\{Result, Identifier};
 use AqWiki\Items\Domain\ValueObjects\ItemInfo;
 use AqWiki\Items\Domain\Abstractions\AqwItem;
-use AqWiki\Shared\Domain\ValueObjects\Result;
 use AqWiki\Items\Domain\Enums\WeaponType;
 
 class Weapon extends AqwItem
 {
     private function __construct(
-        string $guid,
+        Identifier $id,
         ItemInfo $info,
         private readonly WeaponType $type
     ) {
-        $this->guid = $guid;
+        $this->id = $id;
         $this->info = $info;
+    }
+
+    /** @return Result<Weapon> */
+    public static function create(
+        Identifier $id,
+        ItemInfo $info,
+        WeaponType $type
+    ) {
+
+        return Result::success(null, new self($id, $info, $type));
     }
 
     public function getType(): WeaponType
     {
         return $this->type;
-    }
-
-    /** @return Result<Weapon> */
-    public static function create(
-        string $guid,
-        ItemInfo $info,
-        WeaponType $type
-    ) {
-        $guid = trim($guid);
-        if (empty($guid)) {
-            return Result::error('The GUID of an weapon cant be empty.', null);
-        }
-
-        return Result::success(null, new self($guid, $info, $type));
     }
 }

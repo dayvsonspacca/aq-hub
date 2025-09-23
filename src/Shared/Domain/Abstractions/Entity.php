@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace AqWiki\Shared\Domain\Abstractions;
 
+use AqWiki\Shared\Domain\ValueObjects\Identifier;
+
 abstract class Entity
 {
-    protected string $guid;
+    protected Identifier $id;
 
-    public function getGuid(): string
+    public function getId(): int
     {
-        return $this->guid;
+        return $this->id->getValue();
     }
 }
