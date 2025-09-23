@@ -10,20 +10,14 @@ class ItemInfo
 {
     private function __construct(
         private readonly Name $name,
-        private readonly string $description,
+        private readonly Description $description,
         private ItemTags $tags
     ) {
     }
 
     /** @return Result<ItemInfo> **/
-    public static function create(Name $name, string $description, ItemTags $tags)
+    public static function create(Name $name, Description $description, ItemTags $tags)
     {
-        $description = trim($description);
-
-        if (empty($description)) {
-            return Result::error('The description of an item cant be empty.', null);
-        }
-
         return Result::success(null, new self($name, $description, $tags));
     }
 
@@ -34,7 +28,7 @@ class ItemInfo
 
     public function getDescription(): string
     {
-        return $this->description;
+        return $this->description->value;
     }
 
     public function getTags(): ItemTags
