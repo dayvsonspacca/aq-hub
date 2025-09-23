@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Quests\Domain\Entities;
 
 use AqWiki\Quests\Domain\ValueObjects\QuestRequirements;
+use AqWiki\Shared\Domain\ValueObjects\Identifier;
 use AqWiki\Quests\Domain\Entities\Quest;
 use PHPUnit\Framework\Attributes\Test;
 use AqWiki\Tests\Unit\TestCase;
@@ -14,40 +15,26 @@ final class QuestTest extends TestCase
     #[Test]
     public function should_create_quest_instance_and_stores_it_data()
     {
-        $guid = '1';
+        $id = Identifier::create(1)->getData();
         $name = 'Awesome Quest';
         $requirements = $this->createMock(QuestRequirements::class);
 
-        $quest = Quest::create($guid, $name, $requirements)->unwrap();
+        $quest = Quest::create($id, $name, $requirements)->unwrap();
 
         $this->assertInstanceOf(Quest::class, $quest);
-        $this->assertSame($guid, $quest->getGuid());
+        $this->assertSame($id->getValue(), $quest->getId());
         $this->assertSame($name, $quest->getName());
         $this->assertSame($requirements, $quest->getRequirements());
     }
 
     #[Test]
-    public function should_fail_because_quest_guid_is_empty()
-    {
-        $guid = '';
-        $name = 'Awesome Quest';
-        $requirements = $this->createMock(QuestRequirements::class);
-
-        $result = Quest::create($guid, $name, $requirements);
-
-        $this->assertNotInstanceOf(Quest::class, $result->getData());
-        $this->assertNull($result->getData());
-        $this->assertSame($result->getMessage(), 'The quest GUID cant be empty.');
-    }
-
-    #[Test]
     public function should_fail_because_quest_name_is_empty()
     {
-        $guid = '1';
+        $id = Identifier::create(1)->getData();
         $name = '';
         $requirements = $this->createMock(QuestRequirements::class);
 
-        $result = Quest::create($guid, $name, $requirements);
+        $result = Quest::create($id, $name, $requirements);
 
         $this->assertNotInstanceOf(Quest::class, $result->getData());
         $this->assertNull($result->getData());

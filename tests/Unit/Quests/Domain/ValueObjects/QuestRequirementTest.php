@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Quests\Domain\ValueObjects;
 
-use AqWiki\Player\Domain\Entities\Player;
+use AqWiki\Quests\Domain\ValueObjects\{LevelRequirement, QuestRequirements, QuestRequirement};
 use AqWiki\Player\Domain\ValueObjects\PlayerInventory;
-use AqWiki\Quests\Domain\ValueObjects\QuestRequirement;
+use AqWiki\Shared\Domain\ValueObjects\Identifier;
+use AqWiki\Player\Domain\Entities\Player;
 use AqWiki\Quests\Domain\Entities\Quest;
-use AqWiki\Quests\Domain\ValueObjects\LevelRequirement;
-use AqWiki\Quests\Domain\ValueObjects\QuestRequirements;
 use PHPUnit\Framework\Attributes\Test;
 use AqWiki\Tests\Unit\TestCase;
 
@@ -29,19 +28,19 @@ final class QuestRequirementTest extends TestCase
     public function should_pass_when_player_meet_quest_requirement()
     {
         $quest = Quest::create(
-            '1',
+            Identifier::create(1)->getData(),
             'Awesome Quest',
             new QuestRequirements([new LevelRequirement(5)])
         )->unwrap();
 
         $questRequirement = new QuestRequirement($quest);
 
-        $guid = 'Hilise';
+        $id = Identifier::create(1)->getData();
         $level = 100;
         $inventory = $this->createMock(PlayerInventory::class);
 
         $player = Player::create(
-            $guid,
+            $id,
             $level,
             $inventory
         )->unwrap();
@@ -53,19 +52,19 @@ final class QuestRequirementTest extends TestCase
     public function should_fail_when_player_does_not_meet_quest_requirement()
     {
         $quest = Quest::create(
-            '1',
+            Identifier::create(1)->getData(),
             'Awesome Quest',
             new QuestRequirements([new LevelRequirement(50)])
         )->unwrap();
 
         $questRequirement = new QuestRequirement($quest);
 
-        $guid = 'Hilise';
+        $id = Identifier::create(1)->getData();
         $level = 6;
         $inventory = $this->createMock(PlayerInventory::class);
 
         $player = Player::create(
-            $guid,
+            $id,
             $level,
             $inventory
         )->unwrap();

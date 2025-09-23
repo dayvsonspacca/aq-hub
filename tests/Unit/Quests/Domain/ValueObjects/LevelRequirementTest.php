@@ -6,6 +6,7 @@ namespace Tests\Unit\Quests\Domain\ValueObjects;
 
 use AqWiki\Quests\Domain\ValueObjects\LevelRequirement;
 use AqWiki\Player\Domain\ValueObjects\PlayerInventory;
+use AqWiki\Shared\Domain\ValueObjects\Identifier;
 use AqWiki\Player\Domain\Entities\Player;
 use PHPUnit\Framework\Attributes\Test;
 use AqWiki\Tests\Unit\TestCase;
@@ -25,12 +26,12 @@ final class LevelRequirementTest extends TestCase
     #[Test]
     public function should_pass_when_player_meet_level_requirement()
     {
-        $guid = 'Hilise';
+        $id = Identifier::create(1)->getData();
         $level = 100;
         $inventory = $this->createMock(PlayerInventory::class);
 
         $player = Player::create(
-            $guid,
+            $id,
             $level,
             $inventory
         )->unwrap();
@@ -43,12 +44,12 @@ final class LevelRequirementTest extends TestCase
 
     public function should_fail_when_player_does_not_meet_level_requirement()
     {
-        $guid = 'Hilise';
+        $id = Identifier::create(1)->getData();
         $level = 10;
         $inventory = $this->createMock(PlayerInventory::class);
 
         $player = Player::create(
-            $guid,
+            $id,
             $level,
             $inventory
         )->unwrap();
