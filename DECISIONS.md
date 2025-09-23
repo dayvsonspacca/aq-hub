@@ -21,11 +21,11 @@ This question came up when I noticed that a `UseCase` can result in many excepti
 or another when using some service. This introduces a break in the `Input -> Process -> Output` flow of a `UseCase`,
 and creates the need to add many `try-catch` blocks within the `UseCase`.
 
-On the other hand, using Result methods protects the `UseCase` logic, but now I need to check `isSuccess` on all Result objects.
+On the other hand, using `Result` methods protects the `UseCase` logic, but now I need to check `isSuccess` on all Result objects.
 
-Looking at these two options, I decided to use the Result methods. This choice was made entirely to avoid breaking the `UseCase` flow.
+Looking at these two options, I decided to use the `Result` methods. This choice was made entirely to avoid breaking the `UseCase` flow.
 
-> Conclusion: Let's use Result methods. That way, once again, we ensure immutability, cohesion, and a consistent process flow.
+> Conclusion: Let's use `Result` methods. That way, once again, we ensure immutability, cohesion, and a consistent process flow.
 
 # #3 How Will Unit Tests Be Done? 2025-05-08
 
@@ -35,3 +35,19 @@ They will follow these simple rules:
 1. **Test if you can create an instance of a class.**  
 2. **Test if the class can store and retrieve data correctly.**  
 3. **Force errors and test how they are handled.**
+
+# #4 Should Repository Methods Always Return a Result? 2025-09-23  
+
+This question came up while building the Repository classes, which are responsible for performing operations in the database.  
+Suppose I want to persist a new record, and this function should return an identifier.  
+
+The doubt is: should this operation always return a `Result`, like `Result<Identifier>`?  
+After all, something can go wrong during persistence: the database may be down, or a record with a unique key may already exist.  
+
+Wrapping the return type in a `Result` gives a consistent behavior:  
+- `Result<Identifier>` in case of success.  
+- `Result<null>` in case of failure.
+
+In my mind, this approach makes sense, as it maintains immutability, cohesion, and a uniform way of handling errors across all layers.  
+
+> Conclusion: Repository methods should always return a `Result`. That way, we guarantee consistency and reliability when dealing with database operations.  
