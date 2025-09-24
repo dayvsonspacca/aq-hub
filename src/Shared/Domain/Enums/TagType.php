@@ -18,12 +18,12 @@ enum TagType
     public static function fromString(string $tag): Result
     {
         return match (strtolower($tag)) {
-            'legend' => Result::success(null, self::Legend),
-            'ac' => Result::success(null, self::AdventureCoins),
-            'rare' => Result::success(null, self::Rare),
-            'pseudo' => Result::success(null, self::PseudoRare),
-            'seasonal' => Result::success(null, self::Seasonal),
-            'special' => Result::success(null, self::SpecialOffer),
+            'Legend' => Result::success(null, self::Legend),
+            'Adventure Coins' => Result::success(null, self::AdventureCoins),
+            'Rare' => Result::success(null, self::Rare),
+            'Pseudo Rare' => Result::success(null, self::PseudoRare),
+            'Seasonal' => Result::success(null, self::Seasonal),
+            'Special Offer' => Result::success(null, self::SpecialOffer),
             default => Result::error('Tag not defined: ' . $tag, null)
         };
     }

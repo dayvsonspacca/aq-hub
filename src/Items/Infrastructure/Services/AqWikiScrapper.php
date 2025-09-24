@@ -36,6 +36,16 @@ class AqWikiScrapper
                     preg_match_all('/\/image-tags\/(ac|rare|pseudo|legend|special|seasonal)large\.png/i', $html, $tagMatches);
                     if (!empty($tagMatches[1])) {
                         foreach ($tagMatches[1] as $tagString) {
+                            $tagString = match ($tagString) {
+                                'legend' => 'Legend',
+                                'ac' => 'Adventure Coins',
+                                'rare' => 'Rare',
+                                'pseudo' => 'Pseudo Rare',
+                                'seasonal' => 'Seasonal',
+                                'special' => 'Special Offer',
+                                default => ''
+                            };
+
                             $result = TagType::fromString($tagString);
                             if ($result->isSuccess()) {
                                 $itemTags->add($result->getData());
