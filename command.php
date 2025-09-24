@@ -2,37 +2,18 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use AqHub\Items\Application\Weapon\AddWeapon;
-use AqHub\Items\Infrastructure\Repositories\Sql\SqliteWeaponRepository;
-use AqHub\Items\Infrastructure\Commands\AddItemCommand;
 use AqHub\Items\Infrastructure\Commands\MineCharpageItemsCommand;
-use AqHub\Player\Infrastructure\Repositories\Sql\SqlitePlayerRepository;
-use AqHub\Player\Application\AddPlayer;
-use AqHub\Shared\Infrastructure\Database\Connection;
+use AqHub\Items\Infrastructure\Commands\AddItemCommand;
 use Symfony\Component\Console\Application;
+use DI\ContainerBuilder;
 
-$db = Connection::connect(
-    path: __DIR__ . '/database/db.sqlite'
-);
-
-if ($db->isError()) {
-    echo $db->getMessage() . PHP_EOL;
-    exit(0);
-}
-
-$db = $db->getData();
-
-$addWeapon = new AddWeapon(
-    new SqliteWeaponRepository($db)
-);
-
-$addPlayer = new AddPlayer(
-    new SqlitePlayerRepository($db)
-);
+$builder = new ContainerBuilder();
+$builder->addDefinitions(__DIR__ . '/config.php');
+$container = $builder->build();
 
 $application = new Application();
 
-$application->add(new AddItemCommand($addWeapon));
-$application->add(new MineCharpageItemsCommand($addWeapon, $addPlayer));
+$application->add($container->get(AddItemCommand::class));
+$application->add($container->get(MineCharpageItemsCommand::class));
 
 $application->run();
