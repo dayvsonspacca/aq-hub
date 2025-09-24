@@ -6,8 +6,8 @@ namespace Tests\Unit\Items\Domain\ValueObjects;
 
 use AqHub\Player\Infrastructure\Repositories\InMemory\InMemoryPlayerRepository;
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
+use AqHub\Player\Domain\ValueObjects\{Name ,Level};
 use AqHub\Player\Domain\Entities\Player;
-use AqHub\Player\Domain\ValueObjects\Name;
 use PHPUnit\Framework\Attributes\Test;
 use AqHub\Tests\Unit\TestCase;
 
@@ -20,12 +20,14 @@ final class InMemoryPlayerRepositoryTest extends TestCase
 
         $identifier = IntIdentifier::create(72894515)->unwrap();
         $name       = Name::create('Hilise')->unwrap();
+        $level = Level::create(1)->unwrap();
 
-        $result = $repository->persist($identifier, $name);
+        $result = $repository->persist($identifier, $name, $level);
 
         $this->assertTrue($result->isSuccess());
-        $this->assertInstanceOf(IntIdentifier::class, $result->unwrap());
-        $this->assertSame(72894515, $result->unwrap()->getValue());
+        $this->assertInstanceOf(Player::class, $result->getData());
+        $this->assertSame(72894515, $result->unwrap()->getId());
+        $this->assertSame('Hilise', $result->unwrap()->getName());
     }
 
     #[Test]
@@ -35,9 +37,10 @@ final class InMemoryPlayerRepositoryTest extends TestCase
 
         $identifier = IntIdentifier::create(72894515)->unwrap();
         $name       = Name::create('Hilise')->unwrap();
+        $level = Level::create(1)->unwrap();
 
-        $repository->persist($identifier, $name);
-        $result = $repository->persist($identifier, $name);
+        $repository->persist($identifier, $name, $level);
+        $result = $repository->persist($identifier, $name, $level);
 
         $this->assertTrue($result->isError());
         $this->assertSame(null, $result->getData());
@@ -51,8 +54,9 @@ final class InMemoryPlayerRepositoryTest extends TestCase
 
         $identifier = IntIdentifier::create(72894515)->unwrap();
         $name       = Name::create('Hilise')->unwrap();
+        $level = Level::create(1)->unwrap();
 
-        $repository->persist($identifier, $name);
+        $repository->persist($identifier, $name, $level);
 
         $result = $repository->findByIdentifier($identifier);
 

@@ -27,7 +27,7 @@ class InMemoryPlayerRepository implements PlayerRepository
 
         $this->memory[$identifier->getValue()] = $player->getData();
 
-        return Result::success(null, $player);
+        return Result::success(null, $player->getData());
     }
 
     /**
