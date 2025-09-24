@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Domain\ValueObjects;
 
+use AqHub\Shared\Domain\Abstractions\Identifier;
+
 /**
  * Represents an identifier based on a string value.
  *
@@ -20,7 +22,7 @@ namespace AqHub\Shared\Domain\ValueObjects;
  * }
  * ```
  */
-class StringIdentifier
+class StringIdentifier extends Identifier
 {
     /**
      * Private constructor to enforce controlled instantiation

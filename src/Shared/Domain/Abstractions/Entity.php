@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Domain\Abstractions;
 
-use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
-
 abstract class Entity
 {
-    protected IntIdentifier $id;
+    protected Identifier $id;
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id->getValue();
     }
