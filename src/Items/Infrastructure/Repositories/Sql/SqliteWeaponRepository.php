@@ -21,13 +21,13 @@ class SqliteWeaponRepository implements WeaponRepository
     }
 
     /**
-     * @return Result<StringIdentifier|null>
+     * @return Result<Weapon|null>
      */
     public function persist(ItemInfo $itemInfo, WeaponType $type): Result
     {
         try {
             $this->db->getConnection()->beginTransaction();
-            
+
             $hash = ItemIdentifierGenerator::generate($itemInfo, Weapon::class);
             if ($hash->isError()) {
                 throw new DomainException('Failed to generate StringIdentifier: '. $hash->getMessage());
@@ -60,7 +60,9 @@ class SqliteWeaponRepository implements WeaponRepository
 
             $this->db->getConnection()->commit();
 
-            return Result::success(null, $hash);
+            $weapon = Weapon::create($hash, $itemInfo, $type)->unwrap();
+
+            return Result::success(null, $weapon);
         } catch (\Throwable $e) {
             $this->db->getConnection()->rollBack();
             return Result::error('Failed to persist weapon: ' . $e->getMessage() . ' at ' . $e->getLine(), null);

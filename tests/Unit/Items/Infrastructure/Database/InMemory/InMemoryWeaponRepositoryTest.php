@@ -31,8 +31,8 @@ final class InMemoryWeaponRepositoryTest extends TestCase
         $result = $repository->persist($itemInfo, $weaponType);
 
         $this->assertTrue($result->isSuccess());
-        $this->assertInstanceOf(StringIdentifier::class, $result->unwrap());
-        $this->assertSame('87f3da3ead50247f5b890b3291b45c1a426537117e8a60703a70c5ae4f0481ad', $result->unwrap()->getValue());
+        $this->assertInstanceOf(Weapon::class, $result->unwrap());
+        $this->assertSame('87f3da3ead50247f5b890b3291b45c1a426537117e8a60703a70c5ae4f0481ad', $result->unwrap()->getId());
     }
 
     #[Test]
@@ -67,9 +67,9 @@ final class InMemoryWeaponRepositoryTest extends TestCase
         $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
         $weaponType  = WeaponType::Sword;
 
-        $id = $repository->persist($itemInfo, $weaponType)->unwrap();
+        $weapon = $repository->persist($itemInfo, $weaponType)->unwrap();
 
-        $result = $repository->findByIdentifier($id);
+        $result = $repository->findByIdentifier(StringIdentifier::create($weapon->getId())->unwrap());
 
         $this->assertTrue($result->isSuccess());
         $this->assertInstanceOf(Weapon::class, $result->unwrap());
@@ -82,7 +82,7 @@ final class InMemoryWeaponRepositoryTest extends TestCase
         $repository = new InMemoryWeaponRepository();
 
         $name = 'Necrotic Sword of Doom';
-        $id = StringIdentifier::create($name)->unwrap();
+        $id   = StringIdentifier::create($name)->unwrap();
 
         $result = $repository->findByIdentifier($id);
 

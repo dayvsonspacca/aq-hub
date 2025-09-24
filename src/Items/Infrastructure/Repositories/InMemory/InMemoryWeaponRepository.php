@@ -17,7 +17,7 @@ class InMemoryWeaponRepository implements WeaponRepository
     private array $memory = [];
 
     /**
-     * @return Result<StringIdentifier|null>
+     * @return Result<Weapon|null>
      */
     public function persist(ItemInfo $itemInfo, WeaponType $type): Result
     {
@@ -31,7 +31,7 @@ class InMemoryWeaponRepository implements WeaponRepository
 
         $this->memory[$weapon->getId()] = $weapon;
 
-        return Result::success(null, $id);
+        return Result::success(null, $weapon);
     }
 
     /**
