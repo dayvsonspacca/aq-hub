@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Items\Infrastructure\Services;
+namespace AqHub\Player\Infrastructure\Services;
 
 use AqHub\Shared\Domain\ValueObjects\{Result, IntIdentifier};
 use AqHub\Player\Domain\ValueObjects\{Name, Level};

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Application\UseCases;
 
-use AqHub\Items\Infrastructure\Services\CharpageScrapper;
+use AqHub\Player\Infrastructure\Services\CharpageScrapper;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Shared\Domain\ValueObjects\Result;
 use AqHub\Player\Domain\ValueObjects\Name;
