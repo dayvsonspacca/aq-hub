@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Items\Infrastructure\Container;
 
 use AqHub\Items\Infrastructure\Repositories\Sql\{SqlWeaponRepository, SqlArmorRepository};
-use AqHub\Items\Infrastructure\Commands\{AddItemCommand, MineCharpageItemsCommand};
+use AqHub\Items\Infrastructure\Commands\{MineAllPlayersItemsCommand, MineCharpageItemsCommand};
 use AqHub\Items\Domain\Repositories\{ArmorRepository, WeaponRepository};
 use AqHub\Shared\Infrastructure\Container\ContainerRegistry;
 use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
@@ -40,7 +40,7 @@ class ItemsContainerRegistry implements ContainerRegistry
     public static function registerCommands(): array
     {
         return [
-            AddItemCommand::class => autowire(),
+            MineAllPlayersItemsCommand::class => autowire(),
             MineCharpageItemsCommand::class => autowire()
         ];
     }
