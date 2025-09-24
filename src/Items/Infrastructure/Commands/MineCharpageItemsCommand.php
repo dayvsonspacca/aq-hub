@@ -9,8 +9,9 @@ use Symfony\Component\Console\Input\{InputInterface, InputArgument};
 use AqHub\Player\Domain\ValueObjects\Name as PlayerName;
 use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
 use Symfony\Component\Console\Output\OutputInterface;
-use AqHub\Player\Application\UseCases\AddPlayer;
+use AqHub\Items\Application\UseCases\Armor\AddArmor;
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
+use AqHub\Player\Application\UseCases\AddPlayer;
 use Symfony\Component\Console\Command\Command;
 use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Shared\Domain\Enums\TagType;
@@ -22,7 +23,8 @@ class MineCharpageItemsCommand extends Command
 
     public function __construct(
         private readonly AddWeapon $addWeapon,
-        private readonly AddPlayer $addPlayer
+        private readonly AddPlayer $addPlayer,
+        private readonly AddArmor $addArmor
     ) {
         parent::__construct();
         $this->client = new Client();
@@ -83,7 +85,7 @@ class MineCharpageItemsCommand extends Command
         $urls[] = $baseName . '-non-legend';
         $urls[] = $baseName . '-non-ac';
 
-        return array_map(fn ($name) => 'http://aqwwiki.wikidot.com/' . $name, $urls);
+        return array_map(fn($name) => 'http://aqwwiki.wikidot.com/' . $name, $urls);
     }
 
     private function slugify(string $string): string
@@ -126,16 +128,16 @@ class MineCharpageItemsCommand extends Command
 
         $response = $this->client->get('https://account.aq.com/CharPage/Inventory?ccid=' . $ccid);
         $jsonData = json_decode($response->getBody()->getContents(), true);
+        $jsonData = array_filter($jsonData, fn($object) => $object['strName'] !== 'Inventory Hidden');
 
         $output->writeln('<fg=blue;options=bold>ℹ Found</> <fg=yellow>' . count($jsonData) . '</> <fg=blue;options=bold>items in</> <fg=cyan>' . $charpage . '</>.');
 
-        $weapons = array_filter($jsonData, fn (array $object) => WeaponType::fromString($object['strType'])->isSuccess());
-
-        $output->writeln('<fg=magenta;options=bold>⚔ Mining only weapons for now.</>');
-        $output->writeln('<fg=blue;options=bold>ℹ Found</> <fg=yellow>' . count($weapons) . '</> <fg=blue;options=bold>weapons in</> <fg=cyan>' . $charpage . '</>.');
-        $output->writeln('<fg=green;options=bold>▶ Starting to mine items info in AqWiki...</>');
-
         $totalMined = 0;
+
+        $weapons = array_filter($jsonData, fn(array $object) => WeaponType::fromString($object['strType'])->isSuccess());
+        $output->writeln('<fg=blue;options=bold>ℹ Found</> <fg=yellow>' . count($weapons) . '</> <fg=blue;options=bold>weapons in</> <fg=cyan>' . $charpage . '</>.');
+        $output->writeln('<fg=green;options=bold>▶ Starting to mine weapons info in AqWiki...</>');
+
         foreach ($weapons as $object) {
             $weaponTypeResult = WeaponType::fromString($object['strType']);
             if ($weaponTypeResult->isError()) {
@@ -186,6 +188,9 @@ class MineCharpageItemsCommand extends Command
 
             $itemTags = new ItemTags();
             if ($object['bUpgrade']) {
+                $itemTags->add(TagType::Legend);
+            }
+            if ($object['bCoins']) {
                 $itemTags->add(TagType::AdventureCoins);
             }
 
@@ -199,6 +204,74 @@ class MineCharpageItemsCommand extends Command
             }
 
             $output->writeln('<fg=green;options=bold>✔ Persisted:</> <fg=yellow>' . $itemName->value . '</> (<fg=magenta>' . $weaponType->toString() . '</>)');
+            $totalMined++;
+        }
+
+        $output->writeln('');
+
+        $armors = array_filter($jsonData, fn(array $object) => $object['strType'] === 'Armor');
+        $output->writeln('<fg=blue;options=bold>ℹ Found</> <fg=yellow>' . count($armors) . '</> <fg=blue;options=bold>armors in</> <fg=cyan>' . $charpage . '</>.');
+        $output->writeln('<fg=green;options=bold>▶ Starting to mine armors info in AqWiki...</>');
+
+        foreach ($armors as $object) {
+            $nameResult = Name::create($object['strName']);
+            if ($nameResult->isError()) {
+                $output->writeln('<fg=red>✘ ' . $nameResult->getMessage() . '</>');
+                continue;
+            }
+            $itemName    = $nameResult->getData();
+            $urlItemName = $this->slugify(html_entity_decode($itemName->value, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+
+            $urls = $this->generatePossibleUrls(
+                $urlItemName,
+                $weaponType->toString(),
+                (bool) $object['bCoins'],
+                (bool) $object['bUpgrade']
+            );
+
+            $description = null;
+            foreach ($urls as $url) {
+                $output->writeln('<fg=cyan>🔎 Trying</> <fg=yellow>' . $itemName->value . '</> <fg=cyan>at</> <fg=blue;options=underscore>' . $url . '</>');
+                $description = $this->mineDescription($url);
+                if ($description) {
+                    $description = html_entity_decode($description, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                    break;
+                }
+            }
+
+            if (!$description) {
+                $output->writeln('<fg=red;options=bold>✘ Description not found for:</> <fg=yellow>' . $itemName->value . '</>');
+                $output->writeln('<fg=magenta>↳ Check base URL:</> <fg=blue;options=underscore>' . $urls[0] . '</>');
+                continue;
+            }
+
+            $descResult = Description::create($description);
+            if ($descResult->isError()) {
+                $output->writeln('<fg=red;options=bold>✘ ' . $descResult->getMessage() . '</>');
+                continue;
+            }
+            $description = $descResult->getData();
+
+            $output->writeln('<fg=green;options=bold>✔ Description found:</> <fg=yellow>"' . $description->value . '"</>');
+
+            $itemTags = new ItemTags();
+            if ($object['bUpgrade']) {
+                $itemTags->add(TagType::Legend);
+            }
+            if ($object['bCoins']) {
+                $itemTags->add(TagType::AdventureCoins);
+            }
+
+            $itemInfo = ItemInfo::create($itemName, $description, $itemTags)->getData();
+
+            $result = $this->addArmor->execute($itemInfo);
+            if ($result->isError()) {
+                $output->writeln('<fg=red;options=bold>✘ Failed to persist item:</> <fg=yellow>' . $itemName->value . '</>');
+                $output->writeln('<fg=red>↳ Reason:</> ' . $result->getMessage());
+                continue;
+            }
+
+            $output->writeln('<fg=green;options=bold>✔ Persisted:</> <fg=yellow>' . $itemName->value . '</>');
             $totalMined++;
         }
 
