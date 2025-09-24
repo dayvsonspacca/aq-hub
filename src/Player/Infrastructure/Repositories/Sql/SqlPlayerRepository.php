@@ -66,4 +66,27 @@ class SqlPlayerRepository implements PlayerRepository
 
         return Result::success(null, $player);
     }
+
+    public function findAll(): Result
+    {
+        $query = 'SELECT * FROM players';
+        $playersData = $this->db->fetchAll($query);
+
+        if (!$playersData) {
+            return Result::success(null, []);
+        }
+
+        foreach ($playersData as $playerData) {
+            $identifier = IntIdentifier::create((int) $playerData['id'])->getData();
+            $name = Name::create($playerData['name'])->getData();
+            $level = Level::create((int) $playerData['level'])->getData();
+            $inventory = new PlayerInventory([], 999);
+
+            $player = Player::create($identifier, $name, $level, $inventory)->getData();
+            
+            $players[] = $player;
+        }
+
+        return Result::success(null, $players ?? []);
+    }
 }

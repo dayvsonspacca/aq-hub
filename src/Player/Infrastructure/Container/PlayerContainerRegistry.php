@@ -6,10 +6,10 @@ namespace AqHub\Player\Infrastructure\Container;
 
 use AqHub\Player\Infrastructure\Repositories\Sql\SqlPlayerRepository;
 use AqHub\Player\Infrastructure\Http\Controllers\PlayerController;
+use AqHub\Player\Application\UseCases\{AddPlayer, FindAllPlayers};
 use AqHub\Shared\Infrastructure\Container\ContainerRegistry;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Shared\Infrastructure\Database\Connection;
-use AqHub\Player\Application\UseCases\AddPlayer;
 
 use function DI\autowire;
 use function DI\get;
@@ -42,7 +42,8 @@ class PlayerContainerRegistry implements ContainerRegistry
     public static function registerUseCases(): array
     {
         return [
-            AddPlayer::class => autowire()
+            AddPlayer::class => autowire(),
+            FindAllPlayers::class => autowire()
         ];
     }
 
