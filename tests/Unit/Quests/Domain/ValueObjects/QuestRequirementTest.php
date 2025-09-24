@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Quests\Domain\ValueObjects;
 
 use AqHub\Quests\Domain\ValueObjects\{LevelRequirement, QuestRequirements, QuestRequirement};
-use AqHub\Player\Domain\ValueObjects\PlayerInventory;
+use AqHub\Player\Domain\ValueObjects\{PlayerInventory, Name};
 use AqHub\Shared\Domain\ValueObjects\Identifier;
 use AqHub\Player\Domain\Entities\Player;
 use AqHub\Quests\Domain\Entities\Quest;
@@ -35,12 +35,14 @@ final class QuestRequirementTest extends TestCase
 
         $questRequirement = new QuestRequirement($quest);
 
-        $id        = Identifier::create(1)->getData();
+        $id        = Identifier::create(1)->unwrap();
         $level     = 100;
         $inventory = $this->createMock(PlayerInventory::class);
+        $name      = Name::create('Hilise')->unwrap();
 
         $player = Player::create(
             $id,
+            $name,
             $level,
             $inventory
         )->unwrap();
@@ -52,19 +54,21 @@ final class QuestRequirementTest extends TestCase
     public function should_fail_when_player_does_not_meet_quest_requirement()
     {
         $quest = Quest::create(
-            Identifier::create(1)->getData(),
+            Identifier::create(1)->unwrap(),
             'Awesome Quest',
             new QuestRequirements([new LevelRequirement(50)])
         )->unwrap();
 
         $questRequirement = new QuestRequirement($quest);
 
-        $id        = Identifier::create(1)->getData();
+        $id        = Identifier::create(1)->unwrap();
         $level     = 6;
         $inventory = $this->createMock(PlayerInventory::class);
+        $name      = Name::create('Hilise')->unwrap();
 
         $player = Player::create(
             $id,
+            $name,
             $level,
             $inventory
         )->unwrap();

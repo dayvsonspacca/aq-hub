@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Player\Domain\Entities;
 
-use AqHub\Player\Domain\ValueObjects\PlayerInventory;
+use AqHub\Player\Domain\ValueObjects\{PlayerInventory, Name};
 use AqHub\Shared\Domain\ValueObjects\Identifier;
 use AqHub\Player\Domain\Entities\Player;
 use PHPUnit\Framework\Attributes\Test;
@@ -15,12 +15,14 @@ final class PlayerTest extends TestCase
     #[Test]
     public function should_create_player_instance_and_stores_it_data()
     {
-        $id        = Identifier::create(1)->getData();
+        $id        = Identifier::create(1)->unwrap();
         $level     = 100;
         $inventory = $this->createMock(PlayerInventory::class);
+        $name      = Name::create('Hilise')->unwrap();
 
         $player = Player::create(
             $id,
+            $name,
             $level,
             $inventory
         )->unwrap();
@@ -34,12 +36,14 @@ final class PlayerTest extends TestCase
     #[Test]
     public function should_fail_because_player_level_is_negative()
     {
-        $id        = Identifier::create(1)->getData();
+        $id        = Identifier::create(1)->unwrap();
         $level     = -10;
         $inventory = $this->createMock(PlayerInventory::class);
+        $name      = Name::create('Hilise')->unwrap();
 
         $result = Player::create(
             $id,
+            $name,
             $level,
             $inventory
         );
