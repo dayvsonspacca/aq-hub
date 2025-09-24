@@ -16,3 +16,8 @@ CREATE TABLE IF NOT EXISTS weapon_tags (
     PRIMARY KEY (weapon_id, tag),
     FOREIGN KEY (weapon_id) REFERENCES weapons(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS players (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL
+);
