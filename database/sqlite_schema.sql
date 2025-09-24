@@ -22,3 +22,19 @@ CREATE TABLE IF NOT EXISTS players (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS armors (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    hash TEXT NOT NULL,
+    description TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS armor_tags (
+    armor_id INTEGER NOT NULL,
+    tag TEXT NOT NULL CHECK(tag IN (
+        'Legend', 'Adventure Coins', 'Rare', 'Pseudo Rare', 'Seasonal'
+    )),
+    PRIMARY KEY (armor_id, tag),
+    FOREIGN KEY (armor_id) REFERENCES armors(id) ON DELETE CASCADE
+);

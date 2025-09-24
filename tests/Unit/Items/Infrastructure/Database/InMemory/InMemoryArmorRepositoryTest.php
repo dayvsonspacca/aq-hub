@@ -76,7 +76,7 @@ final class InMemoryArmorRepositoryTest extends TestCase
         $repository = new InMemoryArmorRepository();
 
         $name = 'ArchFiend DoomLord';
-        $id = StringIdentifier::create($name)->unwrap();
+        $id   = StringIdentifier::create($name)->unwrap();
 
         $result = $repository->findByIdentifier($id);
 
