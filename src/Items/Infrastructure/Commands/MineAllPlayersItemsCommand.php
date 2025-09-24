@@ -62,7 +62,7 @@ class MineAllPlayersItemsCommand extends Command
             foreach ($itemsByType as $type => $items) {
                 $output->writeln('<fg=blue;options=bold>ℹ Found ' . count($items) . " item(s) of type <fg=yellow>{$type}</> for player <fg=cyan>{$player->getName()}</>:</>");
 
-                $allowedTypes = array_merge(['Armor'], WeaponType::cases());
+                $allowedTypes = array_merge(['Armor'], array_map(fn($type) => $type->toString(), WeaponType::cases()));
 
                 if (!in_array($type, $allowedTypes)) {
                     $output->writeln("<fg=yellow>✘ Skiping: {$type}</>");
