@@ -112,7 +112,7 @@ class MineCharpageItemsCommand extends Command
 
 
         $output->writeln('<fg=magenta;options=bold>⚔ Saving player...</>');
-        $result = $this->addPlayer->execute($playerName->getData(), Level::create(1)->getData());
+        $result = $this->addPlayer->execute($playerName->getData());
         if ($result->isError()) {
             $output->writeln('<fg=red;options=bold>✘ Failed to persist player:</> <fg=yellow>' . $playerName->getData()->value . '</>');
             $output->writeln('<fg=red>↳ Reason:</> ' . $result->getMessage());

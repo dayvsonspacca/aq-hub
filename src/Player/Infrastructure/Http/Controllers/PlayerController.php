@@ -25,12 +25,7 @@ class PlayerController
             return new JsonResponse(['message' => $name->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $level = Level::create((int) $post['level'] ?? 0);
-        if ($level->isError()) {
-            return new JsonResponse(['message' => $level->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        $player = $this->addPlayer->execute($name->getData(), $level->getData());
+        $player = $this->addPlayer->execute($name->getData());
         if ($player->isError()) {
             return new JsonResponse(['message' => $player->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }

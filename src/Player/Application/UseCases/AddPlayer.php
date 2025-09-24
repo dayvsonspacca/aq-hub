@@ -6,8 +6,8 @@ namespace AqHub\Player\Application\UseCases;
 
 use AqHub\Items\Infrastructure\Services\CharpageScrapper;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
-use AqHub\Player\Domain\ValueObjects\{Name, Level};
 use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Player\Domain\ValueObjects\Name;
 use AqHub\Player\Domain\Entities\Player;
 
 class AddPlayer
@@ -19,14 +19,16 @@ class AddPlayer
     /**
      * @return Result<Player|null>
      */
-    public function execute(Name $name, Level $level): Result
+    public function execute(Name $name): Result
     {
-        $identifier = CharpageScrapper::findIdentifier($name);
+        $result = CharpageScrapper::findIdentifier($name);
 
-        if ($identifier->isError()) {
-            return $identifier;
+        if ($result->isError()) {
+            return $result;
         }
 
-        return $this->playerRepository->persist($identifier->getData(), $name, $level);
+        [$identifier, $level] = $result->getData();
+
+        return $this->playerRepository->persist($identifier, $name, $level);
     }
 }
