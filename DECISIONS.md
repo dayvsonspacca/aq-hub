@@ -51,3 +51,12 @@ Wrapping the return type in a `Result` gives a consistent behavior:
 In my mind, this approach makes sense, as it maintains immutability, cohesion, and a uniform way of handling errors across all layers.  
 
 > Conclusion: Repository methods should always return a `Result`. That way, we guarantee consistency and reliability when dealing with database operations.  
+
+# #5 Why Do We Need an Identifier to Persist a Player? 2025-09-23  
+
+While working on the Player persistence layer, the question arose: why exactly do we need an identifier for a Player?  
+
+After some investigation, I realized that the only reliable representation available for now is the user ID from AQW itself.  
+So instead of generating a new internal ID for each Player, I decided to reuse the same AQW user ID. 
+
+> Conclusion: The Player’s identifier will be the AQW user ID. This avoids unnecessary duplication and keeps the system aligned with its external reference.
