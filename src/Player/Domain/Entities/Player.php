@@ -43,4 +43,12 @@ class Player extends Entity
     {
         return $this->inventory;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'name' => $this->getName(),
+            'level' => $this->getLevel()
+        ];
+    }
 }
