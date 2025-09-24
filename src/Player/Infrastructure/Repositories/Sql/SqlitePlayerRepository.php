@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Items\Infrastructure\Repositories\Sql;
+namespace AqHub\Player\Infrastructure\Repositories\Sql;
 
 use AqHub\Shared\Domain\ValueObjects\{Identifier, Result};
 use AqHub\Player\Domain\Repositories\PlayerRepository;

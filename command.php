@@ -6,7 +6,7 @@ use AqHub\Items\Application\Weapon\AddWeapon;
 use AqHub\Items\Infrastructure\Repositories\Sql\SqliteWeaponRepository;
 use AqHub\Items\Infrastructure\Commands\AddItemCommand;
 use AqHub\Items\Infrastructure\Commands\MineCharpageItemsCommand;
-use AqHub\Items\Infrastructure\Repositories\Sql\SqlitePlayerRepository;
+use AqHub\Player\Infrastructure\Repositories\Sql\SqlitePlayerRepository;
 use AqHub\Player\Application\AddPlayer;
 use AqHub\Shared\Infrastructure\Database\Connection;
 use Symfony\Component\Console\Application;
