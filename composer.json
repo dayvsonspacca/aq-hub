@@ -23,7 +23,8 @@
         "guzzlehttp/guzzle": "^7.10",
         "php-di/php-di": "^7.1",
         "symfony/http-foundation": "^7.3",
-        "symfony/routing": "^7.3"
+        "symfony/routing": "^7.3",
+        "twig/twig": "^3.21"
     },
     "require-dev": {
         "pestphp/pest": "^3.7",
