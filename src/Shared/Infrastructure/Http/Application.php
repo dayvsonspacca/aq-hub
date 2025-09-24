@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace AqHub\Shared\Infrastructure\Http;
 
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\{RouteCollection, RequestContext};
-use Symfony\Component\HttpFoundation\{Request, Response};
+use Symfony\Component\HttpFoundation\{JsonResponse, Request};
 use Symfony\Component\Routing\Route as SymfonyRoute;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use ReflectionClass;
@@ -79,9 +80,11 @@ class Application
 
             $response = $controller->$method($request);
         } catch (ResourceNotFoundException) {
-            $response = new Response('Not Found', 404);
+            $response = new JsonResponse(['message' => 'Not Found'], 404);
+        } catch (MethodNotAllowedException) {
+            $response = new JsonResponse(['message' => 'Not Found'], 404);
         } catch (\Throwable $e) {
-            $response = new Response('An error occurred: ' . $e->getMessage(), 500);
+            $response = new JsonResponse(['message' => 'An error occurred: ' . $e->getMessage()], 500);
         }
 
         $response->send();
