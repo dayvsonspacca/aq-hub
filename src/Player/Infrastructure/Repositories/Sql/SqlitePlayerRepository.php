@@ -26,7 +26,7 @@ class SqlitePlayerRepository implements PlayerRepository
         try {
             $this->db->getConnection()->beginTransaction();
 
-            if ($this->findByIdentifier($identifier)) {
+            if ($this->findByIdentifier($identifier)->isSuccess()) {
                 throw new DomainException('A player with same id already exists: ' . $identifier->getValue());
             }
 
@@ -41,7 +41,7 @@ class SqlitePlayerRepository implements PlayerRepository
             return Result::success(null, $identifier);
         } catch (\Throwable $e) {
             $this->db->getConnection()->rollBack();
-            return Result::error('Failed to persist weapon: ' . $e->getMessage() . ' at ' . $e->getLine(), null);
+            return Result::error('Failed to persist player: ' . $e->getMessage() . ' at ' . $e->getLine(), null);
         }
     }
 
