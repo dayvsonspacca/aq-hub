@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Quests\Domain\ValueObjects;
+namespace AqHub\Quests\Domain\ValueObjects;
 
-use AqWiki\Quests\Domain\Contracts\QuestRequirementInterface;
-use AqWiki\Shared\Domain\ValueObjects\Result;
+use AqHub\Quests\Domain\Contracts\QuestRequirementInterface;
+use AqHub\Shared\Domain\ValueObjects\Result;
 use IteratorAggregate;
 use ArrayIterator;
 use Countable;

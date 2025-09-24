@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Items\Infrastructure\Commands;
+namespace AqHub\Items\Infrastructure\Commands;
 
-use AqWiki\Items\Domain\ValueObjects\{Description, ItemInfo, Name, ItemTags};
+use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, Name, ItemTags};
 use Symfony\Component\Console\Input\{InputInterface, InputArgument};
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
-use AqWiki\Items\Application\Weapon\AddWeapon;
-use AqWiki\Items\Domain\Enums\WeaponType;
-use AqWiki\Shared\Domain\Enums\TagType;
+use AqHub\Items\Application\Weapon\AddWeapon;
+use AqHub\Items\Domain\Enums\WeaponType;
+use AqHub\Shared\Domain\Enums\TagType;
 use GuzzleHttp\Client;
 
 class MineCharpageItemsCommand extends Command
@@ -115,7 +115,7 @@ class MineCharpageItemsCommand extends Command
 
         $output->writeln('<fg=magenta;options=bold>⚔ Mining only weapons for now.</>');
         $output->writeln('<fg=blue;options=bold>ℹ Found</> <fg=yellow>' . count($weapons) . '</> <fg=blue;options=bold>weapons in</> <fg=cyan>' . $charpage . '</>.');
-        $output->writeln('<fg=green;options=bold>▶ Starting to mine items info in AQWiki...</>');
+        $output->writeln('<fg=green;options=bold>▶ Starting to mine items info in AqHub...</>');
 
         $totalMined = 0;
         foreach ($weapons as $object) {

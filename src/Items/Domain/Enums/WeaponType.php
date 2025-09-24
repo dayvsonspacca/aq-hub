@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Items\Domain\Enums;
+namespace AqHub\Items\Domain\Enums;
 
-use AqWiki\Shared\Domain\ValueObjects\Result;
+use AqHub\Shared\Domain\ValueObjects\Result;
 
 enum WeaponType
 {

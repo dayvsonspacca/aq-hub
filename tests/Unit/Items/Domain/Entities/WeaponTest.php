@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Items\Domain\Entities;
 
-use AqWiki\Items\Domain\ValueObjects\{Description, ItemTags, ItemInfo, Name};
-use AqWiki\Shared\Domain\ValueObjects\Identifier;
-use AqWiki\Items\Domain\Enums\WeaponType;
-use AqWiki\Items\Domain\Entities\Weapon;
-use AqWiki\Shared\Domain\Enums\TagType;
+use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, ItemInfo, Name};
+use AqHub\Shared\Domain\ValueObjects\Identifier;
+use AqHub\Items\Domain\Enums\WeaponType;
+use AqHub\Items\Domain\Entities\Weapon;
+use AqHub\Shared\Domain\Enums\TagType;
 use PHPUnit\Framework\Attributes\Test;
-use AqWiki\Tests\Unit\TestCase;
+use AqHub\Tests\Unit\TestCase;
 
 final class WeaponTest extends TestCase
 {

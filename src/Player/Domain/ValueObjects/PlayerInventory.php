@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Player\Domain\ValueObjects;
+namespace AqHub\Player\Domain\ValueObjects;
 
-use AqWiki\Shared\Domain\Abstractions\Inventory;
-use AqWiki\Shared\Domain\ValueObjects\Result;
-use AqWiki\Items\Domain\Abstractions\AqwItem;
-use AqWiki\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\Abstractions\Inventory;
+use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Items\Domain\Abstractions\AqwItem;
+use AqHub\Shared\Domain\Enums\TagType;
 
 class PlayerInventory extends Inventory
 {

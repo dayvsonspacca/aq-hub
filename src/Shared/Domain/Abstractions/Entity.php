@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Shared\Domain\Abstractions;
+namespace AqHub\Shared\Domain\Abstractions;
 
-use AqWiki\Shared\Domain\ValueObjects\Identifier;
+use AqHub\Shared\Domain\ValueObjects\Identifier;
 
 abstract class Entity
 {

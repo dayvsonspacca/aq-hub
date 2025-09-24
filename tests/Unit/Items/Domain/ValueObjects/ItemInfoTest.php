@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Items\Domain\ValueObjects;
 
-use AqWiki\Items\Domain\ValueObjects\{Description, ItemTags, ItemInfo, Name};
-use AqWiki\Shared\Domain\Enums\TagType;
+use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, ItemInfo, Name};
+use AqHub\Shared\Domain\Enums\TagType;
 use PHPUnit\Framework\Attributes\Test;
-use AqWiki\Tests\Unit\TestCase;
+use AqHub\Tests\Unit\TestCase;
 
 final class ItemInfoTest extends TestCase
 {

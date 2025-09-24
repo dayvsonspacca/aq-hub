@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Items\Domain\ValueObjects;
 
-use AqWiki\Items\Domain\ValueObjects\Name;
+use AqHub\Items\Domain\ValueObjects\Name;
 use PHPUnit\Framework\Attributes\Test;
-use AqWiki\Tests\Unit\TestCase;
+use AqHub\Tests\Unit\TestCase;
 
 final class NameTest extends TestCase
 {

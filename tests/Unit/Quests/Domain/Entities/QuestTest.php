@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Quests\Domain\Entities;
 
-use AqWiki\Quests\Domain\ValueObjects\QuestRequirements;
-use AqWiki\Shared\Domain\ValueObjects\Identifier;
-use AqWiki\Quests\Domain\Entities\Quest;
+use AqHub\Quests\Domain\ValueObjects\QuestRequirements;
+use AqHub\Shared\Domain\ValueObjects\Identifier;
+use AqHub\Quests\Domain\Entities\Quest;
 use PHPUnit\Framework\Attributes\Test;
-use AqWiki\Tests\Unit\TestCase;
+use AqHub\Tests\Unit\TestCase;
 
 final class QuestTest extends TestCase
 {

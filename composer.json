@@ -1,5 +1,5 @@
 {
-    "name": "dayvsonspacca/aq-wiki",
+    "name": "dayvsonspacca/aq-hub",
     "type": "project",
     "scripts": {
         "test": "./vendor/bin/pest",
@@ -7,8 +7,8 @@
     },
     "autoload": {
         "psr-4": {
-            "AqWiki\\": "src/",
-            "AqWiki\\Tests\\": "tests/"
+            "AqHub\\": "src/",
+            "AqHub\\Tests\\": "tests/"
         }
     },
     "authors": [

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Items\Domain\Abstractions;
+namespace AqHub\Items\Domain\Abstractions;
 
-use AqWiki\Items\Domain\ValueObjects\ItemInfo;
-use AqWiki\Items\Domain\ValueObjects\ItemTags;
-use AqWiki\Shared\Domain\Abstractions\Entity;
+use AqHub\Items\Domain\ValueObjects\ItemInfo;
+use AqHub\Items\Domain\ValueObjects\ItemTags;
+use AqHub\Shared\Domain\Abstractions\Entity;
 
 abstract class AqwItem extends Entity
 {

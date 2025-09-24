@@ -2,20 +2,22 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Items\Infrastructure\Repositories\Sql;
+namespace AqHub\Items\Infrastructure\Repositories\Sql;
 
-use AqWiki\Items\Domain\ValueObjects\{Description, Name, ItemTags, ItemInfo};
-use AqWiki\Shared\Domain\ValueObjects\{Identifier, Result};
-use AqWiki\Items\Domain\Repositories\WeaponRepository;
-use AqWiki\Shared\Infrastructure\Database\Connection;
-use AqWiki\Items\Domain\Enums\WeaponType;
-use AqWiki\Items\Domain\Entities\Weapon;
-use AqWiki\Shared\Domain\Enums\TagType;
+use AqHub\Items\Domain\ValueObjects\{Description, Name, ItemTags, ItemInfo};
+use AqHub\Shared\Domain\ValueObjects\{Identifier, Result};
+use AqHub\Items\Domain\Repositories\WeaponRepository;
+use AqHub\Shared\Infrastructure\Database\Connection;
+use AqHub\Items\Domain\Enums\WeaponType;
+use AqHub\Items\Domain\Entities\Weapon;
+use AqHub\Shared\Domain\Enums\TagType;
 use DomainException;
 
 class SqliteWeaponRepository implements WeaponRepository
 {
-    public function __construct(private readonly Connection $db) {}
+    public function __construct(private readonly Connection $db)
+    {
+    }
 
     /**
      * @return Result<Identifier|null>
@@ -70,7 +72,7 @@ class SqliteWeaponRepository implements WeaponRepository
         $tagsQuery = 'SELECT tag FROM weapon_tags WHERE weapon_id = :weapon_id';
         $tagsData  = $this->db->fetchAll($tagsQuery, ['weapon_id' => $weaponData['id']]);
 
-        $tags = new ItemTags(array_map(fn($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+        $tags = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
 
         $name        = Name::create($weaponData['name'])->unwrap();
         $description = Description::create($weaponData['description'])->unwrap();

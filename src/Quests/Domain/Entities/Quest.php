@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Quests\Domain\Entities;
+namespace AqHub\Quests\Domain\Entities;
 
-use AqWiki\Shared\Domain\ValueObjects\{Result, Identifier};
-use AqWiki\Quests\Domain\ValueObjects\QuestRequirements;
-use AqWiki\Shared\Domain\Abstractions\Entity;
+use AqHub\Shared\Domain\ValueObjects\{Result, Identifier};
+use AqHub\Quests\Domain\ValueObjects\QuestRequirements;
+use AqHub\Shared\Domain\Abstractions\Entity;
 
 class Quest extends Entity
 {

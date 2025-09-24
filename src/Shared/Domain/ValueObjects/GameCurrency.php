@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Shared\Domain\ValueObjects;
+namespace AqHub\Shared\Domain\ValueObjects;
 
-use AqWiki\Shared\Domain\Enums\CurrencyType;
+use AqHub\Shared\Domain\Enums\CurrencyType;
 
 class GameCurrency
 {

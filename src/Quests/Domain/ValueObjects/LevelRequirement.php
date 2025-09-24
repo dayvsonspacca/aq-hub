@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Quests\Domain\ValueObjects;
+namespace AqHub\Quests\Domain\ValueObjects;
 
-use AqWiki\Quests\Domain\Contracts\QuestRequirementInterface;
-use AqWiki\Player\Domain\Entities\Player;
+use AqHub\Quests\Domain\Contracts\QuestRequirementInterface;
+use AqHub\Player\Domain\Entities\Player;
 
 class LevelRequirement implements QuestRequirementInterface
 {

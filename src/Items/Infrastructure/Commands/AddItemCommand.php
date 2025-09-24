@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Items\Infrastructure\Commands;
+namespace AqHub\Items\Infrastructure\Commands;
 
-use AqWiki\Items\Domain\ValueObjects\{ItemInfo, ItemTags, Description, Name};
+use AqHub\Items\Domain\ValueObjects\{ItemInfo, ItemTags, Description, Name};
 use Symfony\Component\Console\Question\{Question, ChoiceQuestion};
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Command\Command;
-use AqWiki\Items\Application\Weapon\AddWeapon;
-use AqWiki\Items\Domain\Enums\WeaponType;
-use AqWiki\Shared\Domain\Enums\TagType;
+use AqHub\Items\Application\Weapon\AddWeapon;
+use AqHub\Items\Domain\Enums\WeaponType;
+use AqHub\Shared\Domain\Enums\TagType;
 use RuntimeException;
 
 class AddItemCommand extends Command

@@ -2,11 +2,11 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use AqWiki\Items\Application\Weapon\AddWeapon;
-use AqWiki\Items\Infrastructure\Repositories\Sql\SqliteWeaponRepository;
-use AqWiki\Items\Infrastructure\Commands\AddItemCommand;
-use AqWiki\Items\Infrastructure\Commands\MineCharpageItemsCommand;
-use AqWiki\Shared\Infrastructure\Database\Connection;
+use AqHub\Items\Application\Weapon\AddWeapon;
+use AqHub\Items\Infrastructure\Repositories\Sql\SqliteWeaponRepository;
+use AqHub\Items\Infrastructure\Commands\AddItemCommand;
+use AqHub\Items\Infrastructure\Commands\MineCharpageItemsCommand;
+use AqHub\Shared\Infrastructure\Database\Connection;
 use Symfony\Component\Console\Application;
 
 $db = Connection::connect(

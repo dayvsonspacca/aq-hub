@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Quests\Domain\Contracts;
+namespace AqHub\Quests\Domain\Contracts;
 
-use AqWiki\Player\Domain\Entities\Player;
+use AqHub\Player\Domain\Entities\Player;
 
 interface QuestRequirementInterface
 {

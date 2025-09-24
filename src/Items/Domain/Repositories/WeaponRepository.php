@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Items\Domain\Repositories;
+namespace AqHub\Items\Domain\Repositories;
 
-use AqWiki\Shared\Domain\ValueObjects\{Identifier, Result};
-use AqWiki\Items\Domain\ValueObjects\ItemInfo;
-use AqWiki\Items\Domain\Enums\WeaponType;
-use AqWiki\Items\Domain\Entities\Weapon;
+use AqHub\Shared\Domain\ValueObjects\{Identifier, Result};
+use AqHub\Items\Domain\ValueObjects\ItemInfo;
+use AqHub\Items\Domain\Enums\WeaponType;
+use AqHub\Items\Domain\Entities\Weapon;
 
 interface WeaponRepository
 {

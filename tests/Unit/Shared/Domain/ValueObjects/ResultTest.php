@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Shared\Domain\ValueObjects;
 
-use AqWiki\Shared\Domain\ValueObjects\Result;
-use AqWiki\Shared\Domain\Enums\ResultStatus;
+use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Shared\Domain\Enums\ResultStatus;
 use PHPUnit\Framework\Attributes\Test;
-use AqWiki\Tests\Unit\TestCase;
+use AqHub\Tests\Unit\TestCase;
 
 final class ResultTest extends TestCase
 {

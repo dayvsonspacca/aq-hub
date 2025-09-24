@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Shared\Domain\ValueObjects;
+namespace AqHub\Shared\Domain\ValueObjects;
 
 /**
  * Represents an identifier based on a positive integer value.

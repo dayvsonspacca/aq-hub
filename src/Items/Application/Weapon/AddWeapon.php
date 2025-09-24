@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Items\Application\Weapon;
+namespace AqHub\Items\Application\Weapon;
 
-use AqWiki\Items\Domain\Repositories\WeaponRepository;
-use AqWiki\Items\Domain\ValueObjects\ItemInfo;
-use AqWiki\Shared\Domain\ValueObjects\Result;
-use AqWiki\Items\Domain\Enums\WeaponType;
+use AqHub\Items\Domain\Repositories\WeaponRepository;
+use AqHub\Items\Domain\ValueObjects\ItemInfo;
+use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Items\Domain\Enums\WeaponType;
 
 class AddWeapon
 {

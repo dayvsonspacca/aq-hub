@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Items\Domain\ValueObjects;
+namespace AqHub\Items\Domain\ValueObjects;
 
-use AqWiki\Shared\Domain\ValueObjects\Result;
+use AqHub\Shared\Domain\ValueObjects\Result;
 
 class Name
 {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Quests\Domain\ValueObjects;
 
-use AqWiki\Quests\Domain\ValueObjects\{LevelRequirement, ItemRequirement, QuestRequirements};
+use AqHub\Quests\Domain\ValueObjects\{LevelRequirement, ItemRequirement, QuestRequirements};
 use PHPUnit\Framework\Attributes\Test;
-use AqWiki\Tests\Unit\TestCase;
+use AqHub\Tests\Unit\TestCase;
 
 final class QuestRequirementsTest extends TestCase
 {

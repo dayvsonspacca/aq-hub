@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Items\Infrastructure\Repositories\InMemory;
+namespace AqHub\Items\Infrastructure\Repositories\InMemory;
 
-use AqWiki\Shared\Domain\ValueObjects\{Identifier, Result};
-use AqWiki\Items\Domain\Repositories\WeaponRepository;
-use AqWiki\Items\Domain\ValueObjects\ItemInfo;
-use AqWiki\Items\Domain\Enums\WeaponType;
-use AqWiki\Items\Domain\Entities\Weapon;
+use AqHub\Shared\Domain\ValueObjects\{Identifier, Result};
+use AqHub\Items\Domain\Repositories\WeaponRepository;
+use AqHub\Items\Domain\ValueObjects\ItemInfo;
+use AqHub\Items\Domain\Enums\WeaponType;
+use AqHub\Items\Domain\Entities\Weapon;
 
 class InMemoryWeaponRepository implements WeaponRepository
 {

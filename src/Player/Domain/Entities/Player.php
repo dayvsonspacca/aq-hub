@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Player\Domain\Entities;
+namespace AqHub\Player\Domain\Entities;
 
-use AqWiki\Shared\Domain\ValueObjects\{Result, Identifier};
-use AqWiki\Player\Domain\ValueObjects\PlayerInventory;
-use AqWiki\Shared\Domain\Abstractions\Entity;
+use AqHub\Shared\Domain\ValueObjects\{Result, Identifier};
+use AqHub\Player\Domain\ValueObjects\PlayerInventory;
+use AqHub\Shared\Domain\Abstractions\Entity;
 
 class Player extends Entity
 {

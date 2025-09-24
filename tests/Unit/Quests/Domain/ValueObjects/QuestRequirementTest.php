@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Quests\Domain\ValueObjects;
 
-use AqWiki\Quests\Domain\ValueObjects\{LevelRequirement, QuestRequirements, QuestRequirement};
-use AqWiki\Player\Domain\ValueObjects\PlayerInventory;
-use AqWiki\Shared\Domain\ValueObjects\Identifier;
-use AqWiki\Player\Domain\Entities\Player;
-use AqWiki\Quests\Domain\Entities\Quest;
+use AqHub\Quests\Domain\ValueObjects\{LevelRequirement, QuestRequirements, QuestRequirement};
+use AqHub\Player\Domain\ValueObjects\PlayerInventory;
+use AqHub\Shared\Domain\ValueObjects\Identifier;
+use AqHub\Player\Domain\Entities\Player;
+use AqHub\Quests\Domain\Entities\Quest;
 use PHPUnit\Framework\Attributes\Test;
-use AqWiki\Tests\Unit\TestCase;
+use AqHub\Tests\Unit\TestCase;
 
 final class QuestRequirementTest extends TestCase
 {

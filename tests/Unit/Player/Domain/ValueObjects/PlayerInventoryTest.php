@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Player\Domain\ValueObjects;
 
-use AqWiki\Player\Domain\ValueObjects\PlayerInventory;
-use AqWiki\Items\Domain\Entities\{Armor, Weapon};
+use AqHub\Player\Domain\ValueObjects\PlayerInventory;
+use AqHub\Items\Domain\Entities\{Armor, Weapon};
 use PHPUnit\Framework\Attributes\Test;
-use AqWiki\Tests\Unit\TestCase;
+use AqHub\Tests\Unit\TestCase;
 
 final class PlayerInventoryTest extends TestCase
 {

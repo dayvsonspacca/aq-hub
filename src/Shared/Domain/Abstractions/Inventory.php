@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Shared\Domain\Abstractions;
+namespace AqHub\Shared\Domain\Abstractions;
 
-use AqWiki\Items\Domain\Abstractions\AqwItem;
+use AqHub\Items\Domain\Abstractions\AqwItem;
 use IteratorAggregate;
 use ArrayIterator;
 use Countable;

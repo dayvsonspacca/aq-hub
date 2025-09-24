@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Items\Domain\Entities;
+namespace AqHub\Items\Domain\Entities;
 
-use AqWiki\Shared\Domain\ValueObjects\{Result, Identifier};
-use AqWiki\Items\Domain\ValueObjects\ItemInfo;
-use AqWiki\Items\Domain\Abstractions\AqwItem;
-use AqWiki\Items\Domain\Enums\WeaponType;
+use AqHub\Shared\Domain\ValueObjects\{Result, Identifier};
+use AqHub\Items\Domain\ValueObjects\ItemInfo;
+use AqHub\Items\Domain\Abstractions\AqwItem;
+use AqHub\Items\Domain\Enums\WeaponType;
 
 class Weapon extends AqwItem
 {

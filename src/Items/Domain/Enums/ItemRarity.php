@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Item\Domain\Enums;
+namespace AqHub\Item\Domain\Enums;
 
 enum ItemRarity
 {

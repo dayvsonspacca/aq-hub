@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Quests\Domain\ValueObjects;
 
-use AqWiki\Player\Domain\ValueObjects\PlayerInventory;
-use AqWiki\Quests\Domain\ValueObjects\ItemRequirement;
-use AqWiki\Shared\Domain\ValueObjects\Identifier;
-use AqWiki\Items\Domain\Entities\{Weapon, Armor};
-use AqWiki\Player\Domain\Entities\Player;
+use AqHub\Player\Domain\ValueObjects\PlayerInventory;
+use AqHub\Quests\Domain\ValueObjects\ItemRequirement;
+use AqHub\Shared\Domain\ValueObjects\Identifier;
+use AqHub\Items\Domain\Entities\{Weapon, Armor};
+use AqHub\Player\Domain\Entities\Player;
 use PHPUnit\Framework\Attributes\Test;
-use AqWiki\Tests\Unit\TestCase;
+use AqHub\Tests\Unit\TestCase;
 
 final class ItemRequirementTest extends TestCase
 {

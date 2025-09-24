@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Items\Domain\ValueObjects;
+namespace AqHub\Items\Domain\ValueObjects;
 
-use AqWiki\Shared\Domain\ValueObjects\Result;
-use AqWiki\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Shared\Domain\Enums\TagType;
 use IteratorAggregate;
 use ArrayIterator;
 use Countable;

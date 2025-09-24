@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AqWiki\Shared\Infrastructure\Database;
+namespace AqHub\Shared\Infrastructure\Database;
 
-use AqWiki\Shared\Domain\ValueObjects\Result;
+use AqHub\Shared\Domain\ValueObjects\Result;
 use PDOException;
 use PDO;
 
