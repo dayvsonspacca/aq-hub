@@ -48,7 +48,7 @@ class AqWikiScrapper
                 }
             }
 
-            if (is_null($description)) {
+            if (is_null($description ?? null)) {
                 return Result::error('Description not found for: ' . $name->value, null);
             }
 
