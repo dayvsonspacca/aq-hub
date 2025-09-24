@@ -14,7 +14,9 @@ use DomainException;
 
 class SqlPlayerRepository implements PlayerRepository
 {
-    public function __construct(private readonly Connection $db) {}
+    public function __construct(private readonly Connection $db)
+    {
+    }
 
     /**
      * @return Result<Player|null>

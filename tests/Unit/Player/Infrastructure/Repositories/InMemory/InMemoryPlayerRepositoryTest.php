@@ -20,7 +20,7 @@ final class InMemoryPlayerRepositoryTest extends TestCase
 
         $identifier = IntIdentifier::create(72894515)->unwrap();
         $name       = Name::create('Hilise')->unwrap();
-        $level = Level::create(1)->unwrap();
+        $level      = Level::create(1)->unwrap();
 
         $result = $repository->persist($identifier, $name, $level);
 
@@ -37,7 +37,7 @@ final class InMemoryPlayerRepositoryTest extends TestCase
 
         $identifier = IntIdentifier::create(72894515)->unwrap();
         $name       = Name::create('Hilise')->unwrap();
-        $level = Level::create(1)->unwrap();
+        $level      = Level::create(1)->unwrap();
 
         $repository->persist($identifier, $name, $level);
         $result = $repository->persist($identifier, $name, $level);
@@ -54,7 +54,7 @@ final class InMemoryPlayerRepositoryTest extends TestCase
 
         $identifier = IntIdentifier::create(72894515)->unwrap();
         $name       = Name::create('Hilise')->unwrap();
-        $level = Level::create(1)->unwrap();
+        $level      = Level::create(1)->unwrap();
 
         $repository->persist($identifier, $name, $level);
 

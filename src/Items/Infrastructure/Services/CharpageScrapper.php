@@ -18,7 +18,7 @@ class CharpageScrapper
     {
         try {
             $response = (new Client())->get('https://account.aq.com/CharPage?id=' . $name->value);
-            $html =  (string) $response->getBody();
+            $html     =  (string) $response->getBody();
 
             preg_match("/var\s+ccid\s*=\s*(\d+);/", $html ?? '', $matches);
             if (!isset($matches[1])) {

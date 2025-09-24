@@ -85,7 +85,7 @@ class MineCharpageItemsCommand extends Command
         $urls[] = $baseName . '-non-legend';
         $urls[] = $baseName . '-non-ac';
 
-        return array_map(fn($name) => 'http://aqwwiki.wikidot.com/' . $name, $urls);
+        return array_map(fn ($name) => 'http://aqwwiki.wikidot.com/' . $name, $urls);
     }
 
     private function slugify(string $string): string
@@ -110,7 +110,7 @@ class MineCharpageItemsCommand extends Command
 
         $charpage = $playerName->getData()->value;
 
-        
+
         $output->writeln('<fg=magenta;options=bold>⚔ Saving player...</>');
         $result = $this->addPlayer->execute($playerName->getData(), Level::create(1)->getData());
         if ($result->isError()) {
@@ -122,16 +122,16 @@ class MineCharpageItemsCommand extends Command
         $player = $result->getData();
 
         $output->writeln('<fg=green;options=bold>✔ Found AQW user ID (ccid):</> <fg=cyan>' . $player->getId() . '</>');
-        
+
         $response = $this->client->get('https://account.aq.com/CharPage/Inventory?ccid=' . $player->getId());
         $jsonData = json_decode($response->getBody()->getContents(), true);
-        $jsonData = array_filter($jsonData, fn($object) => $object['strName'] !== 'Inventory Hidden');
+        $jsonData = array_filter($jsonData, fn ($object) => $object['strName'] !== 'Inventory Hidden');
 
         $output->writeln('<fg=blue;options=bold>ℹ Found</> <fg=yellow>' . count($jsonData) . '</> <fg=blue;options=bold>items in</> <fg=cyan>' . $charpage . '</>.');
 
         $totalMined = 0;
 
-        $weapons = array_filter($jsonData, fn(array $object) => WeaponType::fromString($object['strType'])->isSuccess());
+        $weapons = array_filter($jsonData, fn (array $object) => WeaponType::fromString($object['strType'])->isSuccess());
         $output->writeln('<fg=blue;options=bold>ℹ Found</> <fg=yellow>' . count($weapons) . '</> <fg=blue;options=bold>weapons in</> <fg=cyan>' . $charpage . '</>.');
         $output->writeln('<fg=green;options=bold>▶ Starting to mine weapons info in AqWiki...</>');
 
@@ -206,7 +206,7 @@ class MineCharpageItemsCommand extends Command
 
         $output->writeln('');
 
-        $armors = array_filter($jsonData, fn(array $object) => $object['strType'] === 'Armor');
+        $armors = array_filter($jsonData, fn (array $object) => $object['strType'] === 'Armor');
         $output->writeln('<fg=blue;options=bold>ℹ Found</> <fg=yellow>' . count($armors) . '</> <fg=blue;options=bold>armors in</> <fg=cyan>' . $charpage . '</>.');
         $output->writeln('<fg=green;options=bold>▶ Starting to mine armors info in AqWiki...</>');
 

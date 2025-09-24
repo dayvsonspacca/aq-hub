@@ -11,7 +11,9 @@ use AqHub\Shared\Infrastructure\Http\Route;
 
 class PlayerController
 {
-    public function __construct(private readonly AddPlayer $addPlayer) {}
+    public function __construct(private readonly AddPlayer $addPlayer)
+    {
+    }
 
     #[Route(path: '/players/add', methods: ['POST'])]
     public function add(Request $request): JsonResponse

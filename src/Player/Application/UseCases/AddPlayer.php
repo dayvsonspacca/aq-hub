@@ -12,7 +12,9 @@ use AqHub\Player\Domain\Entities\Player;
 
 class AddPlayer
 {
-    public function __construct(private readonly PlayerRepository $playerRepository) {}
+    public function __construct(private readonly PlayerRepository $playerRepository)
+    {
+    }
 
     /**
      * @return Result<Player|null>
