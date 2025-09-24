@@ -118,7 +118,12 @@ class MineCharpageItemsCommand extends Command
         $ccid = $matches[1];
         $output->writeln('<fg=green;options=bold>✔ Found AQW user ID (ccid):</> <fg=cyan>' . $ccid . '</>');
 
-        $this->addPlayer->execute(Identifier::create((int) $ccid)->getData(), $playerName->getData());
+        $output->writeln('<fg=magenta;options=bold>⚔ Saving player...</>');
+        $result = $this->addPlayer->execute(Identifier::create((int) $ccid)->getData(), $playerName->getData());
+        if ($result->isError()) {
+            $output->writeln('<fg=red;options=bold>✘ Failed to persist player:</> <fg=yellow>' . $playerName->getData()->value . '</>');
+            $output->writeln('<fg=red>↳ Reason:</> ' . $result->getMessage());
+        }
 
         $response = $this->client->get('https://account.aq.com/CharPage/Inventory?ccid=' . $ccid);
         $jsonData = json_decode($response->getBody()->getContents(), true);
@@ -129,7 +134,7 @@ class MineCharpageItemsCommand extends Command
 
         $output->writeln('<fg=magenta;options=bold>⚔ Mining only weapons for now.</>');
         $output->writeln('<fg=blue;options=bold>ℹ Found</> <fg=yellow>' . count($weapons) . '</> <fg=blue;options=bold>weapons in</> <fg=cyan>' . $charpage . '</>.');
-        $output->writeln('<fg=green;options=bold>▶ Starting to mine items info in AqHub...</>');
+        $output->writeln('<fg=green;options=bold>▶ Starting to mine items info in AqWiki...</>');
 
         $totalMined = 0;
         foreach ($weapons as $object) {
