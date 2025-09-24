@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Quests\Domain\ValueObjects;
 
 use AqHub\Quests\Domain\ValueObjects\{LevelRequirement, QuestRequirements, QuestRequirement};
-use AqHub\Player\Domain\ValueObjects\{PlayerInventory, Name};
+use AqHub\Player\Domain\ValueObjects\{Level, PlayerInventory, Name};
 use AqHub\Shared\Domain\ValueObjects\Identifier;
 use AqHub\Player\Domain\Entities\Player;
 use AqHub\Quests\Domain\Entities\Quest;
@@ -36,7 +36,7 @@ final class QuestRequirementTest extends TestCase
         $questRequirement = new QuestRequirement($quest);
 
         $id        = Identifier::create(1)->unwrap();
-        $level     = 100;
+        $level     = Level::create(100)->unwrap();
         $inventory = $this->createMock(PlayerInventory::class);
         $name      = Name::create('Hilise')->unwrap();
 
@@ -62,7 +62,7 @@ final class QuestRequirementTest extends TestCase
         $questRequirement = new QuestRequirement($quest);
 
         $id        = Identifier::create(1)->unwrap();
-        $level     = 6;
+        $level     = Level::create(1)->unwrap();
         $inventory = $this->createMock(PlayerInventory::class);
         $name      = Name::create('Hilise')->unwrap();
 
