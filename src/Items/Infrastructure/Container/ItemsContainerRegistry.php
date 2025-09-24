@@ -29,14 +29,14 @@ class ItemsContainerRegistry implements ContainerRegistry
     {
         return [
             SqliteWeaponRepository::class => autowire()->constructor(get(Connection::class)),
-            WeaponRepository::class       => autowire(SqliteWeaponRepository::class)
+            WeaponRepository::class => autowire(SqliteWeaponRepository::class)
         ];
     }
 
     public static function registerCommands(): array
     {
         return [
-            AddItemCommand::class           => autowire(),
+            AddItemCommand::class => autowire(),
             MineCharpageItemsCommand::class => autowire()
         ];
     }

@@ -17,7 +17,7 @@ final class ItemIdentifierGeneratorTest extends TestCase
     #[Test]
     public function should_generate_same_identifier_for_same_item(): void
     {
-        $tags = new ItemTags([TagType::AdventureCoins, TagType::Legend]);
+        $tags  = new ItemTags([TagType::AdventureCoins, TagType::Legend]);
         $item1 = ItemInfo::create(Name::create('Burning Blade')->unwrap(), Description::create('A fiery sword')->unwrap(), $tags)->unwrap();
         $item2 = ItemInfo::create(Name::create('Burning Blade')->unwrap(), Description::create('A fiery sword')->unwrap(), $tags)->unwrap();
 
@@ -54,7 +54,7 @@ final class ItemIdentifierGeneratorTest extends TestCase
         $item = ItemInfo::create(Name::create('Burning Blade')->unwrap(), Description::create('A fiery sword')->unwrap(), $tags)->unwrap();
 
         $resultWeapon = ItemIdentifierGenerator::generate($item, Weapon::class);
-        $resultArmor = ItemIdentifierGenerator::generate($item,  Armor::class);
+        $resultArmor  = ItemIdentifierGenerator::generate($item, Armor::class);
 
         $this->assertTrue($resultWeapon->isSuccess());
         $this->assertTrue($resultArmor->isSuccess());

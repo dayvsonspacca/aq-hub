@@ -21,7 +21,7 @@ final class WeaponTest extends TestCase
         $description = 'The darkness compels… DOOOOOOOOOOOM!!!';
         $tags        = new ItemTags([TagType::AdventureCoins]);
         $type        = WeaponType::Sword;
-        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
+        $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
         $id          = ItemIdentifierGenerator::generate($itemInfo, Weapon::class)->unwrap();
 
         $weapon = Weapon::create(

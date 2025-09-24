@@ -19,7 +19,7 @@ final class ArmorTest extends TestCase
         $name        = 'ArchFiend DoomLord';
         $description = "Not even the dark magic of the Shadowscythe is enough to satisfy this soul's lust for power.";
         $tags        = new ItemTags([TagType::AdventureCoins]);
-        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
+        $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
         $id          = ItemIdentifierGenerator::generate($itemInfo, Armor::class)->unwrap();
 
         $armor = Armor::create(

@@ -41,10 +41,10 @@ class SqliteWeaponRepository implements WeaponRepository
 
             $query = 'INSERT INTO weapons (name, hash, description, type) VALUES (:name, :hash, :description, :type)';
             $this->db->execute($query, [
-                'name'        => $itemInfo->getName(),
-                'hash'        => $hash->getValue(),
+                'name' => $itemInfo->getName(),
+                'hash' => $hash->getValue(),
                 'description' => $itemInfo->getDescription(),
-                'type'        => $type->toString(),
+                'type' => $type->toString(),
             ]);
 
             $weaponId = $this->db->getConnection()->lastInsertId();

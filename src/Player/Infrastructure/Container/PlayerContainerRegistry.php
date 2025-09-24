@@ -28,7 +28,7 @@ class PlayerContainerRegistry implements ContainerRegistry
     {
         return [
             SqlitePlayerRepository::class => autowire()->constructor(get(Connection::class)),
-            PlayerRepository::class       => autowire(SqlitePlayerRepository::class)
+            PlayerRepository::class => autowire(SqlitePlayerRepository::class)
         ];
     }
 
