@@ -13,7 +13,7 @@ use AqHub\Items\Domain\Entities\Armor;
 use AqHub\Shared\Domain\Enums\TagType;
 use DomainException;
 
-class SqliteArmorRepository implements ArmorRepository
+class SqlArmorRepository implements ArmorRepository
 {
     public function __construct(private readonly Connection $db)
     {

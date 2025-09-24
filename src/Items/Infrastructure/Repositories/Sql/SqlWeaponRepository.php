@@ -14,7 +14,7 @@ use AqHub\Items\Domain\Entities\Weapon;
 use AqHub\Shared\Domain\Enums\TagType;
 use DomainException;
 
-class SqliteWeaponRepository implements WeaponRepository
+class SqlWeaponRepository implements WeaponRepository
 {
     public function __construct(private readonly Connection $db)
     {

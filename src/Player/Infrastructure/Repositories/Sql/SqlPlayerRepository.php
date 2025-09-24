@@ -12,11 +12,9 @@ use AqHub\Player\Domain\ValueObjects\{Level, Name};
 use AqHub\Player\Domain\Entities\Player;
 use DomainException;
 
-class SqlitePlayerRepository implements PlayerRepository
+class SqlPlayerRepository implements PlayerRepository
 {
-    public function __construct(private readonly Connection $db)
-    {
-    }
+    public function __construct(private readonly Connection $db) {}
 
     /**
      * @return Result<Player|null>
@@ -48,6 +46,9 @@ class SqlitePlayerRepository implements PlayerRepository
         }
     }
 
+    /**
+     * @return Result<Player|null>
+     */
     public function findByIdentifier(IntIdentifier $identifier): Result
     {
         $query      = 'SELECT * FROM players WHERE id = :id LIMIT 1';

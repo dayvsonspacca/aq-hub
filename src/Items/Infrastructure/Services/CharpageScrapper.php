@@ -22,7 +22,7 @@ class CharpageScrapper
 
             preg_match("/var\s+ccid\s*=\s*(\d+);/", $html ?? '', $matches);
             if (!isset($matches[1])) {
-                throw new DomainException('Could not found the ccid on page from charpage: '. $name->value);
+                throw new DomainException('Could not found the ccid on player charpage: '. $name->value);
             }
 
             $ccid = (int) $matches[1];

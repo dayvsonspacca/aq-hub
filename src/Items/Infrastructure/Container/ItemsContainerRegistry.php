@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Infrastructure\Container;
 
-use AqHub\Items\Infrastructure\Repositories\Sql\{SqliteWeaponRepository, SqliteArmorRepository};
+use AqHub\Items\Infrastructure\Repositories\Sql\{SqlWeaponRepository, SqlArmorRepository};
 use AqHub\Items\Infrastructure\Commands\{AddItemCommand, MineCharpageItemsCommand};
 use AqHub\Items\Domain\Repositories\{ArmorRepository, WeaponRepository};
 use AqHub\Shared\Infrastructure\Container\ContainerRegistry;
@@ -30,10 +30,10 @@ class ItemsContainerRegistry implements ContainerRegistry
     public static function registerRepositories(): array
     {
         return [
-            SqliteWeaponRepository::class => autowire()->constructor(get(Connection::class)),
-            SqliteArmorRepository::class => autowire()->constructor(get(Connection::class)),
-            WeaponRepository::class => autowire(SqliteWeaponRepository::class),
-            ArmorRepository::class => autowire(SqliteArmorRepository::class)
+            SqlWeaponRepository::class => autowire()->constructor(get(Connection::class)),
+            SqlArmorRepository::class => autowire()->constructor(get(Connection::class)),
+            WeaponRepository::class => autowire(SqlWeaponRepository::class),
+            ArmorRepository::class => autowire(SqlArmorRepository::class)
         ];
     }
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Container;
 
-use AqHub\Player\Infrastructure\Repositories\Sql\SqlitePlayerRepository;
+use AqHub\Player\Infrastructure\Repositories\Sql\SqlPlayerRepository;
 use AqHub\Player\Infrastructure\Http\Controllers\PlayerController;
 use AqHub\Shared\Infrastructure\Container\ContainerRegistry;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
@@ -29,8 +29,8 @@ class PlayerContainerRegistry implements ContainerRegistry
     public static function registerRepositories(): array
     {
         return [
-            SqlitePlayerRepository::class => autowire()->constructor(get(Connection::class)),
-            PlayerRepository::class => autowire(SqlitePlayerRepository::class)
+            SqlPlayerRepository::class => autowire()->constructor(get(Connection::class)),
+            PlayerRepository::class => autowire(SqlPlayerRepository::class)
         ];
     }
 
