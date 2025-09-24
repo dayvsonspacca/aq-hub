@@ -6,11 +6,14 @@ namespace AqHub\Items\Infrastructure\Commands;
 
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, Name, ItemTags};
 use Symfony\Component\Console\Input\{InputInterface, InputArgument};
+use AqHub\Player\Domain\ValueObjects\Name as PlayerName;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use AqHub\Items\Application\Weapon\AddWeapon;
 use AqHub\Items\Domain\Enums\WeaponType;
+use AqHub\Player\Application\AddPlayer;
 use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\ValueObjects\Identifier;
 use GuzzleHttp\Client;
 
 class MineCharpageItemsCommand extends Command
@@ -18,7 +21,8 @@ class MineCharpageItemsCommand extends Command
     private Client $client;
 
     public function __construct(
-        private readonly AddWeapon $addWeapon
+        private readonly AddWeapon $addWeapon,
+        private readonly AddPlayer $addPlayer
     ) {
         parent::__construct();
         $this->client = new Client();
@@ -97,6 +101,14 @@ class MineCharpageItemsCommand extends Command
         $start    = microtime(true);
         $charpage = $input->getArgument('charpage');
 
+        $playerName = PlayerName::create($charpage);
+        if ($playerName->isError()) {
+            $output->writeln($playerName->getMessage());
+            return Command::INVALID;
+        }
+
+        $charpage = $playerName->getData()->value;
+
         $html = $this->fetchHtml('https://account.aq.com/CharPage?id=' . $charpage);
         preg_match("/var\s+ccid\s*=\s*(\d+);/", $html ?? '', $matches);
         if (!isset($matches[1])) {
@@ -105,6 +117,8 @@ class MineCharpageItemsCommand extends Command
         }
         $ccid = $matches[1];
         $output->writeln('<fg=green;options=bold>✔ Found AQW user ID (ccid):</> <fg=cyan>' . $ccid . '</>');
+
+        $this->addPlayer->execute(Identifier::create((int) $ccid)->getData(), $playerName->getData());
 
         $response = $this->client->get('https://account.aq.com/CharPage/Inventory?ccid=' . $ccid);
         $jsonData = json_decode($response->getBody()->getContents(), true);
