@@ -15,19 +15,19 @@ class InMemoryPlayerRepository implements PlayerRepository
     private array $memory = [];
 
     /**
-     * @return Result<IntIdentifier|null>
+     * @return Result<Player|null>
      */
-    public function persist(IntIdentifier $identifier, Name $name): Result
+    public function persist(IntIdentifier $identifier, Name $name, Level $level): Result
     {
         if ($this->findByIdentifier($identifier)->isSuccess()) {
             return Result::error('A player with same id already exists: ' . $identifier->getValue(), null);
         }
 
-        $player = Player::create($identifier, $name, Level::create(1)->unwrap(), new PlayerInventory([], 30));
+        $player = Player::create($identifier, $name, $level, new PlayerInventory([], 30));
 
         $this->memory[$identifier->getValue()] = $player->getData();
 
-        return Result::success(null, $identifier);
+        return Result::success(null, $player);
     }
 
     /**

@@ -8,9 +8,8 @@ use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
 use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Player\Domain\ValueObjects\PlayerInventory;
 use AqHub\Shared\Infrastructure\Database\Connection;
+use AqHub\Player\Domain\ValueObjects\{Level, Name};
 use AqHub\Player\Domain\Entities\Player;
-use AqHub\Player\Domain\ValueObjects\Level;
-use AqHub\Player\Domain\ValueObjects\Name;
 use DomainException;
 
 class SqlitePlayerRepository implements PlayerRepository
@@ -20,9 +19,9 @@ class SqlitePlayerRepository implements PlayerRepository
     }
 
     /**
-     * @return Result<IntIdentifier|null>
+     * @return Result<Player|null>
      */
-    public function persist(IntIdentifier $identifier, Name $name): Result
+    public function persist(IntIdentifier $identifier, Name $name, Level $level): Result
     {
         try {
             $this->db->getConnection()->beginTransaction();
@@ -31,15 +30,18 @@ class SqlitePlayerRepository implements PlayerRepository
                 throw new DomainException('A player with same id already exists: ' . $identifier->getValue());
             }
 
-            $query = 'INSERT INTO players (id, name) VALUES (:id, :name)';
+            $query = 'INSERT INTO players (id, name, level) VALUES (:id, :name, :level)';
             $this->db->execute($query, [
                 'id' => $identifier->getValue(),
-                'name' => $name->value
+                'name' => $name->value,
+                'level' => $level->value
             ]);
+
+            $player = Player::create($identifier, $name, $level, new PlayerInventory([], 999))->unwrap();
 
             $this->db->getConnection()->commit();
 
-            return Result::success(null, $identifier);
+            return Result::success(null, $player);
         } catch (\Throwable $e) {
             $this->db->getConnection()->rollBack();
             return Result::error('Failed to persist player: ' . $e->getMessage() . ' at ' . $e->getLine(), null);
@@ -57,7 +59,7 @@ class SqlitePlayerRepository implements PlayerRepository
 
         $name = Name::create($playerData['name'])->getData();
 
-        $player = Player::create($identifier, $name, Level::create(1)->getData(), new PlayerInventory([], 999))->getData();
+        $player = Player::create($identifier, $name, Level::create((int) $playerData['level'])->getData(), new PlayerInventory([], 999))->getData();
 
         return Result::success(null, $player);
     }
