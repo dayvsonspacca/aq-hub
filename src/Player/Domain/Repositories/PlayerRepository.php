@@ -19,4 +19,9 @@ interface PlayerRepository
      * @return Result<Player|null>
      */
     public function findByIdentifier(IntIdentifier $identifier): Result;
+
+    /**
+     * @return Result<array<Player>>
+     */
+    public function findAll(): Result;
 }

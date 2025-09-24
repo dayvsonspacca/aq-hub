@@ -41,4 +41,9 @@ class InMemoryPlayerRepository implements PlayerRepository
 
         return Result::success(null, $this->memory[$identifier->getValue()]);
     }
+
+    public function findAll(): Result
+    {
+        return Result::success(null, $this->memory);
+    }
 }

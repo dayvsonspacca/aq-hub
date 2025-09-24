@@ -76,4 +76,39 @@ final class InMemoryPlayerRepositoryTest extends TestCase
         $this->assertTrue($result->isError());
         $this->assertSame(null, $result->getData());
     }
+
+    #[Test]
+    public function should_return_empty_array_when_find_all_without_persist()
+    {
+        $repository = new InMemoryPlayerRepository();
+        $result = $repository->findAll();
+
+        $this->assertTrue($result->isSuccess());
+        $this->assertSame([], $result->getData());
+    }
+
+
+    #[Test]
+    public function should_return_all_players()
+    {
+        $repository = new InMemoryPlayerRepository();
+        $result = $repository->findAll();
+        
+        $identifier = IntIdentifier::create(72894515)->unwrap();
+        $name       = Name::create('Hilise')->unwrap();
+        $level      = Level::create(1)->unwrap();
+
+        $repository->persist($identifier, $name, $level);
+
+        $identifier = IntIdentifier::create(72894516)->unwrap();
+        $name       = Name::create('Hilise2')->unwrap();
+        $level      = Level::create(1)->unwrap();
+
+        $repository->persist($identifier, $name, $level);
+
+        $result = $repository->findAll();
+
+        $this->assertTrue($result->isSuccess());
+        $this->assertSame(2, count($result->getData()));
+    }
 }
