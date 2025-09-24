@@ -82,8 +82,7 @@ class MineCharpageItemsCommand extends Command
 
         $urls[] = $baseName . '-non-legend';
         $urls[] = $baseName . '-non-ac';
-        $urls[] = $baseName . '-1';
-        $urls[] = $baseName . '-2';
+        
         return array_map(fn ($name) => 'http://aqwwiki.wikidot.com/' . $name, $urls);
     }
 
