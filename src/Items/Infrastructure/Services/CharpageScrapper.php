@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Infrastructure\Services;
 
-use AqHub\Player\Domain\ValueObjects\Level;
 use AqHub\Shared\Domain\ValueObjects\{Result, IntIdentifier};
-use AqHub\Player\Domain\ValueObjects\Name;
+use AqHub\Player\Domain\ValueObjects\{Name, Level};
+use AqHub\Player\Infrastructure\Data\PlayerData;
 use GuzzleHttp\Client;
 use DomainException;
 
 class CharpageScrapper
 {
     /**
-     * @return Result<array|null>
+     * @return Result<PlayerData|null>
      */
-    public static function findIdentifier(Name $name): Result
+    public static function findPlayerData(Name $name): Result
     {
         try {
             $response = (new Client())->get('https://account.aq.com/CharPage?id=' . $name->value);
@@ -36,10 +36,7 @@ class CharpageScrapper
             
             $level = Level::create((int) $matches[1])->unwrap();
 
-            return Result::success(null, [
-                $identifier,
-                $level
-            ]);
+            return Result::success(null, new PlayerData($identifier, $name, $level));
         } catch (\Throwable $th) {
             return Result::error($th->getMessage(), null);
         }
