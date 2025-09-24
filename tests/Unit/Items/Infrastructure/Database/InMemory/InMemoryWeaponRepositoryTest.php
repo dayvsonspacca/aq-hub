@@ -36,7 +36,7 @@ final class InMemoryWeaponRepositoryTest extends TestCase
     }
 
     #[Test]
-    public function should_fail_when_persist_an_weapon_with_same_name()
+    public function should_fail_when_persist_an_weapon_with_same_identifier()
     {
         $repository = new InMemoryWeaponRepository();
 
@@ -53,11 +53,11 @@ final class InMemoryWeaponRepositoryTest extends TestCase
 
         $this->assertTrue($result->isError());
         $this->assertSame(null, $result->getData());
-        $this->assertSame('A Weapon with same name already exists: Necrotic Sword of Doom', $result->getMessage());
+        $this->assertSame('A Weapon with same identifier already exists: 87f3da3ead50247f5b890b3291b45c1a426537117e8a60703a70c5ae4f0481ad', $result->getMessage());
     }
 
     #[Test]
-    public function should_find_weapon_by_name()
+    public function should_find_weapon_by_identifier()
     {
         $repository = new InMemoryWeaponRepository();
 
@@ -66,9 +66,10 @@ final class InMemoryWeaponRepositoryTest extends TestCase
         $tags        = new ItemTags([TagType::AdventureCoins]);
         $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
         $weaponType  = WeaponType::Sword;
-        $repository->persist($itemInfo, $weaponType);
 
-        $result = $repository->findByName($name);
+        $id = $repository->persist($itemInfo, $weaponType)->unwrap();
+
+        $result = $repository->findByIdentifier($id);
 
         $this->assertTrue($result->isSuccess());
         $this->assertInstanceOf(Weapon::class, $result->unwrap());
@@ -76,13 +77,14 @@ final class InMemoryWeaponRepositoryTest extends TestCase
     }
 
     #[Test]
-    public function should_return_null_when_weapon_not_found_by_name()
+    public function should_return_null_when_weapon_not_found_by_identifier()
     {
         $repository = new InMemoryWeaponRepository();
 
         $name = 'Necrotic Sword of Doom';
+        $id = StringIdentifier::create($name)->unwrap();
 
-        $result = $repository->findByName($name);
+        $result = $repository->findByIdentifier($id);
 
         $this->assertTrue($result->isError());
         $this->assertSame(null, $result->getData());

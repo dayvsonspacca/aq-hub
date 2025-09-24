@@ -27,17 +27,18 @@ class SqliteWeaponRepository implements WeaponRepository
     {
         try {
             $this->db->getConnection()->beginTransaction();
-
-            if ($this->findByName($itemInfo->getName())->isSuccess()) {
-                throw new DomainException('A Weapon with same name already exists: ' . $itemInfo->getName());
-            }
-
+            
             $hash = ItemIdentifierGenerator::generate($itemInfo, Weapon::class);
             if ($hash->isError()) {
                 throw new DomainException('Failed to generate StringIdentifier: '. $hash->getMessage());
             }
 
             $hash = $hash->getData();
+
+            if ($this->findByIdentifier($hash)->isSuccess()) {
+                throw new DomainException('A Weapon with same identifier already exists: ' . $hash->getValue());
+            }
+
 
             $query = 'INSERT INTO weapons (name, hash, description, type) VALUES (:name, :hash, :description, :type)';
             $this->db->execute($query, [
@@ -69,10 +70,10 @@ class SqliteWeaponRepository implements WeaponRepository
     /**
      * @return Result<Weapon|null>
      */
-    public function findByName(string $name): Result
+    public function findByIdentifier(StringIdentifier $identifier): Result
     {
-        $query      = 'SELECT * FROM weapons WHERE name = :name LIMIT 1';
-        $weaponData = $this->db->fetchOne($query, ['name' => $name]);
+        $query      = 'SELECT * FROM weapons WHERE hash = :hash LIMIT 1';
+        $weaponData = $this->db->fetchOne($query, ['hash' => $identifier->getValue()]);
 
         if (!$weaponData) {
             return Result::error(null, null);

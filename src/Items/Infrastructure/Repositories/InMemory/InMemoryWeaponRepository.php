@@ -21,11 +21,11 @@ class InMemoryWeaponRepository implements WeaponRepository
      */
     public function persist(ItemInfo $itemInfo, WeaponType $type): Result
     {
-        if ($this->findByName($itemInfo->getName())->isSuccess()) {
-            return Result::error('A Weapon with same name already exists: ' . $itemInfo->getName(), null);
-        }
-
         $id = ItemIdentifierGenerator::generate($itemInfo, Weapon::class)->unwrap();
+
+        if ($this->findByIdentifier($id)->isSuccess()) {
+            return Result::error('A Weapon with same identifier already exists: ' . $id->getValue(), null);
+        }
 
         $weapon = Weapon::create($id, $itemInfo, $type)->unwrap();
 
@@ -37,9 +37,9 @@ class InMemoryWeaponRepository implements WeaponRepository
     /**
      * @return Result<Weapon|null>
      */
-    public function findByName(string $name): Result
+    public function findByIdentifier(StringIdentifier $identifier): Result
     {
-        $weapons = array_filter($this->memory, fn ($weapon) => $weapon->getName() === $name);
+        $weapons = array_filter($this->memory, fn ($weapon) => $weapon->getId() === $identifier->getValue());
 
         if (empty($weapons)) {
             return Result::error(null, null);

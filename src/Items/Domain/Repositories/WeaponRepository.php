@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Domain\Repositories;
 
-use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
+use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
 use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\Entities\Weapon;
@@ -12,12 +12,12 @@ use AqHub\Items\Domain\Entities\Weapon;
 interface WeaponRepository
 {
     /**
-     * @return Result<IntIdentifier|null>
+     * @return Result<StringIdentifier|null>
      */
     public function persist(ItemInfo $itemInfo, WeaponType $type): Result;
 
     /**
      * @return Result<Weapon|null>
      */
-    public function findByName(string $name): Result;
+    public function findByIdentifier(StringIdentifier $identifier): Result;
 }
