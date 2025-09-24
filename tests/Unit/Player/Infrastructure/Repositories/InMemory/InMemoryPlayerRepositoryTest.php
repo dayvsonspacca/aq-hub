@@ -7,6 +7,7 @@ namespace Tests\Unit\Items\Domain\ValueObjects;
 use AqHub\Player\Infrastructure\Repositories\InMemory\InMemoryPlayerRepository;
 use AqHub\Shared\Domain\ValueObjects\Identifier;
 use AqHub\Player\Domain\Entities\Player;
+use AqHub\Player\Domain\ValueObjects\Name;
 use PHPUnit\Framework\Attributes\Test;
 use AqHub\Tests\Unit\TestCase;
 
@@ -17,9 +18,10 @@ final class InMemoryPlayerRepositoryTest extends TestCase
     {
         $repository = new InMemoryPlayerRepository();
 
-        $identifier = Identifier::create(72894515)->getData();
+        $identifier = Identifier::create(72894515)->unwrap();
+        $name       = Name::create('Hilise')->unwrap();
 
-        $result = $repository->persist($identifier);
+        $result = $repository->persist($identifier, $name);
 
         $this->assertTrue($result->isSuccess());
         $this->assertInstanceOf(Identifier::class, $result->unwrap());
@@ -31,10 +33,11 @@ final class InMemoryPlayerRepositoryTest extends TestCase
     {
         $repository = new InMemoryPlayerRepository();
 
-        $identifier = Identifier::create(72894515)->getData();
+        $identifier = Identifier::create(72894515)->unwrap();
+        $name       = Name::create('Hilise')->unwrap();
 
-        $repository->persist($identifier);
-        $result = $repository->persist($identifier);
+        $repository->persist($identifier, $name);
+        $result = $repository->persist($identifier, $name);
 
         $this->assertTrue($result->isError());
         $this->assertSame(null, $result->getData());
@@ -46,8 +49,10 @@ final class InMemoryPlayerRepositoryTest extends TestCase
     {
         $repository = new InMemoryPlayerRepository();
 
-        $identifier = Identifier::create(72894515)->getData();
-        $repository->persist($identifier);
+        $identifier = Identifier::create(72894515)->unwrap();
+        $name       = Name::create('Hilise')->unwrap();
+
+        $repository->persist($identifier, $name);
 
         $result = $repository->findByIdentifier($identifier);
 
@@ -55,12 +60,12 @@ final class InMemoryPlayerRepositoryTest extends TestCase
         $this->assertInstanceOf(Player::class, $result->getData());
     }
 
-        #[Test]
+    #[Test]
     public function should_return_null_when_player_not_found_by_id()
     {
         $repository = new InMemoryPlayerRepository();
 
-        $identifier = Identifier::create(72894515)->getData();
+        $identifier = Identifier::create(72894515)->unwrap();
 
         $result = $repository->findByIdentifier($identifier);
 
