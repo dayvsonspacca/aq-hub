@@ -38,5 +38,19 @@ services:
     networks:
       - aqhub
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: aqhub-pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - aqhub
+
 networks:
   aqhub:
