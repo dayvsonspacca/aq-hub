@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Items\Domain\Entities;
 
-use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, ItemInfo, Name};
-use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
-use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\Entities\Weapon;
+use AqHub\Items\Domain\Enums\WeaponType;
+use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
+use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
 use AqHub\Shared\Domain\Enums\TagType;
-use PHPUnit\Framework\Attributes\Test;
 use AqHub\Tests\Unit\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class WeaponTest extends TestCase
 {

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Domain\ValueObjects;
 
-use AqHub\Shared\Domain\Abstractions\Inventory;
-use AqHub\Shared\Domain\ValueObjects\Result;
 use AqHub\Items\Domain\Abstractions\AqwItem;
+use AqHub\Shared\Domain\Abstractions\Inventory;
 use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\ValueObjects\Result;
 
 class PlayerInventory extends Inventory
 {

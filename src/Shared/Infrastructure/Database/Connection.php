@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace AqHub\Shared\Infrastructure\Database;
 
 use AqHub\Shared\Domain\ValueObjects\Result;
-use PDOException;
 use PDO;
+use PDOException;
 
 class Connection
 {

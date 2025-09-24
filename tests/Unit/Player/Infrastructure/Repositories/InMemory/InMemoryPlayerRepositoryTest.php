@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Items\Domain\ValueObjects;
 
+use AqHub\Player\Domain\Entities\Player;
+use AqHub\Player\Domain\ValueObjects\{Level, Name};
 use AqHub\Player\Infrastructure\Repositories\InMemory\InMemoryPlayerRepository;
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
-use AqHub\Player\Domain\ValueObjects\{Name ,Level};
-use AqHub\Player\Domain\Entities\Player;
-use PHPUnit\Framework\Attributes\Test;
 use AqHub\Tests\Unit\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class InMemoryPlayerRepositoryTest extends TestCase
 {
@@ -81,7 +81,7 @@ final class InMemoryPlayerRepositoryTest extends TestCase
     public function should_return_empty_array_when_find_all_without_persist()
     {
         $repository = new InMemoryPlayerRepository();
-        $result = $repository->findAll();
+        $result     = $repository->findAll();
 
         $this->assertTrue($result->isSuccess());
         $this->assertSame([], $result->getData());
@@ -92,8 +92,8 @@ final class InMemoryPlayerRepositoryTest extends TestCase
     public function should_return_all_players()
     {
         $repository = new InMemoryPlayerRepository();
-        $result = $repository->findAll();
-        
+        $result     = $repository->findAll();
+
         $identifier = IntIdentifier::create(72894515)->unwrap();
         $name       = Name::create('Hilise')->unwrap();
         $level      = Level::create(1)->unwrap();

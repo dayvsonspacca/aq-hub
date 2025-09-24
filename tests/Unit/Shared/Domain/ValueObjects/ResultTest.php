@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit\Shared\Domain\ValueObjects;
 
 use AqHub\Shared\Domain\ValueObjects\Result;
-use AqHub\Shared\Domain\Enums\ResultStatus;
-use PHPUnit\Framework\Attributes\Test;
 use AqHub\Tests\Unit\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class ResultTest extends TestCase
 {

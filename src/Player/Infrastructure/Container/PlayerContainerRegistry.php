@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Container;
 
-use AqHub\Player\Infrastructure\Repositories\Sql\SqlPlayerRepository;
-use AqHub\Player\Infrastructure\Http\Controllers\PlayerController;
 use AqHub\Player\Application\UseCases\{AddPlayer, FindAllPlayers};
-use AqHub\Shared\Infrastructure\Container\ContainerRegistry;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
+use AqHub\Player\Infrastructure\Http\Controllers\PlayerController;
+use AqHub\Player\Infrastructure\Repositories\Sql\SqlPlayerRepository;
+use AqHub\Shared\Infrastructure\Container\ContainerRegistry;
 use AqHub\Shared\Infrastructure\Database\Connection;
 
-use function DI\autowire;
-use function DI\get;
+use function DI\{autowire, get};
 
 class PlayerContainerRegistry implements ContainerRegistry
 {

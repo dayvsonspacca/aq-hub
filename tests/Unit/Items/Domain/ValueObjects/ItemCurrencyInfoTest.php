@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\Unit\Items\Domain\ValueObjects;
 
 use AqHub\Items\Domain\ValueObjects\ItemCurrencyInfo;
-use AqHub\Shared\Domain\ValueObjects\GameCurrency;
 use AqHub\Shared\Domain\Enums\CurrencyType;
-use PHPUnit\Framework\Attributes\Test;
+use AqHub\Shared\Domain\ValueObjects\GameCurrency;
 use AqHub\Tests\Unit\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class ItemCurrencyInfoTest extends TestCase
 {

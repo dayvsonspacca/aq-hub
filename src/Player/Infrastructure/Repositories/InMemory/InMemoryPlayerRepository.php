@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Repositories\InMemory;
 
-use AqHub\Player\Domain\ValueObjects\{Name, Level, PlayerInventory};
-use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
-use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Player\Domain\Entities\Player;
+use AqHub\Player\Domain\Repositories\PlayerRepository;
+use AqHub\Player\Domain\ValueObjects\{Level, Name, PlayerInventory};
+use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
 
 class InMemoryPlayerRepository implements PlayerRepository
 {

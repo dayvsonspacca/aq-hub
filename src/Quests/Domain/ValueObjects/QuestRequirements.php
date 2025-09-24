@@ -6,9 +6,9 @@ namespace AqHub\Quests\Domain\ValueObjects;
 
 use AqHub\Quests\Domain\Contracts\QuestRequirementInterface;
 use AqHub\Shared\Domain\ValueObjects\Result;
-use IteratorAggregate;
 use ArrayIterator;
 use Countable;
+use IteratorAggregate;
 
 class QuestRequirements implements Countable, IteratorAggregate
 {

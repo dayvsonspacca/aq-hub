@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace AqHub\Shared\Domain\Abstractions;
 
 use AqHub\Items\Domain\Abstractions\AqwItem;
-use IteratorAggregate;
 use ArrayIterator;
 use Countable;
+use IteratorAggregate;
 
 abstract class Inventory implements Countable, IteratorAggregate
 {

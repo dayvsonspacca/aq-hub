@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Infrastructure\Http;
 
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Symfony\Component\Routing\Exception\MethodNotAllowedException;
-use Symfony\Component\Routing\{RouteCollection, RequestContext};
-use Symfony\Component\HttpFoundation\{JsonResponse, Request};
-use Symfony\Component\Routing\Route as SymfonyRoute;
-use Symfony\Component\Routing\Matcher\UrlMatcher;
-use ReflectionClass;
 use DI\Container;
+use ReflectionClass;
+use Symfony\Component\HttpFoundation\{JsonResponse, Request};
+use Symfony\Component\Routing\Exception\{MethodNotAllowedException, ResourceNotFoundException};
+use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Routing\Route as SymfonyRoute;
+use Symfony\Component\Routing\{RequestContext, RouteCollection};
 
 class Application
 {

@@ -6,8 +6,8 @@ namespace Tests\Unit\Items\Domain\ValueObjects;
 
 use AqHub\Items\Domain\ValueObjects\ItemTags;
 use AqHub\Shared\Domain\Enums\TagType;
-use PHPUnit\Framework\Attributes\Test;
 use AqHub\Tests\Unit\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class ItemTagsTest extends TestCase
 {

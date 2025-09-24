@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Repositories\Sql;
 
-use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
+use AqHub\Player\Domain\Entities\Player;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Player\Domain\ValueObjects\PlayerInventory;
-use AqHub\Shared\Infrastructure\Database\Connection;
 use AqHub\Player\Domain\ValueObjects\{Level, Name};
-use AqHub\Player\Domain\Entities\Player;
+use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
+use AqHub\Shared\Infrastructure\Database\Connection;
 use DomainException;
 
 class SqlPlayerRepository implements PlayerRepository
@@ -69,7 +69,7 @@ class SqlPlayerRepository implements PlayerRepository
 
     public function findAll(): Result
     {
-        $query = 'SELECT * FROM players';
+        $query       = 'SELECT * FROM players';
         $playersData = $this->db->fetchAll($query);
 
         if (!$playersData) {
@@ -78,12 +78,12 @@ class SqlPlayerRepository implements PlayerRepository
 
         foreach ($playersData as $playerData) {
             $identifier = IntIdentifier::create((int) $playerData['id'])->getData();
-            $name = Name::create($playerData['name'])->getData();
-            $level = Level::create((int) $playerData['level'])->getData();
-            $inventory = new PlayerInventory([], 999);
+            $name       = Name::create($playerData['name'])->getData();
+            $level      = Level::create((int) $playerData['level'])->getData();
+            $inventory  = new PlayerInventory([], 999);
 
             $player = Player::create($identifier, $name, $level, $inventory)->getData();
-            
+
             $players[] = $player;
         }
 

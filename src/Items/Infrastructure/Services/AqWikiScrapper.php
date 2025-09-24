@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Infrastructure\Services;
 
-use AqHub\Items\Domain\ValueObjects\{Name, Description, ItemTags};
+use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, Name};
 use AqHub\Items\Infrastructure\Data\ItemData;
-use AqHub\Shared\Domain\ValueObjects\Result;
 use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\ValueObjects\Result;
 use GuzzleHttp\Client;
 
 class AqWikiScrapper
@@ -18,7 +18,7 @@ class AqWikiScrapper
     public static function findItemData(Name $name)
     {
         try {
-            $urls = self::generatePossibleUrls($name);
+            $urls     = self::generatePossibleUrls($name);
             $itemTags = new ItemTags();
 
             foreach ($urls as $url) {

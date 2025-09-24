@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Application\UseCases\Weapon;
 
+use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\Repositories\WeaponRepository;
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
 use AqHub\Shared\Domain\ValueObjects\Result;
-use AqHub\Items\Domain\Enums\WeaponType;
 
 class AddWeapon
 {

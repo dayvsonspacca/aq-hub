@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Infrastructure\Repositories\InMemory;
 
-use AqHub\Shared\Domain\ValueObjects\{StringIdentifier, Result};
-use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
-use AqHub\Items\Domain\Repositories\ArmorRepository;
-use AqHub\Items\Domain\ValueObjects\ItemInfo;
 use AqHub\Items\Domain\Entities\Armor;
+use AqHub\Items\Domain\Repositories\ArmorRepository;
+use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
+use AqHub\Items\Domain\ValueObjects\ItemInfo;
+use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 
 class InMemoryArmorRepository implements ArmorRepository
 {

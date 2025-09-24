@@ -17,6 +17,7 @@ return (new PhpCsFixer\Config())
         'ordered_imports' => [
             'sort_algorithm' => 'alpha',
         ],
-        'group_imports' => ['group_classes' => true, 'group_functions' => true, 'group_constants' => true],
+        'group_import' => ['group_types' => ['classy', 'functions', 'constants']],
+        'single_import_per_statement' => false
     ])
     ->setFinder($finder);

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Player\Domain\Entities;
 
-use AqHub\Player\Domain\ValueObjects\{Level, PlayerInventory, Name};
-use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 use AqHub\Player\Domain\Entities\Player;
-use PHPUnit\Framework\Attributes\Test;
+use AqHub\Player\Domain\ValueObjects\{Level, Name, PlayerInventory};
+use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 use AqHub\Tests\Unit\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class PlayerTest extends TestCase
 {

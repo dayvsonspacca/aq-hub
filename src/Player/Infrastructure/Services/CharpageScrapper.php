@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Services;
 
-use AqHub\Shared\Domain\ValueObjects\{Result, IntIdentifier};
 use AqHub\Items\Domain\ValueObjects\Name as ItemName;
-use AqHub\Player\Domain\ValueObjects\{Name, Level};
+use AqHub\Player\Domain\ValueObjects\{Level, Name};
 use AqHub\Player\Infrastructure\Data\PlayerData;
-use GuzzleHttp\Client;
+use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
 use DomainException;
+use GuzzleHttp\Client;
 
 class CharpageScrapper
 {
@@ -27,7 +27,7 @@ class CharpageScrapper
                 throw new DomainException('Could not found the ccid on player charpage: ' . $name->value);
             }
 
-            $ccid = (int) $matches[1];
+            $ccid       = (int) $matches[1];
             $identifier = IntIdentifier::create($ccid)->unwrap();
 
             preg_match('/<label>\s*Level:\s*<\/label>\s*(\d+)/i', $html, $matches);
@@ -55,14 +55,14 @@ class CharpageScrapper
             $response = (new Client())->get('https://account.aq.com/CharPage/Inventory?ccid=' . $identifier->getValue());
             $jsonData = json_decode($response->getBody()->getContents(), true);
 
-            $jsonData = array_filter($jsonData, fn($obj) => $obj['strName'] !== 'Inventory Hidden');
+            $jsonData = array_filter($jsonData, fn ($obj) => $obj['strName'] !== 'Inventory Hidden');
 
             $itemsByType = [];
 
             foreach ($jsonData as $obj) {
                 $nameResult = ItemName::create($obj['strName']);
                 if ($nameResult->isSuccess()) {
-                    $type = $obj['strType'] ?? 'Unknown';
+                    $type                 = $obj['strType'] ?? 'Unknown';
                     $itemsByType[$type][] = $nameResult->unwrap();
                 }
             }

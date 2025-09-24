@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AqHub\Quests\Domain\ValueObjects;
 
-use AqHub\Quests\Domain\Contracts\QuestRequirementInterface;
 use AqHub\Items\Domain\Abstractions\AqwItem;
 use AqHub\Player\Domain\Entities\Player;
+use AqHub\Quests\Domain\Contracts\QuestRequirementInterface;
 
 class ItemRequirement implements QuestRequirementInterface
 {

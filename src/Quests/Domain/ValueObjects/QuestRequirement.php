@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Quests\Domain\ValueObjects;
 
-use AqHub\Quests\Domain\Contracts\QuestRequirementInterface;
 use AqHub\Player\Domain\Entities\Player;
+use AqHub\Quests\Domain\Contracts\QuestRequirementInterface;
 use AqHub\Quests\Domain\Entities\Quest;
 
 class QuestRequirement implements QuestRequirementInterface

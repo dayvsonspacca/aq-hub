@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Infrastructure\Commands;
 
-use AqHub\Player\Infrastructure\Services\CharpageScrapper;
-use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
-use Symfony\Component\Console\Output\OutputInterface;
-use AqHub\Player\Application\UseCases\FindAllPlayers;
 use AqHub\Items\Application\UseCases\Armor\AddArmor;
+use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
 use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
 use AqHub\Items\Infrastructure\Services\AqWikiScrapper;
+use AqHub\Player\Application\UseCases\FindAllPlayers;
+use AqHub\Player\Infrastructure\Services\CharpageScrapper;
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class MineAllPlayersItemsCommand extends Command
 {
@@ -44,7 +44,7 @@ class MineAllPlayersItemsCommand extends Command
             return Command::FAILURE;
         }
 
-        $players = $players->getData();
+        $players    = $players->getData();
         $totalMined = 0;
 
         foreach ($players as $player) {
@@ -60,7 +60,7 @@ class MineAllPlayersItemsCommand extends Command
             $itemsByType = $itemsByType->getData();
 
             foreach ($itemsByType as $type => $items) {
-                $output->writeln("<fg=blue;options=bold>ℹ Found " . count($items) . " item(s) of type <fg=yellow>{$type}</> for player <fg=cyan>{$player->getName()}</>:</>");
+                $output->writeln('<fg=blue;options=bold>ℹ Found ' . count($items) . " item(s) of type <fg=yellow>{$type}</> for player <fg=cyan>{$player->getName()}</>:</>");
 
                 foreach ($items as $itemName) {
                     $output->writeln("<fg=cyan>🔎 Mining item:</> <fg=yellow>{$itemName->value}</> (<fg=magenta>{$type}</>)");
@@ -100,9 +100,9 @@ class MineAllPlayersItemsCommand extends Command
             $output->writeln('');
         }
 
-        $output->writeln("<fg=green;options=bold>✔ Finished mining all players.</>");
+        $output->writeln('<fg=green;options=bold>✔ Finished mining all players.</>');
         $output->writeln("<fg=blue>Total items mined: <fg=yellow>{$totalMined}</></>");
-        $output->writeln("<fg=blue;options=bold>⏱ Process took</> <fg=green>" . round(microtime(true) - $start, 2) . "s</>.");
+        $output->writeln('<fg=blue;options=bold>⏱ Process took</> <fg=green>' . round(microtime(true) - $start, 2) . 's</>.');
 
         return Command::SUCCESS;
     }

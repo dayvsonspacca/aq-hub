@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit\Player\Domain\ValueObjects;
 
 use AqHub\Player\Domain\ValueObjects\Name;
-use PHPUnit\Framework\Attributes\Test;
 use AqHub\Tests\Unit\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class NameTest extends TestCase
 {

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Domain\ValueObjects;
 
-use AqHub\Shared\Domain\ValueObjects\Result;
 use AqHub\Shared\Domain\Enums\TagType;
-use IteratorAggregate;
+use AqHub\Shared\Domain\ValueObjects\Result;
 use ArrayIterator;
 use Countable;
+use IteratorAggregate;
 
 class ItemTags implements Countable, IteratorAggregate
 {

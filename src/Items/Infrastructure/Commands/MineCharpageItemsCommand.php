@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Infrastructure\Commands;
 
-use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, Name, ItemTags};
-use Symfony\Component\Console\Input\{InputInterface, InputArgument};
-use AqHub\Player\Domain\ValueObjects\Name as PlayerName;
-use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
-use Symfony\Component\Console\Output\OutputInterface;
 use AqHub\Items\Application\UseCases\Armor\AddArmor;
-use AqHub\Player\Application\UseCases\AddPlayer;
-use Symfony\Component\Console\Command\Command;
-use AqHub\Player\Domain\ValueObjects\Level;
+use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
 use AqHub\Items\Domain\Enums\WeaponType;
+use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
+use AqHub\Player\Application\UseCases\AddPlayer;
+use AqHub\Player\Domain\ValueObjects\{Name as PlayerName};
 use AqHub\Shared\Domain\Enums\TagType;
 use GuzzleHttp\Client;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\{InputArgument, InputInterface};
+use Symfony\Component\Console\Output\OutputInterface;
 
 class MineCharpageItemsCommand extends Command
 {

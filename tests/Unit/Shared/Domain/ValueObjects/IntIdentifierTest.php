@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit\Shared\Domain\ValueObjects;
 
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
-use PHPUnit\Framework\Attributes\Test;
 use AqHub\Tests\Unit\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class IdentifierTest extends TestCase
 {

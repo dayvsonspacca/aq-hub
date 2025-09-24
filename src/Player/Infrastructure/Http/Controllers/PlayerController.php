@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Http\Controllers;
 
-use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
-use AqHub\Player\Domain\ValueObjects\{Level, Name};
 use AqHub\Player\Application\UseCases\AddPlayer;
+use AqHub\Player\Domain\ValueObjects\{Name};
 use AqHub\Shared\Infrastructure\Http\Route;
+use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
 
 class PlayerController
 {
