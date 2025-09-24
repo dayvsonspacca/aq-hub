@@ -8,13 +8,13 @@ use AqHub\Player\Domain\ValueObjects\Level;
 use PHPUnit\Framework\Attributes\Test;
 use AqHub\Tests\Unit\TestCase;
 
-final class NameTest extends TestCase
+final class LevelTest extends TestCase
 {
     #[Test]
     public function should_create_level_and_store_it_data()
     {
         $level   = 100;
-        $result = Level::create($level);
+        $result  = Level::create($level);
 
         $this->assertTrue($result->isSuccess());
         $this->assertInstanceOf(Level::class, $result->getData());

@@ -11,7 +11,9 @@ class Level
     public const int MAX = 100;
     public const int MIN = 1;
 
-    private function __construct(public readonly int $value) {}
+    private function __construct(public readonly int $value)
+    {
+    }
 
     /**
      * @return Result<Level|null>
