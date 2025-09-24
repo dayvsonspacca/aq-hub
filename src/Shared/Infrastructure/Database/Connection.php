@@ -32,6 +32,16 @@ class Connection
                         return Result::error('To use sqlite you must specify the path.', null);
                     }
                     $pdo = new PDO('sqlite:' . $path);
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                    $schemaFile = 'database/sqlite_schema.sql';
+                    if (file_exists($schemaFile)) {
+                        $sql = file_get_contents($schemaFile);
+                        if ($sql !== false) {
+                            $pdo->exec($sql);
+                        }
+                    }
+
                     break;
 
                 default:
