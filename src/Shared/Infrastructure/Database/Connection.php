@@ -18,36 +18,15 @@ class Connection
     }
 
     public static function connect(
-        string $driver = 'sqlite',
-        string $host = '',
-        string $dbname = '',
-        string $username = '',
-        string $password = '',
-        string $path = ''
+        string $host,
+        string $dbname,
+        string $username,
+        string $password,
+        int $port = 5432
     ): Result {
         try {
-            switch ($driver) {
-                case 'sqlite':
-                    if (empty($path)) {
-                        return Result::error('To use sqlite you must specify the path.', null);
-                    }
-                    $pdo = new PDO('sqlite:' . $path);
-                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                    $schemaFile = 'database/sqlite_schema.sql';
-                    if (file_exists($schemaFile)) {
-                        $sql = file_get_contents($schemaFile);
-                        if ($sql !== false) {
-                            $pdo->exec($sql);
-                        }
-                    }
-
-                    break;
-
-                default:
-                    return Result::error("Driver {$driver} not supported.", null);
-            }
-
+            $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
+            $pdo = new PDO($dsn, $username, $password);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             return Result::success('Connection established.', new self($pdo));

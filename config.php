@@ -10,12 +10,16 @@ return array_merge(
     [
         Connection::class => function () {
             $db = Connection::connect(
-                path: __DIR__ . '/database/db.sqlite'
+                host: 'db',
+                dbname: 'aqhub',
+                username: 'aqhub',
+                password: 'aqhub',
+                port: 5432
             );
 
             if ($db->isError()) {
-                echo $db->getMessage() . PHP_EOL;
-                exit(0);
+                echo '[DB ERROR] ' . $db->getMessage() . PHP_EOL;
+                exit(1);
             }
 
             return $db->getData();
