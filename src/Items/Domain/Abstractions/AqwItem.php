@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Domain\Abstractions;
 
-use AqHub\Items\Domain\ValueObjects\ItemInfo;
-use AqHub\Items\Domain\ValueObjects\ItemTags;
+use AqHub\Items\Domain\ValueObjects\{ItemInfo, ItemTags};
 use AqHub\Shared\Domain\Abstractions\Entity;
 
 abstract class AqwItem extends Entity

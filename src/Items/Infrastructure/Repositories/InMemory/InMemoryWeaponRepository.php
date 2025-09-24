@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Infrastructure\Repositories\InMemory;
 
-use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
+use AqHub\Shared\Domain\ValueObjects\{StringIdentifier, Result};
+use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\Repositories\WeaponRepository;
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
 use AqHub\Items\Domain\Enums\WeaponType;
@@ -16,7 +17,7 @@ class InMemoryWeaponRepository implements WeaponRepository
     private array $memory = [];
 
     /**
-     * @return Result<IntIdentifier|null>
+     * @return Result<StringIdentifier|null>
      */
     public function persist(ItemInfo $itemInfo, WeaponType $type): Result
     {
@@ -24,11 +25,7 @@ class InMemoryWeaponRepository implements WeaponRepository
             return Result::error('A Weapon with same name already exists: ' . $itemInfo->getName(), null);
         }
 
-        $id = IntIdentifier::create(
-            end($this->memory) ? end($this->memory)->getId() + 1 : 1
-        );
-
-        $id = $id->unwrap();
+        $id = ItemIdentifierGenerator::generate($itemInfo, Weapon::class)->unwrap();
 
         $weapon = Weapon::create($id, $itemInfo, $type)->unwrap();
 

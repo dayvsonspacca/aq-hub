@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Items\Domain\ValueObjects;
 
-use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, ItemInfo, Name};
 use AqHub\Items\Infrastructure\Repositories\InMemory\InMemoryWeaponRepository;
-use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
+use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, ItemInfo, Name};
+use AqHub\Shared\Domain\ValueObjects\StringIdentifier;
 use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\Entities\Weapon;
 use AqHub\Shared\Domain\Enums\TagType;
@@ -31,8 +31,8 @@ final class InMemoryWeaponRepositoryTest extends TestCase
         $result = $repository->persist($itemInfo, $weaponType);
 
         $this->assertTrue($result->isSuccess());
-        $this->assertInstanceOf(IntIdentifier::class, $result->unwrap());
-        $this->assertSame(1, $result->unwrap()->getValue());
+        $this->assertInstanceOf(StringIdentifier::class, $result->unwrap());
+        $this->assertSame('87f3da3ead50247f5b890b3291b45c1a426537117e8a60703a70c5ae4f0481ad', $result->unwrap()->getValue());
     }
 
     #[Test]

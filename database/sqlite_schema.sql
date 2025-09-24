@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS weapons (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL,
+    hash TEXT NOT NULL,
     description TEXT NOT NULL,
     type TEXT NOT NULL CHECK(type IN (
         'Axe', 'Bow', 'Dagger', 'Gauntlet', 'Gun', 

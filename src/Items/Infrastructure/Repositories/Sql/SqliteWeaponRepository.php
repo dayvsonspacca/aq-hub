@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace AqHub\Items\Infrastructure\Repositories\Sql;
 
 use AqHub\Items\Domain\ValueObjects\{Description, Name, ItemTags, ItemInfo};
-use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
+use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 use AqHub\Items\Domain\Repositories\WeaponRepository;
 use AqHub\Shared\Infrastructure\Database\Connection;
 use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\Entities\Weapon;
+use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Shared\Domain\Enums\TagType;
 use DomainException;
 
@@ -20,7 +21,7 @@ class SqliteWeaponRepository implements WeaponRepository
     }
 
     /**
-     * @return Result<IntIdentifier|null>
+     * @return Result<StringIdentifier|null>
      */
     public function persist(ItemInfo $itemInfo, WeaponType $type): Result
     {
@@ -31,11 +32,19 @@ class SqliteWeaponRepository implements WeaponRepository
                 throw new DomainException('A Weapon with same name already exists: ' . $itemInfo->getName());
             }
 
-            $query = 'INSERT INTO weapons (name, description, type) VALUES (:name, :description, :type)';
+            $hash = ItemIdentifierGenerator::generate($itemInfo, Weapon::class);
+            if ($hash->isError()) {
+                throw new DomainException('Failed to generate StringIdentifier: '. $hash->getMessage());
+            }
+
+            $hash = $hash->getData();
+
+            $query = 'INSERT INTO weapons (name, hash, description, type) VALUES (:name, :hash, :description, :type)';
             $this->db->execute($query, [
-                'name' => $itemInfo->getName(),
+                'name'        => $itemInfo->getName(),
+                'hash'        => $hash->getValue(),
                 'description' => $itemInfo->getDescription(),
-                'type' => $type->toString(),
+                'type'        => $type->toString(),
             ]);
 
             $weaponId = $this->db->getConnection()->lastInsertId();
@@ -50,7 +59,7 @@ class SqliteWeaponRepository implements WeaponRepository
 
             $this->db->getConnection()->commit();
 
-            return Result::success(null, IntIdentifier::create((int) $weaponId)->unwrap());
+            return Result::success(null, $hash);
         } catch (\Throwable $e) {
             $this->db->getConnection()->rollBack();
             return Result::error('Failed to persist weapon: ' . $e->getMessage() . ' at ' . $e->getLine(), null);
@@ -81,7 +90,7 @@ class SqliteWeaponRepository implements WeaponRepository
         $weaponType = WeaponType::fromString($weaponData['type'])->unwrap();
 
         $weapon = Weapon::create(
-            IntIdentifier::create((int)$weaponData['id'])->unwrap(),
+            StringIdentifier::create($weaponData['hash'])->unwrap(),
             $itemInfo,
             $weaponType
         )->unwrap();
