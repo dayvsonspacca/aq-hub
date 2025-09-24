@@ -4,7 +4,7 @@ CREATE TYPE weapon_type AS ENUM (
 );
 
 CREATE TYPE item_tag AS ENUM (
-    'Legend', 'Adventure Coins', 'Rare', 'Pseudo Rare', 'Seasonal'
+    'Legend', 'Adventure Coins', 'Rare', 'Pseudo Rare', 'Seasonal', 'Special Offer'
 );
 
 CREATE TABLE IF NOT EXISTS weapons (
