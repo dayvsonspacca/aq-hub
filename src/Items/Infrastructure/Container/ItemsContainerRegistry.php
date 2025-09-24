@@ -7,9 +7,9 @@ namespace AqHub\Items\Infrastructure\Container;
 use AqHub\Items\Infrastructure\Commands\{AddItemCommand, MineCharpageItemsCommand};
 use AqHub\Items\Infrastructure\Repositories\Sql\SqliteWeaponRepository;
 use AqHub\Shared\Infrastructure\Container\ContainerRegistry;
+use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
 use AqHub\Items\Domain\Repositories\WeaponRepository;
 use AqHub\Shared\Infrastructure\Database\Connection;
-use AqHub\Items\Application\Weapon\AddWeapon;
 
 use function DI\autowire;
 use function DI\get;

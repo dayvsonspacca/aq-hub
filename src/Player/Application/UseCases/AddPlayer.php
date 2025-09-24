@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Player\Application;
+namespace AqHub\Player\Application\UseCases;
 
 use AqHub\Shared\Domain\ValueObjects\{Result, Identifier};
 use AqHub\Player\Domain\Repositories\PlayerRepository;

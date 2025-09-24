@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Items\Application\Weapon;
+namespace AqHub\Items\Application\UseCases\Weapon;
 
 use AqHub\Items\Domain\Repositories\WeaponRepository;
 use AqHub\Items\Domain\ValueObjects\ItemInfo;

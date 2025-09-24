@@ -7,13 +7,13 @@ namespace AqHub\Items\Infrastructure\Commands;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, Name, ItemTags};
 use Symfony\Component\Console\Input\{InputInterface, InputArgument};
 use AqHub\Player\Domain\ValueObjects\Name as PlayerName;
+use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
-use AqHub\Items\Application\Weapon\AddWeapon;
-use AqHub\Items\Domain\Enums\WeaponType;
-use AqHub\Player\Application\AddPlayer;
-use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Player\Application\UseCases\AddPlayer;
 use AqHub\Shared\Domain\ValueObjects\Identifier;
+use Symfony\Component\Console\Command\Command;
+use AqHub\Items\Domain\Enums\WeaponType;
+use AqHub\Shared\Domain\Enums\TagType;
 use GuzzleHttp\Client;
 
 class MineCharpageItemsCommand extends Command

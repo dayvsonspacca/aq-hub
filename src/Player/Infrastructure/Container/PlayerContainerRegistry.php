@@ -8,7 +8,7 @@ use AqHub\Player\Infrastructure\Repositories\Sql\SqlitePlayerRepository;
 use AqHub\Shared\Infrastructure\Container\ContainerRegistry;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Shared\Infrastructure\Database\Connection;
-use AqHub\Player\Application\AddPlayer;
+use AqHub\Player\Application\UseCases\AddPlayer;
 
 use function DI\autowire;
 use function DI\get;
