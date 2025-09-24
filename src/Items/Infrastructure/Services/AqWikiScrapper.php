@@ -1,0 +1,62 @@
+<?php
+
+declare(strict_types=1);
+
+namespace AqHub\Items\Infrastructure\Services;
+
+use AqHub\Items\Domain\ValueObjects\Description;
+use AqHub\Items\Infrastructure\Data\ItemData;
+use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Items\Domain\ValueObjects\Name;
+use GuzzleHttp\Client;
+
+class AqWikiScrapper
+{
+    /**
+     * @return Result<ItemData|null>
+     */
+    public static function findItemData(Name $name)
+    {
+        try {
+            $urls = self::generatePossibleUrls($name);
+
+            foreach ($urls as $url) {
+                try {
+                    $response = (new Client())->get('http://aqwwiki.wikidot.com/' . $url);
+                    $html     =  (string) $response->getBody();
+
+                    preg_match('/<strong>\s*Description:\s*<\/strong>\s*(.*?)(?:<br\s*\/?>|<\/|\z)/is', $html, $matches);
+                    if (!isset($matches[1])) {
+                        continue;
+                    }
+
+                    $description = Description::create(html_entity_decode($matches[1], ENT_QUOTES | ENT_HTML5, 'UTF-8'))->unwrap();
+                    break;
+                } catch (\Throwable) {
+                }
+            }
+
+            if (is_null($description)) {
+                return Result::error('Description not found for: ' . $name->value, null);
+            }
+
+            return Result::success(null, new ItemData($name, $description));
+        } catch (\Throwable $th) {
+            return Result::error($th->getMessage(), null);
+        }
+    }
+
+    private static function generatePossibleUrls(Name $name)
+    {
+        $urls   = [];
+
+        $urls[] = $name->value;
+        $urls[] = $name->value . '-ac';
+        $urls[] = $name->value . '-0-ac';
+        $urls[] = $name->value . '-non-ac';
+        $urls[] = $name->value . '-legend';
+        $urls[] = $name->value . '-non-legend';
+
+        return $urls;
+    }
+}
