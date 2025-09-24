@@ -9,6 +9,7 @@ use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Player\Domain\ValueObjects\PlayerInventory;
 use AqHub\Shared\Infrastructure\Database\Connection;
 use AqHub\Player\Domain\Entities\Player;
+use AqHub\Player\Domain\ValueObjects\Level;
 use AqHub\Player\Domain\ValueObjects\Name;
 use DomainException;
 
@@ -56,7 +57,7 @@ class SqlitePlayerRepository implements PlayerRepository
 
         $name = Name::create($playerData['name'])->getData();
 
-        $player = Player::create($identifier, $name, 1, new PlayerInventory([], 999))->getData();
+        $player = Player::create($identifier, $name, Level::create(1)->getData(), new PlayerInventory([], 999))->getData();
 
         return Result::success(null, $player);
     }
