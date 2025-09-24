@@ -28,8 +28,8 @@ final class InMemoryArmorRepositoryTest extends TestCase
         $result = $repository->persist($itemInfo);
 
         $this->assertTrue($result->isSuccess());
-        $this->assertInstanceOf(StringIdentifier::class, $result->unwrap());
-        $this->assertSame('339be7deafb1fcc932663d92b6f0ea2db2960c9d73cbb64432129cfdd64dfd98', $result->unwrap()->getValue());
+        $this->assertInstanceOf(Armor::class, $result->unwrap());
+        $this->assertSame('339be7deafb1fcc932663d92b6f0ea2db2960c9d73cbb64432129cfdd64dfd98', $result->unwrap()->getId());
     }
 
     #[Test]
@@ -61,9 +61,9 @@ final class InMemoryArmorRepositoryTest extends TestCase
         $tags        = new ItemTags([TagType::AdventureCoins]);
         $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
 
-        $id = $repository->persist($itemInfo)->unwrap();
+        $armor = $repository->persist($itemInfo)->unwrap();
 
-        $result = $repository->findByIdentifier($id);
+        $result = $repository->findByIdentifier(StringIdentifier::create($armor->getId())->unwrap());
 
         $this->assertTrue($result->isSuccess());
         $this->assertInstanceOf(Armor::class, $result->unwrap());

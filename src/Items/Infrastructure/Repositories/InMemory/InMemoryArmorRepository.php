@@ -16,7 +16,7 @@ class InMemoryArmorRepository implements ArmorRepository
     private array $memory = [];
 
     /**
-     * @return Result<StringIdentifier|null>
+     * @return Result<Armor|null>
      */
     public function persist(ItemInfo $itemInfo): Result
     {
@@ -30,7 +30,7 @@ class InMemoryArmorRepository implements ArmorRepository
 
         $this->memory[$armor->getId()] = $armor;
 
-        return Result::success(null, $id);
+        return Result::success(null, $armor);
     }
 
     /**

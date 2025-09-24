@@ -6,11 +6,12 @@ namespace AqHub\Items\Domain\Repositories;
 
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
+use AqHub\Items\Domain\Entities\Armor;
 
 interface ArmorRepository extends AqwItemRepository
 {
     /**
-     * @return Result<StringIdentifier|null>
+     * @return Result<Armor|null>
      */
     public function persist(ItemInfo $itemInfo): Result;
 }
