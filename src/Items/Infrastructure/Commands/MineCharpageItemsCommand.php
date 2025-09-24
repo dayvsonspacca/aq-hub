@@ -10,9 +10,9 @@ use AqHub\Player\Domain\ValueObjects\Name as PlayerName;
 use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
 use Symfony\Component\Console\Output\OutputInterface;
 use AqHub\Items\Application\UseCases\Armor\AddArmor;
-use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 use AqHub\Player\Application\UseCases\AddPlayer;
 use Symfony\Component\Console\Command\Command;
+use AqHub\Player\Domain\ValueObjects\Level;
 use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Shared\Domain\Enums\TagType;
 use GuzzleHttp\Client;
@@ -110,23 +110,20 @@ class MineCharpageItemsCommand extends Command
 
         $charpage = $playerName->getData()->value;
 
-        $html = $this->fetchHtml('https://account.aq.com/CharPage?id=' . $charpage);
-        preg_match("/var\s+ccid\s*=\s*(\d+);/", $html ?? '', $matches);
-        if (!isset($matches[1])) {
-            $output->writeln('<fg=red;options=bold>✘ Could not found the ccid on page from charpage:</> <fg=yellow>' . $charpage . '</>');
-            return Command::INVALID;
-        }
-        $ccid = $matches[1];
-        $output->writeln('<fg=green;options=bold>✔ Found AQW user ID (ccid):</> <fg=cyan>' . $ccid . '</>');
-
+        
         $output->writeln('<fg=magenta;options=bold>⚔ Saving player...</>');
-        $result = $this->addPlayer->execute(IntIdentifier::create((int) $ccid)->getData(), $playerName->getData());
+        $result = $this->addPlayer->execute($playerName->getData(), Level::create(1)->getData());
         if ($result->isError()) {
             $output->writeln('<fg=red;options=bold>✘ Failed to persist player:</> <fg=yellow>' . $playerName->getData()->value . '</>');
             $output->writeln('<fg=red>↳ Reason:</> ' . $result->getMessage());
+            return Command::FAILURE;
         }
 
-        $response = $this->client->get('https://account.aq.com/CharPage/Inventory?ccid=' . $ccid);
+        $player = $result->getData();
+
+        $output->writeln('<fg=green;options=bold>✔ Found AQW user ID (ccid):</> <fg=cyan>' . $player->getId() . '</>');
+        
+        $response = $this->client->get('https://account.aq.com/CharPage/Inventory?ccid=' . $player->getId());
         $jsonData = json_decode($response->getBody()->getContents(), true);
         $jsonData = array_filter($jsonData, fn($object) => $object['strName'] !== 'Inventory Hidden');
 
