@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Domain\Entities;
 
-use AqHub\Player\Domain\ValueObjects\{PlayerInventory, Name};
+use AqHub\Player\Domain\ValueObjects\{Level, PlayerInventory, Name};
 use AqHub\Shared\Domain\ValueObjects\{Result, Identifier};
 use AqHub\Shared\Domain\Abstractions\Entity;
 
@@ -13,7 +13,7 @@ class Player extends Entity
     private function __construct(
         Identifier $id,
         private readonly Name $name,
-        private readonly int $level,
+        private readonly Level $level,
         private PlayerInventory $inventory
     ) {
         $this->id = $id;
@@ -23,13 +23,9 @@ class Player extends Entity
     public static function create(
         Identifier $id,
         Name $name,
-        int $level,
+        Level $level,
         PlayerInventory $inventory
     ) {
-        if ($level < 0) {
-            return Result::error('The level of a player cant be negative.', null);
-        }
-
         return Result::success(null, new self($id, $name, $level, $inventory));
     }
 
@@ -40,7 +36,7 @@ class Player extends Entity
 
     public function getLevel(): int
     {
-        return $this->level;
+        return $this->level->value;
     }
 
     public function getInventory(): PlayerInventory
