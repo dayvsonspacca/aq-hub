@@ -20,4 +20,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
+RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
+
 CMD ["php-fpm"]
