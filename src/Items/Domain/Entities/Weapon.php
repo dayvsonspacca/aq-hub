@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Domain\Entities;
 
-use AqHub\Shared\Domain\ValueObjects\{Result, Identifier};
+use AqHub\Shared\Domain\ValueObjects\{Result, IntIdentifier};
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
 use AqHub\Items\Domain\Abstractions\AqwItem;
 use AqHub\Items\Domain\Enums\WeaponType;
@@ -12,7 +12,7 @@ use AqHub\Items\Domain\Enums\WeaponType;
 class Weapon extends AqwItem
 {
     private function __construct(
-        Identifier $id,
+        IntIdentifier $id,
         ItemInfo $info,
         private readonly WeaponType $type
     ) {
@@ -22,7 +22,7 @@ class Weapon extends AqwItem
 
     /** @return Result<Weapon> */
     public static function create(
-        Identifier $id,
+        IntIdentifier $id,
         ItemInfo $info,
         WeaponType $type
     ) {

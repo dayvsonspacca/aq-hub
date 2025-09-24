@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace AqHub\Quests\Domain\Entities;
 
-use AqHub\Shared\Domain\ValueObjects\{Result, Identifier};
+use AqHub\Shared\Domain\ValueObjects\{Result, IntIdentifier};
 use AqHub\Quests\Domain\ValueObjects\QuestRequirements;
 use AqHub\Shared\Domain\Abstractions\Entity;
 
 class Quest extends Entity
 {
     private function __construct(
-        Identifier $id,
+        IntIdentifier $id,
         private readonly string $name,
         private QuestRequirements $requirements
     ) {
@@ -19,7 +19,7 @@ class Quest extends Entity
     }
 
     /** @return Result<Quest> **/
-    public static function create(Identifier $id, string $name, QuestRequirements $requirements)
+    public static function create(IntIdentifier $id, string $name, QuestRequirements $requirements)
     {
         $name = trim($name);
 

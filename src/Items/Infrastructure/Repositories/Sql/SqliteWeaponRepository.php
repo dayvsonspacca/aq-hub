@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Items\Infrastructure\Repositories\Sql;
 
 use AqHub\Items\Domain\ValueObjects\{Description, Name, ItemTags, ItemInfo};
-use AqHub\Shared\Domain\ValueObjects\{Identifier, Result};
+use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
 use AqHub\Items\Domain\Repositories\WeaponRepository;
 use AqHub\Shared\Infrastructure\Database\Connection;
 use AqHub\Items\Domain\Enums\WeaponType;
@@ -20,7 +20,7 @@ class SqliteWeaponRepository implements WeaponRepository
     }
 
     /**
-     * @return Result<Identifier|null>
+     * @return Result<IntIdentifier|null>
      */
     public function persist(ItemInfo $itemInfo, WeaponType $type): Result
     {
@@ -50,7 +50,7 @@ class SqliteWeaponRepository implements WeaponRepository
 
             $this->db->getConnection()->commit();
 
-            return Result::success(null, Identifier::create((int) $weaponId)->unwrap());
+            return Result::success(null, IntIdentifier::create((int) $weaponId)->unwrap());
         } catch (\Throwable $e) {
             $this->db->getConnection()->rollBack();
             return Result::error('Failed to persist weapon: ' . $e->getMessage() . ' at ' . $e->getLine(), null);
@@ -81,7 +81,7 @@ class SqliteWeaponRepository implements WeaponRepository
         $weaponType = WeaponType::fromString($weaponData['type'])->unwrap();
 
         $weapon = Weapon::create(
-            Identifier::create((int)$weaponData['id'])->unwrap(),
+            IntIdentifier::create((int)$weaponData['id'])->unwrap(),
             $itemInfo,
             $weaponType
         )->unwrap();

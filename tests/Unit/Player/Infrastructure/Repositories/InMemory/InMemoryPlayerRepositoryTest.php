@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Items\Domain\ValueObjects;
 
 use AqHub\Player\Infrastructure\Repositories\InMemory\InMemoryPlayerRepository;
-use AqHub\Shared\Domain\ValueObjects\Identifier;
+use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 use AqHub\Player\Domain\Entities\Player;
 use AqHub\Player\Domain\ValueObjects\Name;
 use PHPUnit\Framework\Attributes\Test;
@@ -18,13 +18,13 @@ final class InMemoryPlayerRepositoryTest extends TestCase
     {
         $repository = new InMemoryPlayerRepository();
 
-        $identifier = Identifier::create(72894515)->unwrap();
+        $identifier = IntIdentifier::create(72894515)->unwrap();
         $name       = Name::create('Hilise')->unwrap();
 
         $result = $repository->persist($identifier, $name);
 
         $this->assertTrue($result->isSuccess());
-        $this->assertInstanceOf(Identifier::class, $result->unwrap());
+        $this->assertInstanceOf(IntIdentifier::class, $result->unwrap());
         $this->assertSame(72894515, $result->unwrap()->getValue());
     }
 
@@ -33,7 +33,7 @@ final class InMemoryPlayerRepositoryTest extends TestCase
     {
         $repository = new InMemoryPlayerRepository();
 
-        $identifier = Identifier::create(72894515)->unwrap();
+        $identifier = IntIdentifier::create(72894515)->unwrap();
         $name       = Name::create('Hilise')->unwrap();
 
         $repository->persist($identifier, $name);
@@ -49,7 +49,7 @@ final class InMemoryPlayerRepositoryTest extends TestCase
     {
         $repository = new InMemoryPlayerRepository();
 
-        $identifier = Identifier::create(72894515)->unwrap();
+        $identifier = IntIdentifier::create(72894515)->unwrap();
         $name       = Name::create('Hilise')->unwrap();
 
         $repository->persist($identifier, $name);
@@ -65,7 +65,7 @@ final class InMemoryPlayerRepositoryTest extends TestCase
     {
         $repository = new InMemoryPlayerRepository();
 
-        $identifier = Identifier::create(72894515)->unwrap();
+        $identifier = IntIdentifier::create(72894515)->unwrap();
 
         $result = $repository->findByIdentifier($identifier);
 

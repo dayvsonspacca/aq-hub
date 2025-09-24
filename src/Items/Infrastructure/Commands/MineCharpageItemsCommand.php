@@ -10,7 +10,7 @@ use AqHub\Player\Domain\ValueObjects\Name as PlayerName;
 use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
 use Symfony\Component\Console\Output\OutputInterface;
 use AqHub\Player\Application\UseCases\AddPlayer;
-use AqHub\Shared\Domain\ValueObjects\Identifier;
+use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 use Symfony\Component\Console\Command\Command;
 use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Shared\Domain\Enums\TagType;
@@ -118,7 +118,7 @@ class MineCharpageItemsCommand extends Command
         $output->writeln('<fg=green;options=bold>✔ Found AQW user ID (ccid):</> <fg=cyan>' . $ccid . '</>');
 
         $output->writeln('<fg=magenta;options=bold>⚔ Saving player...</>');
-        $result = $this->addPlayer->execute(Identifier::create((int) $ccid)->getData(), $playerName->getData());
+        $result = $this->addPlayer->execute(IntIdentifier::create((int) $ccid)->getData(), $playerName->getData());
         if ($result->isError()) {
             $output->writeln('<fg=red;options=bold>✘ Failed to persist player:</> <fg=yellow>' . $playerName->getData()->value . '</>');
             $output->writeln('<fg=red>↳ Reason:</> ' . $result->getMessage());

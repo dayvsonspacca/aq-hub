@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Quests\Domain\Entities;
 
 use AqHub\Quests\Domain\ValueObjects\QuestRequirements;
-use AqHub\Shared\Domain\ValueObjects\Identifier;
+use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 use AqHub\Quests\Domain\Entities\Quest;
 use PHPUnit\Framework\Attributes\Test;
 use AqHub\Tests\Unit\TestCase;
@@ -15,7 +15,7 @@ final class QuestTest extends TestCase
     #[Test]
     public function should_create_quest_instance_and_stores_it_data()
     {
-        $id           = Identifier::create(1)->getData();
+        $id           = IntIdentifier::create(1)->getData();
         $name         = 'Awesome Quest';
         $requirements = $this->createMock(QuestRequirements::class);
 
@@ -30,7 +30,7 @@ final class QuestTest extends TestCase
     #[Test]
     public function should_fail_because_quest_name_is_empty()
     {
-        $id           = Identifier::create(1)->getData();
+        $id           = IntIdentifier::create(1)->getData();
         $name         = '';
         $requirements = $this->createMock(QuestRequirements::class);
 

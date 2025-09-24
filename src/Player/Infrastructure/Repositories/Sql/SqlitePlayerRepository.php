@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Repositories\Sql;
 
-use AqHub\Shared\Domain\ValueObjects\{Identifier, Result};
+use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
 use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Player\Domain\ValueObjects\PlayerInventory;
 use AqHub\Shared\Infrastructure\Database\Connection;
@@ -20,9 +20,9 @@ class SqlitePlayerRepository implements PlayerRepository
     }
 
     /**
-     * @return Result<Identifier|null>
+     * @return Result<IntIdentifier|null>
      */
-    public function persist(Identifier $identifier, Name $name): Result
+    public function persist(IntIdentifier $identifier, Name $name): Result
     {
         try {
             $this->db->getConnection()->beginTransaction();
@@ -46,7 +46,7 @@ class SqlitePlayerRepository implements PlayerRepository
         }
     }
 
-    public function findByIdentifier(Identifier $identifier): Result
+    public function findByIdentifier(IntIdentifier $identifier): Result
     {
         $query      = 'SELECT * FROM players WHERE id = :id LIMIT 1';
         $playerData = $this->db->fetchOne($query, ['id' => $identifier->getValue()]);

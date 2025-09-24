@@ -13,14 +13,14 @@ namespace AqHub\Shared\Domain\ValueObjects;
  *
  * Example usage:
  * ```php
- * $result = Identifier::create(10);
+ * $result = IntIdentifier::create(10);
  * if ($result->isSuccess()) {
  *     $id = $result->getValue();
  *     echo $id->getValue(); // 10
  * }
  * ```
  */
-class Identifier
+class IntIdentifier
 {
     /**
      * Private constructor to enforce controlled instantiation
@@ -34,12 +34,12 @@ class Identifier
     }
 
     /**
-     * Creates a new Identifier instance while validating business rules.
+     * Creates a new IntIdentifier instance while validating business rules.
      *
      * @param int $value Integer value to be used as an identifier.
      *
-     * @return Result<Identifier> Returns a Result object containing:
-     *   - success: the valid Identifier instance;
+     * @return Result<IntIdentifier> Returns a Result object containing:
+     *   - success: the valid IntIdentifier instance;
      *   - error: a descriptive message if the value is invalid.
      */
     public static function create(int $value)

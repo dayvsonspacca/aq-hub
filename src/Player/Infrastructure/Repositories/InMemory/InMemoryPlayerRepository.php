@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Player\Infrastructure\Repositories\InMemory;
 
 use AqHub\Player\Domain\ValueObjects\{Name, Level, PlayerInventory};
-use AqHub\Shared\Domain\ValueObjects\{Identifier, Result};
+use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
 use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Player\Domain\Entities\Player;
 
@@ -15,9 +15,9 @@ class InMemoryPlayerRepository implements PlayerRepository
     private array $memory = [];
 
     /**
-     * @return Result<Identifier|null>
+     * @return Result<IntIdentifier|null>
      */
-    public function persist(Identifier $identifier, Name $name): Result
+    public function persist(IntIdentifier $identifier, Name $name): Result
     {
         if ($this->findByIdentifier($identifier)->isSuccess()) {
             return Result::error('A player with same id already exists: ' . $identifier->getValue(), null);
@@ -33,7 +33,7 @@ class InMemoryPlayerRepository implements PlayerRepository
     /**
      * @return Result<Player|null>
      */
-    public function findByIdentifier(Identifier $identifier): Result
+    public function findByIdentifier(IntIdentifier $identifier): Result
     {
         if (!isset($this->memory[$identifier->getValue()])) {
             return Result::error(null, null);

@@ -6,7 +6,7 @@ namespace Tests\Unit\Quests\Domain\ValueObjects;
 
 use AqHub\Player\Domain\ValueObjects\{Level, PlayerInventory, Name};
 use AqHub\Quests\Domain\ValueObjects\ItemRequirement;
-use AqHub\Shared\Domain\ValueObjects\Identifier;
+use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 use AqHub\Items\Domain\Entities\{Weapon, Armor};
 use AqHub\Player\Domain\Entities\Player;
 use PHPUnit\Framework\Attributes\Test;
@@ -28,7 +28,7 @@ final class ItemRequirementTest extends TestCase
     public function should_pass_when_player_meet_item_requirement()
     {
         $weapon    = $this->createMock(Weapon::class);
-        $id        = Identifier::create(1)->unwrap();
+        $id        = IntIdentifier::create(1)->unwrap();
         $level     = Level::create(100)->unwrap();
         $inventory = new PlayerInventory([$weapon], 10);
         $name      = Name::create('Hilise')->unwrap();
@@ -49,7 +49,7 @@ final class ItemRequirementTest extends TestCase
     public function should_fail_when_player_does_not_meet_item_requirement()
     {
         $weapon    = $this->createMock(Weapon::class);
-        $id        = Identifier::create(1)->unwrap();
+        $id        = IntIdentifier::create(1)->unwrap();
         $level     = Level::create(100)->unwrap();
         $inventory = new PlayerInventory([$weapon], 10);
         $name      = Name::create('Hilise')->unwrap();
