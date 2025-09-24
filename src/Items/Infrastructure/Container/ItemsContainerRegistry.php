@@ -22,7 +22,8 @@ class ItemsContainerRegistry implements ContainerRegistry
         return array_merge(
             self::registerRepositories(),
             self::registerUseCases(),
-            self::registerCommands()
+            self::registerCommands(),
+            self::registerControllers()
         );
     }
 
@@ -50,5 +51,10 @@ class ItemsContainerRegistry implements ContainerRegistry
             AddWeapon::class => autowire(),
             AddArmor::class => autowire()
         ];
+    }
+
+    public static function registerControllers(): array
+    {
+        return [];
     }
 }

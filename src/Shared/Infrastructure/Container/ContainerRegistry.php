@@ -11,4 +11,6 @@ interface ContainerRegistry
     public static function registerRepositories(): array;
     public static function registerCommands(): array;
     public static function registerUseCases(): array;
+
+    public static function registerControllers(): array;
 }

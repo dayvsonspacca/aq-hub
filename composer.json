@@ -21,11 +21,14 @@
         "php": "^8.3",
         "symfony/console": "^7.3",
         "guzzlehttp/guzzle": "^7.10",
-        "php-di/php-di": "^7.1"
+        "php-di/php-di": "^7.1",
+        "symfony/http-foundation": "^7.3",
+        "symfony/routing": "^7.3"
     },
     "require-dev": {
         "pestphp/pest": "^3.7",
-        "friendsofphp/php-cs-fixer": "^3.73"
+        "friendsofphp/php-cs-fixer": "^3.73",
+        "symfony/var-dumper": "^7.3"
     },
     "config": {
         "allow-plugins": {
