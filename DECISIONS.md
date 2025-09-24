@@ -60,3 +60,18 @@ After some investigation, I realized that the only reliable representation avail
 So instead of generating a new internal ID for each Player, I decided to reuse the same AQW user ID. 
 
 > Conclusion: The Player’s identifier will be the AQW user ID. This avoids unnecessary duplication and keeps the system aligned with its external reference.
+
+### #6 Should We Enforce Item Uniqueness by Name, or Something Else?  
+2025-09-24  
+
+While working on the persistence of `Items` like `Weapon` or `Armor`, I faced a critical question: should we enforce that two items with the same name cannot exist in the system? At first, this sounded like a reasonable rule, since the name feels like the most natural identifier.  
+
+However, I quickly ran into a problem. In AQW, there are cases where two completely different items share the exact same name. One example is the [*Burning Blade*](http://aqwwiki.wikidot.com/burning-blade) in reality, there are at least two distinct items with this name, differing in appearance, rarity, and attributes.  
+
+This breaks the assumption that the **name** could serve as a unique key. If names are unreliable, then the question becomes: which parameter can truly define the uniqueness of an item when persisting it? Unlike the Player case, where I could rely on the external AQW user ID, I haven’t yet discovered what the equivalent unique identifier for `Items` is.
+
+Given that, I am considering creating an **internal unique identifier** for items in the system. Each AQW item in my system is represented by an `ItemInfo` object, which includes the `Name`, `Description`, `ItemTags`, and **The Item Type** (`Weapon` or `Armor`) of the item. By combining these fields into a single string and generating a hash from it, I could produce a deterministic identifier that is unique for every distinct item.  
+
+This approach would allow anyone with the same `ItemInfo` to generate the same identifier, ensuring consistency while avoiding collisions between items that share a name but differ in other attributes.
+
+> Conclusion Since item names are not guaranteed to be unique in AQW, we will not rely on them to enforce uniqueness. Instead, we will create a deterministic internal identifier by combining key attributes of an item (`Name`, `Description`, `ItemTags`, and **The Item Type Classname**) and generating a hash from them. This ensures that each distinct item can be uniquely identified and consistently persisted, even when multiple items share the same name.
