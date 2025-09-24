@@ -47,6 +47,7 @@ class Player extends Entity
     public function toArray(): array
     {
         return [
+            'id' => $this->getId(),
             'name' => $this->getName(),
             'level' => $this->getLevel()
         ];
