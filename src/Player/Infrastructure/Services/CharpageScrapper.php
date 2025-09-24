@@ -44,18 +44,30 @@ class CharpageScrapper
     }
 
     /**
-     * @return Result<array<ItemName>|null>
+     * Get all items names for a player, grouped by type.
+     *
+     * @param IntIdentifier $identifier
+     * @return Result<array<string, ItemName[]>|null>  // chave: tipo do item, valor: array de ItemName
      */
-    public static function findPlayerItemsName(IntIdentifier $identifier): Result
+    public static function findPlayerItemsNameByType(IntIdentifier $identifier): Result
     {
         try {
             $response = (new Client())->get('https://account.aq.com/CharPage/Inventory?ccid=' . $identifier->getValue());
             $jsonData = json_decode($response->getBody()->getContents(), true);
-            $jsonData = array_filter($jsonData, fn($obj) => $obj['strName'] !== 'Inventory Hidden');
-            $itemsName = array_filter($jsonData, fn($obj) => ItemName::create($obj['strName'])->isSuccess());
-            $itemsName = array_map(fn($obj) => ItemName::create($obj['strName'])->unwrap(), $jsonData);
 
-            return Result::success(null, $itemsName);
+            $jsonData = array_filter($jsonData, fn($obj) => $obj['strName'] !== 'Inventory Hidden');
+
+            $itemsByType = [];
+
+            foreach ($jsonData as $obj) {
+                $nameResult = ItemName::create($obj['strName']);
+                if ($nameResult->isSuccess()) {
+                    $type = $obj['strType'] ?? 'Unknown';
+                    $itemsByType[$type][] = $nameResult->unwrap();
+                }
+            }
+
+            return Result::success(null, $itemsByType);
         } catch (\Throwable $th) {
             return Result::error($th->getMessage(), null);
         }
