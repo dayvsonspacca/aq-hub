@@ -6,11 +6,11 @@ namespace AqHub\Items\Infrastructure\Repositories\Sql;
 
 use AqHub\Items\Domain\ValueObjects\{Description, Name, ItemTags, ItemInfo};
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
+use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\Repositories\WeaponRepository;
 use AqHub\Shared\Infrastructure\Database\Connection;
 use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\Entities\Weapon;
-use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Shared\Domain\Enums\TagType;
 use DomainException;
 
