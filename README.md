@@ -1,17 +1,17 @@
 # AQ Hub
 
-AQ Hub is a web application focused on **AdventureQuest Worlds (AQW)**. Its primary goal is to serve as a **wiki for the game**, offering structured and easy-to-access information for players. Unlike the current AQW wiki, which has some gaps and inconsistencies, AQ Hub aims to provide a more complete and reliable source of information.  
+AQ Hub is a web application dedicated to **AdventureQuest Worlds (AQW)**. Its main goal is to serve as a **wiki-style resource for the game**, providing structured and easy-to-access information for players. While inspired by the existing AQW Wiki, AQ Hub focuses on offering a more streamlined, consistent, and beginner-friendly experience.  
 
 ## Objectives
 
-- Provide a comprehensive and organized database of AQW items, quests, and characters.  
-- Deliver an intuitive and user-friendly interface for browsing game information.  
-- Offer search and filtering tools to help players quickly find what they need.  
-- Continuously expand content to cover all aspects of the game in detail.  
-- Maintain a consistent and up-to-date resource for both new and experienced players.  
+- Build a comprehensive and well-organized database of AQW items, quests, and characters.  
+- Provide an intuitive and user-friendly interface for exploring game content.  
+- Include search and filtering tools to help players quickly find what they need.  
+- Continuously expand and improve content to cover all aspects of the game.  
+- Maintain an accurate and up-to-date resource for both new and experienced players.  
 
 ## Features (Planned / Current)
 
 - AQW item database  
-- Quest and character information  
+- Quest roadmap  
 - Search and filter functionality  
