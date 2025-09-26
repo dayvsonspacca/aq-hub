@@ -6,10 +6,13 @@ namespace AqHub\Player\Infrastructure\Console;
 
 use AqHub\Player\Application\UseCases\AddPlayer;
 use AqHub\Player\Domain\ValueObjects\Name;
+use AqHub\Player\Infrastructure\Adapters\AqwSocketClient\EventsFactory;
+use AqHub\Player\Infrastructure\Adapters\AqwSocketClient\EventsHandler;
+use AqHub\Player\Infrastructure\Adapters\AqwSocketClient\LogEventsHandler;
 use AqHub\Shared\Infrastructure\Http\Clients\AqwApiClient;
 use AqwSocketClient\Client;
-use AqwSocketClient\Factories\CoreEventsFactory;
-use AqwSocketClient\Factories\CoreEventsHandler;
+use AqwSocketClient\Events\Factories\CoreEventsFactory;
+use AqwSocketClient\Events\Handlers\CoreEventsHandler;
 use AqwSocketClient\Server;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -48,7 +51,18 @@ class MinePlayersNameCommand extends Command
 
         $token = AqwApiClient::login(Name::create($username)->unwrap(), $password);
 
-        $client = new Client(Server::espada(), [new CoreEventsFactory()], [new CoreEventsHandler($username, $token)]);
+        $client = new Client(
+            Server::yorumi(),
+            [
+                new CoreEventsFactory(),
+                new EventsFactory()
+            ],
+            [
+                new CoreEventsHandler($username, $token),
+                new EventsHandler($this->addPlayer),
+                new LogEventsHandler($output)
+            ]
+        );
         $client->run();
 
         return Command::SUCCESS;
