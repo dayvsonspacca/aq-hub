@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Http\Controllers;
 
-use AqHub\Player\Application\UseCases\AddPlayer;
-use AqHub\Player\Application\UseCases\FindAllPlayers;
+use AqHub\Player\Application\UseCases\{AddPlayer, FindAllPlayers};
 use AqHub\Player\Domain\ValueObjects\{Name};
 use AqHub\Player\Infrastructure\Repositories\Filters\PlayerFilter;
 use AqHub\Shared\Infrastructure\Http\Route;
@@ -16,7 +15,8 @@ class PlayerController
     public function __construct(
         private readonly AddPlayer $addPlayer,
         private readonly FindAllPlayers $findAllPlayers
-    ) {}
+    ) {
+    }
 
     #[Route(path: '/players/add', methods: ['POST'])]
     public function add(Request $request): JsonResponse
@@ -52,10 +52,10 @@ class PlayerController
         }
 
         $players = $players->getData();
-        $players = array_map(fn($player) => $player->toArray(), $players);
+        $players = array_map(fn ($player) => $player->toArray(), $players);
 
         return new JsonResponse([
-            'page'    => $page,
+            'page' => $page,
             'players' => $players
         ], Response::HTTP_OK);
     }

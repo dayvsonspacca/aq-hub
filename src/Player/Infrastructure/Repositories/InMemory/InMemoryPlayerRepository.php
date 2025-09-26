@@ -59,7 +59,7 @@ class InMemoryPlayerRepository implements PlayerRepository
         }
 
         $this->playersMined[$name->value] = new DateTime();
-        
+
         return Result::success(null, null);
     }
 }

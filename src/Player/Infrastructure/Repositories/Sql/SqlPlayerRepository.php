@@ -15,7 +15,9 @@ use DomainException;
 
 class SqlPlayerRepository implements PlayerRepository
 {
-    public function __construct(private readonly Connection $db) {}
+    public function __construct(private readonly Connection $db)
+    {
+    }
 
     /**
      * @return Result<Player|null>
@@ -118,7 +120,7 @@ class SqlPlayerRepository implements PlayerRepository
 
     public function markAsMined(Name $name): Result
     {
-        $query = 'SELECT * FROM players_mined WHERE name = :name';
+        $query      = 'SELECT * FROM players_mined WHERE name = :name';
         $playerData = $this->db->fetchOne($query, ['name' => $name->value]);
 
         if (!$playerData) {
