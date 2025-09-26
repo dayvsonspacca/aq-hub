@@ -29,6 +29,7 @@ class InMemoryArmorRepository implements ArmorRepository
         }
 
         $armorData = new ArmorData(
+            $id,
             Name::create($itemInfo->getName())->unwrap(),
             Description::create($itemInfo->getDescription())->unwrap(),
             $itemInfo->getTags(),

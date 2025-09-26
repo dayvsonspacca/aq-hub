@@ -30,6 +30,7 @@ class InMemoryWeaponRepository implements WeaponRepository
         }
 
         $weaponData = new WeaponData(
+            $id,
             Name::create($itemInfo->getName())->unwrap(),
             Description::create($itemInfo->getDescription())->unwrap(),
             $itemInfo->getTags(),

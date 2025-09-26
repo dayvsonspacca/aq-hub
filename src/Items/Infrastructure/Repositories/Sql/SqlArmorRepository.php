@@ -51,6 +51,7 @@ class SqlArmorRepository implements ArmorRepository
         return Result::success(
             null,
             new ArmorData(
+                $identifier,
                 $name,
                 $description,
                 $tags,
@@ -106,6 +107,7 @@ class SqlArmorRepository implements ArmorRepository
             $this->db->getConnection()->commit();
 
             return Result::success(null, new ArmorData(
+                $hash,
                 Name::create($itemInfo->getName())->unwrap(),
                 Description::create($itemInfo->getDescription())->unwrap(),
                 $itemInfo->getTags(),

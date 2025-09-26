@@ -34,7 +34,7 @@ final class InMemoryWeaponRepositoryTest extends TestCase
 
         $this->assertTrue($result->isSuccess());
         $this->assertInstanceOf(WeaponData::class, $result->unwrap());
-        // $this->assertSame('87f3da3ead50247f5b890b3291b45c1a426537117e8a60703a70c5ae4f0481ad', $result->unwrap()->getId());
+        $this->assertSame('87f3da3ead50247f5b890b3291b45c1a426537117e8a60703a70c5ae4f0481ad', $result->unwrap()->identifier->getValue());
     }
 
     #[Test]

@@ -31,7 +31,7 @@ final class InMemoryArmorRepositoryTest extends TestCase
 
         $this->assertTrue($result->isSuccess());
         $this->assertInstanceOf(ArmorData::class, $result->unwrap());
-        // $this->assertSame('339be7deafb1fcc932663d92b6f0ea2db2960c9d73cbb64432129cfdd64dfd98', $result->unwrap()->getId());
+        $this->assertSame('339be7deafb1fcc932663d92b6f0ea2db2960c9d73cbb64432129cfdd64dfd98', $result->unwrap()->identifier->getValue());
     }
 
     #[Test]

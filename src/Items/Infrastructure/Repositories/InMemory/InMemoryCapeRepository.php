@@ -29,6 +29,7 @@ class InMemoryCapeRepository implements CapeRepository
         }
 
         $capeData = new CapeData(
+            $id,
             Name::create($itemInfo->getName())->unwrap(),
             Description::create($itemInfo->getDescription())->unwrap(),
             $itemInfo->getTags(),

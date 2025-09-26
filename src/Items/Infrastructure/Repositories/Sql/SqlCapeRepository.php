@@ -52,6 +52,7 @@ class SqlCapeRepository implements CapeRepository
         return Result::success(
             null,
             new CapeData(
+                $identifier,
                 $name,
                 $description,
                 $tags,
@@ -106,6 +107,7 @@ class SqlCapeRepository implements CapeRepository
             $this->db->getConnection()->commit();
 
             return Result::success(null, new CapeData(
+                $hash,
                 Name::create($itemInfo->getName())->unwrap(),
                 Description::create($itemInfo->getDescription())->unwrap(),
                 $itemInfo->getTags(),

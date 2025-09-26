@@ -53,6 +53,7 @@ class SqlWeaponRepository implements WeaponRepository
         return Result::success(
             null,
             new WeaponData(
+                $identifier,
                 $name,
                 $description,
                 $tags,
@@ -111,6 +112,7 @@ class SqlWeaponRepository implements WeaponRepository
             $this->db->getConnection()->commit();
 
             return Result::success(null, new WeaponData(
+                $hash,
                 Name::create($itemInfo->getName())->unwrap(),
                 Description::create($itemInfo->getDescription())->unwrap(),
                 $itemInfo->getTags(),

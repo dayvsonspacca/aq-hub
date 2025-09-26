@@ -31,7 +31,7 @@ final class InMemoryCapeRepositoryTest extends TestCase
 
         $this->assertTrue($result->isSuccess());
         $this->assertInstanceOf(CapeData::class, $result->unwrap());
-        // $this->assertSame('5258530f3d77c94ba139eb404e3bd5f18bb1925c04d0d6dc9db6f3d37048dff7', $result->unwrap()->getId());
+        $this->assertSame('5258530f3d77c94ba139eb404e3bd5f18bb1925c04d0d6dc9db6f3d37048dff7', $result->unwrap()->identifier->getValue());
     }
 
     #[Test]
