@@ -9,5 +9,7 @@ use AqwSocketClient\Events\EventInterface;
 
 class PlayerFoundEvent implements EventInterface
 {
-    public function __construct(public readonly Name $name) {}
+    public function __construct(public readonly Name $name)
+    {
+    }
 }

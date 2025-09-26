@@ -9,8 +9,7 @@ use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
 use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
 use AqHub\Items\Infrastructure\Http\Scrappers\AqWikiScrapper;
-use AqHub\Player\Application\UseCases\FindAllPlayers;
-use AqHub\Player\Application\UseCases\MarkAsMined;
+use AqHub\Player\Application\UseCases\{FindAllPlayers, MarkAsMined};
 use AqHub\Player\Infrastructure\Http\Scrappers\CharpageScrapper;
 use AqHub\Player\Infrastructure\Repositories\Filters\PlayerFilter;
 use Symfony\Component\Console\Command\Command;
@@ -45,7 +44,7 @@ class MineAllPlayersItemsCommand extends Command
             $output->writeln('<fg=red;options=bold>✘ Failed to retrieve players:</> <fg=yellow>' . $players->getMessage() . '</>');
             return Command::FAILURE;
         }
-        
+
         $players    = $players->getData();
         $totalMined = 0;
 

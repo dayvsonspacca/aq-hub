@@ -6,5 +6,7 @@ namespace AqHub\Player\Infrastructure\Repositories\Filters;
 
 class PlayerFilter
 {
-    public function __construct(public ?bool $mined = null) {}
+    public function __construct(public ?bool $mined = null)
+    {
+    }
 }

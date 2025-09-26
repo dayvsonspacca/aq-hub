@@ -6,17 +6,13 @@ namespace AqHub\Player\Infrastructure\Console;
 
 use AqHub\Player\Application\UseCases\AddPlayer;
 use AqHub\Player\Domain\ValueObjects\Name;
-use AqHub\Player\Infrastructure\Adapters\AqwSocketClient\EventsFactory;
-use AqHub\Player\Infrastructure\Adapters\AqwSocketClient\EventsHandler;
-use AqHub\Player\Infrastructure\Adapters\AqwSocketClient\LogEventsHandler;
+use AqHub\Player\Infrastructure\Adapters\AqwSocketClient\{EventsFactory, EventsHandler, LogEventsHandler};
 use AqHub\Shared\Infrastructure\Http\Clients\AqwApiClient;
-use AqwSocketClient\Client;
+use AqwSocketClient\{Client, Server};
 use AqwSocketClient\Events\Factories\CoreEventsFactory;
 use AqwSocketClient\Events\Handlers\CoreEventsHandler;
-use AqwSocketClient\Server;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\{InputArgument, InputInterface};
 use Symfony\Component\Console\Output\OutputInterface;
 
 class MinePlayersNameCommand extends Command

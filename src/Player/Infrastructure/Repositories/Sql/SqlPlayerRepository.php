@@ -11,12 +11,13 @@ use AqHub\Player\Infrastructure\Data\PlayerData;
 use AqHub\Player\Infrastructure\Repositories\Filters\PlayerFilter;
 use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
 use AqHub\Shared\Infrastructure\Database\Connection;
-use DateTime;
 use DomainException;
 
 class SqlPlayerRepository implements PlayerRepository
 {
-    public function __construct(private readonly Connection $db) {}
+    public function __construct(private readonly Connection $db)
+    {
+    }
 
     /**
      * @return Result<Player|null>
@@ -54,15 +55,15 @@ class SqlPlayerRepository implements PlayerRepository
      */
     public function findByIdentifier(IntIdentifier $identifier): Result
     {
-        $query = 'SELECT * FROM players WHERE id = :id LIMIT 1';
+        $query      = 'SELECT * FROM players WHERE id = :id LIMIT 1';
         $playerData = $this->db->fetchOne($query, ['id' => $identifier->getValue()]);
 
         if (!$playerData) {
             return Result::error(null, null);
         }
 
-        $name = Name::create($playerData['name'])->getData();
-        $level = Level::create((int) $playerData['level'])->getData();
+        $name   = Name::create($playerData['name'])->getData();
+        $level  = Level::create((int) $playerData['level'])->getData();
         $player = Player::create($identifier, $name, $level, new PlayerInventory([], 999))->getData();
 
         return Result::success(null, $player);
@@ -79,7 +80,7 @@ class SqlPlayerRepository implements PlayerRepository
                   LEFT JOIN players_mined pm ON pm.name = p.name';
 
         $conditions = [];
-        $params = [];
+        $params     = [];
 
         if (!is_null($filter->mined)) {
             $conditions[] = 'pm.id IS ' . ($filter->mined ? 'NOT NULL' : 'NULL');

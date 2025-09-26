@@ -17,7 +17,7 @@ final class CapeTest extends TestCase
     public function should_create_cape_instance_and_stores_it_data()
     {
         $name        = 'Auroran Cryomagus Ponytail';
-        $description = "Pink auroras are created during intense solar storms. It sounds scary but that phenomenon is considered a blessing by the Cryomagus and others ice magic practioners.";
+        $description = 'Pink auroras are created during intense solar storms. It sounds scary but that phenomenon is considered a blessing by the Cryomagus and others ice magic practioners.';
         $tags        = new ItemTags([TagType::AdventureCoins, TagType::Rare]);
         $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
         $id          = ItemIdentifierGenerator::generate($itemInfo, Cape::class)->unwrap();

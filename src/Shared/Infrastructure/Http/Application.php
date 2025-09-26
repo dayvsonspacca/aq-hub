@@ -9,8 +9,8 @@ use ReflectionClass;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request};
 use Symfony\Component\Routing\Exception\{MethodNotAllowedException, ResourceNotFoundException};
 use Symfony\Component\Routing\Matcher\UrlMatcher;
-use Symfony\Component\Routing\Route as SymfonyRoute;
 use Symfony\Component\Routing\{RequestContext, RouteCollection};
+use Symfony\Component\Routing\Route as SymfonyRoute;
 
 class Application
 {

@@ -13,7 +13,7 @@ class EventsFactory implements EventsFactoryInterface
     public function fromMessage(string $message): array
     {
         $events = [];
-        preg_match("/%xt%uotls%-1%([^%]+)%/", $message, $matches);
+        preg_match('/%xt%uotls%-1%([^%]+)%/', $message, $matches);
         if (isset($matches[1])) {
             $name = Name::create($matches[1]);
             if ($name->isSuccess()) {

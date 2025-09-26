@@ -17,7 +17,8 @@ class PlayerData
         public readonly Level $level,
         public readonly DateTime $createdAt,
         public readonly bool $mined
-    ) {}
+    ) {
+    }
 
     public static function fromDomain(Player $player, DateTime $createdAt, bool $mined)
     {

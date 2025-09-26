@@ -10,7 +10,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class LogEventsHandler implements EventsHandlerInterface
 {
-    public function __construct(private readonly OutputInterface $output) {}
+    public function __construct(private readonly OutputInterface $output)
+    {
+    }
 
     public function handle(array $events): array
     {

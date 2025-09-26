@@ -10,7 +10,9 @@ use AqwSocketClient\Events\Handlers\EventsHandlerInterface;
 
 class EventsHandler implements EventsHandlerInterface
 {
-    public function __construct(private readonly AddPlayer $addPlayer) {}
+    public function __construct(private readonly AddPlayer $addPlayer)
+    {
+    }
 
     public function handle(array $events): array
     {

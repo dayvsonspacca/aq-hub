@@ -26,7 +26,7 @@ class InMemoryPlayerRepository implements PlayerRepository
             return Result::error('A player with same id already exists: ' . $identifier->getValue(), null);
         }
 
-        $player = Player::create($identifier, $name, $level, new PlayerInventory([], 30));
+        $player                                = Player::create($identifier, $name, $level, new PlayerInventory([], 30));
         $this->memory[$identifier->getValue()] = $player->getData();
 
         return Result::success(null, $player->getData());
@@ -43,10 +43,10 @@ class InMemoryPlayerRepository implements PlayerRepository
 
     public function findAll(PlayerFilter $filter): Result
     {
-        $players = array_map(fn($player) => PlayerData::fromDomain($player, new DateTime(), isset($this->playersMined[$player->getName()])), $this->memory);
+        $players = array_map(fn ($player) => PlayerData::fromDomain($player, new DateTime(), isset($this->playersMined[$player->getName()])), $this->memory);
 
         if (!is_null($filter->mined)) {
-            $players = array_values(array_filter($players, fn($player) => $player->mined === $filter->mined));
+            $players = array_values(array_filter($players, fn ($player) => $player->mined === $filter->mined));
         }
 
         return Result::success(null, $players);

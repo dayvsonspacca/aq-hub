@@ -24,7 +24,7 @@ class AddPlayer
         $result = CharpageScrapper::findPlayerData($name);
 
         [$identifier, $name, $level] = $result->getData();
-        
+
         if ($result->isError()) {
             return $result;
         }
