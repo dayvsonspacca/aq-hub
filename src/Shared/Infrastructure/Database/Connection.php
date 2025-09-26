@@ -5,16 +5,19 @@ declare(strict_types=1);
 namespace AqHub\Shared\Infrastructure\Database;
 
 use AqHub\Shared\Domain\ValueObjects\Result;
+use Aura\SqlQuery\QueryFactory;
 use PDO;
 use PDOException;
 
 class Connection
 {
     private PDO $connection;
+    public QueryFactory $builder;
 
     private function __construct(PDO $connection)
     {
         $this->connection = $connection;
+        $this->builder    = new QueryFactory('pgsql');
     }
 
     public static function connect(

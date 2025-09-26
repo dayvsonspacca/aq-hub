@@ -48,6 +48,9 @@ class ItemTags implements Countable, IteratorAggregate
         return new ArrayIterator($this->tags);
     }
 
+    /**
+     * @return array<string>
+     */
     public function toArray(): array
     {
         return array_map(fn (TagType $tag) => $tag->toString(), $this->tags);
