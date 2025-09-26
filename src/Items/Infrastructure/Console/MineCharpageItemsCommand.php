@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Items\Infrastructure\Commands;
+namespace AqHub\Items\Infrastructure\Console;
 
 use AqHub\Items\Application\UseCases\Armor\AddArmor;
 use AqHub\Items\Application\UseCases\Weapon\AddWeapon;

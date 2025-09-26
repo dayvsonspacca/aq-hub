@@ -7,7 +7,7 @@ namespace AqHub\Items\Infrastructure\Container;
 use AqHub\Items\Application\UseCases\Armor\AddArmor;
 use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
 use AqHub\Items\Domain\Repositories\{ArmorRepository, WeaponRepository};
-use AqHub\Items\Infrastructure\Commands\{MineAllPlayersItemsCommand, MineCharpageItemsCommand};
+use AqHub\Items\Infrastructure\Console\{MineAllPlayersItemsCommand, MineCharpageItemsCommand};
 use AqHub\Items\Infrastructure\Repositories\Sql\{SqlArmorRepository, SqlWeaponRepository};
 use AqHub\Shared\Infrastructure\Container\ContainerRegistry;
 use AqHub\Shared\Infrastructure\Database\Connection;

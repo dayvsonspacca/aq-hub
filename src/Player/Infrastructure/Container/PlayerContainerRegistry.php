@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Container;
 
-use AqHub\Player\Infrastructure\Commands\MinePlayersNameCommand;
+use AqHub\Player\Infrastructure\Console\MinePlayersNameCommand;
 use AqHub\Player\Application\UseCases\{AddPlayer, FindAllPlayers};
 use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Player\Infrastructure\Http\Controllers\PlayerController;

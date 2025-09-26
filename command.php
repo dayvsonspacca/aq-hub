@@ -2,9 +2,9 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use AqHub\Items\Infrastructure\Commands\MineAllPlayersItemsCommand;
-use AqHub\Items\Infrastructure\Commands\MineCharpageItemsCommand;
-use AqHub\Player\Infrastructure\Commands\MinePlayersNameCommand;
+use AqHub\Items\Infrastructure\Console\MineAllPlayersItemsCommand;
+use AqHub\Items\Infrastructure\Console\MineCharpageItemsCommand;
+use AqHub\Player\Infrastructure\Console\MinePlayersNameCommand;
 use Symfony\Component\Console\Application;
 use DI\ContainerBuilder;
 

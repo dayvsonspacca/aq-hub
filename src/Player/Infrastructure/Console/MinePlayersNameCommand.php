@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Player\Infrastructure\Commands;
+namespace AqHub\Player\Infrastructure\Console;
 
 use AqHub\Player\Application\UseCases\AddPlayer;
 use AqHub\Player\Domain\ValueObjects\Name;
