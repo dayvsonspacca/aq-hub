@@ -7,7 +7,7 @@ namespace AqHub\Player\Application\UseCases;
 use AqHub\Player\Domain\Entities\Player;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Player\Domain\ValueObjects\Name;
-use AqHub\Player\Infrastructure\Services\CharpageScrapper;
+use AqHub\Player\Infrastructure\Http\Scrappers\CharpageScrapper;
 use AqHub\Shared\Domain\ValueObjects\Result;
 
 class AddPlayer

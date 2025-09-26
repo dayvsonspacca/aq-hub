@@ -10,7 +10,7 @@ use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
 use AqHub\Items\Infrastructure\Services\AqWikiScrapper;
 use AqHub\Player\Application\UseCases\FindAllPlayers;
-use AqHub\Player\Infrastructure\Services\CharpageScrapper;
+use AqHub\Player\Infrastructure\Http\Scrappers\CharpageScrapper;
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

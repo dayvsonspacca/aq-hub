@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Player\Infrastructure\Services;
+namespace AqHub\Player\Infrastructure\Http\Scrappers;
 
 use AqHub\Items\Domain\ValueObjects\Name as ItemName;
 use AqHub\Player\Domain\ValueObjects\{Level, Name};
