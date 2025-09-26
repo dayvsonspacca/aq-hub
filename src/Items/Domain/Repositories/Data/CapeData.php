@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Items\Infrastructure\Repositories\Data;
+namespace AqHub\Items\Domain\Repositories\Data;
 
 use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, Name};
 
