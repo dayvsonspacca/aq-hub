@@ -7,17 +7,19 @@ namespace AqHub\Items\Infrastructure\Repositories\InMemory;
 use AqHub\Items\Domain\Entities\Weapon;
 use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\Repositories\WeaponRepository;
+use AqHub\Items\Domain\Repositories\Data\WeaponData;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
-use AqHub\Items\Domain\ValueObjects\ItemInfo;
+use AqHub\Items\Domain\ValueObjects\{ItemInfo, Name, Description};
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
+use DateTime;
 
 class InMemoryWeaponRepository implements WeaponRepository
 {
-    /** @var array<Weapon> $memory description */
+    /** @var array<WeaponData> $memory */
     private array $memory = [];
 
     /**
-     * @return Result<Weapon|null>
+     * @return Result<WeaponData|null>
      */
     public function persist(ItemInfo $itemInfo, WeaponType $type): Result
     {
@@ -27,24 +29,28 @@ class InMemoryWeaponRepository implements WeaponRepository
             return Result::error('A Weapon with same identifier already exists: ' . $id->getValue(), null);
         }
 
-        $weapon = Weapon::create($id, $itemInfo, $type)->unwrap();
+        $weaponData = new WeaponData(
+            Name::create($itemInfo->getName())->unwrap(),
+            Description::create($itemInfo->getDescription())->unwrap(),
+            $itemInfo->getTags(),
+            $type,
+            new DateTime()
+        );
 
-        $this->memory[$weapon->getId()] = $weapon;
+        $this->memory[$id->getValue()] = $weaponData;
 
-        return Result::success(null, $weapon);
+        return Result::success(null, $weaponData);
     }
 
     /**
-     * @return Result<Weapon|null>
+     * @return Result<WeaponData|null>
      */
     public function findByIdentifier(StringIdentifier $identifier): Result
     {
-        $weapons = array_filter($this->memory, fn ($weapon) => $weapon->getId() === $identifier->getValue());
-
-        if (empty($weapons)) {
+        if (!isset($this->memory[$identifier->getValue()])) {
             return Result::error(null, null);
         }
 
-        return Result::success(null, end($weapons));
+        return Result::success(null, $this->memory[$identifier->getValue()]);
     }
 }

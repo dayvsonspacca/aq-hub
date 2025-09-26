@@ -6,17 +6,19 @@ namespace AqHub\Items\Infrastructure\Repositories\InMemory;
 
 use AqHub\Items\Domain\Entities\Cape;
 use AqHub\Items\Domain\Repositories\CapeRepository;
+use AqHub\Items\Domain\Repositories\Data\CapeData;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
-use AqHub\Items\Domain\ValueObjects\ItemInfo;
+use AqHub\Items\Domain\ValueObjects\{ItemInfo, Name, Description};
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
+use DateTime;
 
 class InMemoryCapeRepository implements CapeRepository
 {
-    /** @var array<Cape> $memory description */
+    /** @var array<CapeData> $memory */
     private array $memory = [];
 
     /**
-     * @return Result<Cape|null>
+     * @return Result<CapeData|null>
      */
     public function persist(ItemInfo $itemInfo): Result
     {
@@ -26,24 +28,27 @@ class InMemoryCapeRepository implements CapeRepository
             return Result::error('A Cape with same identifier already exists: ' . $id->getValue(), null);
         }
 
-        $cape = Cape::create($id, $itemInfo)->unwrap();
+        $capeData = new CapeData(
+            Name::create($itemInfo->getName())->unwrap(),
+            Description::create($itemInfo->getDescription())->unwrap(),
+            $itemInfo->getTags(),
+            new DateTime()
+        );
 
-        $this->memory[$cape->getId()] = $cape;
+        $this->memory[$id->getValue()] = $capeData;
 
-        return Result::success(null, $cape);
+        return Result::success(null, $capeData);
     }
 
     /**
-     * @return Result<Cape|null>
+     * @return Result<CapeData|null>
      */
     public function findByIdentifier(StringIdentifier $identifier): Result
     {
-        $capes = array_filter($this->memory, fn ($cape) => $cape->getId() === $identifier->getValue());
-
-        if (empty($capes)) {
+        if (!isset($this->memory[$identifier->getValue()])) {
             return Result::error(null, null);
         }
 
-        return Result::success(null, end($capes));
+        return Result::success(null, $this->memory[$identifier->getValue()]);
     }
 }

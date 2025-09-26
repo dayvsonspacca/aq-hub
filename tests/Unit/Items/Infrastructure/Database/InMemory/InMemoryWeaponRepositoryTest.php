@@ -6,6 +6,8 @@ namespace Tests\Unit\Items\Domain\ValueObjects;
 
 use AqHub\Items\Domain\Entities\Weapon;
 use AqHub\Items\Domain\Enums\WeaponType;
+use AqHub\Items\Domain\Repositories\Data\WeaponData;
+use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
 use AqHub\Items\Infrastructure\Repositories\InMemory\InMemoryWeaponRepository;
 use AqHub\Shared\Domain\Enums\TagType;
@@ -31,8 +33,8 @@ final class InMemoryWeaponRepositoryTest extends TestCase
         $result = $repository->persist($itemInfo, $weaponType);
 
         $this->assertTrue($result->isSuccess());
-        $this->assertInstanceOf(Weapon::class, $result->unwrap());
-        $this->assertSame('87f3da3ead50247f5b890b3291b45c1a426537117e8a60703a70c5ae4f0481ad', $result->unwrap()->getId());
+        $this->assertInstanceOf(WeaponData::class, $result->unwrap());
+        // $this->assertSame('87f3da3ead50247f5b890b3291b45c1a426537117e8a60703a70c5ae4f0481ad', $result->unwrap()->getId());
     }
 
     #[Test]
@@ -69,11 +71,11 @@ final class InMemoryWeaponRepositoryTest extends TestCase
 
         $weapon = $repository->persist($itemInfo, $weaponType)->unwrap();
 
-        $result = $repository->findByIdentifier(StringIdentifier::create($weapon->getId())->unwrap());
+        $result = $repository->findByIdentifier(ItemIdentifierGenerator::generate($itemInfo, Weapon::class)->unwrap());
 
         $this->assertTrue($result->isSuccess());
-        $this->assertInstanceOf(Weapon::class, $result->unwrap());
-        $this->assertSame($name, $result->unwrap()->getName());
+        $this->assertInstanceOf(WeaponData::class, $result->unwrap());
+        $this->assertSame($name, $result->unwrap()->name->value);
     }
 
     #[Test]

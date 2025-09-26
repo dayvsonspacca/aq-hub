@@ -6,6 +6,7 @@ namespace Tests\Unit\Items\Domain\ValueObjects;
 
 use AqHub\Player\Domain\Entities\Player;
 use AqHub\Player\Domain\ValueObjects\{Level, Name};
+use AqHub\Player\Infrastructure\Data\PlayerData;
 use AqHub\Player\Infrastructure\Repositories\Filters\PlayerFilter;
 use AqHub\Player\Infrastructure\Repositories\InMemory\InMemoryPlayerRepository;
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
@@ -26,9 +27,9 @@ final class InMemoryPlayerRepositoryTest extends TestCase
         $result = $repository->persist($identifier, $name, $level);
 
         $this->assertTrue($result->isSuccess());
-        $this->assertInstanceOf(Player::class, $result->getData());
-        $this->assertSame(72894515, $result->unwrap()->getId());
-        $this->assertSame('HILISE', $result->unwrap()->getName());
+        $this->assertInstanceOf(PlayerData::class, $result->getData());
+        $this->assertSame(72894515, $result->unwrap()->identifier->getValue());
+        $this->assertSame('HILISE', $result->unwrap()->name->value);
     }
 
     #[Test]
@@ -49,7 +50,7 @@ final class InMemoryPlayerRepositoryTest extends TestCase
     }
 
     #[Test]
-    public function should_find_player_by_identifier()
+    public function should_find_player_data_by_identifier()
     {
         $repository = new InMemoryPlayerRepository();
 
@@ -62,11 +63,11 @@ final class InMemoryPlayerRepositoryTest extends TestCase
         $result = $repository->findByIdentifier($identifier);
 
         $this->assertTrue($result->isSuccess());
-        $this->assertInstanceOf(Player::class, $result->getData());
+        $this->assertInstanceOf(PlayerData::class, $result->getData());
     }
 
     #[Test]
-    public function should_return_null_when_player_not_found_by_id()
+    public function should_return_null_when_player_data_not_found_by_id()
     {
         $repository = new InMemoryPlayerRepository();
 

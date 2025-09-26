@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Repositories\InMemory;
 
-use AqHub\Player\Domain\Entities\Player;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
-use AqHub\Player\Domain\ValueObjects\{Level, Name, PlayerInventory};
+use AqHub\Player\Domain\ValueObjects\{Level, Name};
 use AqHub\Player\Infrastructure\Data\PlayerData;
 use AqHub\Player\Infrastructure\Repositories\Filters\PlayerFilter;
 use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
@@ -14,24 +13,37 @@ use DateTime;
 
 class InMemoryPlayerRepository implements PlayerRepository
 {
-    /** @var array<Player> */
+    /** @var array<PlayerData> */
     private array $memory = [];
 
     /** @var array<string, DateTime> */
     private array $playersMined = [];
 
+    /**
+     * @return Result<PlayerData|null>
+     */
     public function persist(IntIdentifier $identifier, Name $name, Level $level): Result
     {
         if ($this->findByIdentifier($identifier)->isSuccess()) {
             return Result::error('A player with same id already exists: ' . $identifier->getValue(), null);
         }
 
-        $player                                = Player::create($identifier, $name, $level, new PlayerInventory([], 30));
-        $this->memory[$identifier->getValue()] = $player->getData();
+        $playerData = new PlayerData(
+            $identifier,
+            $name,
+            $level,
+            new DateTime(),
+            false
+        );
 
-        return Result::success(null, $player->getData());
+        $this->memory[$identifier->getValue()] = $playerData;
+
+        return Result::success(null, $playerData);
     }
 
+    /**
+     * @return Result<PlayerData|null>
+     */
     public function findByIdentifier(IntIdentifier $identifier): Result
     {
         if (!isset($this->memory[$identifier->getValue()])) {
@@ -41,17 +53,29 @@ class InMemoryPlayerRepository implements PlayerRepository
         return Result::success(null, $this->memory[$identifier->getValue()]);
     }
 
+    /**
+     * @return Result<PlayerData[]>
+     */
     public function findAll(PlayerFilter $filter): Result
     {
-        $players = array_map(fn ($player) => PlayerData::fromDomain($player, new DateTime(), isset($this->playersMined[$player->getName()])), $this->memory);
+        $players = array_map(
+            fn (PlayerData $player) => $player,
+            $this->memory
+        );
 
         if (!is_null($filter->mined)) {
-            $players = array_values(array_filter($players, fn ($player) => $player->mined === $filter->mined));
+            $players = array_values(array_filter(
+                $players,
+                fn ($player) => $player->mined === $filter->mined
+            ));
         }
 
         return Result::success(null, $players);
     }
 
+    /**
+     * @return Result<null>
+     */
     public function markAsMined(Name $name): Result
     {
         if (isset($this->playersMined[$name->value])) {
@@ -59,6 +83,18 @@ class InMemoryPlayerRepository implements PlayerRepository
         }
 
         $this->playersMined[$name->value] = new DateTime();
+
+        foreach ($this->memory as $id => $playerData) {
+            if ($playerData->name->value === $name->value) {
+                $this->memory[$id] = new PlayerData(
+                    IntIdentifier::create($id)->unwrap(),
+                    $playerData->name,
+                    $playerData->level,
+                    $playerData->registeredAt,
+                    true
+                );
+            }
+        }
 
         return Result::success(null, null);
     }
