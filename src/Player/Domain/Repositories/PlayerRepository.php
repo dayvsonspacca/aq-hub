@@ -27,5 +27,5 @@ interface PlayerRepository
      */
     public function findAll(PlayerFilter $filter): Result;
 
-    public function markAsMined(Name $name);
+    public function markAsMined(Name $name): Result;
 }

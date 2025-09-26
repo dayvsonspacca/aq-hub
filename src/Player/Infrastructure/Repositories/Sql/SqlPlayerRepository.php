@@ -15,9 +15,7 @@ use DomainException;
 
 class SqlPlayerRepository implements PlayerRepository
 {
-    public function __construct(private readonly Connection $db)
-    {
-    }
+    public function __construct(private readonly Connection $db) {}
 
     /**
      * @return Result<Player|null>
@@ -110,11 +108,20 @@ class SqlPlayerRepository implements PlayerRepository
         return Result::success(null, $players);
     }
 
-    public function markAsMined(Name $name)
+    public function markAsMined(Name $name): Result
     {
-        $query = 'INSERT INTO players_mined (name, mined_at) VALUES (:name, NOW())';
-        $this->db->execute($query, [
-            'name' => $name->value
-        ]);
+        $query = 'SELECT * FROM players_mined WHERE name = :name';
+        $playerData = $this->db->fetchOne($query, ['name' => $name->value]);
+
+        if (!$playerData) {
+            $query = 'INSERT INTO players_mined (name, mined_at) VALUES (:name, NOW())';
+            $this->db->execute($query, [
+                'name' => $name->value
+            ]);
+
+            return Result::success(null, null);
+        }
+
+        return Result::error('The player ' . $name->value . ' is already mined.', null);
     }
 }

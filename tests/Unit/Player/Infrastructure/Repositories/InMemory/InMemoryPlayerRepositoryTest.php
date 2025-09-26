@@ -133,4 +133,19 @@ final class InMemoryPlayerRepositoryTest extends TestCase
         $this->assertSame(1, count($result->getData()));
         $this->assertSame('Hilise2', $result->getData()[0]->name->value);
     }
+
+    #[Test]
+    public function should_fail_when_try_mine_same_player()
+    {
+        $repository = new InMemoryPlayerRepository();
+        $identifier = IntIdentifier::create(72894515)->unwrap();
+        $name       = Name::create('Hilise')->unwrap();
+        $level      = Level::create(1)->unwrap();
+
+        $repository->persist($identifier, $name, $level);
+        $repository->markAsMined($name);
+        $result = $repository->markAsMined($name);
+
+        $this->assertTrue($result->isError());
+    }
 }

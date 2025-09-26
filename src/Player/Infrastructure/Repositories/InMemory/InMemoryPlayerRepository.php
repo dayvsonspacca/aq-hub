@@ -52,8 +52,14 @@ class InMemoryPlayerRepository implements PlayerRepository
         return Result::success(null, $players);
     }
 
-    public function markAsMined(Name $name): void
+    public function markAsMined(Name $name): Result
     {
+        if (isset($this->playersMined[$name->value])) {
+            return Result::error('The player ' . $name->value . ' is already mined.', null);
+        }
+
         $this->playersMined[$name->value] = new DateTime();
+        
+        return Result::success(null, null);
     }
 }
