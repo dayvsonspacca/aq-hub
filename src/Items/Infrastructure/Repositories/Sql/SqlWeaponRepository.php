@@ -13,13 +13,12 @@ use AqHub\Items\Domain\Repositories\Data\WeaponData;
 use AqHub\Shared\Domain\Enums\TagType;
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 use AqHub\Shared\Infrastructure\Database\Connection;
+use DateTime;
 use DomainException;
 
 class SqlWeaponRepository implements WeaponRepository
 {
-    public function __construct(private readonly Connection $db)
-    {
-    }
+    public function __construct(private readonly Connection $db) {}
 
     /**
      * @return Result<WeaponData|null>
@@ -45,13 +44,22 @@ class SqlWeaponRepository implements WeaponRepository
             ->bindValue('weapon_id', $weaponData['id']);
 
         $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), ['weapon_id' => $weaponData['id']]);
-        $tags     = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+        $tags     = new ItemTags(array_map(fn($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
 
         $name        = Name::create($weaponData['name'])->unwrap();
         $description = Description::create($weaponData['description'])->unwrap();
         $weaponType  = WeaponType::fromString($weaponData['type'])->unwrap();
 
-        return Result::success(null, new WeaponData($name, $description, $tags, $weaponType));
+        return Result::success(
+            null,
+            new WeaponData(
+                $name,
+                $description,
+                $tags,
+                $weaponType,
+                new DateTime($weaponData['registered_at'])
+            )
+        );
     }
 
     /**
@@ -64,7 +72,7 @@ class SqlWeaponRepository implements WeaponRepository
 
             $hash = ItemIdentifierGenerator::generate($itemInfo, Weapon::class);
             if ($hash->isError()) {
-                throw new DomainException('Failed to generate StringIdentifier: '. $hash->getMessage());
+                throw new DomainException('Failed to generate StringIdentifier: ' . $hash->getMessage());
             }
 
             $hash = $hash->getData();
@@ -73,13 +81,16 @@ class SqlWeaponRepository implements WeaponRepository
                 throw new DomainException('A Weapon with same identifier already exists: ' . $hash->getValue());
             }
 
+            $registeredAt = new DateTime();
+
             $insert = $this->db->builder->newInsert()
                 ->into('weapons')
                 ->cols([
                     'name' => $itemInfo->getName(),
                     'hash' => $hash->getValue(),
                     'description' => $itemInfo->getDescription(),
-                    'type' => $type->toString()
+                    'type' => $type->toString(),
+                    'registered_at' => $registeredAt->getTimestamp()
                 ]);
 
             $this->db->execute($insert->getStatement());
@@ -103,7 +114,8 @@ class SqlWeaponRepository implements WeaponRepository
                 Name::create($itemInfo->getName())->unwrap(),
                 Description::create($itemInfo->getDescription())->unwrap(),
                 $itemInfo->getTags(),
-                $type
+                $type,
+                $registeredAt
             ));
         } catch (\Throwable $e) {
             $this->db->getConnection()->rollBack();

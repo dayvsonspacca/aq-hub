@@ -6,6 +6,7 @@ namespace AqHub\Items\Domain\Repositories\Data;
 
 use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, Name};
+use DateTime;
 
 class WeaponData
 {
@@ -13,7 +14,8 @@ class WeaponData
         public readonly Name $name,
         public readonly Description $description,
         public readonly ItemTags $tags,
-        public readonly WeaponType $type
+        public readonly WeaponType $type,
+        public readonly DateTime $registeredAt
     ) {
     }
 }

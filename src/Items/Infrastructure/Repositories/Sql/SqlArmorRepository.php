@@ -12,13 +12,12 @@ use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Shared\Domain\Enums\TagType;
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 use AqHub\Shared\Infrastructure\Database\Connection;
+use DateTime;
 use DomainException;
 
 class SqlArmorRepository implements ArmorRepository
 {
-    public function __construct(private readonly Connection $db)
-    {
-    }
+    public function __construct(private readonly Connection $db) {}
 
     /**
      * @return Result<ArmorData|null>
@@ -49,7 +48,15 @@ class SqlArmorRepository implements ArmorRepository
         $name        = Name::create($armorData['name'])->unwrap();
         $description = Description::create($armorData['description'])->unwrap();
 
-        return Result::success(null, new ArmorData($name, $description, $tags));
+        return Result::success(
+            null,
+            new ArmorData(
+                $name,
+                $description,
+                $tags,
+                new DateTime($armorData['registered_at'])
+            )
+        );
     }
 
     /**
@@ -62,7 +69,7 @@ class SqlArmorRepository implements ArmorRepository
 
             $hash = ItemIdentifierGenerator::generate($itemInfo, Armor::class);
             if ($hash->isError()) {
-                throw new DomainException('Failed to generate StringIdentifier: '. $hash->getMessage());
+                throw new DomainException('Failed to generate StringIdentifier: ' . $hash->getMessage());
             }
 
             $hash = $hash->getData();
@@ -71,12 +78,15 @@ class SqlArmorRepository implements ArmorRepository
                 throw new DomainException('An Armor with same identifier already exists: ' . $hash->getValue());
             }
 
+            $registeredAt = new DateTime();
+
             $insert = $this->db->builder->newInsert()
                 ->into('armors')
                 ->cols([
                     'name' => $itemInfo->getName(),
                     'hash' => $hash->getValue(),
-                    'description' => $itemInfo->getDescription()
+                    'description' => $itemInfo->getDescription(),
+                    'registered_at' => $registeredAt->getTimestamp()
                 ]);
 
             $this->db->execute($insert->getStatement());
@@ -98,7 +108,8 @@ class SqlArmorRepository implements ArmorRepository
             return Result::success(null, new ArmorData(
                 Name::create($itemInfo->getName())->unwrap(),
                 Description::create($itemInfo->getDescription())->unwrap(),
-                $itemInfo->getTags()
+                $itemInfo->getTags(),
+                $registeredAt
             ));
         } catch (\Throwable $e) {
             $this->db->getConnection()->rollBack();

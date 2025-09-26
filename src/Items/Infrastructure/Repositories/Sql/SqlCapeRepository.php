@@ -12,13 +12,12 @@ use AqHub\Items\Domain\Repositories\Data\CapeData;
 use AqHub\Shared\Domain\Enums\TagType;
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 use AqHub\Shared\Infrastructure\Database\Connection;
+use DateTime;
 use DomainException;
 
 class SqlCapeRepository implements CapeRepository
 {
-    public function __construct(private readonly Connection $db)
-    {
-    }
+    public function __construct(private readonly Connection $db) {}
 
     /**
      * @return Result<CapeData|null>
@@ -48,13 +47,17 @@ class SqlCapeRepository implements CapeRepository
             ->bindValue('cape_id', $identifier->getValue());
 
         $tagsData  = $this->db->fetchAll($select->getStatement(), ['cape_id' => $identifier->getValue()]);
-        $tags      = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+        $tags      = new ItemTags(array_map(fn($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
 
-        return Result::success(null, new CapeData(
-            $name,
-            $description,
-            $tags
-        ));
+        return Result::success(
+            null,
+            new CapeData(
+                $name,
+                $description,
+                $tags,
+                new DateTime($capeData['registered_at'])
+            )
+        );
     }
 
     /**
@@ -76,12 +79,15 @@ class SqlCapeRepository implements CapeRepository
                 throw new DomainException('A Cape with same identifier already exists: ' . $hash->getValue());
             }
 
+            $registeredAt = new DateTime();
+
             $insert = $this->db->builder->newInsert()
                 ->into('capes')
                 ->cols([
                     'name' => $itemInfo->getName(),
                     'hash' => $hash->getValue(),
-                    'description' => $itemInfo->getDescription()
+                    'description' => $itemInfo->getDescription(),
+                    'registered_at' => $registeredAt->getTimestamp()
                 ]);
 
             $this->db->execute($insert->getStatement());
@@ -102,7 +108,8 @@ class SqlCapeRepository implements CapeRepository
             return Result::success(null, new CapeData(
                 Name::create($itemInfo->getName())->unwrap(),
                 Description::create($itemInfo->getDescription())->unwrap(),
-                $itemInfo->getTags()
+                $itemInfo->getTags(),
+                $registeredAt
             ));
         } catch (\Throwable $e) {
             $this->db->getConnection()->rollBack();

@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS weapons (
     name TEXT NOT NULL,
     hash TEXT NOT NULL,
     description TEXT NOT NULL,
-    type weapon_type NOT NULL
+    type weapon_type NOT NULL,
+    registered_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS weapon_tags (
@@ -26,7 +27,7 @@ CREATE TABLE IF NOT EXISTS players (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     level INT NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+    registered_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS players_mined (
@@ -39,7 +40,8 @@ CREATE TABLE IF NOT EXISTS armors (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     hash TEXT NOT NULL,
-    description TEXT NOT NULL
+    description TEXT NOT NULL,
+    registered_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS armor_tags (
@@ -48,3 +50,20 @@ CREATE TABLE IF NOT EXISTS armor_tags (
     PRIMARY KEY (armor_id, tag),
     FOREIGN KEY (armor_id) REFERENCES armors(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS capes (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    hash TEXT NOT NULL,
+    description TEXT NOT NULL,
+    registered_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+
+CREATE TABLE IF NOT EXISTS cape_tags (
+    cape_id INT NOT NULL,
+    tag item_tag NOT NULL,
+    PRIMARY KEY (cape_id, tag),
+    FOREIGN KEY (cape_id) REFERENCES capes(id) ON DELETE CASCADE
+);
+

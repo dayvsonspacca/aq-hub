@@ -15,18 +15,18 @@ class PlayerData
         public readonly IntIdentifier $identifier,
         public readonly Name $name,
         public readonly Level $level,
-        public readonly DateTime $createdAt,
+        public readonly DateTime $registeredAt,
         public readonly bool $mined
     ) {
     }
 
-    public static function fromDomain(Player $player, DateTime $createdAt, bool $mined)
+    public static function fromDomain(Player $player, DateTime $registeredAt, bool $mined)
     {
         return new self(
             IntIdentifier::create($player->getId())->unwrap(),
             Name::create($player->getName())->unwrap(),
             Level::create($player->getLevel())->unwrap(),
-            $createdAt,
+            $registeredAt,
             $mined
         );
     }
@@ -37,7 +37,7 @@ class PlayerData
             'id' => $this->identifier->getValue(),
             'name' => $this->name->value,
             'level' => $this->level->value,
-            'created_at' => $this->createdAt->format('Y-m-d H:i:s'),
+            'created_at' => $this->registeredAt->format('Y-m-d H:i:s'),
             'mined' => $this->mined
         ];
     }
