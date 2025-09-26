@@ -73,7 +73,9 @@ class SqlPlayerRepository implements PlayerRepository
      */
     public function findAll(PlayerFilter $filter): Result
     {
-        $query = 'SELECT p.* FROM players p
+        $query = 'SELECT p.*,
+                  CASE WHEN pm.name IS NOT NULL THEN TRUE ELSE FALSE END AS mined
+                  FROM players p
                   LEFT JOIN players_mined pm ON pm.name = p.name';
 
         $conditions = [];
@@ -100,7 +102,7 @@ class SqlPlayerRepository implements PlayerRepository
                 Name::create($playerData['name'])->unwrap(),
                 Level::create((int)$playerData['level'])->unwrap(),
                 new \DateTime($playerData['created_at']),
-                (bool)$playerData['mined']
+                (bool) $playerData['mined']
             );
         }
 

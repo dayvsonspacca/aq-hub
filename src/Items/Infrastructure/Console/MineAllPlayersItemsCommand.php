@@ -10,9 +10,9 @@ use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
 use AqHub\Items\Infrastructure\Http\Scrappers\AqWikiScrapper;
 use AqHub\Player\Application\UseCases\FindAllPlayers;
+use AqHub\Player\Application\UseCases\MarkAsMined;
 use AqHub\Player\Infrastructure\Http\Scrappers\CharpageScrapper;
 use AqHub\Player\Infrastructure\Repositories\Filters\PlayerFilter;
-use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,7 +22,8 @@ class MineAllPlayersItemsCommand extends Command
     public function __construct(
         private readonly FindAllPlayers $findAllPlayers,
         private readonly AddWeapon $addWeapon,
-        private readonly AddArmor $addArmor
+        private readonly AddArmor $addArmor,
+        private readonly MarkAsMined $markAsMined
     ) {
         parent::__construct();
     }
@@ -44,7 +45,7 @@ class MineAllPlayersItemsCommand extends Command
             $output->writeln('<fg=red;options=bold>✘ Failed to retrieve players:</> <fg=yellow>' . $players->getMessage() . '</>');
             return Command::FAILURE;
         }
-
+        
         $players    = $players->getData();
         $totalMined = 0;
 
@@ -105,6 +106,8 @@ class MineAllPlayersItemsCommand extends Command
                 }
             }
 
+            $this->markAsMined->execute($player->name);
+            $output->writeln("<fg=green;options=bold>✔ {$player->name->value} marked as mined.</>");
             $output->writeln('');
         }
 

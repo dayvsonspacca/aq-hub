@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Player\Infrastructure\Container;
 
 use AqHub\Player\Infrastructure\Console\MinePlayersNameCommand;
-use AqHub\Player\Application\UseCases\{AddPlayer, FindAllPlayers};
+use AqHub\Player\Application\UseCases\{AddPlayer, FindAllPlayers, MarkAsMined};
 use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Player\Infrastructure\Http\Controllers\PlayerController;
 use AqHub\Player\Infrastructure\Repositories\Sql\SqlPlayerRepository;
@@ -45,7 +45,8 @@ class PlayerContainerRegistry implements ContainerRegistry
     {
         return [
             AddPlayer::class => autowire(),
-            FindAllPlayers::class => autowire()
+            FindAllPlayers::class => autowire(),
+            MarkAsMined::class => autowire()
         ];
     }
 
