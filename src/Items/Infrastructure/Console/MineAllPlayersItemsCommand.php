@@ -8,7 +8,7 @@ use AqHub\Items\Application\UseCases\Armor\AddArmor;
 use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
 use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
-use AqHub\Items\Infrastructure\Services\AqWikiScrapper;
+use AqHub\Items\Infrastructure\Http\Scrappers\AqWikiScrapper;
 use AqHub\Player\Application\UseCases\FindAllPlayers;
 use AqHub\Player\Infrastructure\Http\Scrappers\CharpageScrapper;
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
