@@ -6,6 +6,8 @@ namespace AqHub\Player\Domain\Repositories;
 
 use AqHub\Player\Domain\Entities\Player;
 use AqHub\Player\Domain\ValueObjects\{Level, Name};
+use AqHub\Player\Infrastructure\Data\PlayerData;
+use AqHub\Player\Infrastructure\Repositories\Filters\PlayerFilter;
 use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
 
 interface PlayerRepository
@@ -21,7 +23,9 @@ interface PlayerRepository
     public function findByIdentifier(IntIdentifier $identifier): Result;
 
     /**
-     * @return Result<array<Player>>
+     * @return Result<array<PlayerData>>
      */
-    public function findAll(): Result;
+    public function findAll(PlayerFilter $filter): Result;
+
+    public function markAsMined(Name $name);
 }

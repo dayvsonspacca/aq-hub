@@ -6,6 +6,7 @@ namespace Tests\Unit\Items\Domain\ValueObjects;
 
 use AqHub\Player\Domain\Entities\Player;
 use AqHub\Player\Domain\ValueObjects\{Level, Name};
+use AqHub\Player\Infrastructure\Repositories\Filters\PlayerFilter;
 use AqHub\Player\Infrastructure\Repositories\InMemory\InMemoryPlayerRepository;
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 use AqHub\Tests\Unit\TestCase;
@@ -81,19 +82,16 @@ final class InMemoryPlayerRepositoryTest extends TestCase
     public function should_return_empty_array_when_find_all_without_persist()
     {
         $repository = new InMemoryPlayerRepository();
-        $result     = $repository->findAll();
+        $result     = $repository->findAll(new PlayerFilter());
 
         $this->assertTrue($result->isSuccess());
         $this->assertSame([], $result->getData());
     }
 
-
     #[Test]
     public function should_return_all_players()
     {
         $repository = new InMemoryPlayerRepository();
-        $result     = $repository->findAll();
-
         $identifier = IntIdentifier::create(72894515)->unwrap();
         $name       = Name::create('Hilise')->unwrap();
         $level      = Level::create(1)->unwrap();
@@ -106,9 +104,33 @@ final class InMemoryPlayerRepositoryTest extends TestCase
 
         $repository->persist($identifier, $name, $level);
 
-        $result = $repository->findAll();
+        $result = $repository->findAll(new PlayerFilter());
 
         $this->assertTrue($result->isSuccess());
         $this->assertSame(2, count($result->getData()));
+    }
+
+    #[Test]
+    public function should_return_only_mined_players()
+    {
+        $repository = new InMemoryPlayerRepository();
+        $identifier = IntIdentifier::create(72894515)->unwrap();
+        $name       = Name::create('Hilise')->unwrap();
+        $level      = Level::create(1)->unwrap();
+
+        $repository->persist($identifier, $name, $level);
+
+        $identifier = IntIdentifier::create(72894516)->unwrap();
+        $name       = Name::create('Hilise2')->unwrap();
+        $level      = Level::create(1)->unwrap();
+
+        $repository->persist($identifier, $name, $level);
+        $repository->markAsMined($name);
+
+        $result = $repository->findAll(new PlayerFilter(mined: true));
+
+        $this->assertTrue($result->isSuccess());
+        $this->assertSame(1, count($result->getData()));
+        $this->assertSame('Hilise2', $result->getData()[0]->name->value);
     }
 }
