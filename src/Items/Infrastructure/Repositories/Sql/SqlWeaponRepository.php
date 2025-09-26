@@ -9,6 +9,7 @@ use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\Repositories\WeaponRepository;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
+use AqHub\Items\Infrastructure\Repositories\Data\WeaponData;
 use AqHub\Shared\Domain\Enums\TagType;
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 use AqHub\Shared\Infrastructure\Database\Connection;
@@ -21,7 +22,40 @@ class SqlWeaponRepository implements WeaponRepository
     }
 
     /**
-     * @return Result<Weapon|null>
+     * @return Result<WeaponData|null>
+     */
+    public function findByIdentifier(StringIdentifier $identifier): Result
+    {
+        $select = $this->db->builder->newSelect()
+            ->from('weapons')
+            ->cols(['*'])
+            ->where('hash = :hash')
+            ->bindValue('hash', $identifier->getValue());
+
+        $weaponData = $this->db->fetchOne($select->getStatement(), ['hash' => $identifier->getValue()]);
+
+        if (!$weaponData) {
+            return Result::error(null, null);
+        }
+
+        $tagsSelect = $this->db->builder->newSelect()
+            ->from('weapon_tags')
+            ->cols(['tag'])
+            ->where('weapon_id = :weapon_id')
+            ->bindValue('weapon_id', $weaponData['id']);
+
+        $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), ['weapon_id' => $weaponData['id']]);
+        $tags     = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+
+        $name        = Name::create($weaponData['name'])->unwrap();
+        $description = Description::create($weaponData['description'])->unwrap();
+        $weaponType  = WeaponType::fromString($weaponData['type'])->unwrap();
+
+        return Result::success(null, new WeaponData($name, $description, $tags, $weaponType));
+    }
+
+    /**
+     * @return Result<WeaponData|null>
      */
     public function persist(ItemInfo $itemInfo, WeaponType $type): Result
     {
@@ -39,65 +73,41 @@ class SqlWeaponRepository implements WeaponRepository
                 throw new DomainException('A Weapon with same identifier already exists: ' . $hash->getValue());
             }
 
+            $insert = $this->db->builder->newInsert()
+                ->into('weapons')
+                ->cols([
+                    'name' => $itemInfo->getName(),
+                    'hash' => $hash->getValue(),
+                    'description' => $itemInfo->getDescription(),
+                    'type' => $type->toString()
+                ]);
 
-            $query = 'INSERT INTO weapons (name, hash, description, type) VALUES (:name, :hash, :description, :type)';
-            $this->db->execute($query, [
-                'name' => $itemInfo->getName(),
-                'hash' => $hash->getValue(),
-                'description' => $itemInfo->getDescription(),
-                'type' => $type->toString(),
-            ]);
+            $this->db->execute($insert->getStatement());
 
             $weaponId = $this->db->getConnection()->lastInsertId();
 
             foreach ($itemInfo->getTags()->toArray() as $tag) {
-                $tagQuery = 'INSERT INTO weapon_tags (weapon_id, tag) VALUES (:weapon_id, :tag)';
-                $this->db->execute($tagQuery, [
-                    'weapon_id' => $weaponId,
-                    'tag' => $tag,
-                ]);
+                $insertTag = $this->db->builder->newInsert()
+                    ->into('weapon_tags')
+                    ->cols([
+                        'weapon_id' => $weaponId,
+                        'tag' => $tag
+                    ]);
+
+                $this->db->execute($insertTag->getStatement());
             }
 
             $this->db->getConnection()->commit();
 
-            $weapon = Weapon::create($hash, $itemInfo, $type)->unwrap();
-
-            return Result::success(null, $weapon);
+            return Result::success(null, new WeaponData(
+                Name::create($itemInfo->getName())->unwrap(),
+                Description::create($itemInfo->getDescription())->unwrap(),
+                $itemInfo->getTags(),
+                $type
+            ));
         } catch (\Throwable $e) {
             $this->db->getConnection()->rollBack();
             return Result::error('Failed to persist weapon: ' . $e->getMessage() . ' at ' . $e->getLine(), null);
         }
-    }
-
-    /**
-     * @return Result<Weapon|null>
-     */
-    public function findByIdentifier(StringIdentifier $identifier): Result
-    {
-        $query      = 'SELECT * FROM weapons WHERE hash = :hash LIMIT 1';
-        $weaponData = $this->db->fetchOne($query, ['hash' => $identifier->getValue()]);
-
-        if (!$weaponData) {
-            return Result::error(null, null);
-        }
-
-        $tagsQuery = 'SELECT tag FROM weapon_tags WHERE weapon_id = :weapon_id';
-        $tagsData  = $this->db->fetchAll($tagsQuery, ['weapon_id' => $weaponData['id']]);
-
-        $tags = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
-
-        $name        = Name::create($weaponData['name'])->unwrap();
-        $description = Description::create($weaponData['description'])->unwrap();
-        $itemInfo    = ItemInfo::create($name, $description, $tags)->unwrap();
-
-        $weaponType = WeaponType::fromString($weaponData['type'])->unwrap();
-
-        $weapon = Weapon::create(
-            StringIdentifier::create($weaponData['hash'])->unwrap(),
-            $itemInfo,
-            $weaponType
-        )->unwrap();
-
-        return Result::success(null, $weapon);
     }
 }

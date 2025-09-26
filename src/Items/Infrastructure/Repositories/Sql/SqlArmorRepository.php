@@ -8,6 +8,7 @@ use AqHub\Items\Domain\Entities\Armor;
 use AqHub\Items\Domain\Repositories\ArmorRepository;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
+use AqHub\Items\Infrastructure\Repositories\Data\ArmorData;
 use AqHub\Shared\Domain\Enums\TagType;
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 use AqHub\Shared\Infrastructure\Database\Connection;
@@ -20,7 +21,39 @@ class SqlArmorRepository implements ArmorRepository
     }
 
     /**
-     * @return Result<Armor|null>
+     * @return Result<ArmorData|null>
+     */
+    public function findByIdentifier(StringIdentifier $identifier): Result
+    {
+        $select = $this->db->builder->newSelect()
+            ->from('armors')
+            ->cols(['*'])
+            ->where('hash = :hash')
+            ->bindValue('hash', $identifier->getValue());
+
+        $armorData = $this->db->fetchOne($select->getStatement(), ['hash' => $identifier->getValue()]);
+
+        if (!$armorData) {
+            return Result::error(null, null);
+        }
+
+        $tagsSelect = $this->db->builder->newSelect()
+            ->from('armor_tags')
+            ->cols(['tag'])
+            ->where('armor_id = :armor_id')
+            ->bindValue('armor_id', $armorData['id']);
+
+        $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), ['armor_id' => $armorData['id']]);
+        $tags     = new ItemTags(array_map(fn($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+
+        $name        = Name::create($armorData['name'])->unwrap();
+        $description = Description::create($armorData['description'])->unwrap();
+
+        return Result::success(null, new ArmorData($name, $description, $tags));
+    }
+
+    /**
+     * @return Result<ArmorData|null>
      */
     public function persist(ItemInfo $itemInfo): Result
     {
@@ -38,60 +71,38 @@ class SqlArmorRepository implements ArmorRepository
                 throw new DomainException('An Armor with same identifier already exists: ' . $hash->getValue());
             }
 
-            $query = 'INSERT INTO armors (name, hash, description) VALUES (:name, :hash, :description)';
-            $this->db->execute($query, [
-                'name' => $itemInfo->getName(),
-                'hash' => $hash->getValue(),
-                'description' => $itemInfo->getDescription(),
-            ]);
+            $insert = $this->db->builder->newInsert()
+                ->into('armors')
+                ->cols([
+                    'name' => $itemInfo->getName(),
+                    'hash' => $hash->getValue(),
+                    'description' => $itemInfo->getDescription()
+                ]);
+
+            $this->db->execute($insert->getStatement());
 
             $armorId = $this->db->getConnection()->lastInsertId();
 
             foreach ($itemInfo->getTags()->toArray() as $tag) {
-                $tagQuery = 'INSERT INTO armor_tags (armor_id, tag) VALUES (:armor_id, :tag)';
-                $this->db->execute($tagQuery, [
-                    'armor_id' => $armorId,
-                    'tag' => $tag,
-                ]);
+                $insertTag = $this->db->builder->newInsert()
+                    ->into('armor_tags')
+                    ->cols([
+                        'armor_id' => $armorId,
+                        'tag' => $tag
+                    ]);
+                $this->db->execute($insertTag->getStatement());
             }
 
             $this->db->getConnection()->commit();
 
-            $armor = Armor::create($hash, $itemInfo)->unwrap();
-
-            return Result::success(null, $armor);
+            return Result::success(null, new ArmorData(
+                Name::create($itemInfo->getName())->unwrap(),
+                Description::create($itemInfo->getDescription())->unwrap(),
+                $itemInfo->getTags()
+            ));
         } catch (\Throwable $e) {
             $this->db->getConnection()->rollBack();
             return Result::error('Failed to persist armor: ' . $e->getMessage() . ' at ' . $e->getLine(), null);
         }
-    }
-
-    /**
-     * @return Result<Armor|null>
-     */
-    public function findByIdentifier(StringIdentifier $identifier): Result
-    {
-        $query      = 'SELECT * FROM armors WHERE hash = :hash LIMIT 1';
-        $armorData  = $this->db->fetchOne($query, ['hash' => $identifier->getValue()]);
-
-        if (!$armorData) {
-            return Result::error(null, null);
-        }
-
-        $tagsQuery = 'SELECT tag FROM armor_tags WHERE armor_id = :armor_id';
-        $tagsData  = $this->db->fetchAll($tagsQuery, ['armor_id' => $armorData['id']]);
-
-        $tags = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
-
-        $name        = Name::create($armorData['name'])->unwrap();
-        $description = Description::create($armorData['description'])->unwrap();
-        $itemInfo    = ItemInfo::create($name, $description, $tags)->unwrap();
-
-        $armor = Armor::create(
-            StringIdentifier::create($armorData['hash'])->unwrap(),
-            $itemInfo
-        )->unwrap();
-
-        return Result::success(null, $armor);
     }
 }
