@@ -18,7 +18,7 @@ final class NameTest extends TestCase
 
         $this->assertTrue($result->isSuccess());
         $this->assertInstanceOf(Name::class, $result->getData());
-        $this->assertSame($name, $result->getData()->value);
+        $this->assertSame(mb_strtoupper($name), $result->getData()->value);
     }
 
     #[Test]

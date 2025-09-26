@@ -17,7 +17,7 @@ class Name
      */
     public static function create(string $name): Result
     {
-        $name = trim($name);
+        $name = mb_strtoupper(trim($name));
 
         if (empty($name)) {
             return Result::error('The name of a player cant be empty.', null);

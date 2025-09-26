@@ -28,7 +28,7 @@ final class InMemoryPlayerRepositoryTest extends TestCase
         $this->assertTrue($result->isSuccess());
         $this->assertInstanceOf(Player::class, $result->getData());
         $this->assertSame(72894515, $result->unwrap()->getId());
-        $this->assertSame('Hilise', $result->unwrap()->getName());
+        $this->assertSame('HILISE', $result->unwrap()->getName());
     }
 
     #[Test]
@@ -131,7 +131,7 @@ final class InMemoryPlayerRepositoryTest extends TestCase
 
         $this->assertTrue($result->isSuccess());
         $this->assertSame(1, count($result->getData()));
-        $this->assertSame('Hilise2', $result->getData()[0]->name->value);
+        $this->assertSame('HILISE2', $result->getData()[0]->name->value);
     }
 
     #[Test]
