@@ -6,6 +6,7 @@ namespace AqHub\Shared\Infrastructure\Http\Clients;
 
 use AqHub\Player\Domain\ValueObjects\Name;
 use AqHub\Shared\Domain\ValueObjects\Result;
+use DomainException;
 use GuzzleHttp\Client;
 
 class AqwApiClient
@@ -26,6 +27,11 @@ class AqwApiClient
             $body = json_decode($response->getBody()->getContents(), true);
 
             // [ TODO ] - PARSER TO AN OBJECT
+            if (!isset($body['login']) && !isset($body['login']['sToken'])) {
+                throw new DomainException('Login endpoint dont returned token.');
+            }
+
+            return $body['login']['sToken'];
         } catch (\Throwable $th) {
             return Result::error($th->getMessage(), null);
         }
