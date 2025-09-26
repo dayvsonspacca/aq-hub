@@ -30,4 +30,15 @@ class PlayerData
             $mined
         );
     }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->identifier->getValue(),
+            'name' => $this->name->value,
+            'level' => $this->level->value,
+            'created_at' => $this->createdAt->format('Y-m-d H:i:s'),
+            'mined' => $this->mined
+        ];
+    }
 }

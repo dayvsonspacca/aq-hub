@@ -73,9 +73,9 @@ class SqlPlayerRepository implements PlayerRepository
     public function findAll(PlayerFilter $filter): Result
     {
         $query = 'SELECT p.*,
-                  CASE WHEN pm.name IS NOT NULL THEN TRUE ELSE FALSE END AS mined
-                  FROM players p
-                  LEFT JOIN players_mined pm ON pm.name = p.name';
+              CASE WHEN pm.name IS NOT NULL THEN TRUE ELSE FALSE END AS mined
+              FROM players p
+              LEFT JOIN players_mined pm ON pm.name = p.name';
 
         $conditions = [];
         $params     = [];
@@ -87,6 +87,14 @@ class SqlPlayerRepository implements PlayerRepository
         if (!empty($conditions)) {
             $query .= ' WHERE ' . implode(' AND ', $conditions);
         }
+
+        $limit  = $filter->pageSize;
+        $offset = ($filter->page - 1) * $filter->pageSize;
+
+        $query .= ' ORDER BY p.id ASC LIMIT :limit OFFSET :offset';
+
+        $params['limit']  = $limit;
+        $params['offset'] = $offset;
 
         $playersData = $this->db->fetchAll($query, $params);
 
