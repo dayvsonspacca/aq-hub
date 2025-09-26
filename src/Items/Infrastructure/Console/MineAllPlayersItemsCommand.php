@@ -11,6 +11,7 @@ use AqHub\Items\Domain\ValueObjects\ItemInfo;
 use AqHub\Items\Infrastructure\Http\Scrappers\AqWikiScrapper;
 use AqHub\Player\Application\UseCases\FindAllPlayers;
 use AqHub\Player\Infrastructure\Http\Scrappers\CharpageScrapper;
+use AqHub\Player\Infrastructure\Repositories\Filters\PlayerFilter;
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -37,7 +38,7 @@ class MineAllPlayersItemsCommand extends Command
     {
         $start = microtime(true);
 
-        $players = $this->findAllPlayers->execute();
+        $players = $this->findAllPlayers->execute(new PlayerFilter(mined: false));
 
         if ($players->isError()) {
             $output->writeln('<fg=red;options=bold>✘ Failed to retrieve players:</> <fg=yellow>' . $players->getMessage() . '</>');
@@ -48,19 +49,19 @@ class MineAllPlayersItemsCommand extends Command
         $totalMined = 0;
 
         foreach ($players as $player) {
-            $output->writeln("<fg=magenta;options=bold>▶ Mining items for player:</> <fg=cyan>{$player->getName()}</>");
+            $output->writeln("<fg=magenta;options=bold>▶ Mining items for player:</> <fg=cyan>{$player->name->value}</>");
 
-            $itemsByType = CharpageScrapper::findPlayerItemsNameByType(IntIdentifier::create($player->getId())->getData());
+            $itemsByType = CharpageScrapper::findPlayerItemsNameByType($player->identifier);
 
             if ($itemsByType->isError()) {
-                $output->writeln("<fg=red;options=bold>✘ Failed to retrieve items for player {$player->getName()}:</> <fg=yellow>" . $itemsByType->getMessage() . '</>');
+                $output->writeln("<fg=red;options=bold>✘ Failed to retrieve items for player {$player->name->value}:</> <fg=yellow>" . $itemsByType->getMessage() . '</>');
                 continue;
             }
 
             $itemsByType = $itemsByType->getData();
 
             foreach ($itemsByType as $type => $items) {
-                $output->writeln('<fg=blue;options=bold>ℹ Found ' . count($items) . " item(s) of type <fg=yellow>{$type}</> for player <fg=cyan>{$player->getName()}</>:</>");
+                $output->writeln('<fg=blue;options=bold>ℹ Found ' . count($items) . " item(s) of type <fg=yellow>{$type}</> for player <fg=cyan>{$player->name->value}</>:</>");
 
                 $allowedTypes = array_merge(['Armor'], array_map(fn ($type) => $type->toString(), WeaponType::cases()));
 

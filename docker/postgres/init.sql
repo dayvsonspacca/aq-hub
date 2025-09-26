@@ -25,7 +25,14 @@ CREATE TABLE IF NOT EXISTS weapon_tags (
 CREATE TABLE IF NOT EXISTS players (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-    level INT NOT NULL
+    level INT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS players_mined (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    mined_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS armors (

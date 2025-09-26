@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Application\UseCases;
 
-use AqHub\Player\Domain\Entities\Player;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
+use AqHub\Player\Infrastructure\Data\PlayerData;
+use AqHub\Player\Infrastructure\Repositories\Filters\PlayerFilter;
 use AqHub\Shared\Domain\ValueObjects\Result;
 
 class FindAllPlayers
@@ -15,10 +16,10 @@ class FindAllPlayers
     }
 
     /**
-     * @return Result<array<Player>>
+     * @return Result<array<PlayerData>>
      */
-    public function execute(): Result
+    public function execute(PlayerFilter $filter): Result
     {
-        return $this->playerRepository->findAll();
+        return $this->playerRepository->findAll($filter);
     }
 }

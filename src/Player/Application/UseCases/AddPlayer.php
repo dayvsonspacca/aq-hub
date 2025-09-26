@@ -23,12 +23,14 @@ class AddPlayer
     {
         $result = CharpageScrapper::findPlayerData($name);
 
+        [$identifier, $name, $level] = $result->getData();
+        
         if ($result->isError()) {
             return $result;
         }
 
         $result = $result->getData();
 
-        return $this->playerRepository->persist($result->identifier, $result->name, $result->level);
+        return $this->playerRepository->persist($identifier, $name, $level);
     }
 }
