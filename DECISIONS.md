@@ -75,3 +75,17 @@ Given that, I am considering creating an **internal unique identifier** for item
 This approach would allow anyone with the same `ItemInfo` to generate the same identifier, ensuring consistency while avoiding collisions between items that share a name but differ in other attributes.
 
 > Conclusion Since item names are not guaranteed to be unique in AQW, we will not rely on them to enforce uniqueness. Instead, we will create a deterministic internal identifier by combining key attributes of an item (`Name`, `Description`, `ItemTags`, and **The Item Type Classname**) and generating a hash from them. This ensures that each distinct item can be uniquely identified and consistently persisted, even when multiple items share the same name.
+
+### #7 How should repositories consistently return data across the system?
+2025-09-26
+
+Previously, different repositories returned raw entities, making it difficult to reason about data flow between layers.
+
+To solve this, I decided to adopt **DataObjects** as the standard **DTO (Data Transfer Object)** for all repositories. Each repository will now return a `Data` object that explicitly represents the entity and its data, providing a clear contract for consumers.
+
+This approach brings several benefits:
+- **Consistency:** Every repository has a predictable output structure.
+- **Clarity:** The system clearly specifies what data is being transferred between layers.
+- **Flexibility:** Changes to internal entity structures don’t directly impact consumers, as the `DataObject` serves as a stable interface.
+
+> Conclusion: All repositories will return `DataObjects` as DTOs, defining a consistent way for data to leave the repository layer and ensuring clarity and safety across the system.
