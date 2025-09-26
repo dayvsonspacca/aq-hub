@@ -6,7 +6,6 @@ namespace AqHub\Player\Infrastructure\Http\Scrappers;
 
 use AqHub\Items\Domain\ValueObjects\Name as ItemName;
 use AqHub\Player\Domain\ValueObjects\{Level, Name};
-use AqHub\Player\Infrastructure\Data\PlayerData;
 use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
 use DomainException;
 use GuzzleHttp\Client;
@@ -14,7 +13,7 @@ use GuzzleHttp\Client;
 class CharpageScrapper
 {
     /**
-     * @return Result<PlayerData|null>
+     * @return Result<array|null>
      */
     public static function findPlayerData(Name $name): Result
     {
@@ -37,7 +36,7 @@ class CharpageScrapper
 
             $level = Level::create((int) $matches[1])->unwrap();
 
-            return Result::success(null, new PlayerData($identifier, $name, $level));
+            return Result::success(null, [$identifier, $name, $level]);
         } catch (\Throwable $th) {
             return Result::error($th->getMessage(), null);
         }
