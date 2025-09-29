@@ -94,7 +94,7 @@ class SqlWeaponRepository implements WeaponRepository
                     'registered_at' => $registeredAt->getTimestamp()
                 ]);
 
-            $this->db->execute($insert->getStatement());
+            $this->db->execute($insert->getStatement(), $insert->getBindValues());
 
             $weaponId = $this->db->getConnection()->lastInsertId();
 
@@ -105,8 +105,7 @@ class SqlWeaponRepository implements WeaponRepository
                         'weapon_id' => $weaponId,
                         'tag' => $tag
                     ]);
-
-                $this->db->execute($insertTag->getStatement());
+                $this->db->execute($insertTag->getStatement(), $insertTag->getBindValues());
             }
 
             $this->db->getConnection()->commit();

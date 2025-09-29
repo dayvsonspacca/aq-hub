@@ -87,10 +87,10 @@ class SqlArmorRepository implements ArmorRepository
                     'name' => $itemInfo->getName(),
                     'hash' => $hash->getValue(),
                     'description' => $itemInfo->getDescription(),
-                    'registered_at' => $registeredAt->getTimestamp()
+                    'registered_at' => $registeredAt->format('Y-m-d H:i:s')
                 ]);
 
-            $this->db->execute($insert->getStatement());
+            $this->db->execute($insert->getStatement(), $insert->getBindValues());
 
             $armorId = $this->db->getConnection()->lastInsertId();
 
@@ -101,7 +101,7 @@ class SqlArmorRepository implements ArmorRepository
                         'armor_id' => $armorId,
                         'tag' => $tag
                     ]);
-                $this->db->execute($insertTag->getStatement());
+                $this->db->execute($insertTag->getStatement(), $insertTag->getBindValues());
             }
 
             $this->db->getConnection()->commit();

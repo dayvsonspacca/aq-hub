@@ -91,17 +91,18 @@ class SqlHelmetRepository implements HelmetRepository
                     'registered_at' => $registeredAt->getTimestamp()
                 ]);
 
-            $this->db->execute($insert->getStatement());
+            $this->db->execute($insert->getStatement(), $insert->getBindValues());
 
             $helmetId = $this->db->getConnection()->lastInsertId();
 
             foreach ($itemInfo->tags->toArray() as $tag) {
-                $insert = $this->db->builder->newInsert()
+                $insertTag = $this->db->builder->newInsert()
                     ->into('helmet_tags')
                     ->cols([
                         'helmet_id' => $helmetId,
                         'tag' => $tag,
                     ]);
+                $this->db->execute($insertTag->getStatement(), $insertTag->getBindValues());
             }
 
             $this->db->getConnection()->commit();
