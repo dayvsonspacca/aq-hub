@@ -67,3 +67,17 @@ CREATE TABLE IF NOT EXISTS cape_tags (
     FOREIGN KEY (cape_id) REFERENCES capes(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS helmets (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    hash TEXT NOT NULL,
+    description TEXT NOT NULL,
+    registered_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS helmet_tags (
+    helmet_id INT NOT NULL,
+    tag item_tag NOT NULL,
+    PRIMARY KEY (helmet_id, tag),
+    FOREIGN KEY (helmet_id) REFERENCES helmets(id) ON DELETE CASCADE
+);
