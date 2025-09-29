@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Item\Domain\Enums;
+namespace AqHub\Items\Domain\Enums;
 
 use AqHub\Shared\Domain\ValueObjects\Result;
 
