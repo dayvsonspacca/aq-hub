@@ -7,12 +7,18 @@ CREATE TYPE item_tag AS ENUM (
     'Legend', 'Adventure Coins', 'Rare', 'Pseudo Rare', 'Seasonal', 'Special Offer'
 );
 
+CREATE TYPE item_rarity AS ENUM (
+    'Weird', 'Rare', 'Epic', 'Legendary', 'Awesome', 'Seasonal',
+    'Artifact', 'Boss Drop', 'Impossible', '1% Drop', 'Unknown', 'Secret'
+);
+
 CREATE TABLE IF NOT EXISTS weapons (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     hash TEXT NOT NULL,
     description TEXT NOT NULL,
     type weapon_type NOT NULL,
+    rarity item_rarity,
     registered_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -41,6 +47,7 @@ CREATE TABLE IF NOT EXISTS armors (
     name TEXT NOT NULL,
     hash TEXT NOT NULL,
     description TEXT NOT NULL,
+    rarity item_rarity,
     registered_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -57,6 +64,7 @@ CREATE TABLE IF NOT EXISTS capes (
     hash TEXT NOT NULL,
     description TEXT NOT NULL,
     can_access_bank BOOLEAN NOT NULL,
+    rarity item_rarity,
     registered_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -72,6 +80,7 @@ CREATE TABLE IF NOT EXISTS helmets (
     name TEXT NOT NULL,
     hash TEXT NOT NULL,
     description TEXT NOT NULL,
+    rarity item_rarity,
     registered_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
