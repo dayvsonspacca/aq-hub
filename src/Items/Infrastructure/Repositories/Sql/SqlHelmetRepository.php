@@ -30,9 +30,8 @@ class SqlHelmetRepository implements HelmetRepository
             ->where('hash = :hash')
             ->bindValue('hash', $identifier->getValue());
 
-        $query = $select->getStatement();
-
-        $helmetData = $this->db->execute($query);
+        $helmetData = $this->db->fetchOne($select->getStatement(), ['hash' => $identifier->getValue()]);
+        
         if (!$helmetData) {
             return Result::error(null, null);
         }

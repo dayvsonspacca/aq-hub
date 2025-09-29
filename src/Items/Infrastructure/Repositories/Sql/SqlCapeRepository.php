@@ -30,9 +30,8 @@ class SqlCapeRepository implements CapeRepository
             ->where('hash = :hash')
             ->bindValue('hash', $identifier->getValue());
 
-        $query = $select->getStatement();
-
-        $capeData = $this->db->execute($query);
+        $capeData = $this->db->fetchOne($select->getStatement(), ['hash' => $identifier->getValue()]);
+        
         if (!$capeData) {
             return Result::error(null, null);
         }
