@@ -32,7 +32,7 @@ enum ItemRarity
             'Epic Rarity', 'epic' => Result::success(null, self::Epic),
             'Legendary Item Rarity', 'Legendary Rarity', 'legendary' => Result::success(null, self::Legendary),
             'Awesome Rarity', 'awesome' => Result::success(null, self::Awesome),
-            'Seasonal Item Rarity', 'Seasonal Rarity', 'seasonal' => Result::success(null, self::Seasonal),
+            'Seasonal Rare Rarity', 'Seasonal Item Rarity', 'Seasonal Rarity', 'seasonal' => Result::success(null, self::Seasonal),
             'Artifact Rarity', 'artifact' => Result::success(null, self::Artifact),
             'Boss Drop Rarity', 'boss drop' => Result::success(null, self::BossDrop),
             'Impossible Rarity', 'impossible' => Result::success(null, self::Impossible),
