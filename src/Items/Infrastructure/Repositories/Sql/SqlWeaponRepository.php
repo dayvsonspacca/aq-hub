@@ -91,6 +91,7 @@ class SqlWeaponRepository implements WeaponRepository
                     'hash' => $hash->getValue(),
                     'description' => $itemInfo->getDescription(),
                     'type' => $type->toString(),
+                    'rarity' => $itemInfo->getRarity() ? $itemInfo->getRarity()->toString() : null,
                     'registered_at' => $registeredAt->format('Y-m-d H:i:s')
                 ]);
 

@@ -87,6 +87,7 @@ class SqlArmorRepository implements ArmorRepository
                     'name' => $itemInfo->getName(),
                     'hash' => $hash->getValue(),
                     'description' => $itemInfo->getDescription(),
+                    'rarity' => $itemInfo->getRarity() ? $itemInfo->getRarity()->toString() : null,
                     'registered_at' => $registeredAt->format('Y-m-d H:i:s')
                 ]);
 

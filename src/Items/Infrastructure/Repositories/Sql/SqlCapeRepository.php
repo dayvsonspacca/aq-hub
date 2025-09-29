@@ -27,8 +27,8 @@ class SqlCapeRepository implements CapeRepository
         $select = $this->db->builder->newSelect()
             ->from('capes')
             ->cols(['*'])
-            ->where('id = :id')
-            ->bindValue('id', $identifier->getValue());
+            ->where('hash = :hash')
+            ->bindValue('hash', $identifier->getValue());
 
         $query = $select->getStatement();
 
@@ -91,6 +91,7 @@ class SqlCapeRepository implements CapeRepository
                     'hash' => $hash->getValue(),
                     'description' => $itemInfo->getDescription(),
                     'can_access_bank' => $canAccessBank,
+                    'rarity' => $itemInfo->getRarity() ? $itemInfo->getRarity()->toString() : null,
                     'registered_at' => $registeredAt->format('Y-m-d H:i:s')
                 ]);
 

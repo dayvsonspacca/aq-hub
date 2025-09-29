@@ -27,8 +27,8 @@ class SqlHelmetRepository implements HelmetRepository
         $select = $this->db->builder->newSelect()
             ->from('helmets')
             ->cols(['*'])
-            ->where('id = :id')
-            ->bindValue('id', $identifier->getValue());
+            ->where('hash = :hash')
+            ->bindValue('hash', $identifier->getValue());
 
         $query = $select->getStatement();
 
@@ -88,6 +88,7 @@ class SqlHelmetRepository implements HelmetRepository
                     'name' => $itemInfo->getName(),
                     'hash' => $hash->getValue(),
                     'description' => $itemInfo->getDescription(),
+                    'rarity' => $itemInfo->getRarity() ? $itemInfo->getRarity()->toString() : null,
                     'registered_at' => $registeredAt->format('Y-m-d H:i:s')
                 ]);
 
