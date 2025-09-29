@@ -12,7 +12,8 @@ class Cape extends AqwItem
 {
     private function __construct(
         StringIdentifier $id,
-        ItemInfo $info
+        ItemInfo $info,
+        bool $canAccessBank
     ) {
         $this->id   = $id;
         $this->info = $info;
@@ -22,7 +23,8 @@ class Cape extends AqwItem
     public static function create(
         StringIdentifier $id,
         ItemInfo $info,
+        bool $canAccessBank
     ) {
-        return Result::success(null, new self($id, $info));
+        return Result::success(null, new self($id, $info, $canAccessBank));
     }
 }

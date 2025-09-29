@@ -20,7 +20,7 @@ class InMemoryCapeRepository implements CapeRepository
     /**
      * @return Result<CapeData|null>
      */
-    public function persist(ItemInfo $itemInfo): Result
+    public function persist(ItemInfo $itemInfo, bool $canAccessBank): Result
     {
         $id = ItemIdentifierGenerator::generate($itemInfo, Cape::class)->unwrap();
 
@@ -33,6 +33,7 @@ class InMemoryCapeRepository implements CapeRepository
             Name::create($itemInfo->getName())->unwrap(),
             Description::create($itemInfo->getDescription())->unwrap(),
             $itemInfo->tags,
+            $canAccessBank,
             new DateTime()
         );
 

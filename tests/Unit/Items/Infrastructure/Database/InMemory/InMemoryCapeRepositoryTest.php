@@ -25,10 +25,11 @@ final class InMemoryCapeRepositoryTest extends TestCase
         $name        = 'Cape of Awe';
         $description = 'An AWE-some cape for the truly awesome. Gives 25% more rep, gold, XP and class points when equipped';
         $tags        = new ItemTags([TagType::AdventureCoins]);
+        $canAccessBank = false;
 
         $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Awesome)->unwrap();
 
-        $result = $repository->persist($itemInfo);
+        $result = $repository->persist($itemInfo, $canAccessBank);
 
         $this->assertTrue($result->isSuccess());
         $this->assertInstanceOf(CapeData::class, $result->unwrap());
@@ -43,11 +44,12 @@ final class InMemoryCapeRepositoryTest extends TestCase
         $name        = 'Cape of Awe';
         $description = 'An AWE-some cape for the truly awesome. Gives 25% more rep, gold, XP and class points when equipped';
         $tags        = new ItemTags([TagType::AdventureCoins]);
+        $canAccessBank = false;
 
         $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Awesome)->unwrap();
 
-        $repository->persist($itemInfo);
-        $result = $repository->persist($itemInfo);
+        $repository->persist($itemInfo, $canAccessBank);
+        $result = $repository->persist($itemInfo, $canAccessBank);
 
         $this->assertTrue($result->isError());
         $this->assertSame(null, $result->getData());
@@ -63,8 +65,9 @@ final class InMemoryCapeRepositoryTest extends TestCase
         $description = 'An AWE-some cape for the truly awesome. Gives 25% more rep, gold, XP and class points when equipped';
         $tags        = new ItemTags([TagType::AdventureCoins]);
         $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Awesome)->unwrap();
+        $canAccessBank = false;
 
-        $cape = $repository->persist($itemInfo)->unwrap();
+        $cape = $repository->persist($itemInfo, $canAccessBank)->unwrap();
 
         $result = $repository->findByIdentifier(ItemIdentifierGenerator::generate($itemInfo, Cape::class)->unwrap());
 

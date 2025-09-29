@@ -39,6 +39,7 @@ class SqlCapeRepository implements CapeRepository
 
         $name        = Name::create($capeData['name'])->unwrap();
         $description = Description::create($capeData['description'])->unwrap();
+        $canAccessBank = (bool) $capeData['can_access_bank'];
 
         $select = $this->db->builder->newSelect()
             ->from('cape_tags')
@@ -56,6 +57,7 @@ class SqlCapeRepository implements CapeRepository
                 $name,
                 $description,
                 $tags,
+                $canAccessBank,
                 new DateTime($capeData['registered_at'])
             )
         );
@@ -64,7 +66,7 @@ class SqlCapeRepository implements CapeRepository
     /**
      * @return Result<CapeData|null>
      */
-    public function persist(ItemInfo $itemInfo): Result
+    public function persist(ItemInfo $itemInfo, bool $canAccessBank): Result
     {
         try {
             $this->db->getConnection()->beginTransaction();
@@ -88,6 +90,7 @@ class SqlCapeRepository implements CapeRepository
                     'name' => $itemInfo->getName(),
                     'hash' => $hash->getValue(),
                     'description' => $itemInfo->getDescription(),
+                    'can_access_bank' => $canAccessBank,
                     'registered_at' => $registeredAt->getTimestamp()
                 ]);
 
@@ -111,6 +114,7 @@ class SqlCapeRepository implements CapeRepository
                 Name::create($itemInfo->getName())->unwrap(),
                 Description::create($itemInfo->getDescription())->unwrap(),
                 $itemInfo->tags,
+                $canAccessBank,
                 $registeredAt
             ));
         } catch (\Throwable $e) {

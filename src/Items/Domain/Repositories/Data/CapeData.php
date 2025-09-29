@@ -15,6 +15,7 @@ class CapeData
         public readonly Name $name,
         public readonly Description $description,
         public readonly ItemTags $tags,
+        public readonly bool $canAccessBank,
         public readonly DateTime $registeredAt
     ) {
     }

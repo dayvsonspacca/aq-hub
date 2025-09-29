@@ -13,5 +13,5 @@ interface CapeRepository extends AqwItemRepository
     /**
      * @return Result<CapeData|null>
      */
-    public function persist(ItemInfo $itemInfo): Result;
+    public function persist(ItemInfo $itemInfo, bool $canAccessBank): Result;
 }

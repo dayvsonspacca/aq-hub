@@ -56,9 +56,9 @@ CREATE TABLE IF NOT EXISTS capes (
     name TEXT NOT NULL,
     hash TEXT NOT NULL,
     description TEXT NOT NULL,
+    can_access_bank BOOLEAN NOT NULL,
     registered_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
-
 
 CREATE TABLE IF NOT EXISTS cape_tags (
     cape_id INT NOT NULL,

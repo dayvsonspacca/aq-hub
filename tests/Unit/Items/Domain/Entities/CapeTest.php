@@ -22,10 +22,12 @@ final class CapeTest extends TestCase
         $tags        = new ItemTags([TagType::AdventureCoins, TagType::Rare]);
         $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Rare)->unwrap();
         $id          = ItemIdentifierGenerator::generate($itemInfo, Cape::class)->unwrap();
+        $canAccessBank = false;
 
         $cape = Cape::create(
             $id,
             $itemInfo,
+            $canAccessBank
         )->unwrap();
 
         $this->assertInstanceOf(Cape::class, $cape);
