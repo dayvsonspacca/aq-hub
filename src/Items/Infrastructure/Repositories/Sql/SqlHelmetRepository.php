@@ -88,7 +88,7 @@ class SqlHelmetRepository implements HelmetRepository
                     'name' => $itemInfo->getName(),
                     'hash' => $hash->getValue(),
                     'description' => $itemInfo->getDescription(),
-                    'registered_at' => $registeredAt->getTimestamp()
+                    'registered_at' => $registeredAt->format('Y-m-d H:i:s')
                 ]);
 
             $this->db->execute($insert->getStatement(), $insert->getBindValues());

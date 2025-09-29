@@ -91,7 +91,7 @@ class SqlWeaponRepository implements WeaponRepository
                     'hash' => $hash->getValue(),
                     'description' => $itemInfo->getDescription(),
                     'type' => $type->toString(),
-                    'registered_at' => $registeredAt->getTimestamp()
+                    'registered_at' => $registeredAt->format('Y-m-d H:i:s')
                 ]);
 
             $this->db->execute($insert->getStatement(), $insert->getBindValues());

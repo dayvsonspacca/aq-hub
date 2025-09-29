@@ -91,7 +91,7 @@ class SqlCapeRepository implements CapeRepository
                     'hash' => $hash->getValue(),
                     'description' => $itemInfo->getDescription(),
                     'can_access_bank' => $canAccessBank,
-                    'registered_at' => $registeredAt->getTimestamp()
+                    'registered_at' => $registeredAt->format('Y-m-d H:i:s')
                 ]);
 
             $this->db->execute($insert->getStatement(), $insert->getBindValues());
