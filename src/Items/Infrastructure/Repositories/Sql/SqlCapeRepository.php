@@ -46,7 +46,7 @@ class SqlCapeRepository implements CapeRepository
             ->from('cape_tags')
             ->cols(['tag'])
             ->where('cape_id = :cape_id')
-            ->bindValue('cape_id', $identifier->getValue());
+            ->bindValue('cape_id', $capeData['id']);
 
         $tagsData  = $this->db->fetchAll($select->getStatement(), ['cape_id' => $identifier->getValue()]);
         $tags      = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));

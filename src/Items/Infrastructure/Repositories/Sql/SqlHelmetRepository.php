@@ -45,7 +45,7 @@ class SqlHelmetRepository implements HelmetRepository
             ->from('helmet_tags')
             ->cols(['tag'])
             ->where('helmet_id = :helmet_id')
-            ->bindValue('helmet_id', $identifier->getValue());
+            ->bindValue('helmet_id', $helmetData['id']);
 
         $tagsData  = $this->db->fetchAll($select->getStatement(), ['helmet_id' => $identifier->getValue()]);
         $tags      = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
