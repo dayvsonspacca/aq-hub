@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Infrastructure\Http\Scrappers;
 
+use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, Name};
 use AqHub\Items\Infrastructure\Data\ItemData;
 use AqHub\Shared\Domain\Enums\TagType;
@@ -36,22 +37,19 @@ class AqWikiScrapper
                     preg_match_all('/\/image-tags\/(ac|rare|pseudo|legend|special|seasonal)large\.png/i', $html, $tagMatches);
                     if (!empty($tagMatches[1])) {
                         foreach ($tagMatches[1] as $tagString) {
-                            $tagString = match ($tagString) {
-                                'legend' => 'Legend',
-                                'ac' => 'Adventure Coins',
-                                'rare' => 'Rare',
-                                'pseudo' => 'Pseudo Rare',
-                                'seasonal' => 'Seasonal',
-                                'special' => 'Special Offer',
-                                default => ''
-                            };
-
                             $result = TagType::fromString($tagString);
                             if ($result->isSuccess()) {
                                 $itemTags->add($result->getData());
                             }
                         }
                     }
+
+                    preg_match('/<strong>\s*Rarity:\s*<\/strong>\s*(.*?)(?:<br\s*\/?>|<\/|\z)/is', $html, $matches);
+                    if (!isset($matches[1])) {
+                        continue;
+                    }
+
+                    $rarity = ItemRarity::fromString($matches[1])->unwrap();
 
                     break;
                 } catch (\Throwable) {
@@ -62,7 +60,7 @@ class AqWikiScrapper
                 return Result::error('Description not found for: ' . $name->value, null);
             }
 
-            return Result::success(null, new ItemData($name, $description, $itemTags));
+            return Result::success(null, new ItemData($name, $description, $itemTags, $rarity ?? null));
         } catch (\Throwable $th) {
             return Result::error($th->getMessage(), null);
         }
