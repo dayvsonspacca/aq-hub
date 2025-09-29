@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace AqHub\Items\Infrastructure\Console;
 
 use AqHub\Items\Application\UseCases\Armor\AddArmor;
+use AqHub\Items\Application\UseCases\Cape\AddCape;
+use AqHub\Items\Application\UseCases\Helmet\AddHelmet;
 use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
 use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
@@ -22,6 +24,8 @@ class MineAllPlayersItemsCommand extends Command
         private readonly FindAllPlayers $findAllPlayers,
         private readonly AddWeapon $addWeapon,
         private readonly AddArmor $addArmor,
+        private readonly AddHelmet $addHelmet,
+        private readonly AddCape $addCape,
         private readonly MarkAsMined $markAsMined
     ) {
         parent::__construct();
@@ -63,7 +67,7 @@ class MineAllPlayersItemsCommand extends Command
             foreach ($itemsByType as $type => $items) {
                 $output->writeln('<fg=blue;options=bold>ℹ Found ' . count($items) . " item(s) of type <fg=yellow>{$type}</> for player <fg=cyan>{$player->name->value}</>:</>");
 
-                $allowedTypes = array_merge(['Armor'], array_map(fn ($type) => $type->toString(), WeaponType::cases()));
+                $allowedTypes = array_merge(['Armor', 'Helm'], array_map(fn ($type) => $type->toString(), WeaponType::cases()));
 
                 if (!in_array($type, $allowedTypes, true)) {
                     $output->writeln("<fg=yellow>✘ Skiping: {$type}</>");
@@ -82,10 +86,12 @@ class MineAllPlayersItemsCommand extends Command
 
                     $itemData = $itemData->getData();
 
-                    $itemInfo = ItemInfo::create($itemData->name, $itemData->description, $itemData->tags)->getData();
+                    $itemInfo = ItemInfo::create($itemData->name, $itemData->description, $itemData->tags, $itemData->rarity)->getData();
 
                     if ($type === 'Armor') {
                         $persistResult = $this->addArmor->execute($itemInfo);
+                    } elseif ($type === 'Helm') {
+                        $persistResult = $this->addHelmet->execute($itemInfo);
                     } else {
                         $weaponTypeResult = WeaponType::fromString($type);
                         if ($weaponTypeResult->isError()) {
