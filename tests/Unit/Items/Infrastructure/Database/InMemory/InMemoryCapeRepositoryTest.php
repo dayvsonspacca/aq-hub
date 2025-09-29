@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Items\Domain\ValueObjects;
 
 use AqHub\Items\Domain\Entities\Cape;
+use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Repositories\Data\CapeData;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
@@ -25,7 +26,7 @@ final class InMemoryCapeRepositoryTest extends TestCase
         $description = 'An AWE-some cape for the truly awesome. Gives 25% more rep, gold, XP and class points when equipped';
         $tags        = new ItemTags([TagType::AdventureCoins]);
 
-        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
+        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Awesome)->unwrap();
 
         $result = $repository->persist($itemInfo);
 
@@ -43,7 +44,7 @@ final class InMemoryCapeRepositoryTest extends TestCase
         $description = 'An AWE-some cape for the truly awesome. Gives 25% more rep, gold, XP and class points when equipped';
         $tags        = new ItemTags([TagType::AdventureCoins]);
 
-        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
+        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Awesome)->unwrap();
 
         $repository->persist($itemInfo);
         $result = $repository->persist($itemInfo);
@@ -61,7 +62,7 @@ final class InMemoryCapeRepositoryTest extends TestCase
         $name        = 'Cape of Awe';
         $description = 'An AWE-some cape for the truly awesome. Gives 25% more rep, gold, XP and class points when equipped';
         $tags        = new ItemTags([TagType::AdventureCoins]);
-        $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
+        $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Awesome)->unwrap();
 
         $cape = $repository->persist($itemInfo)->unwrap();
 

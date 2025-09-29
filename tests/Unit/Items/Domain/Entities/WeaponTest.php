@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Items\Domain\Entities;
 
 use AqHub\Items\Domain\Entities\Weapon;
+use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
@@ -21,7 +22,7 @@ final class WeaponTest extends TestCase
         $description = 'The darkness compels… DOOOOOOOOOOOM!!!';
         $tags        = new ItemTags([TagType::AdventureCoins]);
         $type        = WeaponType::Sword;
-        $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
+        $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Legendary)->unwrap();
         $id          = ItemIdentifierGenerator::generate($itemInfo, Weapon::class)->unwrap();
 
         $weapon = Weapon::create(

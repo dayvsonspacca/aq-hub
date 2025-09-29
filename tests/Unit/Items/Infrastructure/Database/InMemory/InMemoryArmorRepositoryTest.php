@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Items\Domain\ValueObjects;
 
 use AqHub\Items\Domain\Entities\Armor;
+use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
@@ -25,7 +26,7 @@ final class InMemoryArmorRepositoryTest extends TestCase
         $description = "Not even the dark magic of the Shadowscythe is enough to satisfy this soul's lust for power. This item does 35% more damage to any monster, and gives 25% more class points, XP, gold, and rep when equipped.";
         $tags        = new ItemTags([TagType::AdventureCoins]);
 
-        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
+        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Epic)->unwrap();
 
         $result = $repository->persist($itemInfo);
 
@@ -43,7 +44,7 @@ final class InMemoryArmorRepositoryTest extends TestCase
         $description = "Not even the dark magic of the Shadowscythe is enough to satisfy this soul's lust for power. This item does 35% more damage to any monster, and gives 25% more class points, XP, gold, and rep when equipped.";
         $tags        = new ItemTags([TagType::AdventureCoins]);
 
-        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
+        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Epic)->unwrap();
 
         $repository->persist($itemInfo);
         $result = $repository->persist($itemInfo);
@@ -61,7 +62,7 @@ final class InMemoryArmorRepositoryTest extends TestCase
         $name        = 'ArchFiend DoomLord';
         $description = "Not even the dark magic of the Shadowscythe is enough to satisfy this soul's lust for power. This item does 35% more damage to any monster, and gives 25% more class points, XP, gold, and rep when equipped.";
         $tags        = new ItemTags([TagType::AdventureCoins]);
-        $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
+        $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Epic)->unwrap();
 
         $armor = $repository->persist($itemInfo)->unwrap();
 

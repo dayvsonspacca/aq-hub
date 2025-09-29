@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Items\Domain\ValueObjects;
 
 use AqHub\Items\Domain\Entities\Weapon;
-use AqHub\Items\Domain\Enums\WeaponType;
+use AqHub\Items\Domain\Enums\{WeaponType, ItemRarity};
 use AqHub\Items\Domain\Repositories\Data\WeaponData;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
@@ -26,7 +26,7 @@ final class InMemoryWeaponRepositoryTest extends TestCase
         $description = 'The darkness compels… DOOOOOOOOOOOM!!!';
         $tags        = new ItemTags([TagType::AdventureCoins]);
 
-        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
+        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Legendary)->unwrap();
 
         $weaponType = WeaponType::Sword;
 
@@ -46,7 +46,7 @@ final class InMemoryWeaponRepositoryTest extends TestCase
         $description = 'The darkness compels… DOOOOOOOOOOOM!!!';
         $tags        = new ItemTags([TagType::AdventureCoins]);
 
-        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
+        $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Legendary)->unwrap();
 
         $weaponType = WeaponType::Sword;
 
@@ -66,7 +66,7 @@ final class InMemoryWeaponRepositoryTest extends TestCase
         $name        = 'Necrotic Sword of Doom';
         $description = 'The darkness compels… DOOOOOOOOOOOM!!!';
         $tags        = new ItemTags([TagType::AdventureCoins]);
-        $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags)->unwrap();
+        $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Legendary)->unwrap();
         $weaponType  = WeaponType::Sword;
 
         $weapon = $repository->persist($itemInfo, $weaponType)->unwrap();
