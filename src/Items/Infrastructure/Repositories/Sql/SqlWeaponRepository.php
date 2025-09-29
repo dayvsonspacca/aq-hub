@@ -98,7 +98,7 @@ class SqlWeaponRepository implements WeaponRepository
 
             $weaponId = $this->db->getConnection()->lastInsertId();
 
-            foreach ($itemInfo->getTags()->toArray() as $tag) {
+            foreach ($itemInfo->tags->toArray() as $tag) {
                 $insertTag = $this->db->builder->newInsert()
                     ->into('weapon_tags')
                     ->cols([
@@ -115,7 +115,7 @@ class SqlWeaponRepository implements WeaponRepository
                 $hash,
                 Name::create($itemInfo->getName())->unwrap(),
                 Description::create($itemInfo->getDescription())->unwrap(),
-                $itemInfo->getTags(),
+                $itemInfo->tags,
                 $type,
                 $registeredAt
             ));

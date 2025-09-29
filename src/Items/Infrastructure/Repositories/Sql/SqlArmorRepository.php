@@ -94,7 +94,7 @@ class SqlArmorRepository implements ArmorRepository
 
             $armorId = $this->db->getConnection()->lastInsertId();
 
-            foreach ($itemInfo->getTags()->toArray() as $tag) {
+            foreach ($itemInfo->tags->toArray() as $tag) {
                 $insertTag = $this->db->builder->newInsert()
                     ->into('armor_tags')
                     ->cols([
@@ -110,7 +110,7 @@ class SqlArmorRepository implements ArmorRepository
                 $hash,
                 Name::create($itemInfo->getName())->unwrap(),
                 Description::create($itemInfo->getDescription())->unwrap(),
-                $itemInfo->getTags(),
+                $itemInfo->tags,
                 $registeredAt
             ));
         } catch (\Throwable $e) {

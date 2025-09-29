@@ -95,7 +95,7 @@ class SqlCapeRepository implements CapeRepository
 
             $capeId = $this->db->getConnection()->lastInsertId();
 
-            foreach ($itemInfo->getTags()->toArray() as $tag) {
+            foreach ($itemInfo->tags->toArray() as $tag) {
                 $insert = $this->db->builder->newInsert()
                     ->into('cape_tags')
                     ->cols([
@@ -110,7 +110,7 @@ class SqlCapeRepository implements CapeRepository
                 $hash,
                 Name::create($itemInfo->getName())->unwrap(),
                 Description::create($itemInfo->getDescription())->unwrap(),
-                $itemInfo->getTags(),
+                $itemInfo->tags,
                 $registeredAt
             ));
         } catch (\Throwable $e) {
