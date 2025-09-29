@@ -6,9 +6,9 @@ namespace AqHub\Items\Infrastructure\Repositories\Sql;
 
 use AqHub\Items\Domain\Entities\Cape;
 use AqHub\Items\Domain\Repositories\CapeRepository;
+use AqHub\Items\Domain\Repositories\Data\CapeData;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
-use AqHub\Items\Domain\Repositories\Data\CapeData;
 use AqHub\Shared\Domain\Enums\TagType;
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 use AqHub\Shared\Infrastructure\Database\Connection;
@@ -17,7 +17,9 @@ use DomainException;
 
 class SqlCapeRepository implements CapeRepository
 {
-    public function __construct(private readonly Connection $db) {}
+    public function __construct(private readonly Connection $db)
+    {
+    }
 
     /**
      * @return Result<CapeData|null>
@@ -31,13 +33,13 @@ class SqlCapeRepository implements CapeRepository
             ->bindValue('hash', $identifier->getValue());
 
         $capeData = $this->db->fetchOne($select->getStatement(), ['hash' => $identifier->getValue()]);
-        
+
         if (!$capeData) {
             return Result::error(null, null);
         }
 
-        $name        = Name::create($capeData['name'])->unwrap();
-        $description = Description::create($capeData['description'])->unwrap();
+        $name          = Name::create($capeData['name'])->unwrap();
+        $description   = Description::create($capeData['description'])->unwrap();
         $canAccessBank = (bool) $capeData['can_access_bank'];
 
         $select = $this->db->builder->newSelect()
@@ -47,7 +49,7 @@ class SqlCapeRepository implements CapeRepository
             ->bindValue('cape_id', $identifier->getValue());
 
         $tagsData  = $this->db->fetchAll($select->getStatement(), ['cape_id' => $identifier->getValue()]);
-        $tags      = new ItemTags(array_map(fn($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+        $tags      = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
 
         return Result::success(
             null,

@@ -8,7 +8,7 @@ use AqHub\Items\Domain\Entities\Armor;
 use AqHub\Items\Domain\Repositories\ArmorRepository;
 use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
-use AqHub\Items\Domain\ValueObjects\{ItemInfo, Name, Description};
+use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, Name};
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 use DateTime;
 

@@ -14,7 +14,8 @@ class ItemInfo
         private readonly Description $description,
         public readonly ItemTags $tags,
         private readonly ?ItemRarity $rarity
-    ) {}
+    ) {
+    }
 
     /** @return Result<ItemInfo> **/
     public static function create(Name $name, Description $description, ItemTags $tags, ?ItemRarity $rarity)

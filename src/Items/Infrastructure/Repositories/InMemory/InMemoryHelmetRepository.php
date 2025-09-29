@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace AqHub\Items\Infrastructure\Repositories\InMemory;
 
 use AqHub\Items\Domain\Entities\Helmet;
-use AqHub\Items\Domain\Repositories\HelmetRepository;
 use AqHub\Items\Domain\Repositories\Data\HelmetData;
+use AqHub\Items\Domain\Repositories\HelmetRepository;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
-use AqHub\Items\Domain\ValueObjects\{ItemInfo, Name, Description};
+use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, Name};
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 use DateTime;
 

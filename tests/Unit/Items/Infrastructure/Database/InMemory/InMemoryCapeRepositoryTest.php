@@ -22,9 +22,9 @@ final class InMemoryCapeRepositoryTest extends TestCase
     {
         $repository = new InMemoryCapeRepository();
 
-        $name        = 'Cape of Awe';
-        $description = 'An AWE-some cape for the truly awesome. Gives 25% more rep, gold, XP and class points when equipped';
-        $tags        = new ItemTags([TagType::AdventureCoins]);
+        $name          = 'Cape of Awe';
+        $description   = 'An AWE-some cape for the truly awesome. Gives 25% more rep, gold, XP and class points when equipped';
+        $tags          = new ItemTags([TagType::AdventureCoins]);
         $canAccessBank = false;
 
         $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Awesome)->unwrap();
@@ -41,9 +41,9 @@ final class InMemoryCapeRepositoryTest extends TestCase
     {
         $repository = new InMemoryCapeRepository();
 
-        $name        = 'Cape of Awe';
-        $description = 'An AWE-some cape for the truly awesome. Gives 25% more rep, gold, XP and class points when equipped';
-        $tags        = new ItemTags([TagType::AdventureCoins]);
+        $name          = 'Cape of Awe';
+        $description   = 'An AWE-some cape for the truly awesome. Gives 25% more rep, gold, XP and class points when equipped';
+        $tags          = new ItemTags([TagType::AdventureCoins]);
         $canAccessBank = false;
 
         $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Awesome)->unwrap();
@@ -61,10 +61,10 @@ final class InMemoryCapeRepositoryTest extends TestCase
     {
         $repository = new InMemoryCapeRepository();
 
-        $name        = 'Cape of Awe';
-        $description = 'An AWE-some cape for the truly awesome. Gives 25% more rep, gold, XP and class points when equipped';
-        $tags        = new ItemTags([TagType::AdventureCoins]);
-        $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Awesome)->unwrap();
+        $name          = 'Cape of Awe';
+        $description   = 'An AWE-some cape for the truly awesome. Gives 25% more rep, gold, XP and class points when equipped';
+        $tags          = new ItemTags([TagType::AdventureCoins]);
+        $itemInfo      = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Awesome)->unwrap();
         $canAccessBank = false;
 
         $cape = $repository->persist($itemInfo, $canAccessBank)->unwrap();

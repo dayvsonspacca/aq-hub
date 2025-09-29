@@ -6,10 +6,10 @@ namespace AqHub\Items\Infrastructure\Repositories\InMemory;
 
 use AqHub\Items\Domain\Entities\Weapon;
 use AqHub\Items\Domain\Enums\WeaponType;
-use AqHub\Items\Domain\Repositories\WeaponRepository;
 use AqHub\Items\Domain\Repositories\Data\WeaponData;
+use AqHub\Items\Domain\Repositories\WeaponRepository;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
-use AqHub\Items\Domain\ValueObjects\{ItemInfo, Name, Description};
+use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, Name};
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 use DateTime;
 

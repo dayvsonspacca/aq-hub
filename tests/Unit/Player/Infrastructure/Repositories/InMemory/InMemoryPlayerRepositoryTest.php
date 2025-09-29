@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Items\Domain\ValueObjects;
 
-use AqHub\Player\Domain\Entities\Player;
 use AqHub\Player\Domain\ValueObjects\{Level, Name};
 use AqHub\Player\Infrastructure\Data\PlayerData;
 use AqHub\Player\Infrastructure\Repositories\Filters\PlayerFilter;

@@ -6,9 +6,9 @@ namespace AqHub\Items\Infrastructure\Repositories\Sql;
 
 use AqHub\Items\Domain\Entities\Armor;
 use AqHub\Items\Domain\Repositories\ArmorRepository;
+use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
-use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Shared\Domain\Enums\TagType;
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 use AqHub\Shared\Infrastructure\Database\Connection;
@@ -17,7 +17,9 @@ use DomainException;
 
 class SqlArmorRepository implements ArmorRepository
 {
-    public function __construct(private readonly Connection $db) {}
+    public function __construct(private readonly Connection $db)
+    {
+    }
 
     /**
      * @return Result<ArmorData|null>
@@ -43,7 +45,7 @@ class SqlArmorRepository implements ArmorRepository
             ->bindValue('armor_id', $armorData['id']);
 
         $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), ['armor_id' => $armorData['id']]);
-        $tags     = new ItemTags(array_map(fn($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+        $tags     = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
 
         $name        = Name::create($armorData['name'])->unwrap();
         $description = Description::create($armorData['description'])->unwrap();

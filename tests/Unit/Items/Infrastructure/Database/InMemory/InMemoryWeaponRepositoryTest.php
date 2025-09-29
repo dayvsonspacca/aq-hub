@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Items\Domain\ValueObjects;
 
 use AqHub\Items\Domain\Entities\Weapon;
-use AqHub\Items\Domain\Enums\{WeaponType, ItemRarity};
+use AqHub\Items\Domain\Enums\{ItemRarity, WeaponType};
 use AqHub\Items\Domain\Repositories\Data\WeaponData;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};

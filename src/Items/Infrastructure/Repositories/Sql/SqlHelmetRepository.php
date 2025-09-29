@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace AqHub\Items\Infrastructure\Repositories\Sql;
 
 use AqHub\Items\Domain\Entities\Helmet;
+use AqHub\Items\Domain\Repositories\Data\HelmetData;
 use AqHub\Items\Domain\Repositories\HelmetRepository;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
-use AqHub\Items\Domain\Repositories\Data\HelmetData;
 use AqHub\Shared\Domain\Enums\TagType;
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 use AqHub\Shared\Infrastructure\Database\Connection;
@@ -17,7 +17,9 @@ use DomainException;
 
 class SqlHelmetRepository implements HelmetRepository
 {
-    public function __construct(private readonly Connection $db) {}
+    public function __construct(private readonly Connection $db)
+    {
+    }
 
     /**
      * @return Result<HelmetData|null>
@@ -31,7 +33,7 @@ class SqlHelmetRepository implements HelmetRepository
             ->bindValue('hash', $identifier->getValue());
 
         $helmetData = $this->db->fetchOne($select->getStatement(), ['hash' => $identifier->getValue()]);
-        
+
         if (!$helmetData) {
             return Result::error(null, null);
         }
@@ -46,7 +48,7 @@ class SqlHelmetRepository implements HelmetRepository
             ->bindValue('helmet_id', $identifier->getValue());
 
         $tagsData  = $this->db->fetchAll($select->getStatement(), ['helmet_id' => $identifier->getValue()]);
-        $tags      = new ItemTags(array_map(fn($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+        $tags      = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
 
         return Result::success(
             null,

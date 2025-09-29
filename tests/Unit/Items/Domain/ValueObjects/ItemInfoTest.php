@@ -18,7 +18,7 @@ final class ItemInfoTest extends TestCase
         $name        = 'Necrotic Sword of Doom';
         $description = 'The darkness compels… DOOOOOOOOOOOM!!!';
         $tags        = new ItemTags([TagType::AdventureCoins]);
-        $rarity = ItemRarity::Legendary;
+        $rarity      = ItemRarity::Legendary;
 
         $itemInfo = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, $rarity)->unwrap();
 

@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Tests\Integration\Items\Infrastructure\Http\Scrapper;
 
 use AqHub\Items\Domain\Enums\ItemRarity;
-use AqHub\Items\Domain\ValueObjects\Description;
-use AqHub\Items\Domain\ValueObjects\ItemTags;
-use AqHub\Items\Domain\ValueObjects\Name;
+use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, Name};
 use AqHub\Items\Infrastructure\Http\Scrappers\AqWikiScrapper;
 use AqHub\Shared\Domain\Enums\TagType;
 use AqHub\Tests\Unit\TestCase;
@@ -20,7 +18,7 @@ final class AqWikiScrapperTest extends TestCase
     {
         $name = Name::create('Cape of Awe')->unwrap();
 
-        $result = AqWikiScrapper::findItemData($name);
+        $result   = AqWikiScrapper::findItemData($name);
         $itemData = $result->getData();
 
         $this->assertTrue($result->isSuccess());
