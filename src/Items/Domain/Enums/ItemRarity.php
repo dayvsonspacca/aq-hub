@@ -26,7 +26,7 @@ enum ItemRarity
      */
     public static function fromString(string $rarity): Result
     {
-        return match (strtolower($rarity)) {
+        return match ($rarity) {
             'Weird Rarity', 'weird' => Result::success(null, self::Weird),
             'Rare Rarity', 'rare' => Result::success(null, self::Rare),
             'Epic Rarity', 'epic' => Result::success(null, self::Epic),
