@@ -32,7 +32,7 @@ class InMemoryCapeRepository implements CapeRepository
             $id,
             Name::create($itemInfo->getName())->unwrap(),
             Description::create($itemInfo->getDescription())->unwrap(),
-            $itemInfo->getTags(),
+            $itemInfo->tags,
             new DateTime()
         );
 

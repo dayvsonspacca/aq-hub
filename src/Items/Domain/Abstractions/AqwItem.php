@@ -23,6 +23,6 @@ abstract class AqwItem extends Entity
 
     public function getTags(): ItemTags
     {
-        return $this->info->getTags();
+        return $this->info->tags;
     }
 }

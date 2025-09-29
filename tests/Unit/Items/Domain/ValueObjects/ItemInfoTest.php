@@ -25,7 +25,7 @@ final class ItemInfoTest extends TestCase
         $this->assertInstanceOf(ItemInfo::class, $itemInfo);
         $this->assertSame($name, $itemInfo->getName());
         $this->assertSame($description, $itemInfo->getDescription());
-        $this->assertSame($tags, $itemInfo->getTags());
+        $this->assertSame($tags, $itemInfo->tags);
         $this->assertSame($rarity, $itemInfo->getRarity());
     }
 }

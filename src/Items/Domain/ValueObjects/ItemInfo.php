@@ -12,7 +12,7 @@ class ItemInfo
     private function __construct(
         private readonly Name $name,
         private readonly Description $description,
-        private ItemTags $tags,
+        public readonly ItemTags $tags,
         private readonly ?ItemRarity $rarity
     ) {}
 
@@ -30,11 +30,6 @@ class ItemInfo
     public function getDescription(): string
     {
         return $this->description->value;
-    }
-
-    public function getTags(): ItemTags
-    {
-        return $this->tags;
     }
 
     public function getRarity(): ?ItemRarity

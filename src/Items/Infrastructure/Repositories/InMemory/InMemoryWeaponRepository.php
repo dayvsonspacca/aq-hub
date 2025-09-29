@@ -33,7 +33,7 @@ class InMemoryWeaponRepository implements WeaponRepository
             $id,
             Name::create($itemInfo->getName())->unwrap(),
             Description::create($itemInfo->getDescription())->unwrap(),
-            $itemInfo->getTags(),
+            $itemInfo->tags,
             $type,
             new DateTime()
         );

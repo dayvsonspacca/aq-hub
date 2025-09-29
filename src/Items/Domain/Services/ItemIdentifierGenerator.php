@@ -19,7 +19,7 @@ class ItemIdentifierGenerator
      */
     public static function generate(ItemInfo $itemInfo, string $className): Result
     {
-        $tagsString = implode(',', $itemInfo->getTags()->toArray());
+        $tagsString = implode(',', $itemInfo->tags->toArray());
         $dataString = $className . '|' . $itemInfo->getName() . '|' . $itemInfo->getDescription() . '|' . $tagsString;
 
         $hash = hash('sha256', $dataString);
