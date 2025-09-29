@@ -20,7 +20,7 @@ enum TagType
      */
     public static function fromString(string $tag): Result
     {
-        return match (strtolower($tag)) {
+        return match ($tag) {
             'Legend', 'legend' => Result::success(null, self::Legend),
             'Adventure Coins', 'ac' => Result::success(null, self::AdventureCoins),
             'Rare', 'rare' => Result::success(null, self::Rare),
