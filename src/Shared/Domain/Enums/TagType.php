@@ -15,15 +15,18 @@ enum TagType
     case Seasonal;
     case SpecialOffer;
 
+    /**
+     * @return Result<TagType>
+     */
     public static function fromString(string $tag): Result
     {
         return match (strtolower($tag)) {
-            'Legend' => Result::success(null, self::Legend),
-            'Adventure Coins' => Result::success(null, self::AdventureCoins),
-            'Rare' => Result::success(null, self::Rare),
-            'Pseudo Rare' => Result::success(null, self::PseudoRare),
-            'Seasonal' => Result::success(null, self::Seasonal),
-            'Special Offer' => Result::success(null, self::SpecialOffer),
+            'Legend', 'legend' => Result::success(null, self::Legend),
+            'Adventure Coins', 'ac' => Result::success(null, self::AdventureCoins),
+            'Rare', 'rare' => Result::success(null, self::Rare),
+            'Pseudo Rare', 'pseudo' => Result::success(null, self::PseudoRare),
+            'Seasonal', 'seasonal' => Result::success(null, self::Seasonal),
+            'Special Offer', 'special' => Result::success(null, self::SpecialOffer),
             default => Result::error('Tag not defined: ' . $tag, null)
         };
     }
