@@ -6,7 +6,7 @@ namespace AqHub\Items\Infrastructure\Http\Scrappers;
 
 use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, Name};
-use AqHub\Items\Infrastructure\Data\ItemData;
+use AqHub\Items\Infrastructure\Data\WikiItemData;
 use AqHub\Shared\Domain\Enums\TagType;
 use AqHub\Shared\Domain\ValueObjects\Result;
 use GuzzleHttp\Client;
@@ -14,7 +14,7 @@ use GuzzleHttp\Client;
 class AqWikiScrapper
 {
     /**
-     * @return Result<ItemData|null>
+     * @return Result<WikiItemData|null>
      */
     public static function findItemData(Name $name)
     {
@@ -60,7 +60,7 @@ class AqWikiScrapper
                 return Result::error('Description not found for: ' . $name->value, null);
             }
 
-            return Result::success(null, new ItemData($name, $description, $itemTags, $rarity ?? null));
+            return Result::success(null, new WikiItemData($name, $description, $itemTags, $rarity ?? null));
         } catch (\Throwable $th) {
             return Result::error($th->getMessage(), null);
         }

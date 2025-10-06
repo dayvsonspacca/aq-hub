@@ -7,7 +7,7 @@ namespace AqHub\Items\Infrastructure\Data;
 use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, Name};
 
-class ItemData
+class WikiItemData
 {
     public function __construct(
         public readonly Name $name,
