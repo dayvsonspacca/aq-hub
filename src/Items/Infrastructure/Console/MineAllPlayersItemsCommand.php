@@ -67,7 +67,7 @@ class MineAllPlayersItemsCommand extends Command
             foreach ($itemsByType as $type => $items) {
                 $output->writeln('<fg=blue;options=bold>ℹ Found ' . count($items) . " item(s) of type <fg=yellow>{$type}</> for player <fg=cyan>{$player->name->value}</>:</>");
 
-                $allowedTypes = array_merge(['Armor', 'Helm'], array_map(fn ($type) => $type->toString(), WeaponType::cases()));
+                $allowedTypes = array_merge(['Armor', 'Helm', 'Cape'], array_map(fn ($type) => $type->toString(), WeaponType::cases()));
 
                 if (!in_array($type, $allowedTypes, true)) {
                     $output->writeln("<fg=yellow>✘ Skiping: {$type}</>");
@@ -92,6 +92,8 @@ class MineAllPlayersItemsCommand extends Command
                         $persistResult = $this->addArmor->execute($itemInfo);
                     } elseif ($type === 'Helm') {
                         $persistResult = $this->addHelmet->execute($itemInfo);
+                    } elseif ($type === 'Cape') {
+                        $persistResult = $this->addCape->execute($itemInfo, $itemData->canAccessBank ?? false);
                     } else {
                         $weaponTypeResult = WeaponType::fromString($type);
                         if ($weaponTypeResult->isError()) {
