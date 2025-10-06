@@ -48,7 +48,7 @@ class SqlCapeRepository implements CapeRepository
             ->where('cape_id = :cape_id')
             ->bindValue('cape_id', $capeData['id']);
 
-        $tagsData  = $this->db->fetchAll($select->getStatement(), ['cape_id' => $identifier->getValue()]);
+        $tagsData  = $this->db->fetchAll($select->getStatement(), ['cape_id' => $capeData['id']]);
         $tags      = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
 
         return Result::success(
@@ -91,7 +91,7 @@ class SqlCapeRepository implements CapeRepository
                     'name' => $itemInfo->getName(),
                     'hash' => $hash->getValue(),
                     'description' => $itemInfo->getDescription(),
-                    'can_access_bank' => $canAccessBank,
+                    'can_access_bank' => $canAccessBank ? 'TRUE' : 'FALSE',
                     'rarity' => $itemInfo->getRarity() ? $itemInfo->getRarity()->toString() : null,
                     'registered_at' => $registeredAt->format('Y-m-d H:i:s')
                 ]);
