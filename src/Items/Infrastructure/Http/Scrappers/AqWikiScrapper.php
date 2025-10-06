@@ -25,7 +25,7 @@ class AqWikiScrapper
             foreach ($urls as $url) {
                 try {
                     $response = (new Client())->get('http://aqwwiki.wikidot.com/' . $url);
-                    $html     =  (string) $response->getBody();
+                    $html     = (string) $response->getBody();
 
                     preg_match('/<strong>\s*Description:\s*<\/strong>\s*(.*?)(?:<br\s*\/?>|<\/|\z)/is', $html, $matches);
                     if (!isset($matches[1])) {
@@ -51,6 +51,18 @@ class AqWikiScrapper
 
                     $rarity = ItemRarity::fromString($matches[1])->unwrap();
 
+                    $canAccessBank = null;
+
+                    if (preg_match('/<div[^>]*id=["\']breadcrumbs["\'][^>]*>(.*?)<\/div>/is', $html, $breadcrumbMatch)) {
+                        if (stripos($breadcrumbMatch[1], 'Capes &amp; Back Items') !== false) {
+                            if (stripos($html, 'Opens the bank for <strong>only</strong> the owner when clicked on.') !== false) {
+                                $canAccessBank = true;
+                            } else {
+                                $canAccessBank = false;
+                            }
+                        }
+                    }
+
                     break;
                 } catch (\Throwable) {
                 }
@@ -60,7 +72,13 @@ class AqWikiScrapper
                 return Result::error('Description not found for: ' . $name->value, null);
             }
 
-            return Result::success(null, new WikiItemData($name, $description, $itemTags, $rarity ?? null));
+            return Result::success(null, new WikiItemData(
+                $name,
+                $description,
+                $itemTags,
+                $rarity ?? null,
+                $canAccessBank ?? null
+            ));
         } catch (\Throwable $th) {
             return Result::error($th->getMessage(), null);
         }
@@ -68,14 +86,20 @@ class AqWikiScrapper
 
     private static function generatePossibleUrls(Name $name)
     {
-        $urls   = [];
+        $urls = [];
 
-        $urls[] = $name->value;
-        $urls[] = $name->value . '-ac';
-        $urls[] = $name->value . '-0-ac';
-        $urls[] = $name->value . '-non-ac';
-        $urls[] = $name->value . '-legend';
-        $urls[] = $name->value . '-non-legend';
+        $slug = strtolower($name->value);
+        $slug = preg_replace('/[^\p{L}\p{N}\s\'-]+/u', '', $slug);
+        $slug = str_replace([' ', '\''], '-', $slug);
+        $slug = preg_replace('/-+/', '-', $slug);
+        $slug = trim($slug, '-');
+
+        $urls[] = $slug;
+        $urls[] = $slug . '-ac';
+        $urls[] = $slug . '-0-ac';
+        $urls[] = $slug . '-non-ac';
+        $urls[] = $slug . '-legend';
+        $urls[] = $slug . '-non-legend';
 
         return $urls;
     }

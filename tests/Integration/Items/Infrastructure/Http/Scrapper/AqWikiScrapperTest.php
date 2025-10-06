@@ -27,5 +27,18 @@ final class AqWikiScrapperTest extends TestCase
         $this->assertEquals($itemData->description->value, Description::create('An AWE-some cape for the truly awesome. Gives 25% more rep, gold, XP and class points when equipped.')->unwrap()->value);
         $this->assertEquals($itemData->rarity, ItemRarity::Awesome);
         $this->assertEquals($itemData->tags, new ItemTags([TagType::AdventureCoins]));
+        $this->assertEquals($itemData->canAccessBank, null);
+    }
+
+    #[Test]
+    public function should_scrapper_cape_bank_access_data()
+    {
+        $name = Name::create("Hollowborn Trainer's Companion Bank ")->unwrap();
+
+        $result   = AqWikiScrapper::findItemData($name);
+        $itemData = $result->getData();
+
+        $this->assertTrue($result->isSuccess());
+        $this->assertEquals($itemData->canAccessBank, true);
     }
 }

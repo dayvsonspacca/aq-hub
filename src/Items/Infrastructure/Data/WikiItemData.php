@@ -13,7 +13,8 @@ class WikiItemData
         public readonly Name $name,
         public readonly Description $description,
         public readonly ItemTags $tags,
-        public readonly ?ItemRarity $rarity
+        public readonly ?ItemRarity $rarity,
+        public readonly ?bool $canAccessBank
     ) {
     }
 }
