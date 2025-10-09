@@ -12,6 +12,7 @@ use Monolog\Level;
 
 use function DI\autowire;
 use function DI\factory;
+use function DI\get;
 
 class SharedDefinations implements Definations
 {
@@ -21,22 +22,7 @@ class SharedDefinations implements Definations
             [
                 Env::class => factory([Env::class, 'instance']),
                 Application::class => autowire(),
-                Connection::class => function () {
-                    $db = Connection::connect(
-                        host: 'db',
-                        dbname: 'aqhub',
-                        username: 'aqhub',
-                        password: 'aqhub',
-                        port: 5432
-                    );
-
-                    if ($db->isError()) {
-                        echo '[DB ERROR] ' . $db->getMessage() . PHP_EOL;
-                        exit(1);
-                    }
-
-                    return $db->getData();
-                }
+                Connection::class => factory([Connection::class, 'instance'])->parameter('env', get(Env::class))
             ],
             self::loggers(),
         );
