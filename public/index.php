@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 require __DIR__ . '/../vendor/autoload.php';
 
-use AqHub\Player\Infrastructure\Http\Controllers\PlayerController;
 use AqHub\Shared\Infrastructure\Http\Application;
 use DI\ContainerBuilder;
-use Psr\Log\LoggerInterface;
 
-$builder = new ContainerBuilder();
-$builder->addDefinitions(__DIR__ . '/../config/container.php');
-$container = $builder->build();
+$containerBuilder = new ContainerBuilder();
+$containerBuilder->addDefinitions(__DIR__ . '/../config/container.php');
+$container = $containerBuilder->build();
 
-$application = new Application($container, $container->get(LoggerInterface::class));
-$application->registerControllers([
-    PlayerController::class
-]);
+$application = $container->get(Application::class);
+
+$controllersPath = __DIR__ . '/../config/controllers.php';
+$controllersArray = require $controllersPath;
+
+$application->registerControllers($controllersArray);
 
 $application->handle();

@@ -5,13 +5,17 @@ declare(strict_types=1);
 use AqHub\Player\Infrastructure\Container\PlayerContainerRegistry;
 use AqHub\Items\Infrastructure\Container\ItemsContainerRegistry;
 use AqHub\Shared\Infrastructure\Database\Connection;
+use AqHub\Shared\Infrastructure\Http\Application;
 use Monolog\Handler\StreamHandler;
 use Monolog\Level;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 
+use function DI\autowire;
+
 return array_merge(
     [
+        Application::class => autowire(),
         Connection::class => function () {
             $db = Connection::connect(
                 host: 'db',
