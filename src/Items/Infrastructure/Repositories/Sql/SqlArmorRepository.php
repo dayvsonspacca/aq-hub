@@ -75,10 +75,8 @@ class SqlArmorRepository implements ArmorRepository
             ->from('armors')
             ->cols(['*']);
 
-        $conditions = [];
-
-        if (!empty($conditions)) {
-            $select->where(implode(' AND ', $conditions));
+        if (count($filter->rarities) > 0) {
+            $select->where('rarity IN (:rarities)', ['rarities' => array_map(fn($rarity) => $rarity->toString(), $filter->rarities)]);
         }
 
         $limit  = $filter->pageSize;
@@ -86,7 +84,7 @@ class SqlArmorRepository implements ArmorRepository
 
         $select->limit($limit)->offset($offset)->orderBy(['id ASC']);
 
-        $armorsData = $this->db->fetchAll($select->getStatement());
+        $armorsData = $this->db->fetchAll($select->getStatement(), $select->getBindValues());
 
         if (!$armorsData) {
             return Result::success(null, []);
