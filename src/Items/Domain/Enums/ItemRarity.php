@@ -27,18 +27,18 @@ enum ItemRarity
     public static function fromString(string $rarity): Result
     {
         return match ($rarity) {
-            'Weird Rarity', 'weird' => Result::success(null, self::Weird),
-            'Rare Rarity', 'rare' => Result::success(null, self::Rare),
-            'Epic Rarity', 'epic' => Result::success(null, self::Epic),
-            'Legendary Item Rarity', 'Legendary Rarity', 'legendary' => Result::success(null, self::Legendary),
-            'Awesome Rarity', 'awesome' => Result::success(null, self::Awesome),
-            'Seasonal Rare Rarity', 'Seasonal Item Rarity', 'Seasonal Rarity', 'seasonal' => Result::success(null, self::Seasonal),
-            'Artifact Rarity', 'artifact' => Result::success(null, self::Artifact),
-            'Boss Drop Rarity', 'boss drop' => Result::success(null, self::BossDrop),
-            'Impossible Rarity', 'impossible' => Result::success(null, self::Impossible),
-            '1% Drop Rarity', 'one percent drop' => Result::success(null, self::OnePercentDrop),
-            'Unknow Rarity', 'unknown' => Result::success(null, self::Unknown),
-            'Secret Rarity', 'secret' => Result::success(null, self::Secret),
+            'Weird Rarity', 'Weird' => Result::success(null, self::Weird),
+            'Rare Rarity', 'Rare' => Result::success(null, self::Rare),
+            'Epic Rarity', 'Epic' => Result::success(null, self::Epic),
+            'Legendary Item Rarity', 'Legendary Rarity', 'Legendary' => Result::success(null, self::Legendary),
+            'Awesome Rarity', 'Awesome' => Result::success(null, self::Awesome),
+            'Seasonal Rare Rarity', 'Seasonal Item Rarity', 'Seasonal Rarity', 'Seasonal' => Result::success(null, self::Seasonal),
+            'Artifact Rarity', 'Artifact' => Result::success(null, self::Artifact),
+            'Boss Drop Rarity', 'Boss Drop' => Result::success(null, self::BossDrop),
+            'Impossible Rarity', 'Impossible' => Result::success(null, self::Impossible),
+            '1% Drop Rarity', '1% Drop' => Result::success(null, self::OnePercentDrop),
+            'Unknow Rarity', 'Unknown' => Result::success(null, self::Unknown),
+            'Secret Rarity', 'Secret' => Result::success(null, self::Secret),
             default => Result::error('Rarity not defined: ' . $rarity, null),
         };
     }
