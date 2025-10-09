@@ -7,7 +7,7 @@ namespace AqHub\Shared\Infrastructure\Http;
 use AqHub\Shared\Infrastructure\Env\AppMode;
 use AqHub\Shared\Infrastructure\Env\Env;
 use DI\Container;
-use Psr\Log\LoggerInterface;
+use Monolog\Logger;
 use ReflectionClass;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request};
 use Symfony\Component\Routing\Exception\{MethodNotAllowedException, ResourceNotFoundException};
@@ -19,14 +19,15 @@ class Application
 {
     private RouteCollection $routes;
     private array $controllers = [];
+    private readonly Logger $logger;
 
     public function __construct(
         private readonly Container $container,
-        private readonly LoggerInterface $logger,
         private readonly Env $env
     ) {
         $this->routes = new RouteCollection();
         $this->controllers = require ROOT_PATH . '/config/controllers.php';
+        $this->logger = $container->get('Logger.Api.Errors');
 
         $this->routes = $this->registerRoutes();
     }
