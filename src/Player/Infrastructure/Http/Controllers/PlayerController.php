@@ -21,7 +21,7 @@ class PlayerController
     public function __construct(
         private readonly PlayerUseCases $playerUseCases
     ) {
-        $this->cache = FileSystemCacheFactory::create('players-list', 60);
+        $this->cache = FileSystemCacheFactory::create('players-list', 0);
     }
 
     #[Route(path: '/players/add', methods: ['POST'])]
@@ -57,7 +57,7 @@ class PlayerController
 
         $cacheKey = 'page-' . $page;
         $players = $this->cache->get($cacheKey, function (ItemInterface $item) use ($page) {
-            $item->expiresAfter(60);
+            $item->expiresAfter(null);
 
             $filter = new PlayerFilter(
                 page: $page
