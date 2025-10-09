@@ -24,7 +24,9 @@ class InMemoryPlayerRepository implements PlayerRepository
      */
     public function persist(IntIdentifier $identifier, Name $name, Level $level): Result
     {
-        if ($this->findByIdentifier($identifier)->isSuccess()) {
+
+        $existing = $this->findByIdentifier($identifier);
+        if ($existing->isSuccess() && $existing->getData() !== null) {
             return Result::error('A player with same id already exists: ' . $identifier->getValue(), null);
         }
 
@@ -54,7 +56,7 @@ class InMemoryPlayerRepository implements PlayerRepository
     }
 
     /**
-     * @return Result<PlayerData[]>
+     * @return Result<array<PlayerData>>
      */
     public function findAll(PlayerFilter $filter): Result
     {
@@ -66,7 +68,7 @@ class InMemoryPlayerRepository implements PlayerRepository
         if (!is_null($filter->mined)) {
             $players = array_values(array_filter(
                 $players,
-                fn ($player) => $player->mined === $filter->mined
+                fn (PlayerData $player) => $player->mined === $filter->mined
             ));
         }
 
@@ -87,7 +89,7 @@ class InMemoryPlayerRepository implements PlayerRepository
         foreach ($this->memory as $id => $playerData) {
             if ($playerData->name->value === $name->value) {
                 $this->memory[$id] = new PlayerData(
-                    IntIdentifier::create($id)->unwrap(),
+                    $playerData->identifier,
                     $playerData->name,
                     $playerData->level,
                     $playerData->registeredAt,

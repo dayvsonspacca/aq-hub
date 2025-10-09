@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Repositories\Sql;
 
-use AqHub\Player\Domain\Entities\Player;
 use AqHub\Player\Domain\Repositories\Data\PlayerData;
 use AqHub\Player\Domain\Repositories\Filters\PlayerFilter;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
@@ -20,7 +19,7 @@ class SqlPlayerRepository implements PlayerRepository
     }
 
     /**
-     * @return Result<Player|null>
+     * @return Result<PlayerData|null>
      */
     public function persist(IntIdentifier $identifier, Name $name, Level $level): Result
     {
@@ -39,11 +38,16 @@ class SqlPlayerRepository implements PlayerRepository
                 'level' => $level->value
             ]);
 
-            $player = Player::create($identifier, $name, $level, new PlayerInventory([], 999))->unwrap();
+            $retrievedData = $this->findByIdentifier($identifier);
+            if ($retrievedData->isError() || $retrievedData->getData() === null) {
+                throw new DomainException('Player persisted but failed to retrieve for return.');
+            }
+
+            $playerData = $retrievedData->getData();
 
             $this->db->getConnection()->commit();
 
-            return Result::success(null, $player);
+            return Result::success(null, $playerData);
         } catch (\Throwable $e) {
             $this->db->getConnection()->rollBack();
             return Result::error('Failed to persist player: ' . $e->getMessage(), null);
@@ -51,22 +55,26 @@ class SqlPlayerRepository implements PlayerRepository
     }
 
     /**
-     * @return Result<Player|null>
+     * @return Result<PlayerData|null>
      */
     public function findByIdentifier(IntIdentifier $identifier): Result
     {
-        $query      = 'SELECT * FROM players WHERE id = :id LIMIT 1';
+        $query      = 'SELECT p.*, FALSE AS mined FROM players p WHERE id = :id LIMIT 1';
         $playerData = $this->db->fetchOne($query, ['id' => $identifier->getValue()]);
 
         if (!$playerData) {
             return Result::error(null, null);
         }
 
-        $name   = Name::create($playerData['name'])->getData();
-        $level  = Level::create((int) $playerData['level'])->getData();
-        $player = Player::create($identifier, $name, $level, new PlayerInventory([], 999))->getData();
+        $data = new PlayerData(
+            IntIdentifier::create((int)$playerData['id'])->unwrap(),
+            Name::create($playerData['name'])->unwrap(),
+            Level::create((int)$playerData['level'])->unwrap(),
+            new \DateTime($playerData['registered_at']),
+            (bool) $playerData['mined']
+        );
 
-        return Result::success(null, $player);
+        return Result::success(null, $data);
     }
 
     /**

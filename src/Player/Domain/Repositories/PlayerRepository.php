@@ -13,12 +13,12 @@ use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
 interface PlayerRepository
 {
     /**
-     * @return Result<Player|null>
+     * @return Result<PlayerData|null>
      */
     public function persist(IntIdentifier $identifier, Name $name, Level $level): Result;
 
     /**
-     * @return Result<Player|null>
+     * @return Result<PlayerData|null>
      */
     public function findByIdentifier(IntIdentifier $identifier): Result;
 
