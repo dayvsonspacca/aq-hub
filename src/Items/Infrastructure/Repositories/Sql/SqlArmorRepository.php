@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Items\Infrastructure\Repositories\Sql;
 
 use AqHub\Items\Domain\Entities\Armor;
+use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Repositories\ArmorRepository;
 use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
@@ -18,9 +19,7 @@ use DomainException;
 
 class SqlArmorRepository implements ArmorRepository
 {
-    public function __construct(private readonly Connection $db)
-    {
-    }
+    public function __construct(private readonly Connection $db) {}
 
     /**
      * @return Result<ArmorData|null>
@@ -46,10 +45,13 @@ class SqlArmorRepository implements ArmorRepository
             ->bindValue('armor_id', $armorData['id']);
 
         $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), ['armor_id' => $armorData['id']]);
-        $tags     = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+        $tags     = new ItemTags(array_map(fn($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
 
         $name        = Name::create($armorData['name'])->unwrap();
         $description = Description::create($armorData['description'])->unwrap();
+
+        $rarity = ItemRarity::fromString($armorData['rarity']);
+        $rarity = $rarity->isError() ? null : $rarity->getData();
 
         return Result::success(
             null,
@@ -58,7 +60,8 @@ class SqlArmorRepository implements ArmorRepository
                 $name,
                 $description,
                 $tags,
-                new DateTime($armorData['registered_at'])
+                new DateTime($armorData['registered_at']),
+                $rarity ?? null
             )
         );
     }
@@ -101,14 +104,21 @@ class SqlArmorRepository implements ArmorRepository
                 ->bindValue('armor_id_' . $armorId, $armorId);
 
             $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), ['armor_id_' . $armorId => $armorId]);
-            $tags     = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+            $tags     = new ItemTags(array_map(fn($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+
+            $rarity = ItemRarity::fromString($armorData['rarity']);
+            $rarity = $rarity->isError() ? null : $rarity->getData();
+
+            $name        = Name::create($armorData['name'])->unwrap();
+            $description = Description::create($armorData['description'])->unwrap();
 
             $armors[] = new ArmorData(
                 StringIdentifier::create($armorData['hash'])->unwrap(),
-                Name::create($armorData['name'])->unwrap(),
-                Description::create($armorData['description'])->unwrap(),
+                $name,
+                $description,
                 $tags,
-                new \DateTime($armorData['registered_at'])
+                new DateTime($armorData['registered_at']),
+                $rarity
             );
         }
 
@@ -167,7 +177,8 @@ class SqlArmorRepository implements ArmorRepository
                 Name::create($itemInfo->getName())->unwrap(),
                 Description::create($itemInfo->getDescription())->unwrap(),
                 $itemInfo->tags,
-                $registeredAt
+                $registeredAt,
+                $itemInfo->getRarity()
             ));
         } catch (\Throwable $e) {
             $this->db->getConnection()->rollBack();
