@@ -23,9 +23,8 @@ class ArmorFilterForm
             return Result::error('Param page cannot be zero or negative.', null);
         }
 
-        $filter = new ArmorFilter(
-            page: $page
-        );
+        $filter = new ArmorFilter();
+        $filter->setPage($page);
 
         $rarities = $request->get('rarities', false);
         if ($rarities) {
@@ -38,7 +37,7 @@ class ArmorFilterForm
                 array_filter($rarities, fn($rawRarity) => ItemRarity::fromString($rawRarity)->isSuccess())
             );
 
-            $filter->rarities = $rarities;
+            $filter->setRarities($rarities);
         }
 
         $tags = $request->get('tags', false);
@@ -51,7 +50,7 @@ class ArmorFilterForm
                 array_filter($tags, fn($rawTag) => TagType::fromString($rawTag)->isSuccess())
             );
 
-            $filter->tags = $tags;
+            $filter->setTags($tags);
         }
 
         return Result::success(null, $filter);

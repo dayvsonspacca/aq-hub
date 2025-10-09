@@ -4,22 +4,13 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Domain\Repositories\Filters;
 
-use AqHub\Items\Domain\Enums\ItemRarity;
-use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\Repositories\Filters\CanPaginate;
 
 class ArmorFilter
 {
-    /**
-     * @param ItemRarity[] $rarities
-     * @param TagType[] $tags
-     */
-    public function __construct(
-        public array $rarities = [],
-        public array $tags = [],
-        public readonly int $page = 1,
-        public readonly int $pageSize = 25
-    ) {
-    }
+    use CanFilterTags;
+    use CanFilterRarities;
+    use CanPaginate;
 
     public function toArray(): array
     {
