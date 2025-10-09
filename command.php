@@ -1,17 +1,22 @@
 <?php
+declare(strict_types=1);
 
-require __DIR__ . '/vendor/autoload.php';
+use Dotenv\Dotenv;
 
-use AqHub\Items\Infrastructure\Console\MineAllPlayersItemsCommand;
-use AqHub\Items\Infrastructure\Console\MineCharpageItemsCommand;
+define('ROOT_PATH', __DIR__ . '/');
+define('LOGS_PATH', ROOT_PATH . 'logs/');
+
+require ROOT_PATH . 'vendor/autoload.php';
+
+$dotenv = Dotenv::createImmutable(ROOT_PATH);
+$dotenv->load();
+
+use AqHub\Items\Infrastructure\Console\{MineAllPlayersItemsCommand, MineCharpageItemsCommand};
 use AqHub\Player\Infrastructure\Console\MinePlayersNameCommand;
+use AqHub\Shared\Infrastructure\Container\Container;
 use Symfony\Component\Console\Application;
-use DI\ContainerBuilder;
 
-$builder = new ContainerBuilder();
-$builder->addDefinitions(__DIR__ . '/config/container.php');
-$container = $builder->build();
-
+$container = Container::build();
 $application = new Application();
 
 $application->add($container->get(MineCharpageItemsCommand::class));
