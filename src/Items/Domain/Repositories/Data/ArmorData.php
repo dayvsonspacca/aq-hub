@@ -16,6 +16,16 @@ class ArmorData
         public readonly Description $description,
         public readonly ItemTags $tags,
         public readonly DateTime $registeredAt
-    ) {
+    ) {}
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->identifier->getValue(),
+            'name' => $this->name->value,
+            'description' => $this->description->value,
+            'registered_at' => $this->registeredAt->format('Y-m-d H:i:s'),
+            'tags' => $this->tags->toArray()
+        ];
     }
 }

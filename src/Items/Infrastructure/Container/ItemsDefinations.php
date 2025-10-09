@@ -11,6 +11,7 @@ use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
 use AqHub\Items\Domain\Repositories\{ArmorRepository, CapeRepository, HelmetRepository, WeaponRepository};
 use AqHub\Items\Infrastructure\Console\{MineAllPlayersItemsCommand, MineCharpageItemsCommand};
 use AqHub\Items\Infrastructure\Repositories\Sql\{SqlArmorRepository, SqlCapeRepository, SqlHelmetRepository, SqlWeaponRepository};
+use AqHub\Player\Infrastructure\Http\Controllers\ArmorController;
 use AqHub\Shared\Infrastructure\Container\Definations;
 use AqHub\Shared\Infrastructure\Database\Connection;
 
@@ -56,6 +57,13 @@ class ItemsDefinations implements Definations
             AddArmor::class => autowire(),
             AddHelmet::class => autowire(),
             AddCape::class => autowire()
+        ];
+    }
+
+    private static function controllers(): array
+    {
+        return [
+            ArmorController::class => autowire()
         ];
     }
 }

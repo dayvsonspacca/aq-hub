@@ -7,6 +7,7 @@ namespace AqHub\Items\Infrastructure\Repositories\Sql;
 use AqHub\Items\Domain\Entities\Armor;
 use AqHub\Items\Domain\Repositories\ArmorRepository;
 use AqHub\Items\Domain\Repositories\Data\ArmorData;
+use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
 use AqHub\Shared\Domain\Enums\TagType;
@@ -60,6 +61,58 @@ class SqlArmorRepository implements ArmorRepository
                 new DateTime($armorData['registered_at'])
             )
         );
+    }
+
+    /**
+     * @return Result<array<ArmorData>>
+     */
+    public function findAll(ArmorFilter $filter): Result
+    {
+        $select = $this->db->builder->newSelect()
+            ->from('armors')
+            ->cols(['*']);
+
+        $conditions = [];
+
+        if (!empty($conditions)) {
+            $select->where(implode(' AND ', $conditions));
+        }
+
+        $limit  = $filter->pageSize;
+        $offset = ($filter->page - 1) * $filter->pageSize;
+
+        $select->limit($limit)->offset($offset)->orderBy(['id ASC']);
+
+        $armorsData = $this->db->fetchAll($select->getStatement());
+
+        if (!$armorsData) {
+            return Result::success(null, []);
+        }
+
+        $armors = [];
+
+        foreach ($armorsData as $armorData) {
+            $armorId = (int)$armorData['id'];
+
+            $tagsSelect = $this->db->builder->newSelect()
+                ->from('armor_tags')
+                ->cols(['tag'])
+                ->where('armor_id = :armor_id_' . $armorId)
+                ->bindValue('armor_id_' . $armorId, $armorId);
+
+            $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), ['armor_id_' . $armorId => $armorId]);
+            $tags     = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+
+            $armors[] = new ArmorData(
+                StringIdentifier::create($armorData['hash'])->unwrap(),
+                Name::create($armorData['name'])->unwrap(),
+                Description::create($armorData['description'])->unwrap(),
+                $tags,
+                new \DateTime($armorData['registered_at'])
+            );
+        }
+
+        return Result::success(null, $armors);
     }
 
     /**
