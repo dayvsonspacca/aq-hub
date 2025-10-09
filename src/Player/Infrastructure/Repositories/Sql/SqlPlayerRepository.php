@@ -14,9 +14,7 @@ use DomainException;
 
 class SqlPlayerRepository implements PlayerRepository
 {
-    public function __construct(private readonly Connection $db)
-    {
-    }
+    public function __construct(private readonly Connection $db) {}
 
     /**
      * @return Result<PlayerData|null>
@@ -31,12 +29,15 @@ class SqlPlayerRepository implements PlayerRepository
                 throw new DomainException('A player with same id already exists: ' . $identifier->getValue());
             }
 
-            $query = 'INSERT INTO players (id, name, level) VALUES (:id, :name, :level)';
-            $this->db->execute($query, [
-                'id' => $identifier->getValue(),
-                'name' => $name->value,
-                'level' => $level->value
-            ]);
+            $insert = $this->db->builder->newInsert()
+                ->into('players')
+                ->cols([
+                    'id' => $identifier->getValue(),
+                    'name' => $name->value,
+                    'level' => $level->value
+                ]);
+
+            $this->db->execute($insert->getStatement(), $insert->getBindValues());
 
             $retrievedData = $this->findByIdentifier($identifier);
             if ($retrievedData->isError() || $retrievedData->getData() === null) {
@@ -59,8 +60,14 @@ class SqlPlayerRepository implements PlayerRepository
      */
     public function findByIdentifier(IntIdentifier $identifier): Result
     {
-        $query      = 'SELECT p.*, FALSE AS mined FROM players p WHERE id = :id LIMIT 1';
-        $playerData = $this->db->fetchOne($query, ['id' => $identifier->getValue()]);
+        $select = $this->db->builder->newSelect()
+            ->from('players as p')
+            ->cols(['p.*', 'FALSE AS mined'])
+            ->where('p.id = :id')
+            ->limit(1)
+            ->bindValue('id', $identifier->getValue());
+
+        $playerData = $this->db->fetchOne($select->getStatement(), $select->getBindValues());
 
         if (!$playerData) {
             return Result::error(null, null);
@@ -82,31 +89,24 @@ class SqlPlayerRepository implements PlayerRepository
      */
     public function findAll(PlayerFilter $filter): Result
     {
-        $query = 'SELECT p.*,
-              CASE WHEN pm.name IS NOT NULL THEN TRUE ELSE FALSE END AS mined
-              FROM players p
-              LEFT JOIN players_mined pm ON pm.name = p.name';
-
-        $conditions = [];
-        $params     = [];
+        $select = $this->db->builder->newSelect()
+            ->from('players as p')
+            ->cols(['p.*', 'CASE WHEN pm.name IS NOT NULL THEN TRUE ELSE FALSE END AS mined'])
+            ->join('LEFT', 'players_mined AS pm', 'pm.name = p.name');
 
         if (!is_null($filter->mined)) {
-            $conditions[] = 'pm.id IS ' . ($filter->mined ? 'NOT NULL' : 'NULL');
-        }
-
-        if (!empty($conditions)) {
-            $query .= ' WHERE ' . implode(' AND ', $conditions);
+            $condition = 'pm.id IS ' . ($filter->mined ? 'NOT NULL' : 'NULL');
+            $select->where($condition);
         }
 
         $limit  = $filter->pageSize;
         $offset = ($filter->page - 1) * $filter->pageSize;
 
-        $query .= ' ORDER BY p.id ASC LIMIT :limit OFFSET :offset';
+        $select->orderBy(['p.id ASC'])
+            ->limit($limit)
+            ->offset($offset);
 
-        $params['limit']  = $limit;
-        $params['offset'] = $offset;
-
-        $playersData = $this->db->fetchAll($query, $params);
+        $playersData = $this->db->fetchAll($select->getStatement(), $select->getBindValues());
 
         if (!$playersData) {
             return Result::success(null, []);
@@ -128,14 +128,20 @@ class SqlPlayerRepository implements PlayerRepository
 
     public function markAsMined(Name $name): Result
     {
-        $query      = 'SELECT * FROM players_mined WHERE name = :name';
-        $playerData = $this->db->fetchOne($query, ['name' => $name->value]);
+        $select = $this->db->builder->newSelect()
+            ->from('players_mined')
+            ->cols(['*'])
+            ->where('name = :name')
+            ->bindValue('name', $name->value);
+
+        $playerData = $this->db->fetchOne($select->getStatement(), $select->getBindValues());
 
         if (!$playerData) {
-            $query = 'INSERT INTO players_mined (name, mined_at) VALUES (:name, NOW())';
-            $this->db->execute($query, [
-                'name' => $name->value
-            ]);
+            $insert = $this->db->builder->newInsert()
+                ->into('players_mined')
+                ->cols(['name' => $name->value, 'mined_at' => 'NOW()']);
+
+            $this->db->execute($insert->getStatement(), $insert->getBindValues());
 
             return Result::success(null, null);
         }
