@@ -16,7 +16,7 @@ final class PlayerTest extends TestCase
     public function should_create_player_instance_and_stores_it_data()
     {
         $id        = IntIdentifier::create(1)->unwrap();
-        $level     = Level::create(100)->getData();
+        $level     = Level::create(100)->unwrap();
         $inventory = $this->createMock(PlayerInventory::class);
         $name      = Name::create('Hilise')->unwrap();
 
@@ -25,7 +25,7 @@ final class PlayerTest extends TestCase
             $name,
             $level,
             $inventory
-        )->unwrap();
+        )->getData();
 
         $this->assertInstanceOf(Player::class, $player);
         $this->assertSame($player->getId(), $id->getValue());
