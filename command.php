@@ -9,7 +9,7 @@ use Symfony\Component\Console\Application;
 use DI\ContainerBuilder;
 
 $builder = new ContainerBuilder();
-$builder->addDefinitions(__DIR__ . '/config.php');
+$builder->addDefinitions(__DIR__ . '/config/container.php');
 $container = $builder->build();
 
 $application = new Application();
