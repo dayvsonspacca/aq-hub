@@ -7,15 +7,16 @@ namespace AqHub\Items\Infrastructure\Http\Controllers;
 use AqHub\Items\Application\UseCases\Armor\ArmorUseCases;
 use AqHub\Items\Infrastructure\Http\Forms\ArmorFilterForm;
 use AqHub\Items\Infrastructure\Http\Presenters\ArmorPresenter;
-use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
 use AqHub\Shared\Infrastructure\Http\Route;
 use RuntimeException;
+use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
 
 class ArmorController
 {
     public function __construct(
         private readonly ArmorUseCases $armorUseCases
-    ) {}
+    ) {
+    }
 
     #[Route(path: '/armors/list', methods: ['GET'])]
     public function list(Request $request): JsonResponse

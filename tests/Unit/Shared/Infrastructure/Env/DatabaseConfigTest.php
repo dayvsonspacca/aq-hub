@@ -32,7 +32,7 @@ final class DatabaseConfigTest extends TestCase
         $result = DatabaseConfig::fromEnvironment($env);
 
         $this->assertTrue($result->isSuccess());
-        
+
         /** @var DatabaseConfig $config */
         $config = $result->unwrap();
 
@@ -43,17 +43,17 @@ final class DatabaseConfigTest extends TestCase
         $this->assertEquals('test_user', $config->user);
         $this->assertEquals('secret', $config->password);
     }
-    
+
     #[Test]
     public function should_create_config_when_port_is_passed_as_string()
     {
-        $env = $this->getDefaultEnv();
+        $env            = $this->getDefaultEnv();
         $env['DB_PORT'] = '3306';
 
         $result = DatabaseConfig::fromEnvironment($env);
 
         $this->assertTrue($result->isSuccess());
-        
+
         $config = $result->unwrap();
 
         $this->assertIsInt($config->port);
@@ -75,7 +75,7 @@ final class DatabaseConfigTest extends TestCase
     #[Test]
     public function should_fail_when_a_required_variable_is_empty()
     {
-        $env = $this->getDefaultEnv();
+        $env            = $this->getDefaultEnv();
         $env['DB_HOST'] = '';
 
         $result = DatabaseConfig::fromEnvironment($env);
@@ -87,7 +87,7 @@ final class DatabaseConfigTest extends TestCase
     #[Test]
     public function should_fail_when_port_is_not_numeric()
     {
-        $env = $this->getDefaultEnv();
+        $env            = $this->getDefaultEnv();
         $env['DB_PORT'] = 'not-a-number';
 
         $result = DatabaseConfig::fromEnvironment($env);

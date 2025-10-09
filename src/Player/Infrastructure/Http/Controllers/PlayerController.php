@@ -56,7 +56,7 @@ class PlayerController
         }
 
         $cacheKey = 'page-' . $page;
-        $players = $this->cache->get($cacheKey, function (ItemInterface $item) use ($page) {
+        $players  = $this->cache->get($cacheKey, function (ItemInterface $item) use ($page) {
             $item->expiresAfter(null);
 
             $filter = new PlayerFilter(
@@ -69,8 +69,8 @@ class PlayerController
             }
 
             $players = $result->getData();
-            $players = array_map(fn($player) => $player->toArray(), $players);
-            
+            $players = array_map(fn ($player) => $player->toArray(), $players);
+
             $item->set($players);
             $item->tag('invalidate-on-new-player');
 

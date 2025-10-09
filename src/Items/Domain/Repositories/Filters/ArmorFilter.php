@@ -18,8 +18,8 @@ class ArmorFilter
         return [
             'page' => $this->page,
             'page_size' => $this->pageSize,
-            'rarities' => array_map(fn($rarity) => $rarity->toString(), $this->rarities),
-            'tags' => array_map(fn($tag) => $tag->toString(), $this->tags),
+            'rarities' => array_map(fn ($rarity) => $rarity->toString(), $this->rarities),
+            'tags' => array_map(fn ($tag) => $tag->toString(), $this->tags),
             'name' => isset($this->name) && !is_null($this->name) ? $this->name->value : null
         ];
     }
@@ -29,12 +29,12 @@ class ArmorFilter
         $key = 'page-' . $this->page;
 
         if (!empty($this->rarities)) {
-            $rarities = array_map(fn($rarity) => $rarity->toString(),  $this->rarities);
+            $rarities = array_map(fn ($rarity) => $rarity->toString(), $this->rarities);
             $key .= '_rarities-' . implode(',', $rarities);
         }
 
         if (!empty($this->tags)) {
-            $tags = array_map(fn($rarity) => $rarity->toString(), $this->tags);
+            $tags = array_map(fn ($rarity) => $rarity->toString(), $this->tags);
             $key .= '_tags-' . implode(',', $tags);
         }
 

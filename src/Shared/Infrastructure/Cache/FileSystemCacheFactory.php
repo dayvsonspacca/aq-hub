@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AqHub\Shared\Infrastructure\Cache;
 
 use Symfony\Component\Cache\Adapter\FilesystemTagAwareAdapter;
 
-class FileSystemCacheFactory 
+class FileSystemCacheFactory
 {
     public static function create(string $namespace, int $ttl)
     {

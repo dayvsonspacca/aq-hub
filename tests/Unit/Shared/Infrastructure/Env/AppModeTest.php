@@ -6,7 +6,6 @@ namespace Tests\Unit\Shared\Domain\ValueObjects;
 
 use AqHub\Shared\Infrastructure\Env\AppMode;
 use AqHub\Tests\Unit\TestCase;
-use DomainException;
 use PHPUnit\Framework\Attributes\Test;
 
 final class AppModeTest extends TestCase

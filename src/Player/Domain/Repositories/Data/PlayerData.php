@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Domain\Repositories\Data;
 
-use AqHub\Player\Domain\Entities\Player;
 use AqHub\Player\Domain\ValueObjects\{Level, Name};
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 use DateTime;

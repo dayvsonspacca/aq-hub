@@ -13,6 +13,6 @@ class ArmorPresenter
      */
     public static function array(array $armorsData)
     {
-        return array_map(fn($armorData) => $armorData->toArray(), $armorsData);
+        return array_map(fn ($armorData) => $armorData->toArray(), $armorsData);
     }
 }

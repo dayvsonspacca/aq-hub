@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Domain\Repositories;
 
-use AqHub\Player\Domain\Entities\Player;
 use AqHub\Player\Domain\Repositories\Data\PlayerData;
 use AqHub\Player\Domain\Repositories\Filters\PlayerFilter;
 use AqHub\Player\Domain\ValueObjects\{Level, Name};

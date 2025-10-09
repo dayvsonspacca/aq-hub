@@ -6,7 +6,7 @@ namespace AqHub\Shared\Domain\Repositories\Filters;
 
 trait CanPaginate
 {
-    public int $page = 1;
+    public int $page     = 1;
     public int $pageSize = 25;
 
     public function setPage(int $page)

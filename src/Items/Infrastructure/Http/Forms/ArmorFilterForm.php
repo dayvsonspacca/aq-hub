@@ -34,8 +34,8 @@ class ArmorFilterForm
             sort($rarities);
 
             $rarities = array_map(
-                fn($rawRarity) => ItemRarity::fromString($rawRarity)->getData(),
-                array_filter($rarities, fn($rawRarity) => ItemRarity::fromString($rawRarity)->isSuccess())
+                fn ($rawRarity) => ItemRarity::fromString($rawRarity)->getData(),
+                array_filter($rarities, fn ($rawRarity) => ItemRarity::fromString($rawRarity)->isSuccess())
             );
 
             $filter->setRarities($rarities);
@@ -47,8 +47,8 @@ class ArmorFilterForm
             sort($tags);
 
             $tags = array_map(
-                fn($rawTag) => TagType::fromString($rawTag)->getData(),
-                array_filter($tags, fn($rawTag) => TagType::fromString($rawTag)->isSuccess())
+                fn ($rawTag) => TagType::fromString($rawTag)->getData(),
+                array_filter($tags, fn ($rawTag) => TagType::fromString($rawTag)->isSuccess())
             );
 
             $filter->setTags($tags);

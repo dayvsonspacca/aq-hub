@@ -18,7 +18,8 @@ class ArmorData
         public readonly ItemTags $tags,
         public readonly DateTime $registeredAt,
         public readonly ?ItemRarity $rarity
-    ) {}
+    ) {
+    }
 
     public function toArray()
     {

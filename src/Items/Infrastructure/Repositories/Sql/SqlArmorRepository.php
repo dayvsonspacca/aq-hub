@@ -19,7 +19,9 @@ use DomainException;
 
 class SqlArmorRepository implements ArmorRepository
 {
-    public function __construct(private readonly Connection $db) {}
+    public function __construct(private readonly Connection $db)
+    {
+    }
 
     /**
      * @return Result<ArmorData|null>
@@ -45,7 +47,7 @@ class SqlArmorRepository implements ArmorRepository
             ->bindValue('armor_id', $armorData['id']);
 
         $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), ['armor_id' => $armorData['id']]);
-        $tags     = new ItemTags(array_map(fn($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+        $tags     = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
 
         $name        = Name::create($armorData['name'])->unwrap();
         $description = Description::create($armorData['description'])->unwrap();
@@ -76,17 +78,17 @@ class SqlArmorRepository implements ArmorRepository
             ->cols(['a.*']);
 
         if (count($filter->rarities) > 0) {
-            $select->where('rarity IN (:rarities)', ['rarities' => array_map(fn($rarity) => $rarity->toString(), $filter->rarities)]);
+            $select->where('rarity IN (:rarities)', ['rarities' => array_map(fn ($rarity) => $rarity->toString(), $filter->rarities)]);
         }
 
         if (count($filter->tags) > 0) {
             $select->join('INNER', 'armor_tags as at', 'a.id = at.armor_id');
-            $select->where('at.tag IN (:tags)', ['tags' => array_map(fn($tag) => $tag->toString(), $filter->tags)]);
+            $select->where('at.tag IN (:tags)', ['tags' => array_map(fn ($tag) => $tag->toString(), $filter->tags)]);
             $select->distinct();
         }
 
         if (isset($filter->name) && !is_null($filter->name)) {
-            $select->where("a.name LIKE :name", ['name' => '%' . $filter->name->value . '%']);
+            $select->where('a.name LIKE :name', ['name' => '%' . $filter->name->value . '%']);
         }
 
         $limit  = $filter->pageSize;
@@ -112,7 +114,7 @@ class SqlArmorRepository implements ArmorRepository
                 ->bindValue('armor_id_' . $armorId, $armorId);
 
             $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), ['armor_id_' . $armorId => $armorId]);
-            $tags     = new ItemTags(array_map(fn($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+            $tags     = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
 
             $rarity = ItemRarity::fromString($armorData['rarity']);
             $rarity = $rarity->isError() ? null : $rarity->getData();

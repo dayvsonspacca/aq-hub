@@ -30,15 +30,15 @@ class FindAllArmors
 
         $cachedResult = $this->cache->get($cacheKey, function (ItemInterface $item) use ($filter) {
 
-            $item->expiresAfter(60); 
+            $item->expiresAfter(60);
             $item->tag('invalidate-on-new-armor');
 
             $result = $this->armorRepository->findAll($filter);
 
             if ($result->isError()) {
-                return $result; 
+                return $result;
             }
-            
+
             $item->set($result);
 
             return $result;

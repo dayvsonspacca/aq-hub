@@ -7,14 +7,16 @@ namespace AqHub\Player\Infrastructure\Repositories\Sql;
 use AqHub\Player\Domain\Repositories\Data\PlayerData;
 use AqHub\Player\Domain\Repositories\Filters\PlayerFilter;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
-use AqHub\Player\Domain\ValueObjects\{Level, Name, PlayerInventory};
+use AqHub\Player\Domain\ValueObjects\{Level, Name};
 use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
 use AqHub\Shared\Infrastructure\Database\Connection;
 use DomainException;
 
 class SqlPlayerRepository implements PlayerRepository
 {
-    public function __construct(private readonly Connection $db) {}
+    public function __construct(private readonly Connection $db)
+    {
+    }
 
     /**
      * @return Result<PlayerData|null>
