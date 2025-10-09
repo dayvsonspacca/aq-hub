@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Items\Domain\ValueObjects;
 
+use AqHub\Player\Domain\Repositories\Filters\PlayerFilter;
 use AqHub\Player\Domain\ValueObjects\{Level, Name};
 use AqHub\Player\Infrastructure\Data\PlayerData;
-use AqHub\Player\Infrastructure\Repositories\Filters\PlayerFilter;
 use AqHub\Player\Infrastructure\Repositories\InMemory\InMemoryPlayerRepository;
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 use AqHub\Tests\Unit\TestCase;

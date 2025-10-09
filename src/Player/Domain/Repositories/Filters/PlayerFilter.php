@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Player\Infrastructure\Repositories\Filters;
+namespace AqHub\Player\Domain\Repositories\Filters;
 
 class PlayerFilter
 {

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace AqHub\Player\Infrastructure\Http\Controllers;
 
 use AqHub\Player\Application\UseCases\PlayerUseCases;
+use AqHub\Player\Domain\Repositories\Filters\PlayerFilter;
 use AqHub\Player\Domain\ValueObjects\{Name};
-use AqHub\Player\Infrastructure\Repositories\Filters\PlayerFilter;
 use AqHub\Shared\Infrastructure\Cache\FileSystemCacheFactory;
 use AqHub\Shared\Infrastructure\Http\Route;
 use RuntimeException;
