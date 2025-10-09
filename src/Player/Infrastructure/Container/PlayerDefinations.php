@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Container;
 
-use AqHub\Player\Application\UseCases\{AddPlayer, FindAllPlayers, MarkAsMined};
+use AqHub\Player\Application\UseCases\{AddPlayer, FindAllPlayers, MarkAsMined, PlayerUseCases};
 use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Player\Infrastructure\Console\MinePlayersNameCommand;
 use AqHub\Player\Infrastructure\Http\Controllers\PlayerController;
@@ -46,7 +46,8 @@ class PlayerDefinations implements Definations
         return [
             AddPlayer::class => autowire(),
             FindAllPlayers::class => autowire(),
-            MarkAsMined::class => autowire()
+            MarkAsMined::class => autowire(),
+            PlayerUseCases::class => autowire(),
         ];
     }
 

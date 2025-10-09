@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Http\Controllers;
 
-use AqHub\Player\Application\UseCases\{AddPlayer, FindAllPlayers};
+use AqHub\Player\Application\UseCases\PlayerUseCases;
 use AqHub\Player\Domain\ValueObjects\{Name};
 use AqHub\Player\Infrastructure\Repositories\Filters\PlayerFilter;
 use AqHub\Shared\Infrastructure\Http\Route;
@@ -13,8 +13,7 @@ use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
 class PlayerController
 {
     public function __construct(
-        private readonly AddPlayer $addPlayer,
-        private readonly FindAllPlayers $findAllPlayers
+        private readonly PlayerUseCases $playerUseCases
     ) {
     }
 
@@ -28,7 +27,7 @@ class PlayerController
             return new JsonResponse(['message' => $name->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $player = $this->addPlayer->execute($name->getData());
+        $player = $this->playerUseCases->add->execute($name->getData());
         if ($player->isError()) {
             return new JsonResponse(['message' => $player->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
@@ -42,11 +41,15 @@ class PlayerController
     {
         $page = (int) $request->get('page', 1);
 
+        if ($page <= 0) {
+            return new JsonResponse(['message' => 'Param page cannot be zero or negative.'], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $filter = new PlayerFilter(
             page: $page
         );
 
-        $players = $this->findAllPlayers->execute($filter);
+        $players = $this->playerUseCases->findAll->execute($filter);
         if ($players->isError()) {
             return new JsonResponse(['message' => $players->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
