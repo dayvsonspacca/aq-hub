@@ -6,6 +6,7 @@ use Dotenv\Dotenv;
 
 define('ROOT_PATH', __DIR__ . '/../');
 define('LOGS_PATH', ROOT_PATH . 'logs/');
+define('CACHE_PATH', ROOT_PATH . 'cache/');
 
 require ROOT_PATH . 'vendor/autoload.php';
 

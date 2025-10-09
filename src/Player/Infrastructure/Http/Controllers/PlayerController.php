@@ -7,14 +7,20 @@ namespace AqHub\Player\Infrastructure\Http\Controllers;
 use AqHub\Player\Application\UseCases\PlayerUseCases;
 use AqHub\Player\Domain\ValueObjects\{Name};
 use AqHub\Player\Infrastructure\Repositories\Filters\PlayerFilter;
+use AqHub\Shared\Infrastructure\Cache\FileSystemCache;
 use AqHub\Shared\Infrastructure\Http\Route;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
+use Symfony\Contracts\Cache\ItemInterface;
 
 class PlayerController
 {
+    private FileSystemCache $cache;
+
     public function __construct(
         private readonly PlayerUseCases $playerUseCases
     ) {
+        $this->cache = new FileSystemCache('players-list', 60);
     }
 
     #[Route(path: '/players/add', methods: ['POST'])]
@@ -31,6 +37,9 @@ class PlayerController
         if ($player->isError()) {
             return new JsonResponse(['message' => $player->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
+
+        $this->cache->invalidateTags(['invalidate-on-new-player']);
+
         $player = $player->getData();
 
         return new JsonResponse($player->toArray(), Response::HTTP_OK);
@@ -45,17 +54,27 @@ class PlayerController
             return new JsonResponse(['message' => 'Param page cannot be zero or negative.'], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $filter = new PlayerFilter(
-            page: $page
-        );
+        $cacheKey = 'page-' . $page;
+        $players = $this->cache->get($cacheKey, function (ItemInterface $item) use ($page) {
+            $item->expiresAfter(60);
 
-        $players = $this->playerUseCases->findAll->execute($filter);
-        if ($players->isError()) {
-            return new JsonResponse(['message' => $players->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+            $filter = new PlayerFilter(
+                page: $page
+            );
 
-        $players = $players->getData();
-        $players = array_map(fn ($player) => $player->toArray(), $players);
+            $result = $this->playerUseCases->findAll->execute($filter);
+            if ($result->isError()) {
+                throw new RuntimeException($result->getMessage());
+            }
+
+            $players = $result->getData();
+            $players = array_map(fn($player) => $player->toArray(), $players);
+            
+            $item->set($players);
+            $item->tag('invalidate-on-new-player');
+
+            return $players;
+        });
 
         return new JsonResponse([
             'page' => $page,

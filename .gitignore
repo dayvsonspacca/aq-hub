@@ -5,3 +5,5 @@ docker/postgres/data
 composer.lock
 logs/*.log
 .env
+cache/*
+!cache/.gitkeep
