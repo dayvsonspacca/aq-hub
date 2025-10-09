@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Shared\Infrastructure\Http;
 
 use DI\Container;
+use Psr\Log\LoggerInterface;
 use ReflectionClass;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request};
 use Symfony\Component\Routing\Exception\{MethodNotAllowedException, ResourceNotFoundException};
@@ -17,8 +18,10 @@ class Application
     private array $controllers = [];
     private RouteCollection $routes;
 
-    public function __construct(private Container $container)
-    {
+    public function __construct(
+        private readonly Container $container,
+        private readonly LoggerInterface $logger
+    ) {
         $this->routes = new RouteCollection();
     }
 
@@ -81,9 +84,17 @@ class Application
         } catch (ResourceNotFoundException) {
             $response = new JsonResponse(['message' => 'Not Found'], 404);
         } catch (MethodNotAllowedException) {
-            $response = new JsonResponse(['message' => 'Not Found'], 404);
+            $response = new JsonResponse(['message' => 'Method not allowed'], 405);
         } catch (\Throwable $e) {
-            $response = new JsonResponse(['message' => 'An error occurred: ' . $e->getMessage()], 500);
+            $this->logger->error('An unhandled exception occurred during request.', [
+                'exception_message' => $e->getMessage(),
+                'exception_file' => $e->getFile(),
+                'exception_line' => $e->getLine(),
+                'uri' => $request->getPathInfo(),
+                'method' => $request->getMethod()
+            ]);
+
+            $response = new JsonResponse(['message' => 'Internal Server Error'], 500);
         }
 
         $response->send();
