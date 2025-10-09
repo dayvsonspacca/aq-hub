@@ -17,6 +17,9 @@ class DatabaseConfig
     ) {
     }
 
+    /**
+     * @return Result<DatabaseConfig|null>
+     */
     public static function fromEnvironment(array $env): Result
     {
         $requiredKeys = [
