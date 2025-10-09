@@ -6,6 +6,7 @@ namespace AqHub\Items\Infrastructure\Http\Forms;
 
 use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
+use AqHub\Items\Domain\ValueObjects\Name;
 use AqHub\Shared\Domain\Enums\TagType;
 use AqHub\Shared\Domain\ValueObjects\Result;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,6 +52,16 @@ class ArmorFilterForm
             );
 
             $filter->setTags($tags);
+        }
+
+        $name = $request->get('name', false);
+        if ($name) {
+            $name = Name::create($name);
+            if ($name->isError()) {
+                return Result::error($name->getMessage(), null);
+            }
+
+            $filter->setName($name->getData());
         }
 
         return Result::success(null, $filter);

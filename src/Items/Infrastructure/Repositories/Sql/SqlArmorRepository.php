@@ -85,6 +85,10 @@ class SqlArmorRepository implements ArmorRepository
             $select->distinct();
         }
 
+        if (isset($filter->name) && !is_null($filter->name)) {
+            $select->where("a.name LIKE :name", ['name' => '%' . $filter->name->value . '%']);
+        }
+
         $limit  = $filter->pageSize;
         $offset = ($filter->page - 1) * $filter->pageSize;
 

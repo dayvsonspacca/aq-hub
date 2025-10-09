@@ -26,7 +26,7 @@ class FindAllArmors
      */
     public function execute(ArmorFilter $filter): Result
     {
-        $cacheKey = $this->generateCacheKey($filter);
+        $cacheKey = $filter->generateUniqueKey();
 
         $cachedResult = $this->cache->get($cacheKey, function (ItemInterface $item) use ($filter) {
 
@@ -45,22 +45,5 @@ class FindAllArmors
         });
 
         return $cachedResult;
-    }
-
-    private function generateCacheKey(ArmorFilter $filter): string
-    {
-        $key = 'page-' . $filter->page;
-
-        if (!empty($filter->rarities)) {
-            $rarities = array_map(fn($rarity) => $rarity->toString(),  $filter->rarities);
-            $key .= '_rarities-' . implode(',', $rarities);
-        }
-
-        if (!empty($filter->tags)) {
-            $tags = array_map(fn($rarity) => $rarity->toString(), $filter->tags);
-            $key .= '_tags-' . implode(',', $tags);
-        }
-        
-        return md5($key);
     }
 }
