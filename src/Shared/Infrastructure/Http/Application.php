@@ -15,23 +15,20 @@ use Symfony\Component\Routing\Route as SymfonyRoute;
 
 class Application
 {
-    private array $controllers = [];
     private RouteCollection $routes;
+    private array $controllers = [];
 
     public function __construct(
         private readonly Container $container,
         private readonly LoggerInterface $logger
     ) {
         $this->routes = new RouteCollection();
+        $this->controllers = require ROOT_PATH . '/config/controllers.php';
+
+        $this->routes = $this->registerRoutes();
     }
 
-    public function registerControllers(array $controllers): void
-    {
-        $this->controllers = $controllers;
-        $this->routes      = $this->generateRoutesFromControllers();
-    }
-
-    private function generateRoutesFromControllers(): RouteCollection
+    private function registerRoutes(): RouteCollection
     {
         $routes = new RouteCollection();
 

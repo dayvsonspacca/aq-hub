@@ -34,12 +34,11 @@ return array_merge(
         },
         LoggerInterface::class => function (): Logger {
             $logger = new Logger('aqhub_app');
-            $logFilePath = __DIR__ . '/../logs/app.log';
+            $logFilePath = LOGS_PATH . '/errors.log';
 
             $logger->pushHandler(new StreamHandler($logFilePath, Level::Warning));
             return $logger;
         },
-
     ],
     ItemsContainerRegistry::build(),
     PlayerContainerRegistry::build()
