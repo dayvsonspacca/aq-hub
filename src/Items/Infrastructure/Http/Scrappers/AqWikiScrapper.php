@@ -32,7 +32,7 @@ class AqWikiScrapper
                         continue;
                     }
 
-                    $description = Description::create(html_entity_decode($matches[1], ENT_QUOTES | ENT_HTML5, 'UTF-8'))->unwrap();
+                    $description = Description::create(strip_tags(html_entity_decode($matches[1], ENT_QUOTES | ENT_HTML5, 'UTF-8')))->unwrap();
 
                     preg_match_all('/\/image-tags\/(ac|rare|pseudo|legend|special|seasonal)large\.png/i', $html, $tagMatches);
                     if (!empty($tagMatches[1])) {
