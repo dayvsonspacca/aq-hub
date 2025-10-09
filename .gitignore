@@ -3,4 +3,5 @@ vendor
 .vscode
 docker/postgres/data
 composer.lock
-logs/errors.log
+logs/*.log
+.env
