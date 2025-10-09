@@ -21,7 +21,7 @@ class PlayerController
     public function __construct(
         private readonly PlayerUseCases $playerUseCases
     ) {
-        $this->cache = FileSystemCacheFactory::create('players-list', 0);
+        $this->cache = FileSystemCacheFactory::create('players', 0);
     }
 
     #[Route(path: '/players/add', methods: ['POST'])]
