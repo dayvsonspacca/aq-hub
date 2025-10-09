@@ -6,6 +6,7 @@ namespace AqHub\Items\Infrastructure\Http\Forms;
 
 use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
+use AqHub\Shared\Domain\Enums\TagType;
 use AqHub\Shared\Domain\ValueObjects\Result;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -38,6 +39,19 @@ class ArmorFilterForm
             );
 
             $filter->rarities = $rarities;
+        }
+
+        $tags = $request->get('tags', false);
+        if ($tags) {
+            $tags = explode(',', $tags);
+            sort($tags);
+
+            $tags = array_map(
+                fn($rawTag) => TagType::fromString($rawTag)->getData(),
+                array_filter($tags, fn($rawTag) => TagType::fromString($rawTag)->isSuccess())
+            );
+
+            $filter->tags = $tags;
         }
 
         return Result::success(null, $filter);

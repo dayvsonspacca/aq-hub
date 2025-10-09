@@ -72,11 +72,17 @@ class SqlArmorRepository implements ArmorRepository
     public function findAll(ArmorFilter $filter): Result
     {
         $select = $this->db->builder->newSelect()
-            ->from('armors')
-            ->cols(['*']);
+            ->from('armors as a')
+            ->cols(['a.*']);
 
         if (count($filter->rarities) > 0) {
             $select->where('rarity IN (:rarities)', ['rarities' => array_map(fn($rarity) => $rarity->toString(), $filter->rarities)]);
+        }
+
+        if (count($filter->tags) > 0) {
+            $select->join('INNER', 'armor_tags as at', 'a.id = at.armor_id');
+            $select->where('at.tag IN (:tags)', ['tags' => array_map(fn($tag) => $tag->toString(), $filter->tags)]);
+            $select->distinct();
         }
 
         $limit  = $filter->pageSize;

@@ -52,10 +52,13 @@ class FindAllArmors
         $key = 'page-' . $filter->page;
 
         if (!empty($filter->rarities)) {
-            $rarities = $filter->rarities;
-            $rarities = array_map(fn($rarity) => $rarity->toString(), $rarities);
-            sort($rarities); 
+            $rarities = array_map(fn($rarity) => $rarity->toString(),  $filter->rarities);
             $key .= '_rarities-' . implode(',', $rarities);
+        }
+
+        if (!empty($filter->tags)) {
+            $tags = array_map(fn($rarity) => $rarity->toString(), $filter->tags);
+            $key .= '_tags-' . implode(',', $tags);
         }
         
         return md5($key);
