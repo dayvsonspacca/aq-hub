@@ -16,7 +16,7 @@ class Container
         $builder = new ContainerBuilder();
         $builder->useAutowiring(true);
         $builder->addDefinitions(self::getDefinitions());
-        
+
         return $builder->build();
     }
 

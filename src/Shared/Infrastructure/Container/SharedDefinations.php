@@ -8,11 +8,10 @@ use AqHub\Shared\Infrastructure\Database\Connection;
 use AqHub\Shared\Infrastructure\Env\Env;
 use AqHub\Shared\Infrastructure\Http\Application;
 use AqHub\Shared\Infrastructure\Log\FileLoggerFactory;
-use Monolog\Level;
 
-use function DI\autowire;
-use function DI\factory;
-use function DI\get;
+use function DI\{autowire, factory, get};
+
+use Monolog\Level;
 
 class SharedDefinations implements Definations
 {

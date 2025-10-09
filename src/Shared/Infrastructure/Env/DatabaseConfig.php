@@ -14,7 +14,8 @@ class DatabaseConfig
         public readonly string $name,
         public readonly string $user,
         public readonly string $password
-    ) {}
+    ) {
+    }
 
     public static function fromEnvironment(array $env): Result
     {

@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Infrastructure\Http;
 
-use AqHub\Shared\Infrastructure\Env\AppMode;
-use AqHub\Shared\Infrastructure\Env\Env;
+use AqHub\Shared\Infrastructure\Env\{AppMode, Env};
 use DI\Container;
 use Monolog\Logger;
 use ReflectionClass;
@@ -25,9 +24,9 @@ class Application
         private readonly Container $container,
         private readonly Env $env
     ) {
-        $this->routes = new RouteCollection();
+        $this->routes      = new RouteCollection();
         $this->controllers = require ROOT_PATH . '/config/controllers.php';
-        $this->logger = $container->get('Logger.Api.Errors');
+        $this->logger      = $container->get('Logger.Api.Errors');
 
         $this->routes = $this->registerRoutes();
     }

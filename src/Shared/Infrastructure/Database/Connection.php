@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Infrastructure\Database;
 
-use AqHub\Shared\Domain\ValueObjects\Result;
 use AqHub\Shared\Infrastructure\Env\Env;
 use Aura\SqlQuery\QueryFactory;
 use PDO;
@@ -36,9 +35,9 @@ class Connection
     {
         $config = $env->dbConfig;
 
-        $host = $config->host;
-        $port = $config->port;
-        $dbname = $config->name;
+        $host     = $config->host;
+        $port     = $config->port;
+        $dbname   = $config->name;
         $username = $config->user;
         $password = $config->password;
 
@@ -50,10 +49,10 @@ class Connection
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
             ];
 
-            $pdo = new PDO($dsn, $username, $password, $options);
+            $pdo              = new PDO($dsn, $username, $password, $options);
             $this->connection = $pdo;
         } catch (PDOException $e) {
-            throw new RuntimeException("Database connection failed: " . $e->getMessage());
+            throw new RuntimeException('Database connection failed: ' . $e->getMessage());
         }
     }
 
