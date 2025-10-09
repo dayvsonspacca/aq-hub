@@ -7,20 +7,21 @@ namespace AqHub\Player\Infrastructure\Http\Controllers;
 use AqHub\Player\Application\UseCases\PlayerUseCases;
 use AqHub\Player\Domain\ValueObjects\{Name};
 use AqHub\Player\Infrastructure\Repositories\Filters\PlayerFilter;
-use AqHub\Shared\Infrastructure\Cache\FileSystemCache;
+use AqHub\Shared\Infrastructure\Cache\FileSystemCacheFactory;
 use AqHub\Shared\Infrastructure\Http\Route;
 use RuntimeException;
+use Symfony\Component\Cache\Adapter\FilesystemTagAwareAdapter;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
 use Symfony\Contracts\Cache\ItemInterface;
 
 class PlayerController
 {
-    private FileSystemCache $cache;
+    private FilesystemTagAwareAdapter $cache;
 
     public function __construct(
         private readonly PlayerUseCases $playerUseCases
     ) {
-        $this->cache = new FileSystemCache('players-list', 60);
+        $this->cache = FileSystemCacheFactory::create('players-list', 60);
     }
 
     #[Route(path: '/players/add', methods: ['POST'])]
