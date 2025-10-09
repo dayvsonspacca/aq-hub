@@ -22,7 +22,7 @@ class ItemIdentifierGenerator
         $tagsString = implode(',', $itemInfo->tags->toArray());
         $dataString = $className . '|' . $itemInfo->getName() . '|' . $itemInfo->getDescription() . '|' . $tagsString;
 
-        $hash = hash('sha256', $dataString);
+        $hash = md5($dataString);
 
         return StringIdentifier::create($hash);
     }
