@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Infrastructure\Http;
 
+use AqHub\Shared\Infrastructure\Env\{AppMode, Env};
 use DI\Container;
+use Monolog\Logger;
 use ReflectionClass;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request};
 use Symfony\Component\Routing\Exception\{MethodNotAllowedException, ResourceNotFoundException};
@@ -14,21 +16,22 @@ use Symfony\Component\Routing\Route as SymfonyRoute;
 
 class Application
 {
-    private array $controllers = [];
     private RouteCollection $routes;
+    private array $controllers = [];
+    private readonly Logger $logger;
 
-    public function __construct(private Container $container)
-    {
-        $this->routes = new RouteCollection();
+    public function __construct(
+        private readonly Container $container,
+        private readonly Env $env
+    ) {
+        $this->routes      = new RouteCollection();
+        $this->controllers = require ROOT_PATH . '/config/controllers.php';
+        $this->logger      = $container->get('Logger.Api.Errors');
+
+        $this->routes = $this->registerRoutes();
     }
 
-    public function registerControllers(array $controllers): void
-    {
-        $this->controllers = $controllers;
-        $this->routes      = $this->generateRoutesFromControllers();
-    }
-
-    private function generateRoutesFromControllers(): RouteCollection
+    private function registerRoutes(): RouteCollection
     {
         $routes = new RouteCollection();
 
@@ -81,9 +84,21 @@ class Application
         } catch (ResourceNotFoundException) {
             $response = new JsonResponse(['message' => 'Not Found'], 404);
         } catch (MethodNotAllowedException) {
-            $response = new JsonResponse(['message' => 'Not Found'], 404);
+            $response = new JsonResponse(['message' => 'Method not allowed'], 405);
         } catch (\Throwable $e) {
-            $response = new JsonResponse(['message' => 'An error occurred: ' . $e->getMessage()], 500);
+            $this->logger->error('An unhandled exception occurred during request.', [
+                'exception_message' => $e->getMessage(),
+                'exception_file' => $e->getFile(),
+                'exception_line' => $e->getLine(),
+                'uri' => $request->getPathInfo(),
+                'method' => $request->getMethod()
+            ]);
+
+            if ($this->env->appMode === AppMode::Production) {
+                $response = new JsonResponse(['message' => 'Internal Server Error'], 500);
+            } else {
+                $response = new JsonResponse(['message' => 'Internal Server Error: ' . $e->getMessage()], 500);
+            }
         }
 
         $response->send();

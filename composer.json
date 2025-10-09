@@ -26,7 +26,9 @@
         "symfony/http-foundation": "^7.3",
         "symfony/routing": "^7.3",
         "dayvsonspacca/aqw-socket-client": "dev-main",
-        "aura/sqlquery": "*"
+        "aura/sqlquery": "*",
+        "monolog/monolog": "^3.9",
+        "vlucas/phpdotenv": "^5.6"
     },
     "require-dev": {
         "pestphp/pest": "^3.7",

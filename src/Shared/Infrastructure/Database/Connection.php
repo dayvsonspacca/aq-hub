@@ -4,37 +4,55 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Infrastructure\Database;
 
-use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Shared\Infrastructure\Env\Env;
 use Aura\SqlQuery\QueryFactory;
 use PDO;
 use PDOException;
+use RuntimeException;
 
 class Connection
 {
+    private static ?Connection $instance = null;
+
+    private function __construct(Env $env)
+    {
+        $this->builder = new QueryFactory('pgsql');
+        $this->establishConnection($env);
+    }
+
+    public static function instance(Env $env): self
+    {
+        if (self::$instance === null) {
+            self::$instance = new self($env);
+        }
+        return self::$instance;
+    }
+
     private PDO $connection;
     public QueryFactory $builder;
 
-    private function __construct(PDO $connection)
+    private function establishConnection(Env $env): void
     {
-        $this->connection = $connection;
-        $this->builder    = new QueryFactory('pgsql');
-    }
+        $config = $env->dbConfig;
 
-    public static function connect(
-        string $host,
-        string $dbname,
-        string $username,
-        string $password,
-        int $port = 5432
-    ): Result {
+        $host     = $config->host;
+        $port     = $config->port;
+        $dbname   = $config->name;
+        $username = $config->user;
+        $password = $config->password;
+
         try {
             $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
-            $pdo = new PDO($dsn, $username, $password);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            return Result::success('Connection established.', new self($pdo));
+            $options = [
+                PDO::ATTR_PERSISTENT => true,
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ];
+
+            $pdo              = new PDO($dsn, $username, $password, $options);
+            $this->connection = $pdo;
         } catch (PDOException $e) {
-            return Result::error($e->getMessage(), null);
+            throw new RuntimeException('Database connection failed: ' . $e->getMessage());
         }
     }
 

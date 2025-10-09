@@ -1,18 +1,20 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+declare(strict_types=1);
 
-use AqHub\Player\Infrastructure\Http\Controllers\PlayerController;
+use Dotenv\Dotenv;
+
+define('ROOT_PATH', __DIR__ . '/../');
+define('LOGS_PATH', ROOT_PATH . 'logs/');
+
+require ROOT_PATH . 'vendor/autoload.php';
+
+$dotenv = Dotenv::createImmutable(ROOT_PATH);
+$dotenv->load();
+
+use AqHub\Shared\Infrastructure\Container\Container;
 use AqHub\Shared\Infrastructure\Http\Application;
-use DI\ContainerBuilder;
 
-$builder = new ContainerBuilder();
-$builder->addDefinitions(__DIR__ . '/../config.php');
-$container = $builder->build();
-
-$application = new Application($container);
-$application->registerControllers([
-    PlayerController::class
-]);
-
+$container = Container::build();
+$application = $container->get(Application::class);
 $application->handle();

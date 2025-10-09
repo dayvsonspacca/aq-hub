@@ -11,24 +11,23 @@ use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
 use AqHub\Items\Domain\Repositories\{ArmorRepository, CapeRepository, HelmetRepository, WeaponRepository};
 use AqHub\Items\Infrastructure\Console\{MineAllPlayersItemsCommand, MineCharpageItemsCommand};
 use AqHub\Items\Infrastructure\Repositories\Sql\{SqlArmorRepository, SqlCapeRepository, SqlHelmetRepository, SqlWeaponRepository};
-use AqHub\Shared\Infrastructure\Container\ContainerRegistry;
+use AqHub\Shared\Infrastructure\Container\Definations;
 use AqHub\Shared\Infrastructure\Database\Connection;
 
 use function DI\{autowire, get};
 
-class ItemsContainerRegistry implements ContainerRegistry
+class ItemsDefinations implements Definations
 {
-    public static function build(): array
+    public static function getDefinitions(): array
     {
         return array_merge(
-            self::registerRepositories(),
-            self::registerUseCases(),
-            self::registerCommands(),
-            self::registerControllers()
+            self::repositories(),
+            self::commands(),
+            self::useCases()
         );
     }
 
-    public static function registerRepositories(): array
+    private static function repositories(): array
     {
         return [
             SqlWeaponRepository::class => autowire()->constructor(get(Connection::class)),
@@ -42,7 +41,7 @@ class ItemsContainerRegistry implements ContainerRegistry
         ];
     }
 
-    public static function registerCommands(): array
+    private static function commands(): array
     {
         return [
             MineAllPlayersItemsCommand::class => autowire(),
@@ -50,7 +49,7 @@ class ItemsContainerRegistry implements ContainerRegistry
         ];
     }
 
-    public static function registerUseCases(): array
+    private static function useCases(): array
     {
         return [
             AddWeapon::class => autowire(),
@@ -58,10 +57,5 @@ class ItemsContainerRegistry implements ContainerRegistry
             AddHelmet::class => autowire(),
             AddCape::class => autowire()
         ];
-    }
-
-    public static function registerControllers(): array
-    {
-        return [];
     }
 }
