@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Repositories\InMemory;
 
+use AqHub\Player\Domain\Repositories\Data\PlayerData;
 use AqHub\Player\Domain\Repositories\Filters\PlayerFilter;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Player\Domain\ValueObjects\{Level, Name};
-use AqHub\Player\Infrastructure\Data\PlayerData;
 use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
 use DateTime;
 
