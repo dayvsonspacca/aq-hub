@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Infrastructure\Http;
 
+use AqHub\Shared\Infrastructure\Env\AppMode;
+use AqHub\Shared\Infrastructure\Env\Env;
 use DI\Container;
 use Psr\Log\LoggerInterface;
 use ReflectionClass;
@@ -20,7 +22,8 @@ class Application
 
     public function __construct(
         private readonly Container $container,
-        private readonly LoggerInterface $logger
+        private readonly LoggerInterface $logger,
+        private readonly Env $env
     ) {
         $this->routes = new RouteCollection();
         $this->controllers = require ROOT_PATH . '/config/controllers.php';
@@ -91,7 +94,11 @@ class Application
                 'method' => $request->getMethod()
             ]);
 
-            $response = new JsonResponse(['message' => 'Internal Server Error'], 500);
+            if ($this->env->appMode === AppMode::Production) {
+                $response = new JsonResponse(['message' => 'Internal Server Error'], 500);
+            } else {
+                $response = new JsonResponse(['message' => 'Internal Server Error: ' . $e->getMessage()], 500);
+            }
         }
 
         $response->send();
