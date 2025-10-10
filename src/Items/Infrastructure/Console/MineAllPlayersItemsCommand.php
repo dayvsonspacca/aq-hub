@@ -42,7 +42,10 @@ class MineAllPlayersItemsCommand extends Command
     {
         $start = microtime(true);
 
-        $players = $this->findAllPlayers->execute(new PlayerFilter(mined: false));
+        $filter = new PlayerFilter();
+        $filter->mined = false;
+
+        $players = $this->findAllPlayers->execute($filter);
 
         if ($players->isError()) {
             $output->writeln('<fg=red;options=bold>✘ Failed to retrieve players:</> <fg=yellow>' . $players->getMessage() . '</>');
