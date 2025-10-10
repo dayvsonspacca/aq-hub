@@ -31,48 +31,17 @@ class SqlCapeRepository implements CapeRepository
         $select = $this->db->builder->newSelect()
             ->from('capes')
             ->cols(['*'])
-            ->where('hash = :hash')
-            ->bindValue('hash', $identifier->getValue());
+            ->where('hash = :hash', ['hash' => $identifier->getValue()]);
 
-        $capeData = $this->db->fetchOne($select->getStatement(), ['hash' => $identifier->getValue()]);
+        $capeData = $this->db->fetchOne($select->getStatement(), $select->getBindValues());
 
         if (!$capeData) {
             return Result::error(null, null);
         }
 
-        $name          = Name::create($capeData['name'])->unwrap();
-        $description   = Description::create($capeData['description'])->unwrap();
-        $canAccessBank = (bool) $capeData['can_access_bank'];
-
-        $select = $this->db->builder->newSelect()
-            ->from('cape_tags')
-            ->cols(['tag'])
-            ->where('cape_id = :cape_id')
-            ->bindValue('cape_id', $capeData['id']);
-
-        $tagsData  = $this->db->fetchAll($select->getStatement(), ['cape_id' => $capeData['id']]);
-        $tags      = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
-
-        $rarity = ItemRarity::fromString($capeData['rarity'] ?? '');
-        $rarity = $rarity->isError() ? null : $rarity->getData();
-
-        return Result::success(
-            null,
-            new CapeData(
-                $identifier,
-                $name,
-                $description,
-                $tags,
-                $canAccessBank,
-                new DateTime($capeData['registered_at']),
-                $rarity
-            )
-        );
+        return $this->hydrateCapeData((array)$capeData);
     }
 
-    /**
-     * @return Result<array<CapeData>>
-     */
     public function findAll(CapeFilter $filter): Result
     {
         $select = $this->db->builder->newSelect()
@@ -84,7 +53,7 @@ class SqlCapeRepository implements CapeRepository
         }
 
         if (count($filter->tags) > 0) {
-            $select->join('INNER', 'cape_tags as ct', 'c.id = ct.armor_id');
+            $select->join('INNER', 'cape_tags as ct', 'c.id = ct.cape_id'); 
             $select->where('ct.tag IN (:tags)', ['tags' => array_map(fn ($tag) => $tag->toString(), $filter->tags)]);
             $select->distinct();
         }
@@ -104,44 +73,16 @@ class SqlCapeRepository implements CapeRepository
             return Result::success(null, []);
         }
 
-        $armors = [];
+        $capeIds = array_column($capesData, 'id');
+        $tagsMap = $this->fetchAllTagsForCapes($capeIds);
 
-        foreach ($capesData as $capeData) {
-            $armorId = (int)$capeData['id'];
+        $capes = array_map(function (array $capeData) use ($tagsMap) {
+            return $this->hydrateCapeDataWithTags($capeData, $tagsMap);
+        }, $capesData);
 
-            $tagsSelect = $this->db->builder->newSelect()
-                ->from('cape_tags')
-                ->cols(['tag'])
-                ->where('cape_id = :cape_id_' . $armorId)
-                ->bindValue('cape_id_' . $armorId, $armorId);
-
-            $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), ['cape_id_' . $armorId => $armorId]);
-            $tags     = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
-
-            $rarity = ItemRarity::fromString($capeData['rarity'] ?? '');
-            $rarity = $rarity->isError() ? null : $rarity->getData();
-
-            $name          = Name::create($capeData['name'])->unwrap();
-            $description   = Description::create($capeData['description'])->unwrap();
-            $canAccessBank = (bool) $capeData['can_access_bank'];
-
-            $armors[] = new CapeData(
-                StringIdentifier::create($capeData['hash'])->unwrap(),
-                $name,
-                $description,
-                $tags,
-                $canAccessBank,
-                new DateTime($capeData['registered_at']),
-                $rarity
-            );
-        }
-
-        return Result::success(null, $armors);
+        return Result::success(null, $capes);
     }
 
-    /**
-     * @return Result<CapeData|null>
-     */
     public function persist(ItemInfo $itemInfo, bool $canAccessBank): Result
     {
         try {
@@ -200,5 +141,74 @@ class SqlCapeRepository implements CapeRepository
             $this->db->getConnection()->rollBack();
             return Result::error('Failed to persist cape: ' . $e->getMessage() . ' at ' . $e->getLine(), null);
         }
+    }
+
+    private function fetchAllTagsForCapes(array $capeIds): array
+    {
+        if (empty($capeIds)) {
+            return [];
+        }
+
+        $tagsSelect = $this->db->builder->newSelect()
+            ->from('cape_tags')
+            ->cols(['cape_id', 'tag']);
+
+        $tagsSelect->where('cape_id IN (:cape_ids)', ['cape_ids' => $capeIds]);
+
+        $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), $tagsSelect->getBindValues());
+
+        $tagsMap = [];
+        foreach ($tagsData as $row) {
+            $tagsMap[(int)$row['cape_id']][] = TagType::fromString($row['tag'])->unwrap();
+        }
+
+        return $tagsMap;
+    }
+
+    private function hydrateCapeDataWithTags(array $capeData, array $tagsMap): CapeData
+    {
+        $capeId = (int)$capeData['id'];
+        $tagsArray = $tagsMap[$capeId] ?? [];
+        $tags = new ItemTags($tagsArray);
+        
+        return $this->buildCapeData($capeData, $tags);
+    }
+    
+    private function hydrateCapeData(array $capeData): Result
+    {
+        $capeId = (int)$capeData['id'];
+
+        $tagsSelect = $this->db->builder->newSelect()
+            ->from('cape_tags')
+            ->cols(['tag'])
+            ->where('cape_id = :cape_id')
+            ->bindValue('cape_id', $capeId);
+
+        $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), $tagsSelect->getBindValues());
+        $tags = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+
+        return Result::success(null, $this->buildCapeData($capeData, $tags));
+    }
+    
+    private function buildCapeData(array $capeData, ItemTags $tags): CapeData
+    {
+        $name          = Name::create($capeData['name'])->unwrap();
+        $description   = Description::create($capeData['description'])->unwrap();
+        $canAccessBank = (bool) $capeData['can_access_bank'];
+
+        $rarity = ItemRarity::fromString($capeData['rarity'] ?? '');
+        $rarity = $rarity->isError() ? null : $rarity->getData();
+        
+        $identifier = StringIdentifier::create($capeData['hash'])->unwrap();
+
+        return new CapeData(
+            $identifier,
+            $name,
+            $description,
+            $tags,
+            $canAccessBank,
+            new DateTime($capeData['registered_at']),
+            $rarity
+        );
     }
 }

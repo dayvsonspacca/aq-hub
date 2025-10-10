@@ -31,41 +31,15 @@ class SqlArmorRepository implements ArmorRepository
         $select = $this->db->builder->newSelect()
             ->from('armors')
             ->cols(['*'])
-            ->where('hash = :hash')
-            ->bindValue('hash', $identifier->getValue());
+            ->where('hash = :hash', ['hash' => $identifier->getValue()]);
 
-        $armorData = $this->db->fetchOne($select->getStatement(), ['hash' => $identifier->getValue()]);
+        $armorData = $this->db->fetchOne($select->getStatement(), $select->getBindValues());
 
         if (!$armorData) {
             return Result::error(null, null);
         }
 
-        $tagsSelect = $this->db->builder->newSelect()
-            ->from('armor_tags')
-            ->cols(['tag'])
-            ->where('armor_id = :armor_id')
-            ->bindValue('armor_id', $armorData['id']);
-
-        $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), ['armor_id' => $armorData['id']]);
-        $tags     = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
-
-        $name        = Name::create($armorData['name'])->unwrap();
-        $description = Description::create($armorData['description'])->unwrap();
-
-        $rarity = ItemRarity::fromString($armorData['rarity'] ?? '');
-        $rarity = $rarity->isError() ? null : $rarity->getData();
-
-        return Result::success(
-            null,
-            new ArmorData(
-                $identifier,
-                $name,
-                $description,
-                $tags,
-                new DateTime($armorData['registered_at']),
-                $rarity ?? null
-            )
-        );
+        return $this->hydrateArmorData((array)$armorData);
     }
 
     /**
@@ -102,35 +76,12 @@ class SqlArmorRepository implements ArmorRepository
             return Result::success(null, []);
         }
 
-        $armors = [];
+        $armorIds = array_column($armorsData, 'id');
+        $tagsMap = $this->fetchAllTagsForArmors($armorIds);
 
-        foreach ($armorsData as $armorData) {
-            $armorId = (int)$armorData['id'];
-
-            $tagsSelect = $this->db->builder->newSelect()
-                ->from('armor_tags')
-                ->cols(['tag'])
-                ->where('armor_id = :armor_id_' . $armorId)
-                ->bindValue('armor_id_' . $armorId, $armorId);
-
-            $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), ['armor_id_' . $armorId => $armorId]);
-            $tags     = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
-
-            $rarity = ItemRarity::fromString($armorData['rarity'] ?? '');
-            $rarity = $rarity->isError() ? null : $rarity->getData();
-
-            $name        = Name::create($armorData['name'])->unwrap();
-            $description = Description::create($armorData['description'])->unwrap();
-
-            $armors[] = new ArmorData(
-                StringIdentifier::create($armorData['hash'])->unwrap(),
-                $name,
-                $description,
-                $tags,
-                new DateTime($armorData['registered_at']),
-                $rarity
-            );
-        }
+        $armors = array_map(function (array $armorData) use ($tagsMap) {
+            return $this->hydrateArmorDataWithTags($armorData, $tagsMap);
+        }, $armorsData);
 
         return Result::success(null, $armors);
     }
@@ -194,5 +145,72 @@ class SqlArmorRepository implements ArmorRepository
             $this->db->getConnection()->rollBack();
             return Result::error('Failed to persist armor: ' . $e->getMessage() . ' at ' . $e->getLine(), null);
         }
+    }
+
+    private function fetchAllTagsForArmors(array $armorIds): array
+    {
+        if (empty($armorIds)) {
+            return [];
+        }
+
+        $tagsSelect = $this->db->builder->newSelect()
+            ->from('armor_tags')
+            ->cols(['armor_id', 'tag']);
+
+        $tagsSelect->where('armor_id IN (:armor_ids)', ['armor_ids' => $armorIds]);
+
+        $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), $tagsSelect->getBindValues());
+
+        $tagsMap = [];
+        foreach ($tagsData as $row) {
+            $tagsMap[(int)$row['armor_id']][] = TagType::fromString($row['tag'])->unwrap();
+        }
+
+        return $tagsMap;
+    }
+
+    private function hydrateArmorDataWithTags(array $armorData, array $tagsMap): ArmorData
+    {
+        $armorId = (int)$armorData['id'];
+        $tagsArray = $tagsMap[$armorId] ?? [];
+        $tags = new ItemTags($tagsArray);
+        
+        return $this->buildArmorData($armorData, $tags);
+    }
+    
+    private function hydrateArmorData(array $armorData): Result
+    {
+        $armorId = (int)$armorData['id'];
+
+        $tagsSelect = $this->db->builder->newSelect()
+            ->from('armor_tags')
+            ->cols(['tag'])
+            ->where('armor_id = :armor_id')
+            ->bindValue('armor_id', $armorId);
+
+        $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), ['armor_id' => $armorId]);
+        $tags = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+
+        return Result::success(null, $this->buildArmorData($armorData, $tags));
+    }
+    
+    private function buildArmorData(array $armorData, ItemTags $tags): ArmorData
+    {
+        $name        = Name::create($armorData['name'])->unwrap();
+        $description = Description::create($armorData['description'])->unwrap();
+
+        $rarity = ItemRarity::fromString($armorData['rarity'] ?? '');
+        $rarity = $rarity->isError() ? null : $rarity->getData();
+        
+        $identifier = StringIdentifier::create($armorData['hash'])->unwrap();
+
+        return new ArmorData(
+            $identifier,
+            $name,
+            $description,
+            $tags,
+            new DateTime($armorData['registered_at']),
+            $rarity
+        );
     }
 }

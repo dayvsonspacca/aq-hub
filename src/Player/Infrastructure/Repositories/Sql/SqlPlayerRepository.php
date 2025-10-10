@@ -41,12 +41,13 @@ class SqlPlayerRepository implements PlayerRepository
 
             $this->db->execute($insert->getStatement(), $insert->getBindValues());
 
-            $retrievedData = $this->findByIdentifier($identifier);
-            if ($retrievedData->isError() || $retrievedData->getData() === null) {
-                throw new DomainException('Player persisted but failed to retrieve for return.');
-            }
-
-            $playerData = $retrievedData->getData();
+            $playerData = new PlayerData(
+                $identifier,
+                $name,
+                $level,
+                new \DateTime(), 
+                false
+            );
 
             $this->db->getConnection()->commit();
 
@@ -57,17 +58,13 @@ class SqlPlayerRepository implements PlayerRepository
         }
     }
 
-    /**
-     * @return Result<PlayerData|null>
-     */
     public function findByIdentifier(IntIdentifier $identifier): Result
     {
         $select = $this->db->builder->newSelect()
             ->from('players as p')
             ->cols(['p.*', 'FALSE AS mined'])
-            ->where('p.id = :id')
-            ->limit(1)
-            ->bindValue('id', $identifier->getValue());
+            ->where('p.id = :id', ['id' => $identifier->getValue()])
+            ->limit(1);
 
         $playerData = $this->db->fetchOne($select->getStatement(), $select->getBindValues());
 
@@ -75,20 +72,9 @@ class SqlPlayerRepository implements PlayerRepository
             return Result::error(null, null);
         }
 
-        $data = new PlayerData(
-            IntIdentifier::create((int)$playerData['id'])->unwrap(),
-            Name::create($playerData['name'])->unwrap(),
-            Level::create((int)$playerData['level'])->unwrap(),
-            new \DateTime($playerData['registered_at']),
-            (bool) $playerData['mined']
-        );
-
-        return Result::success(null, $data);
+        return Result::success(null, $this->buildPlayerData((array)$playerData));
     }
 
-    /**
-     * @return Result<array<PlayerData>>
-     */
     public function findAll(PlayerFilter $filter): Result
     {
         $select = $this->db->builder->newSelect()
@@ -114,16 +100,9 @@ class SqlPlayerRepository implements PlayerRepository
             return Result::success(null, []);
         }
 
-        $players = [];
-        foreach ($playersData as $playerData) {
-            $players[] = new PlayerData(
-                IntIdentifier::create((int)$playerData['id'])->unwrap(),
-                Name::create($playerData['name'])->unwrap(),
-                Level::create((int)$playerData['level'])->unwrap(),
-                new \DateTime($playerData['registered_at']),
-                (bool) $playerData['mined']
-            );
-        }
+        $players = array_map(function (array $playerData) {
+            return $this->buildPlayerData($playerData);
+        }, $playersData);
 
         return Result::success(null, $players);
     }
@@ -133,8 +112,7 @@ class SqlPlayerRepository implements PlayerRepository
         $select = $this->db->builder->newSelect()
             ->from('players_mined')
             ->cols(['*'])
-            ->where('name = :name')
-            ->bindValue('name', $name->value);
+            ->where('name = :name', ['name' => $name->value]);
 
         $playerData = $this->db->fetchOne($select->getStatement(), $select->getBindValues());
 
@@ -149,5 +127,16 @@ class SqlPlayerRepository implements PlayerRepository
         }
 
         return Result::error('The player ' . $name->value . ' is already mined.', null);
+    }
+
+    private function buildPlayerData(array $playerData): PlayerData
+    {
+        return new PlayerData(
+            IntIdentifier::create((int)$playerData['id'])->unwrap(),
+            Name::create($playerData['name'])->unwrap(),
+            Level::create((int)$playerData['level'])->unwrap(),
+            new \DateTime($playerData['registered_at']),
+            (bool) $playerData['mined']
+        );
     }
 }
