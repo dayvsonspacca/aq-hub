@@ -52,7 +52,7 @@ class SqlArmorRepository implements ArmorRepository
         $name        = Name::create($armorData['name'])->unwrap();
         $description = Description::create($armorData['description'])->unwrap();
 
-        $rarity = ItemRarity::fromString($armorData['rarity']);
+        $rarity = ItemRarity::fromString($armorData['rarity'] ?? '');
         $rarity = $rarity->isError() ? null : $rarity->getData();
 
         return Result::success(
