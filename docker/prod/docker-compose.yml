@@ -1,5 +1,0 @@
-services:
-  php:
-    image: serversideup/php:8.3-fpm-nginx
-    volumes:
-      - .:/var/www/html
