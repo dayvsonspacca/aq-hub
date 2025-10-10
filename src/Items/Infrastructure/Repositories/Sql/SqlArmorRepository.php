@@ -86,7 +86,7 @@ class SqlArmorRepository implements ArmorRepository
         }
 
         if (isset($filter->name) && !is_null($filter->name)) {
-            $select->where('a.name LIKE :name', ['name' => '%' . $filter->name->value . '%']);
+            $select->where('a.name ILIKE :name', ['name' => '%' . $filter->name->value . '%']);
         }
 
         $limit  = $filter->pageSize;
