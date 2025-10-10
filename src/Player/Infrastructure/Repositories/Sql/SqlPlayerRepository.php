@@ -45,7 +45,7 @@ class SqlPlayerRepository implements PlayerRepository
                 $identifier,
                 $name,
                 $level,
-                new \DateTime(), 
+                new DateTime(), 
                 false
             );
 
@@ -135,7 +135,7 @@ class SqlPlayerRepository implements PlayerRepository
             IntIdentifier::create((int)$playerData['id'])->unwrap(),
             Name::create($playerData['name'])->unwrap(),
             Level::create((int)$playerData['level'])->unwrap(),
-            new \DateTime($playerData['registered_at']),
+            new DateTime($playerData['registered_at']),
             (bool) $playerData['mined']
         );
     }
