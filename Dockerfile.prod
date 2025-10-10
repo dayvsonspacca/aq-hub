@@ -4,7 +4,6 @@ ENV PHP_OPCACHE_ENABLE=1
 
 USER root
 
-
 WORKDIR /var/www
 
 COPY --chown=www-data:www-data . /var/www/html
