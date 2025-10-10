@@ -53,7 +53,7 @@ class SqlCapeRepository implements CapeRepository
         }
 
         if (count($filter->tags) > 0) {
-            $select->join('INNER', 'cape_tags as ct', 'c.id = ct.cape_id'); 
+            $select->join('INNER', 'cape_tags as ct', 'c.id = ct.cape_id');
             $select->where('ct.tag IN (:tags)', ['tags' => array_map(fn ($tag) => $tag->toString(), $filter->tags)]);
             $select->distinct();
         }
@@ -171,13 +171,13 @@ class SqlCapeRepository implements CapeRepository
 
     private function hydrateCapeDataWithTags(array $capeData, array $tagsMap): CapeData
     {
-        $capeId = (int)$capeData['id'];
+        $capeId    = (int)$capeData['id'];
         $tagsArray = $tagsMap[$capeId] ?? [];
-        $tags = new ItemTags($tagsArray);
-        
+        $tags      = new ItemTags($tagsArray);
+
         return $this->buildCapeData($capeData, $tags);
     }
-    
+
     private function hydrateCapeData(array $capeData): Result
     {
         $capeId = (int)$capeData['id'];
@@ -189,11 +189,11 @@ class SqlCapeRepository implements CapeRepository
             ->bindValue('cape_id', $capeId);
 
         $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), $tagsSelect->getBindValues());
-        $tags = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+        $tags     = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
 
         return Result::success(null, $this->buildCapeData($capeData, $tags));
     }
-    
+
     private function buildCapeData(array $capeData, ItemTags $tags): CapeData
     {
         $name          = Name::create($capeData['name'])->unwrap();
@@ -202,7 +202,7 @@ class SqlCapeRepository implements CapeRepository
 
         $rarity = ItemRarity::fromString($capeData['rarity'] ?? '');
         $rarity = $rarity->isError() ? null : $rarity->getData();
-        
+
         $identifier = StringIdentifier::create($capeData['hash'])->unwrap();
 
         return new CapeData(

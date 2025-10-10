@@ -10,6 +10,7 @@ use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Player\Domain\ValueObjects\{Level, Name};
 use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
 use AqHub\Shared\Infrastructure\Database\Connection;
+use DateTime;
 use DomainException;
 
 class SqlPlayerRepository implements PlayerRepository

@@ -19,7 +19,7 @@ class CapeFilter
     {
         $this->canAccessBank = $can;
     }
-    
+
     public function toArray(): array
     {
         return [
