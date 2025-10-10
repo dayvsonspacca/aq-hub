@@ -1,5 +1,12 @@
 FROM serversideup/php:8.3-fpm-nginx
 
+ENV PHP_OPCACHE_ENABLE="1" \
+    PHP_OPCACHE_VALIDATE_TIMESTAMPS="0"
+
 WORKDIR /var/www/html
 
-COPY . /var/www/html
+COPY composer.json composer.lock ./
+
+RUN composer install --no-dev --optimize-autoloader
+
+COPY . .
