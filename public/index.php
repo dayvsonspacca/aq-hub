@@ -45,7 +45,7 @@ try {
     
     echo "--- LOAD COMPLETE ---\n";
     echo "APP_ENV via getenv(): " . ($appEnv ?: "Variable not set.") . "\n";
-    var_dump($_ENV);
+    var_dump($_ENV, $_SERVER);
 
 } catch (\Exception $e) {
     echo "DOTENV EXCEPTION: " . $e->getMessage() . "\n";
