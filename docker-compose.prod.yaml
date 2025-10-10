@@ -3,6 +3,6 @@ services:
   app:
     build:
       context: . 
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     environment:
       SSL_MODE: "on"
