@@ -5,14 +5,18 @@ ENV PHP_OPCACHE_ENABLE="1" \
 
 WORKDIR /var/www/html
 
-COPY composer.json .
+COPY composer.json composer.lock ./
 
 RUN composer install --no-dev --optimize-autoloader
 
 COPY . .
+
+USER root
 
 RUN chown -R www-data:www-data /var/www/html/logs \
     && chown -R www-data:www-data /var/www/html/cache 
 
 RUN chmod -R 775 /var/www/html/logs \
     && chmod -R 775 /var/www/html/cache
+
+USER www-data
