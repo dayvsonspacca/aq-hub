@@ -9,16 +9,12 @@ use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
 use AqHub\Shared\Domain\ValueObjects\Result;
 use AqHub\Shared\Infrastructure\Cache\FileSystemCacheFactory;
-use Symfony\Component\Cache\Adapter\FilesystemTagAwareAdapter;
 use Symfony\Contracts\Cache\ItemInterface;
 
 class FindAllArmors
 {
-    private FilesystemTagAwareAdapter $cache;
-
     public function __construct(private readonly ArmorRepository $armorRepository)
     {
-        $this->cache = FileSystemCacheFactory::create('armors', 60);
     }
 
     /**
@@ -28,7 +24,8 @@ class FindAllArmors
     {
         $cacheKey = $filter->generateUniqueKey();
 
-        $cachedResult = $this->cache->get($cacheKey, function (ItemInterface $item) use ($filter) {
+        $cachedResult = FileSystemCacheFactory::create('armors', 60)
+        ->get($cacheKey, function (ItemInterface $item) use ($filter) {
 
             $item->expiresAfter(60);
             $item->tag('invalidate-on-new-armor');
