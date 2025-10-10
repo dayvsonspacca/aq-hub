@@ -21,7 +21,7 @@ class Env
 
     private function loadDatabaseConfig(): void
     {
-        $result = DatabaseConfig::fromEnvironment($_ENV);
+        $result = DatabaseConfig::fromEnvironment($_SERVER);
 
         if ($result->isError()) {
             throw new RuntimeException($result->getMessage());
@@ -40,7 +40,7 @@ class Env
 
     private function loadAppMode(): void
     {
-        $mode = $_ENV['APP_MODE'];
+        $mode = $_SERVER['APP_MODE'];
 
         if ($mode === false) {
             throw new RuntimeException("Environment variable 'APP_MODE' is not set.");
