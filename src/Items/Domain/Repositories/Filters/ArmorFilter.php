@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Domain\Repositories\Filters;
 
-use AqHub\Shared\Domain\Repositories\Filters\CanPaginate;
-
 class ArmorFilter
 {
     use DefaultFilters;
