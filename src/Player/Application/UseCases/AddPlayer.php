@@ -33,7 +33,7 @@ class AddPlayer
         if ($result->isError()) {
             return $result;
         }
-        
+
         $this->cache->invalidateTags(['invalidate-on-new-player']);
 
         $result = $result->getData();

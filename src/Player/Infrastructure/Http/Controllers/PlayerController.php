@@ -8,14 +8,15 @@ use AqHub\Player\Application\UseCases\PlayerUseCases;
 use AqHub\Player\Infrastructure\Http\Forms\{AddPlayerForm, ListPlayersForm};
 use AqHub\Player\Infrastructure\Http\Presenters\PlayerPresenter;
 use AqHub\Shared\Infrastructure\Http\Route;
-use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
 use RuntimeException;
+use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
 
 class PlayerController
 {
     public function __construct(
         private readonly PlayerUseCases $playerUseCases
-    ) {}
+    ) {
+    }
 
     #[Route(path: '/players/add', methods: ['POST'])]
     public function add(Request $request): JsonResponse
@@ -43,7 +44,7 @@ class PlayerController
             return new JsonResponse(['message' => $result->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $filter = $result->getData();
+        $filter  = $result->getData();
         $players = $this->playerUseCases->findAll->execute($filter);
 
         if ($players->isError()) {

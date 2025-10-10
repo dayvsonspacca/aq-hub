@@ -13,6 +13,6 @@ class PlayerPresenter
      */
     public static function array(array $playersData)
     {
-        return array_map(fn($playerData) => $playerData->toArray(), $playersData);
+        return array_map(fn ($playerData) => $playerData->toArray(), $playersData);
     }
 }
