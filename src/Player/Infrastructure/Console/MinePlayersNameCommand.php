@@ -37,18 +37,30 @@ class MinePlayersNameCommand extends Command
                 'password',
                 InputArgument::REQUIRED,
                 'The account password'
+            )->addArgument(
+                'server',
+                InputArgument::REQUIRED,
+                'The AQW server name (e.g., twilly, yorumi)'
             );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $username = $input->getArgument('username');
-        $password = $input->getArgument('password');
+        $username   = $input->getArgument('username');
+        $password   = $input->getArgument('password');
+        $serverName = $input->getArgument('server');
+
+        $server = $this->getServerByName($serverName);
+
+        if ($server === null) {
+            $output->writeln('<error>Invalid server: '. $serverName .'</error>');
+            return Command::FAILURE;
+        }
 
         $token = AqwApiClient::login(Name::create($username)->unwrap(), $password);
 
         $client = new Client(
-            Server::yorumi(),
+            $server,
             [
                 new CoreEventsFactory(),
                 new EventsFactory()
@@ -62,5 +74,17 @@ class MinePlayersNameCommand extends Command
         $client->run();
 
         return Command::SUCCESS;
+    }
+
+    private function getServerByName(string $name): ?Server
+    {
+        try {
+            if (!method_exists(Server::class, $name)) {
+                return null;
+            }
+            return call_user_func([Server::class, $name]);
+        } catch (\Throwable $e) {
+            return null;
+        }
     }
 }
