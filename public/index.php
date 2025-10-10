@@ -29,9 +29,12 @@ if (!is_readable($envFilePath)) {
     die(1);
 }
 
+$envContent = file_get_contents($envFilePath);
+
 echo "3. File exists and is readable. Attempting to load...\n";
 // --- END DEBUGGING ---
 
+var_dump($envContent);
 
 try {
     $dotenv = Dotenv::createImmutable(ROOT_PATH);
