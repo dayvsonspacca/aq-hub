@@ -1,29 +1,8 @@
 version: '3.8'
-
 services:
   app:
     build:
-      context: .
-      dockerfile: docker/php/Dockerfile
-    healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:9000"]
-      interval: 5s
-      timeout: 20s
-      retries: 10
-    volumes:
-      - ./:/var/www
-      - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
-
-  server:
-    build:
-      context: .
-      dockerfile: docker/nginx/Dockerfile
-    healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:9000"]
-      interval: 5s
-      timeout: 20s
-      retries: 10
-    volumes:
-      - ./:/var/www
-    depends_on:
-      - app
+      context: . 
+      dockerfile: Dockerfile
+    environment:
+      SSL_MODE: "on"
