@@ -11,9 +11,9 @@ define('CACHE_PATH', ROOT_PATH . 'cache/');
 require ROOT_PATH . 'vendor/autoload.php';
 
 $dotenv = Dotenv::createImmutable(ROOT_PATH);
+$dotenv->load();
 var_dump($dotenv);
 var_dump($_ENV);
-$dotenv->load();
 
 use AqHub\Shared\Infrastructure\Container\Container;
 use AqHub\Shared\Infrastructure\Http\Application;
