@@ -12,7 +12,7 @@ require ROOT_PATH . 'vendor/autoload.php';
 
 $dotenv = Dotenv::createImmutable(ROOT_PATH);
 $dotenv->load();
-var_dump($dotenv);
+var_dump(ROOT_PATH);
 var_dump($_ENV);
 
 use AqHub\Shared\Infrastructure\Container\Container;
