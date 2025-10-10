@@ -57,7 +57,13 @@ class MinePlayersNameCommand extends Command
             return Command::FAILURE;
         }
 
-        $token = AqwApiClient::login(Name::create($username)->unwrap(), $password);
+        $username = Name::create($username)->unwrap();
+
+        $token = AqwApiClient::login($username, $password);
+        if (!$token) {
+            $output->writeln('<error>Token not found for: '. $username->value . ' with pass ' . $password .'</error>');
+            return Command::FAILURE;
+        }
 
         $client = new Client(
             $server,
@@ -66,9 +72,9 @@ class MinePlayersNameCommand extends Command
                 new EventsFactory()
             ],
             [
-                new CoreEventsHandler($username, $token),
+                new CoreEventsHandler($username->value, $token),
                 new EventsHandler($this->addPlayer),
-                new LogEventsHandler($output)
+                new LogEventsHandler($output, $username, $server)
             ]
         );
         $client->run();
