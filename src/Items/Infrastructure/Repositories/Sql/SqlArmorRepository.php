@@ -77,7 +77,7 @@ class SqlArmorRepository implements ArmorRepository
         }
 
         $armorIds = array_column($armorsData, 'id');
-        $tagsMap = $this->fetchAllTagsForArmors($armorIds);
+        $tagsMap  = $this->fetchAllTagsForArmors($armorIds);
 
         $armors = array_map(function (array $armorData) use ($tagsMap) {
             return $this->hydrateArmorDataWithTags($armorData, $tagsMap);
@@ -171,13 +171,13 @@ class SqlArmorRepository implements ArmorRepository
 
     private function hydrateArmorDataWithTags(array $armorData, array $tagsMap): ArmorData
     {
-        $armorId = (int)$armorData['id'];
+        $armorId   = (int)$armorData['id'];
         $tagsArray = $tagsMap[$armorId] ?? [];
-        $tags = new ItemTags($tagsArray);
-        
+        $tags      = new ItemTags($tagsArray);
+
         return $this->buildArmorData($armorData, $tags);
     }
-    
+
     private function hydrateArmorData(array $armorData): Result
     {
         $armorId = (int)$armorData['id'];
@@ -189,11 +189,11 @@ class SqlArmorRepository implements ArmorRepository
             ->bindValue('armor_id', $armorId);
 
         $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), ['armor_id' => $armorId]);
-        $tags = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+        $tags     = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
 
         return Result::success(null, $this->buildArmorData($armorData, $tags));
     }
-    
+
     private function buildArmorData(array $armorData, ItemTags $tags): ArmorData
     {
         $name        = Name::create($armorData['name'])->unwrap();
@@ -201,7 +201,7 @@ class SqlArmorRepository implements ArmorRepository
 
         $rarity = ItemRarity::fromString($armorData['rarity'] ?? '');
         $rarity = $rarity->isError() ? null : $rarity->getData();
-        
+
         $identifier = StringIdentifier::create($armorData['hash'])->unwrap();
 
         return new ArmorData(

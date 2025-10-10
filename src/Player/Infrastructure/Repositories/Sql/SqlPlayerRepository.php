@@ -45,7 +45,7 @@ class SqlPlayerRepository implements PlayerRepository
                 $identifier,
                 $name,
                 $level,
-                new \DateTime(), 
+                new \DateTime(),
                 false
             );
 
