@@ -18,6 +18,11 @@ services:
     build:
       context: .
       dockerfile: docker/nginx/Dockerfile
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:9000"]
+      interval: 5s
+      timeout: 20s
+      retries: 10
     volumes:
       - ./:/var/www
     depends_on:
