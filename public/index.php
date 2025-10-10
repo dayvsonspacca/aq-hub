@@ -1,12 +1,14 @@
 <?php
 
 declare(strict_types=1);
+define('ROOT_PATH', __DIR__ . '/../'); // Assuming your script is in 'public' and .env is in the parent directory
+
+require ROOT_PATH . 'vendor/autoload.php';
 
 use Dotenv\Dotenv;
 
 // Define the ROOT_PATH where your .env file should be located
 // Adjust this based on your project structure (e.g., if index.php is in 'public/')
-define('ROOT_PATH', __DIR__ . '/../'); // Assuming your script is in 'public' and .env is in the parent directory
 
 // --- START DEBUGGING ---
 $envFilePath = ROOT_PATH . '.env';
