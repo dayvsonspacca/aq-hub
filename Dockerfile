@@ -36,7 +36,7 @@ RUN chown -R www-data:www-data /var/www \
     && find /var/www -type f -exec chmod 644 {} \; \
     && chmod -R 775 /var/www/cache /var/www/logs
 
-EXPOSE 9000
+EXPOSE 3000
 
 USER www-data
 
