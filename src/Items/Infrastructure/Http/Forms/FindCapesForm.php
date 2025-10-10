@@ -64,6 +64,11 @@ class FindCapesForm
             $filter->setName($name->getData());
         }
 
+        $canAccessBank = mb_strtolower($request->get('can_access_bank', ''));
+        if ($canAccessBank === 'yes' || $canAccessBank === 'no') {
+            $filter->canAccessBank = $canAccessBank === 'yes' ? true : false;
+        }
+
         return Result::success(null, $filter);
     }
 }

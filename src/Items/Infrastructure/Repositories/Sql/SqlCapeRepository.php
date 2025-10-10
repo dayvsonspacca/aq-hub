@@ -62,6 +62,10 @@ class SqlCapeRepository implements CapeRepository
             $select->where('c.name ILIKE :name', ['name' => '%' . $filter->name->value . '%']);
         }
 
+        if (isset($filter->canAccessBank)) {
+            $select->where('c.can_access_bank = :can', ['can' => $filter->canAccessBank ? 'TRUE' : 'FALSE']);
+        }
+
         $limit  = $filter->pageSize;
         $offset = ($filter->page - 1) * $filter->pageSize;
 
