@@ -4,5 +4,3 @@ services:
     build:
       context: . 
       dockerfile: Dockerfile.prod
-    environment:
-      SSL_MODE: "on"
