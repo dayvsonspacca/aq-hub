@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Items\Infrastructure\Http\Controllers;
 
 use AqHub\Items\Application\UseCases\Armor\ArmorUseCases;
-use AqHub\Items\Infrastructure\Http\Forms\ArmorFilterForm;
+use AqHub\Items\Infrastructure\Http\Forms\FindArmorsForm;
 use AqHub\Items\Infrastructure\Http\Presenters\ArmorPresenter;
 use AqHub\Shared\Infrastructure\Http\Route;
 use RuntimeException;
@@ -21,7 +21,7 @@ class ArmorController
     #[Route(path: '/armors/list', methods: ['GET'])]
     public function list(Request $request): JsonResponse
     {
-        $result = ArmorFilterForm::fromRequest($request);
+        $result = FindArmorsForm::fromRequest($request);
         if ($result->isError()) {
             return new JsonResponse(['message' => $result->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }

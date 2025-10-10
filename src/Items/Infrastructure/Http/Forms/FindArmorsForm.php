@@ -11,7 +11,7 @@ use AqHub\Shared\Domain\Enums\TagType;
 use AqHub\Shared\Domain\ValueObjects\Result;
 use Symfony\Component\HttpFoundation\Request;
 
-class ArmorFilterForm
+class FindArmorsForm
 {
     /**
      * @return Result<ArmorFilter>
