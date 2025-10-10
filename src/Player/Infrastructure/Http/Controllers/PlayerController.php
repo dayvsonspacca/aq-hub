@@ -5,43 +5,30 @@ declare(strict_types=1);
 namespace AqHub\Player\Infrastructure\Http\Controllers;
 
 use AqHub\Player\Application\UseCases\PlayerUseCases;
-use AqHub\Player\Domain\Repositories\Filters\PlayerFilter;
-use AqHub\Player\Domain\ValueObjects\Name;
-use AqHub\Player\Infrastructure\Http\Forms\ListPlayersForm;
+use AqHub\Player\Infrastructure\Http\Forms\{AddPlayerForm, ListPlayersForm};
 use AqHub\Player\Infrastructure\Http\Presenters\PlayerPresenter;
-use AqHub\Shared\Infrastructure\Cache\FileSystemCacheFactory;
 use AqHub\Shared\Infrastructure\Http\Route;
-use RuntimeException;
-use Symfony\Component\Cache\Adapter\FilesystemTagAwareAdapter;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
-use Symfony\Contracts\Cache\ItemInterface;
+use RuntimeException;
 
 class PlayerController
 {
-    private FilesystemTagAwareAdapter $cache;
-
     public function __construct(
         private readonly PlayerUseCases $playerUseCases
-    ) {
-        $this->cache = FileSystemCacheFactory::create('players', 0);
-    }
+    ) {}
 
     #[Route(path: '/players/add', methods: ['POST'])]
     public function add(Request $request): JsonResponse
     {
-        $post = $request->toArray() ?? [];
-
-        $name = Name::create($post['name'] ?? '');
+        $name = AddPlayerForm::fromRequest($request);
         if ($name->isError()) {
             return new JsonResponse(['message' => $name->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $player = $this->playerUseCases->add->execute($name->getData());
         if ($player->isError()) {
-            return new JsonResponse(['message' => $player->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
+            throw new RuntimeException($player->getMessage());
         }
-
-        $this->cache->invalidateTags(['invalidate-on-new-player']);
 
         $player = $player->getData();
 
