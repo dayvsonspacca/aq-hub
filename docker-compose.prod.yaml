@@ -5,6 +5,11 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:9000"]
+      interval: 5s
+      timeout: 20s
+      retries: 10
     volumes:
       - ./:/var/www
       - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
