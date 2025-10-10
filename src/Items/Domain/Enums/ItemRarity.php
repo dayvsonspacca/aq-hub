@@ -37,7 +37,7 @@ enum ItemRarity
             'Boss Drop Rarity', 'Boss Drop' => Result::success(null, self::BossDrop),
             'Impossible Rarity', 'Impossible' => Result::success(null, self::Impossible),
             '1% Drop Rarity', '1% Drop' => Result::success(null, self::OnePercentDrop),
-            'Unknow Rarity', 'Unknown' => Result::success(null, self::Unknown),
+            'Unknown Rarity', 'Unknown' => Result::success(null, self::Unknown),
             'Secret Rarity', 'Secret' => Result::success(null, self::Secret),
             default => Result::error('Rarity not defined: ' . $rarity, null),
         };
