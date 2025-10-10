@@ -7,8 +7,8 @@ namespace AqHub\Player\Infrastructure\Adapters\AqwSocketClient;
 use AqHub\Player\Domain\ValueObjects\Name;
 use AqHub\Player\Infrastructure\Adapters\AqwSocketClient\Events\PlayerFoundEvent;
 use AqwSocketClient\Events\Handlers\EventsHandlerInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use AqwSocketClient\Server;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class LogEventsHandler implements EventsHandlerInterface
 {
@@ -16,7 +16,8 @@ class LogEventsHandler implements EventsHandlerInterface
         private readonly OutputInterface $output,
         private readonly Name $userName,
         private readonly Server $server
-    ) {}
+    ) {
+    }
 
     public function handle(array $events): array
     {
