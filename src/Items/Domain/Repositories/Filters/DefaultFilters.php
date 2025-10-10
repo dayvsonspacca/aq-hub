@@ -23,11 +23,11 @@ trait DefaultFilters
             'name' => isset($this->name) && !is_null($this->name) ? $this->name->value : null
         ];
     }
-    
+
     protected function defaultsUniqueKey(): string
     {
         $key = 'page-' . $this->page;
-        
+
         if (!empty($this->rarities)) {
             $rarities = array_map(fn ($rarity) => $rarity->toString(), $this->rarities);
             $key .= '_rarities-' . implode(',', $rarities);
@@ -41,7 +41,7 @@ trait DefaultFilters
         if (isset($this->name) && !is_null($this->name)) {
             $key .= '_name-' . $this->name->value;
         }
-        
+
         return $key;
     }
 }
