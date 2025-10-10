@@ -42,7 +42,7 @@ class MineAllPlayersItemsCommand extends Command
     {
         $start = microtime(true);
 
-        $filter = new PlayerFilter();
+        $filter        = new PlayerFilter();
         $filter->mined = false;
 
         $players = $this->findAllPlayers->execute($filter);
