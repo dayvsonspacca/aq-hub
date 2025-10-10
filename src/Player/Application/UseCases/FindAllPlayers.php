@@ -8,11 +8,17 @@ use AqHub\Player\Domain\Repositories\Data\PlayerData;
 use AqHub\Player\Domain\Repositories\Filters\PlayerFilter;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Shared\Infrastructure\Cache\FileSystemCacheFactory;
+use Symfony\Component\Cache\Adapter\FilesystemTagAwareAdapter;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class FindAllPlayers
 {
+    private FilesystemTagAwareAdapter $cache;
+
     public function __construct(private readonly PlayerRepository $playerRepository)
     {
+        $this->cache = FileSystemCacheFactory::create('players', 0);
     }
 
     /**
@@ -20,6 +26,24 @@ class FindAllPlayers
      */
     public function execute(PlayerFilter $filter): Result
     {
-        return $this->playerRepository->findAll($filter);
+        $cacheKey = $filter->generateUniqueKey();
+
+        $cachedResult = $this->cache->get($cacheKey, function (ItemInterface $item) use ($filter): Result {
+
+            $item->expiresAfter(null);
+            $item->tag('invalidate-on-new-player');
+
+            $result = $this->playerRepository->findAll($filter);
+
+            if ($result->isError()) {
+                return $result;
+            }
+
+            $item->set($result);
+
+            return $result;
+        });
+
+        return $cachedResult;
     }
 }

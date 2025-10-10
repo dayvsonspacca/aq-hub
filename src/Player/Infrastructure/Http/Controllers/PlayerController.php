@@ -6,7 +6,9 @@ namespace AqHub\Player\Infrastructure\Http\Controllers;
 
 use AqHub\Player\Application\UseCases\PlayerUseCases;
 use AqHub\Player\Domain\Repositories\Filters\PlayerFilter;
-use AqHub\Player\Domain\ValueObjects\{Name};
+use AqHub\Player\Domain\ValueObjects\Name;
+use AqHub\Player\Infrastructure\Http\Forms\ListPlayersForm;
+use AqHub\Player\Infrastructure\Http\Presenters\PlayerPresenter;
 use AqHub\Shared\Infrastructure\Cache\FileSystemCacheFactory;
 use AqHub\Shared\Infrastructure\Http\Route;
 use RuntimeException;
@@ -49,36 +51,23 @@ class PlayerController
     #[Route(path: '/players/list', methods: ['GET'])]
     public function list(Request $request): JsonResponse
     {
-        $page = (int) $request->get('page', 1);
-
-        if ($page <= 0) {
-            return new JsonResponse(['message' => 'Param page cannot be zero or negative.'], Response::HTTP_UNPROCESSABLE_ENTITY);
+        $result = ListPlayersForm::fromRequest($request);
+        if ($result->isError()) {
+            return new JsonResponse(['message' => $result->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $cacheKey = 'page-' . $page;
-        $players  = $this->cache->get($cacheKey, function (ItemInterface $item) use ($page) {
-            $item->expiresAfter(null);
+        $filter = $result->getData();
+        $players = $this->playerUseCases->findAll->execute($filter);
 
-            $filter = new PlayerFilter(
-                page: $page
-            );
+        if ($players->isError()) {
+            throw new RuntimeException($players->getMessage());
+        }
 
-            $result = $this->playerUseCases->findAll->execute($filter);
-            if ($result->isError()) {
-                throw new RuntimeException($result->getMessage());
-            }
-
-            $players = $result->getData();
-            $players = array_map(fn ($player) => $player->toArray(), $players);
-
-            $item->set($players);
-            $item->tag('invalidate-on-new-player');
-
-            return $players;
-        });
+        $players = $players->getData();
+        $players = PlayerPresenter::array($players);
 
         return new JsonResponse([
-            'page' => $page,
+            'filter' => $filter->toArray(),
             'players' => $players
         ], Response::HTTP_OK);
     }
