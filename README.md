@@ -24,3 +24,5 @@ But how can I get player names easily?
 To achieve this, I first needed to study how the game client connects to its servers. Using this knowledge, I built a library [dayvsonspacca/aqw-socket-client](https://github.com/dayvsonspacca/aqw-socket-client) that allows connection to an AQW server via PHP. Once connected, I receive logs detailing what players are doing on my screen. This is the BOOM! moment: I simply need to keep an account logged in to continuously capture and save the names, and with those names, I can get the items!
 
 ![mine-player-items](/.github/images/mine-players-name.jpg)
+
+While this is clearly the most complex method, it's just a lot cooler.
