@@ -1,0 +1,17 @@
+FROM serversideup/php:8.3-fpm-nginx
+
+ENV PHP_OPCACHE_ENABLE="0"
+
+WORKDIR /var/www/html
+
+COPY composer.json .
+
+RUN composer install
+
+USER root
+
+RUN apt-get update && \
+    apt-get install -y vim less && \
+    rm -rf /var/lib/apt/lists/*
+
+USER www-data
