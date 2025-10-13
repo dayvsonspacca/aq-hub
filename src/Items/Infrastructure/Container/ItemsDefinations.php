@@ -57,9 +57,18 @@ class ItemsDefinations implements Definations
     {
         return [
             AddWeapon::class => autowire(),
-            AddArmor::class => autowire(),
-            AddHelmet::class => autowire(),
-            AddCape::class => autowire(),
+            AddArmor::class => autowire()->constructor(
+                get(ArmorRepository::class),
+                get('Cache.Armors')
+            ),
+            AddHelmet::class => autowire()->constructor(
+                get(HelmetRepository::class),
+                get('Cache.Helmets')
+            ),
+            AddCape::class => autowire()->constructor(
+                get(CapeRepository::class),
+                get('Cache.Capes')
+            ),
             FindAllArmors::class => autowire()->constructor(
                 get(ArmorRepository::class),
                 get('Cache.Armors')

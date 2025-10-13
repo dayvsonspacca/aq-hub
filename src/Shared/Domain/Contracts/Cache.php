@@ -9,4 +9,6 @@ use Closure;
 interface Cache
 {
     public function get(string $key, Closure $callback): mixed;
+
+    public function invalidateTags(array $tags);
 }

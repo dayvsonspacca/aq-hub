@@ -8,13 +8,15 @@ use AqHub\Player\Domain\Entities\Player;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Player\Domain\ValueObjects\Name;
 use AqHub\Player\Infrastructure\Http\Scrappers\CharpageScrapper;
+use AqHub\Shared\Domain\Contracts\Cache;
 use AqHub\Shared\Domain\ValueObjects\Result;
-use AqHub\Shared\Infrastructure\Cache\FileSystemCacheFactory;
 
 class AddPlayer
 {
-    public function __construct(private readonly PlayerRepository $playerRepository)
-    {
+    public function __construct(
+        private readonly PlayerRepository $playerRepository,
+        private readonly Cache $cache
+    ) {
     }
 
     /**
@@ -30,7 +32,7 @@ class AddPlayer
             return $result;
         }
 
-        FileSystemCacheFactory::create('players', 0)->invalidateTags(['invalidate-on-new-player']);
+        $this->cache->invalidateTags(['invalidate-on-new-player']);
 
         $result = $result->getData();
 

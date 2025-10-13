@@ -44,7 +44,10 @@ class PlayerDefinations implements Definations
     public static function useCases(): array
     {
         return [
-            AddPlayer::class => autowire(),
+            AddPlayer::class => autowire()->constructor(
+                get(PlayerRepository::class),
+                get('Cache.Players')
+            ),
             FindAllPlayers::class => autowire()->constructor(
                 get(PlayerRepository::class),
                 get('Cache.Players')

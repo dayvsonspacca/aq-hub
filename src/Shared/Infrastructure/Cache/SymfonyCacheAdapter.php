@@ -18,4 +18,10 @@ class SymfonyCacheAdapter implements Cache
     {
         return $this->cache->get($key, $callback);
     }
+
+
+    public function invalidateTags(array $tags)
+    {
+        $this->cache->invalidateTags($tags);
+    }
 }
