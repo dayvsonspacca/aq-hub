@@ -16,7 +16,8 @@ class FindAllCapes
     public function __construct(
         private readonly CapeRepository $capeRepository,
         private readonly Cache $capesCache
-    ) {}
+    ) {
+    }
 
     /**
      * @return Result<array<CapeData>>
