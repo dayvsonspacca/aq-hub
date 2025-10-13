@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Infrastructure\Container;
 
-use AqHub\Items\Application\UseCases\Armor\AddArmor;
-use AqHub\Items\Application\UseCases\Armor\FindAllArmors;
-use AqHub\Items\Application\UseCases\Cape\AddCape;
-use AqHub\Items\Application\UseCases\Cape\FindAllCapes;
+use AqHub\Items\Application\UseCases\Armor\{AddArmor, FindAllArmors};
+use AqHub\Items\Application\UseCases\Cape\{AddCape, FindAllCapes};
 use AqHub\Items\Application\UseCases\Helmet\AddHelmet;
 use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
 use AqHub\Items\Domain\Repositories\{ArmorRepository, CapeRepository, HelmetRepository, WeaponRepository};

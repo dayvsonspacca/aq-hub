@@ -16,7 +16,8 @@ class FindAllPlayers
     public function __construct(
         private readonly PlayerRepository $playerRepository,
         private readonly Cache $playerCache
-    ) {}
+    ) {
+    }
 
     /**
      * @return Result<array<PlayerData>>
