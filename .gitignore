@@ -1,7 +1,6 @@
 vendor
 .php-cs-fixer.cache
 .vscode
-docker/postgres/data
 composer.lock
 logs/*.log
 .env

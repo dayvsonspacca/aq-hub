@@ -17,6 +17,7 @@ services:
     image: postgres:17-alpine
     volumes:
       - dev_db_data:/var/lib/postgresql/data
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql 
     container_name: aqhub-db
     environment:
       POSTGRES_DB: postgres
