@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Infrastructure\Cache;
 
-use Symfony\Component\Cache\Adapter\FilesystemTagAwareAdapter;
 use AqHub\Shared\Domain\Contracts\Cache;
 use Closure;
+use Symfony\Component\Cache\Adapter\FilesystemTagAwareAdapter;
 
 class SymfonyCacheAdapter implements Cache
 {
