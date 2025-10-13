@@ -7,15 +7,16 @@ namespace AqHub\Items\Application\UseCases\Cape;
 use AqHub\Items\Domain\Repositories\CapeRepository;
 use AqHub\Items\Domain\Repositories\Data\CapeData;
 use AqHub\Items\Domain\Repositories\Filters\CapeFilter;
+use AqHub\Shared\Domain\Contracts\Cache;
 use AqHub\Shared\Domain\ValueObjects\Result;
-use AqHub\Shared\Infrastructure\Cache\FileSystemCacheFactory;
 use Symfony\Contracts\Cache\ItemInterface;
 
 class FindAllCapes
 {
-    public function __construct(private readonly CapeRepository $capeRepository)
-    {
-    }
+    public function __construct(
+        private readonly CapeRepository $capeRepository,
+        private readonly Cache $capesCache
+    ) {}
 
     /**
      * @return Result<array<CapeData>>
@@ -24,9 +25,7 @@ class FindAllCapes
     {
         $cacheKey = $filter->generateUniqueKey();
 
-        $cachedResult = FileSystemCacheFactory::create('capes', 60)
-        ->get($cacheKey, function (ItemInterface $item) use ($filter) {
-
+        $cachedResult = $this->capesCache->get($cacheKey, function (ItemInterface $item) use ($filter) {
             $item->expiresAfter(60);
             $item->tag('invalidate-on-new-cape');
 

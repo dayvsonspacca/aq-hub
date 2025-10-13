@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace AqHub\Items\Infrastructure\Container;
 
 use AqHub\Items\Application\UseCases\Armor\AddArmor;
+use AqHub\Items\Application\UseCases\Armor\FindAllArmors;
 use AqHub\Items\Application\UseCases\Cape\AddCape;
+use AqHub\Items\Application\UseCases\Cape\FindAllCapes;
 use AqHub\Items\Application\UseCases\Helmet\AddHelmet;
 use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
 use AqHub\Items\Domain\Repositories\{ArmorRepository, CapeRepository, HelmetRepository, WeaponRepository};
 use AqHub\Items\Infrastructure\Console\{MineAllPlayersItemsCommand, MineCharpageItemsCommand};
+use AqHub\Items\Infrastructure\Http\Controllers\ArmorController;
 use AqHub\Items\Infrastructure\Repositories\Sql\{SqlArmorRepository, SqlCapeRepository, SqlHelmetRepository, SqlWeaponRepository};
-use AqHub\Player\Infrastructure\Http\Controllers\ArmorController;
 use AqHub\Shared\Infrastructure\Container\Definations;
 use AqHub\Shared\Infrastructure\Database\Connection;
 
@@ -24,7 +26,8 @@ class ItemsDefinations implements Definations
         return array_merge(
             self::repositories(),
             self::commands(),
-            self::useCases()
+            self::useCases(),
+            self::controllers()
         );
     }
 
@@ -56,7 +59,15 @@ class ItemsDefinations implements Definations
             AddWeapon::class => autowire(),
             AddArmor::class => autowire(),
             AddHelmet::class => autowire(),
-            AddCape::class => autowire()
+            AddCape::class => autowire(),
+            FindAllArmors::class => autowire()->constructor(
+                get(ArmorRepository::class),
+                get('Cache.Armors')
+            ),
+            FindAllCapes::class => autowire()->constructor(
+                get(CapeRepository::class),
+                get('Cache.Capes')
+            ),
         ];
     }
 

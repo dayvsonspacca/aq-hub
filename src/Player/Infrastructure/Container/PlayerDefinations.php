@@ -45,7 +45,10 @@ class PlayerDefinations implements Definations
     {
         return [
             AddPlayer::class => autowire(),
-            FindAllPlayers::class => autowire(),
+            FindAllPlayers::class => autowire()->constructor(
+                get(PlayerRepository::class),
+                get('Cache.Players')
+            ),
             MarkAsMined::class => autowire(),
             PlayerUseCases::class => autowire(),
         ];

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Infrastructure\Container;
 
+use AqHub\Shared\Infrastructure\Cache\{SymfonyCacheAdapter, SymfonyFileSystemCacheFactory};
 use AqHub\Shared\Infrastructure\Database\Connection;
 use AqHub\Shared\Infrastructure\Env\Env;
 use AqHub\Shared\Infrastructure\Http\Application;
@@ -24,6 +25,7 @@ class SharedDefinations implements Definations
                 Connection::class => factory([Connection::class, 'instance'])->parameter('env', get(Env::class))
             ],
             self::loggers(),
+            self::caches()
         );
     }
 
@@ -31,6 +33,24 @@ class SharedDefinations implements Definations
     {
         return [
             'Logger.Api.Errors' => FileLoggerFactory::create('AQHUB_API_ERRORS', 'api_errors.log', Level::Error)
+        ];
+    }
+
+    public static function caches(): array
+    {
+        return [
+            'Cache.Players' => factory(function () {
+                $symfonyCache = SymfonyFileSystemCacheFactory::create('players', 0);
+                return new SymfonyCacheAdapter($symfonyCache);
+            }),
+            'Cache.Armors' => factory(function () {
+                $symfonyCache = SymfonyFileSystemCacheFactory::create('armors', 60);
+                return new SymfonyCacheAdapter($symfonyCache);
+            }),
+            'Cache.Capes' => factory(function () {
+                $symfonyCache = SymfonyFileSystemCacheFactory::create('capes', 60);
+                return new SymfonyCacheAdapter($symfonyCache);
+            }),
         ];
     }
 }
