@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Tests\Unit\Player\Domain\Repositories\Data;;
+namespace AqHub\Tests\Unit\Player\Domain\Repositories\Data;
+
+;
 
 use AqHub\Player\Domain\Repositories\Data\PlayerData;
-use AqHub\Player\Domain\ValueObjects\Level;
-use AqHub\Player\Domain\ValueObjects\Name;
+use AqHub\Player\Domain\ValueObjects\{Level, Name};
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 use AqHub\Tests\Unit\TestCase;
 use DateTime;
@@ -17,11 +18,11 @@ final class PlayerDataTest extends TestCase
     #[Test]
     public function should_create_player_data_instance_and_stores_it_data()
     {
-        $id = IntIdentifier::create(1)->unwrap();
-        $name = Name::create('Hilise')->unwrap();
-        $level = Level::create(100)->unwrap();
+        $id           = IntIdentifier::create(1)->unwrap();
+        $name         = Name::create('Hilise')->unwrap();
+        $level        = Level::create(100)->unwrap();
         $registeredAt = new DateTime('2025-10-14');
-        $mined = true;
+        $mined        = true;
 
         $playerData = new PlayerData(
             $id,
@@ -42,11 +43,11 @@ final class PlayerDataTest extends TestCase
     #[Test]
     public function should_return_correct_array_format_on_to_array()
     {
-        $id = IntIdentifier::create(1)->unwrap();
-        $name = Name::create('Hilise')->unwrap();
-        $level = Level::create(100)->unwrap();
+        $id           = IntIdentifier::create(1)->unwrap();
+        $name         = Name::create('Hilise')->unwrap();
+        $level        = Level::create(100)->unwrap();
         $registeredAt = new DateTime('2025-10-14');
-        $mined = true;
+        $mined        = true;
 
         $playerData = new PlayerData(
             $id,

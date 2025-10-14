@@ -55,7 +55,7 @@ final class CapeFilterTest extends TestCase
         $this->assertSame($filter->generateUniqueKey(), '30bc93c6e5fb81fc894780d053feff40');
 
         $filter->setCanAccessBank(true);
-        
+
         $this->assertSame($filter->canAccessBank, true);
         $this->assertSame($filter->generateUniqueKey(), '5f6eb2df53c1dfd2937be36f0a889a81');
     }
