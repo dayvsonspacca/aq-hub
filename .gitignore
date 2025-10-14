@@ -6,3 +6,5 @@ logs/*.log
 .env
 cache/*
 !cache/.gitkeep
+.phpunit.result.cache
+coverage
