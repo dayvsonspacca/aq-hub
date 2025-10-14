@@ -33,9 +33,9 @@ final class ItemRarityTest extends TestCase
     #[Test]
     public function should_result_in_error_when_invalid_rarity()
     {
-        $invalidType = 'weird weird rarity';
+        $invalidRarity = 'weird weird rarity';
 
-        $result = ItemRarity::fromString($invalidType);
+        $result = ItemRarity::fromString($invalidRarity);
         $this->assertTrue($result->isError());
         $this->assertSame('Rarity not defined: weird weird rarity', $result->getMessage());
     }
@@ -43,7 +43,7 @@ final class ItemRarityTest extends TestCase
     #[Test]
     public function should_return_the_valid_string_version()
     {
-        $tagTypes = [
+        $rarities = [
             ItemRarity::Weird, ItemRarity::Rare, ItemRarity::Epic, ItemRarity::Legendary,
             ItemRarity::Awesome, ItemRarity::Seasonal, ItemRarity::Artifact, ItemRarity::BossDrop,
             ItemRarity::Impossible, ItemRarity::OnePercentDrop, ItemRarity::Unknown, ItemRarity::Secret
@@ -55,8 +55,8 @@ final class ItemRarityTest extends TestCase
             'Impossible', '1% Drop', 'Unknown', 'Secret'
         ];
 
-        foreach ($tagTypes as $index => $tag) {
-            $result = $tag->toString();
+        foreach ($rarities as $index => $rarity) {
+            $result = $rarity->toString();
             $this->assertEquals($correctString[$index], $result);
         }
     }
