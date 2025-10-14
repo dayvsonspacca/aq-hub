@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Tests\Unit\Items\Domain\Repositories\Filters;
 
-use AqHub\Items\Domain\Enums\ItemRarity;
-use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
-use AqHub\Items\Domain\Repositories\Filters\CanFilterRarities;
-use AqHub\Items\Domain\ValueObjects\Name;
+use AqHub\Items\Domain\Repositories\Filters\{ArmorFilter};
 use AqHub\Tests\Unit\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -32,11 +29,11 @@ final class ArmorFilterTest extends TestCase
     {
         $filter = new ArmorFilter();
 
-        $this->assertSame($filter->toArray(),  [
+        $this->assertSame($filter->toArray(), [
             'page' => $filter->page,
             'page_size' => $filter->pageSize,
-            'rarities' => array_map(fn($rarity) => $rarity->toString(), $filter->rarities),
-            'tags' => array_map(fn($tag) => $tag->toString(), $filter->tags),
+            'rarities' => array_map(fn ($rarity) => $rarity->toString(), $filter->rarities),
+            'tags' => array_map(fn ($tag) => $tag->toString(), $filter->tags),
             'name' => isset($filter->name) && !is_null($filter->name) ? $filter->name->value : null
         ]);
     }

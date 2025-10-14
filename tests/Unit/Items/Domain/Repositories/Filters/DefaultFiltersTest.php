@@ -16,7 +16,7 @@ final class DefaultFiltersTest extends TestCase
     #[Test]
     public function should_create_default_filters()
     {
-        $filter = new class() {
+        $filter = new class () {
             use DefaultFilters;
         };
 
@@ -32,7 +32,7 @@ final class DefaultFiltersTest extends TestCase
     #[Test]
     public function should_can_return_array()
     {
-        $filter = new class() {
+        $filter = new class () {
             use DefaultFilters;
 
             public function toArray(): array
@@ -41,11 +41,11 @@ final class DefaultFiltersTest extends TestCase
             }
         };
 
-        $this->assertSame($filter->toArray(),  [
+        $this->assertSame($filter->toArray(), [
             'page' => $filter->page,
             'page_size' => $filter->pageSize,
-            'rarities' => array_map(fn($rarity) => $rarity->toString(), $filter->rarities),
-            'tags' => array_map(fn($tag) => $tag->toString(), $filter->tags),
+            'rarities' => array_map(fn ($rarity) => $rarity->toString(), $filter->rarities),
+            'tags' => array_map(fn ($tag) => $tag->toString(), $filter->tags),
             'name' => isset($filter->name) && !is_null($filter->name) ? $filter->name->value : null
         ]);
     }
@@ -54,7 +54,7 @@ final class DefaultFiltersTest extends TestCase
     #[Test]
     public function should_can_generate_filter_unique_key_without_change_values()
     {
-        $filter = new class() {
+        $filter = new class () {
             use DefaultFilters;
 
             public function generateUniqueKey(): string
@@ -69,7 +69,7 @@ final class DefaultFiltersTest extends TestCase
     #[Test]
     public function should_can_generate_filter_unique_key_changing_values()
     {
-        $filter = new class() {
+        $filter = new class () {
             use DefaultFilters;
 
             public function generateUniqueKey(): string

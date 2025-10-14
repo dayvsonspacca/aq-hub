@@ -30,11 +30,11 @@ final class CapeFilterTest extends TestCase
     {
         $filter = new CapeFilter();
 
-        $this->assertSame($filter->toArray(),  [
+        $this->assertSame($filter->toArray(), [
             'page' => $filter->page,
             'page_size' => $filter->pageSize,
-            'rarities' => array_map(fn($rarity) => $rarity->toString(), $filter->rarities),
-            'tags' => array_map(fn($tag) => $tag->toString(), $filter->tags),
+            'rarities' => array_map(fn ($rarity) => $rarity->toString(), $filter->rarities),
+            'tags' => array_map(fn ($tag) => $tag->toString(), $filter->tags),
             'name' => isset($filter->name) && !is_null($filter->name) ? $filter->name->value : null,
             'can_access_bank' => $filter->canAccessBank
         ]);
