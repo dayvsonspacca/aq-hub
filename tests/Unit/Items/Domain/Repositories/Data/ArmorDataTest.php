@@ -27,7 +27,7 @@ final class ArmorDataTest extends TestCase
         $tags        = new ItemTags([TagType::AdventureCoins]);
         $rarity      = ItemRarity::Epic;
 
-        $itemInfo    = ItemInfo::create($name, $description, $tags, ItemRarity::Epic)->unwrap();
+        $itemInfo    = ItemInfo::create($name, $description, $tags, $rarity)->unwrap();
         $id          = ItemIdentifierGenerator::generate($itemInfo, Armor::class)->unwrap();
         $registeredAt = new DateTime('2025-10-14');
 
@@ -57,7 +57,7 @@ final class ArmorDataTest extends TestCase
         $tags        = new ItemTags([TagType::AdventureCoins]);
         $rarity      = ItemRarity::Epic;
 
-        $itemInfo    = ItemInfo::create($name, $description, $tags, ItemRarity::Epic)->unwrap();
+        $itemInfo    = ItemInfo::create($name, $description, $tags, $rarity)->unwrap();
         $id          = ItemIdentifierGenerator::generate($itemInfo, Armor::class)->unwrap();
         $registeredAt = new DateTime('2025-10-14');
 
