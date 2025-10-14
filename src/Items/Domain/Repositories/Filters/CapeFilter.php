@@ -8,7 +8,7 @@ class CapeFilter
 {
     use DefaultFilters;
 
-    public bool $canAccessBank = false;
+    public ?bool $canAccessBank = null;
 
     public function setCanAccessBank(bool $can)
     {
@@ -20,7 +20,7 @@ class CapeFilter
         return array_merge(
             $this->defaultsArray(),
             [
-                'can_access_bank' => $this->canAccessBank,
+                'can_access_bank' => isset($this->canAccessBank) ? $this->canAccessBank : null,
             ]
         );
     }
@@ -29,7 +29,9 @@ class CapeFilter
     {
         $key = $this->defaultsUniqueKey();
 
-        $key .= '_can_access_bank-' . $this->canAccessBank;
+        if (!is_null($this->canAccessBank)) {
+            $key .= '_can_access_bank-' . ($this->canAccessBank ? 'true' : 'false');
+        }
 
         return md5($key);
     }
