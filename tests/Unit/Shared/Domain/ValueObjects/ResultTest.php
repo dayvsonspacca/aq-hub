@@ -39,7 +39,7 @@ final class ResultTest extends TestCase
     {
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('Something went wrong');
-        
+
         $result = Result::error('Something went wrong', null);
         $result->unwrap();
     }

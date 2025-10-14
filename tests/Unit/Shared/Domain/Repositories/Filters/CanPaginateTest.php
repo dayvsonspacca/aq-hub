@@ -13,7 +13,9 @@ final class CanPaginateTest extends TestCase
     #[Test]
     public function should_create_can_paginate_filter_with_default_values()
     {
-        $filter = new class {use CanPaginate;};
+        $filter = new class () {
+            use CanPaginate;
+        };
 
         $this->assertSame(1, $filter->page);
         $this->assertSame(25, $filter->pageSize);
@@ -22,7 +24,9 @@ final class CanPaginateTest extends TestCase
     #[Test]
     public function should_change_the_page_and_page_size()
     {
-        $filter = new class {use CanPaginate;};
+        $filter = new class () {
+            use CanPaginate;
+        };
 
         $this->assertSame(1, $filter->page);
         $this->assertSame(25, $filter->pageSize);
