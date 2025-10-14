@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Items\Domain\Entities;
+namespace AqHub\Tests\Unit\Items\Domain\Entities;
 
 use AqHub\Items\Domain\Entities\Cape;
 use AqHub\Items\Domain\Enums\ItemRarity;

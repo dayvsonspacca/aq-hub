@@ -8,7 +8,7 @@ use AqHub\Items\Domain\ValueObjects\Name;
 
 trait CanFilterName
 {
-    public ?Name $name;
+    public ?Name $name = null;
 
     public function setName(Name $name)
     {

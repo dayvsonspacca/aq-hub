@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Shared\Domain\ValueObjects;
+namespace AqHub\Tests\Unit\Shared\Domain\ValueObjects;
 
 use AqHub\Shared\Domain\ValueObjects\StringIdentifier;
 use AqHub\Tests\Unit\TestCase;

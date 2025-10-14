@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Player\Domain\ValueObjects;
+namespace AqHub\Tests\Unit\Player\Domain\ValueObjects;
 
 use AqHub\Player\Domain\ValueObjects\Name;
 use AqHub\Tests\Unit\TestCase;

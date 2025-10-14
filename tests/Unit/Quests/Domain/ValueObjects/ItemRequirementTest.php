@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Quests\Domain\ValueObjects;
+namespace AqHub\Tests\Unit\Quests\Domain\ValueObjects;
 
 use AqHub\Items\Domain\Entities\{Armor, Weapon};
 use AqHub\Player\Domain\Entities\Player;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Items\Domain\ValueObjects;
+namespace AqHub\Tests\Unit\Items\Domain\ValueObjects;
 
 use AqHub\Items\Domain\ValueObjects\ItemTags;
 use AqHub\Shared\Domain\Enums\TagType;
@@ -43,5 +43,16 @@ final class ItemTagsTest extends TestCase
 
         $this->assertFalse($result->isSuccess());
         $this->assertSame($result->getMessage(), 'That item already have this tag.');
+    }
+
+    #[Test]
+    public function should_can_iterate_in_items_tags()
+    {
+        $tags    = new ItemTags([TagType::AdventureCoins, TagType::Legend]);
+        $rawTags = [TagType::AdventureCoins, TagType::Legend];
+
+        foreach ($tags as $index => $tag) {
+            $this->assertSame($tag, $rawTags[$index]);
+        }
     }
 }

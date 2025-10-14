@@ -20,7 +20,7 @@ class SharedDefinations implements Definations
     {
         return array_merge(
             [
-                Env::class => factory([Env::class, 'instance']),
+                Env::class => factory([Env::class, 'instance'])->parameter('env', $_SERVER),
                 Application::class => autowire(),
                 Connection::class => factory([Connection::class, 'instance'])->parameter('env', get(Env::class))
             ],

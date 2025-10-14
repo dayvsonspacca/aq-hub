@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Player\Domain\Entities;
+namespace AqHub\Tests\Unit\Player\Domain\Entities;
 
 use AqHub\Player\Domain\Entities\Player;
 use AqHub\Player\Domain\ValueObjects\{Level, Name, PlayerInventory};
@@ -31,5 +31,11 @@ final class PlayerTest extends TestCase
         $this->assertSame($player->getId(), $id->getValue());
         $this->assertSame($player->getInventory(), $inventory);
         $this->assertSame($player->getLevel(), $level->value);
+        $this->assertSame($player->getName(), $name->value);
+        $this->assertSame($player->toArray(), [
+            'id' => $id->getValue(),
+            'name' => $name->value,
+            'level' => $level->value
+        ]);
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Quests\Domain\ValueObjects;
+namespace AqHub\Tests\Unit\Quests\Domain\ValueObjects;
 
 use AqHub\Quests\Domain\ValueObjects\{ItemRequirement, LevelRequirement, QuestRequirements};
 use AqHub\Tests\Unit\TestCase;

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Shared\Domain\ValueObjects;
+namespace AqHub\Tests\Unit\Shared\Domain\ValueObjects;
 
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 use AqHub\Tests\Unit\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
-final class IdentifierTest extends TestCase
+final class IntIdentifierTest extends TestCase
 {
     #[Test]
     public function should_create_an_identifier(): void

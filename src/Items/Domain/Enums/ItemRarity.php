@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Items\Domain\Enums;
 
 use AqHub\Shared\Domain\ValueObjects\Result;
+use InvalidArgumentException;
 
 enum ItemRarity
 {
@@ -26,21 +27,27 @@ enum ItemRarity
      */
     public static function fromString(string $rarity): Result
     {
-        return match ($rarity) {
-            'Weird Rarity', 'Weird' => Result::success(null, self::Weird),
-            'Rare Rarity', 'Rare' => Result::success(null, self::Rare),
-            'Epic Rarity', 'Epic' => Result::success(null, self::Epic),
-            'Legendary Item Rarity', 'Legendary Rarity', 'Legendary' => Result::success(null, self::Legendary),
-            'Awesome Rarity', 'Awesome' => Result::success(null, self::Awesome),
-            'Seasonal Rare Rarity', 'Seasonal Item Rarity', 'Seasonal Rarity', 'Seasonal' => Result::success(null, self::Seasonal),
-            'Artifact Rarity', 'Artifact' => Result::success(null, self::Artifact),
-            'Boss Drop Rarity', 'Boss Drop' => Result::success(null, self::BossDrop),
-            'Impossible Rarity', 'Impossible' => Result::success(null, self::Impossible),
-            '1% Drop Rarity', '1% Drop' => Result::success(null, self::OnePercentDrop),
-            'Unknown Rarity', 'Unknown' => Result::success(null, self::Unknown),
-            'Secret Rarity', 'Secret' => Result::success(null, self::Secret),
-            default => Result::error('Rarity not defined: ' . $rarity, null),
-        };
+        $rarity = mb_strtolower($rarity);
+
+        try {
+            return match ($rarity) {
+                'weird rarity', 'weird' => Result::success(null, self::Weird),
+                'rare rarity', 'rare' => Result::success(null, self::Rare),
+                'epic rarity', 'epic' => Result::success(null, self::Epic),
+                'legendary item rarity', 'legendary rarity', 'legendary' => Result::success(null, self::Legendary),
+                'awesome rarity', 'awesome' => Result::success(null, self::Awesome),
+                'seasonal rare rarity', 'seasonal item rarity', 'seasonal rarity', 'seasonal' => Result::success(null, self::Seasonal),
+                'artifact rarity', 'artifact' => Result::success(null, self::Artifact),
+                'boss drop rarity', 'boss drop' => Result::success(null, self::BossDrop),
+                'impossible rarity', 'impossible' => Result::success(null, self::Impossible),
+                '1% drop rarity', '1% drop' => Result::success(null, self::OnePercentDrop),
+                'unknown rarity', 'unknown' => Result::success(null, self::Unknown),
+                'secret rarity', 'secret' => Result::success(null, self::Secret),
+                default => throw new InvalidArgumentException('Rarity not defined: ' . $rarity)
+            };
+        } catch (\Throwable $e) {
+            return Result::error($e->getMessage(), null);
+        }
     }
 
     public function toString(): string
