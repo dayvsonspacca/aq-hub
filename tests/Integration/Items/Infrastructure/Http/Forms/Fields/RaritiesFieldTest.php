@@ -9,7 +9,7 @@ use AqHub\Items\Infrastructure\Http\Forms\Fields\RaritiesField;
 use AqHub\Tests\Unit\TestRequests;
 use PHPUnit\Framework\Attributes\Test;
 
-final class RaritiesFiledTest extends TestRequests
+final class RaritiesFieldTest extends TestRequests
 {
     #[Test]
     public function should_ignore_invalid_rarities_and_filter_by_valid_ones()
