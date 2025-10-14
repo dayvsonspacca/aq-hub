@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Domain\Enums;
 
+use AqHub\Shared\Domain\Contracts\FromString;
+use AqHub\Shared\Domain\Contracts\ToString;
 use AqHub\Shared\Domain\ValueObjects\Result;
 use InvalidArgumentException;
 
-enum TagType
+enum TagType implements FromString, ToString
 {
     case Legend;
     case AdventureCoins;
@@ -19,9 +21,9 @@ enum TagType
     /**
      * @return Result<TagType>
      */
-    public static function fromString(string $tag): Result
+    public static function fromString(string $string): Result
     {
-        $tag = mb_strtolower($tag);
+        $tag = mb_strtolower($string);
 
         try {
             return match ($tag) {

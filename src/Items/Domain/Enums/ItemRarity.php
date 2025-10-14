@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Domain\Enums;
 
+use AqHub\Shared\Domain\Contracts\FromString;
+use AqHub\Shared\Domain\Contracts\ToString;
 use AqHub\Shared\Domain\ValueObjects\Result;
 use InvalidArgumentException;
 
-enum ItemRarity
+enum ItemRarity implements FromString, ToString
 {
     case Weird;
     case Rare;
@@ -25,9 +27,9 @@ enum ItemRarity
     /**
      * @return Result<ItemRarity>
      */
-    public static function fromString(string $rarity): Result
+    public static function fromString(string $string): Result
     {
-        $rarity = mb_strtolower($rarity);
+        $rarity = mb_strtolower($string);
 
         try {
             return match ($rarity) {
