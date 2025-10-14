@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Player\Domain\ValueObjects;
+namespace AqHub\Tests\Unit\Player\Domain\ValueObjects;
 
 use AqHub\Items\Domain\Entities\{Armor, Weapon};
 use AqHub\Items\Domain\Enums\ItemRarity;

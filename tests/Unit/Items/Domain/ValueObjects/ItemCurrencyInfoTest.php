@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Items\Domain\ValueObjects;
+namespace AqHub\Tests\Unit\Items\Domain\ValueObjects;
 
 use AqHub\Items\Domain\ValueObjects\ItemCurrencyInfo;
 use AqHub\Shared\Domain\Enums\CurrencyType;

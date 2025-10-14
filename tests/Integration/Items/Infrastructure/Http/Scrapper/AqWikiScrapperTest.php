@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration\Items\Infrastructure\Http\Scrapper;
+namespace AqHub\Tests\Integration\Items\Infrastructure\Http\Scrapper;
 
 use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, Name};

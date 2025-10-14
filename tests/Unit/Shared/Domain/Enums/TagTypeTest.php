@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Shared\Domain\Enums;
+namespace AqHub\Tests\Unit\Shared\Domain\Enums;
 
 use AqHub\Shared\Domain\Enums\TagType;
 use AqHub\Tests\Unit\TestCase;

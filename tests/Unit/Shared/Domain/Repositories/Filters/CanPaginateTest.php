@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Shared\Domain\Repositories\Filters;
+namespace AqHub\Tests\Unit\Shared\Domain\Repositories\Filters;
 
 use AqHub\Shared\Domain\Repositories\Filters\CanPaginate;
 use AqHub\Tests\Unit\TestCase;

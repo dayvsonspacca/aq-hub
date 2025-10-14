@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Shared\Infrastructure\Env;
+namespace AqHub\Tests\Unit\Shared\Infrastructure\Env;
 
 use AqHub\Shared\Infrastructure\Env\{AppMode, DatabaseConfig, Env};
 use AqHub\Tests\Unit\TestCase;
