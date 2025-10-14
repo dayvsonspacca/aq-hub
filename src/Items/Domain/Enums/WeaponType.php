@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Items\Domain\Enums;
 
 use AqHub\Shared\Domain\ValueObjects\Result;
+use InvalidArgumentException;
 
 enum WeaponType
 {
@@ -24,20 +25,26 @@ enum WeaponType
      */
     public static function fromString(string $type): Result
     {
-        return match ($type) {
-            'Axe' => Result::success(null, self::Axe),
-            'Bow' => Result::success(null, self::Bow),
-            'Dagger' => Result::success(null, self::Dagger),
-            'Gauntlet' => Result::success(null, self::Gauntlet),
-            'Gun' => Result::success(null, self::Gun),
-            'Mace' => Result::success(null, self::Mace),
-            'Polearm' => Result::success(null, self::Polearm),
-            'Staff' => Result::success(null, self::Staff),
-            'Sword' => Result::success(null, self::Sword),
-            'Wand' => Result::success(null, self::Wand),
-            'Whip' => Result::success(null, self::Whip),
-            default => Result::error('Type not defined: ' . $type, null),
-        };
+        $type = mb_strtolower($type);
+        
+        try {
+            return match ($type) {
+                'axe' => Result::success(null, self::Axe),
+                'bow' => Result::success(null, self::Bow),
+                'dagger' => Result::success(null, self::Dagger),
+                'gauntlet' => Result::success(null, self::Gauntlet),
+                'gun' => Result::success(null, self::Gun),
+                'mace' => Result::success(null, self::Mace),
+                'polearm' => Result::success(null, self::Polearm),
+                'staff' => Result::success(null, self::Staff),
+                'sword' => Result::success(null, self::Sword),
+                'wand' => Result::success(null, self::Wand),
+                'whip' => Result::success(null, self::Whip),
+                default => throw new InvalidArgumentException('Type not defined: ' . $type)
+            };
+        } catch (\Throwable $e) {
+            return Result::error($e->getMessage(), null);
+        }
     }
 
     public function toString(): string
