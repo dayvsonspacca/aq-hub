@@ -6,7 +6,6 @@ namespace AqHub\Tests\Unit\Items\Domain\Repositories\Filters;
 
 use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Repositories\Filters\CanFilterRarities;
-use AqHub\Items\Domain\ValueObjects\Name;
 use AqHub\Tests\Unit\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 

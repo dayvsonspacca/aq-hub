@@ -7,10 +7,7 @@ namespace Tests\Unit\Player\Domain\ValueObjects;
 use AqHub\Items\Domain\Entities\{Armor, Weapon};
 use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
-use AqHub\Items\Domain\ValueObjects\Description;
-use AqHub\Items\Domain\ValueObjects\ItemInfo;
-use AqHub\Items\Domain\ValueObjects\ItemTags;
-use AqHub\Items\Domain\ValueObjects\Name;
+use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
 use AqHub\Player\Domain\ValueObjects\PlayerInventory;
 use AqHub\Shared\Domain\Enums\TagType;
 use AqHub\Tests\Unit\TestCase;
@@ -123,7 +120,7 @@ final class PlayerInventoryTest extends TestCase
     #[Test]
     public function should_fail_when_try_delete_item_with_ac_tag()
     {
-        $maxSpaces = 50;
+        $maxSpaces   = 50;
         $name        = 'ArchFiend DoomLord';
         $description = "Not even the dark magic of the Shadowscythe is enough to satisfy this soul's lust for power.";
         $tags        = new ItemTags([TagType::AdventureCoins]);
