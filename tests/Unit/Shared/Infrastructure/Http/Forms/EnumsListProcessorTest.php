@@ -16,7 +16,7 @@ final class EnumsListProcessorTest extends TestCase
     public function it_converts_comma_separated_rarities_string_to_item_rarity_enum_array_and_ignores_invalid_values()
     {
         $rarities = 'weird,rare,epic';
-        $result = EnumListProcessor::fromComma($rarities, ItemRarity::class);
+        $result   = EnumListProcessor::fromComma($rarities, ItemRarity::class);
 
         $this->assertCount(3, $result);
         $this->assertSame($result, [
@@ -30,7 +30,7 @@ final class EnumsListProcessorTest extends TestCase
     public function it_converts_comma_separated_tags_string_to_tag_type_enum_array_and_ignores_invalid_values()
     {
         $rarities = 'legend,ac';
-        $result = EnumListProcessor::fromComma($rarities, TagType::class);
+        $result   = EnumListProcessor::fromComma($rarities, TagType::class);
 
         $this->assertCount(2, $result);
         $this->assertSame($result, [

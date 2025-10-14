@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Domain\Enums;
 
-use AqHub\Shared\Domain\Contracts\FromString;
-use AqHub\Shared\Domain\Contracts\ToString;
+use AqHub\Shared\Domain\Contracts\{FromString, ToString};
 use AqHub\Shared\Domain\ValueObjects\Result;
 use InvalidArgumentException;
 

@@ -16,7 +16,7 @@ final class NameFieldTest extends TestRequests
     public function should_create_name_correct()
     {
         $request = $this->createRequest(['name' => 'awe']);
-        $name = NameField::fromRequest($request);
+        $name    = NameField::fromRequest($request);
 
         $this->assertInstanceOf(Name::class, $name);
         $this->assertSame('awe', $name->value);
@@ -29,6 +29,6 @@ final class NameFieldTest extends TestRequests
         $this->expectExceptionMessage('The name of an item cant be empty.');
 
         $request = $this->createRequest(['name' => '   ']);
-        $name = NameField::fromRequest($request);
+        $name    = NameField::fromRequest($request);
     }
 }
