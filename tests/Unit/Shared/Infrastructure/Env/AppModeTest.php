@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Shared\Domain\ValueObjects;
+namespace Tests\Unit\Shared\Infrastructure\Env;
 
 use AqHub\Shared\Infrastructure\Env\AppMode;
 use AqHub\Tests\Unit\TestCase;
