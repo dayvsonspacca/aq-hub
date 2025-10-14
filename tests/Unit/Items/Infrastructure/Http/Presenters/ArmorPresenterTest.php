@@ -17,7 +17,7 @@ final class ArmorPresenterTest extends TestCase
         $armors = [$this->createMock(ArmorData::class), $this->createMock(ArmorData::class)];
 
         $result = ArmorPresenter::array($armors);
-        
+
         $this->assertCount(2, $result);
         $this->assertIsArray($result);
     }

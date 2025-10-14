@@ -17,7 +17,7 @@ final class CapePresenterTest extends TestCase
         $capes = [$this->createMock(CapeData::class), $this->createMock(CapeData::class)];
 
         $result = CapePresenter::array($capes);
-        
+
         $this->assertCount(2, $result);
         $this->assertIsArray($result);
     }

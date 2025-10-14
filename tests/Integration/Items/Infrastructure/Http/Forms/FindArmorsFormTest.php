@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Items\Infrastructure\Http\Forms;
 
 use AqHub\Items\Domain\Enums\ItemRarity;
-use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
 use AqHub\Items\Domain\ValueObjects\Name;
 use AqHub\Items\Infrastructure\Http\Forms\FindArmorsForm;
 use AqHub\Shared\Domain\Enums\TagType;
