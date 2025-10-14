@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Shared\Domain\Enums;
 
 use AqHub\Shared\Domain\ValueObjects\Result;
+use InvalidArgumentException;
 
 enum TagType
 {
@@ -20,15 +21,21 @@ enum TagType
      */
     public static function fromString(string $tag): Result
     {
-        return match ($tag) {
-            'Legend', 'legend' => Result::success(null, self::Legend),
-            'Adventure Coins', 'ac' => Result::success(null, self::AdventureCoins),
-            'Rare', 'rare' => Result::success(null, self::Rare),
-            'Pseudo Rare', 'pseudo' => Result::success(null, self::PseudoRare),
-            'Seasonal', 'seasonal' => Result::success(null, self::Seasonal),
-            'Special Offer', 'special' => Result::success(null, self::SpecialOffer),
-            default => Result::error('Tag not defined: ' . $tag, null)
-        };
+        $tag = mb_strtolower($tag);
+
+        try {
+            return match ($tag) {
+                'legend' => Result::success(null, self::Legend),
+                'adventure coins', 'ac' => Result::success(null, self::AdventureCoins),
+                'rare' => Result::success(null, self::Rare),
+                'pseudo rare', 'pseudo' => Result::success(null, self::PseudoRare),
+                'seasonal' => Result::success(null, self::Seasonal),
+                'special offer', 'special' => Result::success(null, self::SpecialOffer),
+                default => throw new InvalidArgumentException('Tag not defined: '. $tag)
+            };
+        } catch (\Throwable $e) {
+            return Result::error($e->getMessage(), null);
+        }
     }
 
     public function toString(): string
