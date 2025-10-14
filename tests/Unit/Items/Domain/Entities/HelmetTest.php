@@ -18,7 +18,7 @@ final class HelmetTest extends TestCase
     public function should_create_helmet_instance_and_stores_it_data()
     {
         $name        = 'Auroran Cryomagus Ponytail';
-        $description = "I forgot the description";
+        $description = 'I forgot the description';
         $tags        = new ItemTags([TagType::AdventureCoins]);
         $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Epic)->unwrap();
         $id          = ItemIdentifierGenerator::generate($itemInfo, Helmet::class)->unwrap();

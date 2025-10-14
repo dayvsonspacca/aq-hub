@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Shared\Domain\ValueObjects;
 
-use AqHub\Shared\Infrastructure\Env\AppMode;
-use AqHub\Shared\Infrastructure\Env\DatabaseConfig;
-use AqHub\Shared\Infrastructure\Env\Env;
+use AqHub\Shared\Infrastructure\Env\{AppMode, DatabaseConfig, Env};
 use AqHub\Tests\Unit\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 use RuntimeException;
@@ -42,7 +40,7 @@ final class EnvTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage("Environment variable 'APP_MODE' is not set.");
-        
+
         $env = Env::instance([
             'DB_HOST' => 'db',
             'DB_PORT' => 5432,
@@ -57,7 +55,7 @@ final class EnvTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage("Database configuration validation failed: Required environment variable 'DB_HOST' is missing.");
-        
+
         $env = Env::instance([
             'APP_MODE' => 'dev',
             'DB_PORT' => 5432,
@@ -72,7 +70,7 @@ final class EnvTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Mode not defined: ultra-production');
-        
+
         $env = Env::instance([
             'APP_MODE' => 'ultra-production',
             'DB_HOST' => 'db',

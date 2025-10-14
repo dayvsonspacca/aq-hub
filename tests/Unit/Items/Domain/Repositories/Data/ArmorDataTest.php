@@ -8,10 +8,7 @@ use AqHub\Items\Domain\Entities\Armor;
 use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
-use AqHub\Items\Domain\ValueObjects\Description;
-use AqHub\Items\Domain\ValueObjects\ItemInfo;
-use AqHub\Items\Domain\ValueObjects\ItemTags;
-use AqHub\Items\Domain\ValueObjects\Name;
+use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
 use AqHub\Shared\Domain\Enums\TagType;
 use AqHub\Tests\Unit\TestCase;
 use DateTime;
@@ -27,8 +24,8 @@ final class ArmorDataTest extends TestCase
         $tags        = new ItemTags([TagType::AdventureCoins]);
         $rarity      = ItemRarity::Epic;
 
-        $itemInfo    = ItemInfo::create($name, $description, $tags, $rarity)->unwrap();
-        $id          = ItemIdentifierGenerator::generate($itemInfo, Armor::class)->unwrap();
+        $itemInfo     = ItemInfo::create($name, $description, $tags, $rarity)->unwrap();
+        $id           = ItemIdentifierGenerator::generate($itemInfo, Armor::class)->unwrap();
         $registeredAt = new DateTime('2025-10-14');
 
         $armorData = new ArmorData(
@@ -57,8 +54,8 @@ final class ArmorDataTest extends TestCase
         $tags        = new ItemTags([TagType::AdventureCoins]);
         $rarity      = ItemRarity::Epic;
 
-        $itemInfo    = ItemInfo::create($name, $description, $tags, $rarity)->unwrap();
-        $id          = ItemIdentifierGenerator::generate($itemInfo, Armor::class)->unwrap();
+        $itemInfo     = ItemInfo::create($name, $description, $tags, $rarity)->unwrap();
+        $id           = ItemIdentifierGenerator::generate($itemInfo, Armor::class)->unwrap();
         $registeredAt = new DateTime('2025-10-14');
 
         $armorData = new ArmorData(

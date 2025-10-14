@@ -48,7 +48,7 @@ final class ItemTagsTest extends TestCase
     #[Test]
     public function should_can_iterate_in_items_tags()
     {
-        $tags   = new ItemTags([TagType::AdventureCoins, TagType::Legend]);
+        $tags    = new ItemTags([TagType::AdventureCoins, TagType::Legend]);
         $rawTags = [TagType::AdventureCoins, TagType::Legend];
 
         foreach ($tags as $index => $tag) {

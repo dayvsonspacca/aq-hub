@@ -26,7 +26,7 @@ enum WeaponType
     public static function fromString(string $type): Result
     {
         $type = mb_strtolower($type);
-        
+
         try {
             return match ($type) {
                 'axe' => Result::success(null, self::Axe),
