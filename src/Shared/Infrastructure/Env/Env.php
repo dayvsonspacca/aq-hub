@@ -13,15 +13,15 @@ class Env
 
     private static ?self $instance = null;
 
-    private function __construct()
+    private function __construct(array $env)
     {
-        $this->loadDatabaseConfig();
-        $this->loadAppMode();
+        $this->loadDatabaseConfig($env);
+        $this->loadAppMode($env);
     }
 
-    private function loadDatabaseConfig(): void
+    private function loadDatabaseConfig(array $env): void
     {
-        $result = DatabaseConfig::fromEnvironment($_SERVER);
+        $result = DatabaseConfig::fromEnvironment($env);
 
         if ($result->isError()) {
             throw new RuntimeException($result->getMessage());
@@ -30,17 +30,17 @@ class Env
         $this->dbConfig = $result->getData();
     }
 
-    public static function instance(): self
+    public static function instance(array $env): self
     {
         if (self::$instance === null) {
-            self::$instance = new self();
+            self::$instance = new self($env);
         }
         return self::$instance;
     }
 
-    private function loadAppMode(): void
+    private function loadAppMode($env): void
     {
-        $mode = $_SERVER['APP_MODE'];
+        $mode = $env['APP_MODE'];
 
         if ($mode === false) {
             throw new RuntimeException("Environment variable 'APP_MODE' is not set.");
