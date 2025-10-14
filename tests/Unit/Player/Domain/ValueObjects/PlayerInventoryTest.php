@@ -99,4 +99,17 @@ final class PlayerInventoryTest extends TestCase
         $this->assertSame(0, $playerInventory->getAvaliableSpaces());
         $this->assertSame($result->getMessage(), 'There is no space avaliable in the player inventory.');
     }
+
+    #[Test]
+    public function should_can_iterate_on_player_inventory()
+    {
+        $maxSpaces = 2;
+        $items     = [$this->createMock(Weapon::class), $this->createMock(Armor::class)];
+
+        $playerInventory = new PlayerInventory($items, $maxSpaces);
+
+        foreach ($playerInventory as $index => $item) {
+            $this->assertInstanceOf($index === 0 ? Weapon::class : Armor::class, $item);
+        }
+    }
 }
