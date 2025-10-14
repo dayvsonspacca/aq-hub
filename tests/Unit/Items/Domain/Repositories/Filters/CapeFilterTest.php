@@ -45,16 +45,16 @@ final class CapeFilterTest extends TestCase
     {
         $filter = new CapeFilter();
 
-        $this->assertSame($filter->generateUniqueKey(), 'd1197bd5bc2dae71961f2bf9fa5553c3');
+        $this->assertSame($filter->generateUniqueKey(), '30bc93c6e5fb81fc894780d053feff40');
     }
 
     #[Test]
     public function should_can_change_can_access_bank_option()
     {
         $filter = new CapeFilter();
-        $this->assertSame($filter->generateUniqueKey(), 'd1197bd5bc2dae71961f2bf9fa5553c3');
+        $this->assertSame($filter->generateUniqueKey(), '30bc93c6e5fb81fc894780d053feff40');
 
         $filter->setCanAccessBank(true);
-        $this->assertSame($filter->generateUniqueKey(), '2374a29c391648844e9b862b65f27ffc');
+        $this->assertSame($filter->generateUniqueKey(), '5f6eb2df53c1dfd2937be36f0a889a81');
     }
 }
