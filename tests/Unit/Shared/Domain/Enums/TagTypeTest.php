@@ -35,7 +35,7 @@ final class TagTypeTest extends TestCase
     #[Test]
     public function should_return_the_valid_string_version()
     {
-        $tagTypes = [TagType::Legend, TagType::AdventureCoins, TagType::Rare, TagType::PseudoRare, TagType::Seasonal, TagType::SpecialOffer];
+        $tagTypes      = [TagType::Legend, TagType::AdventureCoins, TagType::Rare, TagType::PseudoRare, TagType::Seasonal, TagType::SpecialOffer];
         $correctString = ['Legend', 'Adventure Coins', 'Rare', 'Pseudo Rare', 'Seasonal', 'Special Offer'];
 
         foreach ($tagTypes as $index => $tag) {
