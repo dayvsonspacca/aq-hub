@@ -40,7 +40,7 @@ class Env
 
     private function loadAppMode($envRawData): void
     {
-        $mode = $envRawData['APP_MODE'];
+        $mode = $envRawData['APP_MODE'] ?? false;
 
         if ($mode === false) {
             throw new RuntimeException("Environment variable 'APP_MODE' is not set.");
