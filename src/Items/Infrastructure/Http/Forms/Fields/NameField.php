@@ -10,16 +10,23 @@ use InvalidArgumentException;
 
 class NameField
 {
-    public static function fromRequest(Request $request): Name
+    /**
+     * @return Name|null
+     */
+    public static function fromRequest(Request $request): ?Name
     {
-        $name = $request->get('name', '');
-        
-        $name = Name::create($name);
+        $name = $request->get('name', false);
 
-        if ($name->isError()) {
-            throw new InvalidArgumentException($name->getMessage());
+        if (!$name) {
+            return null;
         }
 
-        return $name->getData();
+        $result = Name::create($name);
+
+        if ($result->isError()) {
+            throw new InvalidArgumentException($result->getMessage());
+        }
+
+        return $result->getData();
     }
 }
