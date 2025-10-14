@@ -44,4 +44,15 @@ final class ItemTagsTest extends TestCase
         $this->assertFalse($result->isSuccess());
         $this->assertSame($result->getMessage(), 'That item already have this tag.');
     }
+
+    #[Test]
+    public function should_can_iterate_in_items_tags()
+    {
+        $tags   = new ItemTags([TagType::AdventureCoins, TagType::Legend]);
+        $rawTags = [TagType::AdventureCoins, TagType::Legend];
+
+        foreach ($tags as $index => $tag) {
+            $this->assertSame($tag, $rawTags[$index]);
+        }
+    }
 }
