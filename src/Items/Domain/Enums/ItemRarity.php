@@ -28,10 +28,10 @@ enum ItemRarity
     public static function fromString(string $rarity): Result
     {
         $rarity = mb_strtolower($rarity);
-        
+
         try {
             return match ($rarity) {
-                'weird Rarity', 'weird' => Result::success(null, self::Weird),
+                'weird rarity', 'weird' => Result::success(null, self::Weird),
                 'rare rarity', 'rare' => Result::success(null, self::Rare),
                 'epic rarity', 'epic' => Result::success(null, self::Epic),
                 'legendary item rarity', 'legendary rarity', 'legendary' => Result::success(null, self::Legendary),
