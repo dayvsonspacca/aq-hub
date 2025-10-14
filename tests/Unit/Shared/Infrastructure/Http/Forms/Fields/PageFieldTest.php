@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Tests\Integration\Shared\Infrastructure\Http\Forms\Fields;
+namespace AqHub\Tests\Unit\Shared\Infrastructure\Http\Forms\Fields;
 
 use AqHub\Shared\Infrastructure\Http\Forms\Fields\PageField;
 use AqHub\Tests\Unit\TestRequests;

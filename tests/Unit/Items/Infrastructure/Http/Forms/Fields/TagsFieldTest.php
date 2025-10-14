@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Tests\Integration\Items\Infrastructure\Http\Forms\Fields;
+namespace AqHub\Tests\Unit\Items\Infrastructure\Http\Forms\Fields;
 
 use AqHub\Items\Infrastructure\Http\Forms\Fields\TagsField;
 use AqHub\Shared\Domain\Enums\TagType;
