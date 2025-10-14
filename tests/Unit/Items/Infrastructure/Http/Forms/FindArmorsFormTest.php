@@ -45,6 +45,6 @@ final class FindArmorsFormTest extends TestRequests
         $result = FindArmorsForm::fromRequest($request);
 
         $this->assertTrue($result->isSuccess());
-        $this->assertSame($result->getData()->name->value,  'Blade of Awe');
+        $this->assertSame($result->getData()->name->value, 'Blade of Awe');
     }
 }
