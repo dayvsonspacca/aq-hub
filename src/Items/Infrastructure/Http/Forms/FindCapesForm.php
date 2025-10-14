@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Infrastructure\Http\Forms;
 
-use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Repositories\Filters\CapeFilter;
-use AqHub\Items\Domain\ValueObjects\Name;
-use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Items\Infrastructure\Http\Forms\Fields\NameField;
+use AqHub\Items\Infrastructure\Http\Forms\Fields\RaritiesField;
+use AqHub\Items\Infrastructure\Http\Forms\Fields\TagsField;
 use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Shared\Infrastructure\Http\Forms\Fields\PageField;
 use Symfony\Component\HttpFoundation\Request;
 
 class FindCapesForm
@@ -18,57 +19,26 @@ class FindCapesForm
      */
     public static function fromRequest(Request $request): Result
     {
-        $page = (int) $request->get('page', 1);
+        try {
+            $filter = new CapeFilter();
 
-        if ($page <= 0) {
-            return Result::error('Param page cannot be zero or negative.', null);
-        }
+            $filter->setPage(PageField::fromRequest($request));
+            $filter->setRarities(RaritiesField::fromRequest($request));
+            $filter->setTags(TagsField::fromRequest($request));
 
-        $filter = new CapeFilter();
-        $filter->setPage($page);
-
-        $rarities = $request->get('rarities', false);
-        if ($rarities) {
-            $rarities = explode(',', $rarities);
-
-            sort($rarities);
-
-            $rarities = array_map(
-                fn ($rawRarity) => ItemRarity::fromString($rawRarity)->getData(),
-                array_filter($rarities, fn ($rawRarity) => ItemRarity::fromString($rawRarity)->isSuccess())
-            );
-
-            $filter->setRarities($rarities);
-        }
-
-        $tags = $request->get('tags', false);
-        if ($tags) {
-            $tags = explode(',', $tags);
-            sort($tags);
-
-            $tags = array_map(
-                fn ($rawTag) => TagType::fromString($rawTag)->getData(),
-                array_filter($tags, fn ($rawTag) => TagType::fromString($rawTag)->isSuccess())
-            );
-
-            $filter->setTags($tags);
-        }
-
-        $name = $request->get('name', false);
-        if ($name) {
-            $name = Name::create($name);
-            if ($name->isError()) {
-                return Result::error($name->getMessage(), null);
+            $name = NameField::fromRequest($request);
+            if ($name) {
+                $filter->setName($name);
             }
 
-            $filter->setName($name->getData());
-        }
+            $canAccessBank = mb_strtolower($request->get('can_access_bank', ''));
+            if ($canAccessBank === 'yes' || $canAccessBank === 'no') {
+                $filter->canAccessBank = $canAccessBank === 'yes' ? true : false;
+            }
 
-        $canAccessBank = mb_strtolower($request->get('can_access_bank', ''));
-        if ($canAccessBank === 'yes' || $canAccessBank === 'no') {
-            $filter->canAccessBank = $canAccessBank === 'yes' ? true : false;
+            return Result::success(null, $filter);
+        } catch (\Throwable $e) {
+            return Result::error($e->getMessage(), null);
         }
-
-        return Result::success(null, $filter);
     }
 }
