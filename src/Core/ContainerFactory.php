@@ -7,7 +7,7 @@ namespace AqHub\Core;
 use DI\Container as DIContainer;
 use DI\ContainerBuilder;
 
-class ContainerFactory
+final class ContainerFactory
 {
     public static function make(array $definitions): DIContainer
     {
