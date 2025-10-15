@@ -12,5 +12,6 @@ $app     = Application::build('api', [CoreDefinitions::class, HttpDefinitions::c
 $handler = $app->get(HttpHandler::class);
 
 $request = Request::createFromGlobals();
+$response = $handler->handle($request);
 
-$handler->handle($request);
+$response->send();

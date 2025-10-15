@@ -71,6 +71,6 @@ final class HttpHandler
         $controller = $this->container->get($controllerClass);
         $response   = $controller->$method($request);
 
-        $response->send();
+        return $response;
     }
 }
