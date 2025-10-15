@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Player\Domain\Repositories\Filters;
 
 use AqHub\Player\Domain\Repositories\Filters\PlayerFilter;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class PlayerFilterTest extends TestCase

@@ -7,7 +7,7 @@ namespace AqHub\Tests\Unit\Shared\Infrastructure\Http\Forms;
 use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Shared\Domain\Enums\ItemTag;
 use AqHub\Shared\Infrastructure\Http\Forms\EnumListProcessor;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class EnumsListProcessorTest extends TestCase

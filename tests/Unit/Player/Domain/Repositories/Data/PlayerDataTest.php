@@ -9,7 +9,7 @@ namespace AqHub\Tests\Unit\Player\Domain\Repositories\Data;
 use AqHub\Player\Domain\Repositories\Data\PlayerData;
 use AqHub\Player\Domain\ValueObjects\{Level, Name};
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use DateTime;
 use PHPUnit\Framework\Attributes\Test;
 

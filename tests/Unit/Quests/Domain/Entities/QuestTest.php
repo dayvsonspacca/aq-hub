@@ -7,7 +7,7 @@ namespace AqHub\Tests\Unit\Quests\Domain\Entities;
 use AqHub\Quests\Domain\Entities\Quest;
 use AqHub\Quests\Domain\ValueObjects\QuestRequirements;
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class QuestTest extends TestCase

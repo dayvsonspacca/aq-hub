@@ -6,7 +6,7 @@ namespace AqHub\Tests\Unit\Items\Domain\Repositories\Filters;
 
 use AqHub\Items\Domain\Repositories\Filters\CanFilterTags;
 use AqHub\Shared\Domain\Enums\ItemTag;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class CanFilterTagsTest extends TestCase

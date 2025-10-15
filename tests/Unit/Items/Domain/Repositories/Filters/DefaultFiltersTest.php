@@ -8,7 +8,7 @@ use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Repositories\Filters\DefaultFilters;
 use AqHub\Items\Domain\ValueObjects\Name;
 use AqHub\Shared\Domain\Enums\ItemTag;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class DefaultFiltersTest extends TestCase

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Shared\Infrastructure\Env;
 
 use AqHub\Shared\Infrastructure\Env\DatabaseConfig;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class DatabaseConfigTest extends TestCase

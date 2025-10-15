@@ -6,7 +6,7 @@ namespace AqHub\Tests\Unit\Items\Domain\Repositories\Filters;
 
 use AqHub\Items\Domain\Repositories\Filters\CanFilterName;
 use AqHub\Items\Domain\ValueObjects\Name;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class CanFilterNameTest extends TestCase

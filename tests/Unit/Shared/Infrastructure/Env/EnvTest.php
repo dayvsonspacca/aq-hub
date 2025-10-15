@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Shared\Infrastructure\Env;
 
 use AqHub\Shared\Infrastructure\Env\{AppMode, DatabaseConfig, Env};
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 use RuntimeException;
 

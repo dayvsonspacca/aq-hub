@@ -7,7 +7,7 @@ namespace AqHub\Tests\Unit\Core;
 use AqHub\Core\ContainerFactory;
 use AqHub\Core\CoreDefinations;
 use PHPUnit\Framework\Attributes\Test;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use DI\Container;
 
 final class CoreDefinationsTest extends TestCase

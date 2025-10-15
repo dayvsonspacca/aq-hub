@@ -9,7 +9,7 @@ use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Repositories\Data\CapeData;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use DateTime;
 use PHPUnit\Framework\Attributes\Test;
 

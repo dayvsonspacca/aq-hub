@@ -6,7 +6,7 @@ namespace AqHub\Tests\Unit\Shared\Domain\ValueObjects;
 
 use AqHub\Shared\Domain\Enums\CurrencyType;
 use AqHub\Shared\Domain\ValueObjects\GameCurrency;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class GameCurrencyTest extends TestCase

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Core;
 
 use AqHub\Core\ContainerFactory;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use DI\Container as DIContainer;
 use PHPUnit\Framework\Attributes\Test;
 

@@ -7,7 +7,7 @@ namespace AqHub\Tests\Unit\Items\Domain\ValueObjects;
 use AqHub\Items\Domain\ValueObjects\ItemCurrencyInfo;
 use AqHub\Shared\Domain\Enums\CurrencyType;
 use AqHub\Shared\Domain\ValueObjects\GameCurrency;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class ItemCurrencyInfoTest extends TestCase

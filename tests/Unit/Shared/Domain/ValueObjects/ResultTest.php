@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Shared\Domain\ValueObjects;
 
 use AqHub\Shared\Domain\ValueObjects\Result;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use DomainException;
 use PHPUnit\Framework\Attributes\Test;
 

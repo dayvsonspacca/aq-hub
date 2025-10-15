@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Shared\Domain\Repositories\Filters;
 
 use AqHub\Shared\Domain\Repositories\Filters\CanPaginate;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class CanPaginateTest extends TestCase

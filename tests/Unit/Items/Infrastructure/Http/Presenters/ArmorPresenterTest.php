@@ -6,7 +6,7 @@ namespace AqHub\Tests\Unit\Items\Infrastructure\Http\Presenters;
 
 use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Items\Infrastructure\Http\Presenters\ArmorPresenter;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class ArmorPresenterTest extends TestCase

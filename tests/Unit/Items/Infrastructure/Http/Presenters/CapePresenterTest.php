@@ -6,7 +6,7 @@ namespace AqHub\Tests\Unit\Items\Infrastructure\Http\Presenters;
 
 use AqHub\Items\Domain\Repositories\Data\CapeData;
 use AqHub\Items\Infrastructure\Http\Presenters\CapePresenter;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class CapePresenterTest extends TestCase
