@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Tests\Unit;
 
+use AqHub\Tests\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class TestRequests extends TestCase
