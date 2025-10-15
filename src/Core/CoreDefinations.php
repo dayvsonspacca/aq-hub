@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace AqHub\Core;
 
 use AqHub\Core\Interfaces\DefinitionsInterface;
+use Dotenv\Dotenv;
+
+use function DI\factory;
 
 final class CoreDefinations implements DefinitionsInterface
 {
@@ -12,10 +15,14 @@ final class CoreDefinations implements DefinitionsInterface
     {
         $rootDir = __DIR__ . '/../../';
 
+        $dotenv = Dotenv::createImmutable($rootDir);
+        $dotenv->load();
+
         return [
             'Path.Root' => $rootDir,
             'Path.Cache' => $rootDir . '/cache',
-            'Path.Logs' => $rootDir . '/logs'
+            'Path.Logs' => $rootDir . '/logs',
+            Env::class => factory([Env::class, 'load'])->parameter('vars', $_ENV)
         ];
     }
 }
