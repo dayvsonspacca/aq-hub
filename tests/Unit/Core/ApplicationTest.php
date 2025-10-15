@@ -6,6 +6,7 @@ namespace AqHub\Tests\Unit\Core;
 
 use AqHub\Core\Application;
 use AqHub\Core\CoreDefinations;
+use AqHub\Core\Env;
 use AqHub\Core\Interfaces\DefinitionsInterface;
 use AqHub\Tests\TestCase;
 use InvalidArgumentException;
@@ -38,5 +39,13 @@ final class ApplicationTest extends TestCase
                 }
             })::class
         ]);
+    }
+
+    #[Test]
+    public function should_can_access_container_definitions()
+    {
+        $app = Application::build('api', [CoreDefinations::class]);
+
+        $this->assertInstanceOf(Env::class, $app->get(Env::class));
     }
 }

@@ -44,4 +44,18 @@ final class Application
             throw new RuntimeException('Fatal error bootstraping ' . $name . ' cause: ' . $e->getMessage(), previous: $e);
         }
     }
+
+    /**
+     * Retrieves a service or dependency from the application container.
+     *
+     * This is the primary way external interfaces (API, CLI) will access the
+     *
+     * @template T
+     * @param class-string<T> $id The class name or identifier of the service to retrieve.
+     * @return T The resolved service instance.
+     */
+    public function get(string $id): mixed
+    {
+        return $this->container->get($id);
+    }
 }
