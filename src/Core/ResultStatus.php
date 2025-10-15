@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Shared\Domain\Enums;
+namespace AqHub\Core;
 
 enum ResultStatus
 {

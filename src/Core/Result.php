@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Shared\Domain\ValueObjects;
+namespace AqHub\Core;
 
-use AqHub\Shared\Domain\Enums\ResultStatus;
 use DomainException;
 
 /**
