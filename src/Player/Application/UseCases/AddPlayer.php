@@ -9,7 +9,7 @@ use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Player\Domain\ValueObjects\Name;
 use AqHub\Player\Infrastructure\Http\Scrappers\CharpageScrapper;
 use AqHub\Shared\Domain\Contracts\Cache;
-use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Core\Result;
 
 class AddPlayer
 {

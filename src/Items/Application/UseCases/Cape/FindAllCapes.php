@@ -8,7 +8,7 @@ use AqHub\Items\Domain\Repositories\CapeRepository;
 use AqHub\Items\Domain\Repositories\Data\CapeData;
 use AqHub\Items\Domain\Repositories\Filters\CapeFilter;
 use AqHub\Shared\Domain\Contracts\Cache;
-use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Core\Result;
 use Symfony\Contracts\Cache\ItemInterface;
 
 class FindAllCapes

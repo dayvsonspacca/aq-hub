@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Infrastructure\Repositories\Sql;
 
+use AqHub\Core\Result;
 use AqHub\Items\Domain\Entities\Armor;
 use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Repositories\ArmorRepository;
@@ -12,7 +13,7 @@ use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
 use AqHub\Shared\Domain\Enums\ItemTag;
-use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
+use AqHub\Shared\Domain\ValueObjects\StringIdentifier;
 use AqHub\Shared\Infrastructure\Database\Connection;
 use DateTime;
 use DomainException;

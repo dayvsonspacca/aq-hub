@@ -7,9 +7,9 @@ namespace AqHub\Items\Domain\Repositories;
 use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
-use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Core\Result;
 
-interface ArmorRepository extends AqwItemRepository
+interface ArmorRepository
 {
     /**
      * @return Result<ArmorData|null>

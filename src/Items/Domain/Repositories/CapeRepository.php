@@ -7,9 +7,9 @@ namespace AqHub\Items\Domain\Repositories;
 use AqHub\Items\Domain\Repositories\Data\CapeData;
 use AqHub\Items\Domain\Repositories\Filters\CapeFilter;
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
-use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Core\Result;
 
-interface CapeRepository extends AqwItemRepository
+interface CapeRepository
 {
     /**
      * @return Result<CapeData|null>

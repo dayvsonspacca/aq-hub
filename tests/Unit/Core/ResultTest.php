@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Tests\Unit\Shared\Domain\ValueObjects;
+namespace AqHub\Tests\Unit\Core;
 
-use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Core\Result;
 use AqHub\Tests\TestCase;
 use DomainException;
 use PHPUnit\Framework\Attributes\Test;

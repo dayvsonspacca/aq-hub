@@ -7,9 +7,9 @@ namespace AqHub\Items\Domain\Repositories;
 use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\Repositories\Data\WeaponData;
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
-use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Core\Result;
 
-interface WeaponRepository extends AqwItemRepository
+interface WeaponRepository
 {
     /**
      * @return Result<WeaponData|null>

@@ -6,9 +6,9 @@ namespace AqHub\Items\Domain\Repositories;
 
 use AqHub\Items\Domain\Repositories\Data\HelmetData;
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
-use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Core\Result;
 
-interface HelmetRepository extends AqwItemRepository
+interface HelmetRepository
 {
     /**
      * @return Result<HelmetData|null>

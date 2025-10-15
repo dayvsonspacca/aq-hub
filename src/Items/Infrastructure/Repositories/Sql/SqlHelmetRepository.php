@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Infrastructure\Repositories\Sql;
 
+use AqHub\Core\Result;
 use AqHub\Items\Domain\Entities\Helmet;
 use AqHub\Items\Domain\Repositories\Data\HelmetData;
 use AqHub\Items\Domain\Repositories\HelmetRepository;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
 use AqHub\Shared\Domain\Enums\ItemTag;
-use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
+use AqHub\Shared\Domain\ValueObjects\StringIdentifier;
 use AqHub\Shared\Infrastructure\Database\Connection;
 use DateTime;
 use DomainException;

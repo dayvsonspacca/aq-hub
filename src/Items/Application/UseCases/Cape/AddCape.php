@@ -7,7 +7,7 @@ namespace AqHub\Items\Application\UseCases\Cape;
 use AqHub\Items\Domain\Repositories\CapeRepository;
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
 use AqHub\Shared\Domain\Contracts\Cache;
-use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Core\Result;
 
 class AddCape
 {

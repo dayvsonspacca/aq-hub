@@ -6,7 +6,7 @@ namespace AqHub\Items\Infrastructure\Http\Forms;
 
 use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
 use AqHub\Items\Infrastructure\Http\Forms\Fields\{NameField, RaritiesField, TagsField};
-use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Core\Result;
 use AqHub\Shared\Infrastructure\Http\Forms\Fields\PageField;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Http\Scrappers;
 
+use AqHub\Core\Result;
 use AqHub\Items\Domain\ValueObjects\Name as ItemName;
 use AqHub\Player\Domain\ValueObjects\{Level, Name};
-use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
+use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 use DomainException;
 use GuzzleHttp\Client;
 

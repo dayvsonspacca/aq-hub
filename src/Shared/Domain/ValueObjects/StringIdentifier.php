@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Domain\ValueObjects;
 
+use AqHub\Core\Result;
 use AqHub\Shared\Domain\Abstractions\Identifier;
 
 /**

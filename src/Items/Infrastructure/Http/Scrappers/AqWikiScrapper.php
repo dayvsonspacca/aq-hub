@@ -8,7 +8,7 @@ use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, Name};
 use AqHub\Items\Infrastructure\Data\WikiItemData;
 use AqHub\Shared\Domain\Enums\ItemTag;
-use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Core\Result;
 use GuzzleHttp\Client;
 
 class AqWikiScrapper

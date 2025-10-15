@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Repositories\Sql;
 
+use AqHub\Core\Result;
 use AqHub\Player\Domain\Repositories\Data\PlayerData;
 use AqHub\Player\Domain\Repositories\Filters\PlayerFilter;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Player\Domain\ValueObjects\{Level, Name};
-use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
+use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 use AqHub\Shared\Infrastructure\Database\Connection;
 use DateTime;
 use DomainException;

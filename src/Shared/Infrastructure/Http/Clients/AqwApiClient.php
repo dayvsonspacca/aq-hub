@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Shared\Infrastructure\Http\Clients;
 
 use AqHub\Player\Domain\ValueObjects\Name;
-use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Core\Result;
 use DomainException;
 use GuzzleHttp\Client;
 
