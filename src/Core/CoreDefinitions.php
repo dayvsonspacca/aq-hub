@@ -9,7 +9,7 @@ use Dotenv\Dotenv;
 
 use function DI\factory;
 
-final class CoreDefinations implements DefinitionsInterface
+final class CoreDefinitions implements DefinitionsInterface
 {
     public static function dependencies(): array
     {

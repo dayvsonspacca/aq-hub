@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Core;
 
 use AqHub\Core\Application;
-use AqHub\Core\CoreDefinations;
+use AqHub\Core\CoreDefinitions;
 use AqHub\Core\Env;
 use AqHub\Core\Interfaces\DefinitionsInterface;
 use AqHub\Tests\TestCase;
@@ -18,7 +18,7 @@ final class ApplicationTest extends TestCase
     #[Test]
     public function should_bootstrap_application()
     {
-        $app = Application::build('api', [CoreDefinations::class]);
+        $app = Application::build('api', [CoreDefinitions::class]);
 
         $this->assertInstanceOf(Application::class, $app);
     }
@@ -31,7 +31,7 @@ final class ApplicationTest extends TestCase
         $this->expectExceptionCode(0);
 
         Application::build('api', [
-            CoreDefinations::class,
+            CoreDefinitions::class,
             (new class implements DefinitionsInterface {
                 public static function dependencies(): array
                 {
@@ -44,7 +44,7 @@ final class ApplicationTest extends TestCase
     #[Test]
     public function should_can_access_container_definitions()
     {
-        $app = Application::build('api', [CoreDefinations::class]);
+        $app = Application::build('api', [CoreDefinitions::class]);
 
         $this->assertInstanceOf(Env::class, $app->get(Env::class));
     }
