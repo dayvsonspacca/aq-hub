@@ -9,7 +9,7 @@ use AqHub\Core\Interfaces\DefinitionsInterface;
 use function DI\autowire;
 use function DI\get;
 
-final class HttpDefinations implements DefinitionsInterface
+final class HttpDefinitions implements DefinitionsInterface
 {
     public static function dependencies(): array
     {
