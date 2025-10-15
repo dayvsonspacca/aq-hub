@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace AqHub\Core;
 
 use AqHub\Core\Interfaces\DefinitionsInterface;
-use Dotenv\Dotenv;
 
 use function DI\factory;
+
+use Dotenv\Dotenv;
 
 final class CoreDefinitions implements DefinitionsInterface
 {

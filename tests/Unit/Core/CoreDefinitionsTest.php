@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace AqHub\Tests\Unit\Core;
 
-use AqHub\Core\ContainerFactory;
-use AqHub\Core\CoreDefinitions;
-use AqHub\Core\Env;
-use PHPUnit\Framework\Attributes\Test;
+use AqHub\Core\{ContainerFactory, CoreDefinitions, Env};
 use AqHub\Tests\TestCase;
 use DI\Container;
+use PHPUnit\Framework\Attributes\Test;
 
 final class CoreDefinitionsTest extends TestCase
 {

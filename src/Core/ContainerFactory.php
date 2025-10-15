@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Core;
 
-use DI\Container as DIContainer;
-use DI\ContainerBuilder;
+use DI\{Container as DIContainer, ContainerBuilder};
 
 final class ContainerFactory
 {

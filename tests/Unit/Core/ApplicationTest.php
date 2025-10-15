@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Tests\Unit\Core;
 
-use AqHub\Core\Application;
-use AqHub\Core\CoreDefinitions;
-use AqHub\Core\Env;
+use AqHub\Core\{Application, CoreDefinitions, Env};
 use AqHub\Core\Interfaces\DefinitionsInterface;
 use AqHub\Tests\TestCase;
 use InvalidArgumentException;
@@ -32,7 +30,7 @@ final class ApplicationTest extends TestCase
 
         Application::build('api', [
             CoreDefinitions::class,
-            (new class implements DefinitionsInterface {
+            (new class () implements DefinitionsInterface {
                 public static function dependencies(): array
                 {
                     throw new InvalidArgumentException('Invalid definition');

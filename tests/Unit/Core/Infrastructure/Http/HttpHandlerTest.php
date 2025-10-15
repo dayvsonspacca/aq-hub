@@ -6,13 +6,14 @@ namespace AqHub\Tests\Unit\Core\Infrastructure\Http;
 
 use AqHub\Core\ContainerFactory;
 use AqHub\Core\Infrastructure\Http\{HttpDefinitions, HttpHandler};
-use PHPUnit\Framework\Attributes\Test;
 use AqHub\Tests\TestCase;
 use AqHub\Tests\Traits\DoRequests;
-use DI\Container;
-use Symfony\Component\HttpFoundation\Response;
 
 use function DI\add;
+
+use DI\Container;
+use PHPUnit\Framework\Attributes\Test;
+use Symfony\Component\HttpFoundation\Response;
 
 final class HttpHandlerTest extends TestCase
 {

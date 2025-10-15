@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace AqHub\Core\Infrastructure\Http;
 
 use AqHub\Core\Interfaces\DefinitionsInterface;
-use DI\Container;
 
-use function DI\autowire;
-use function DI\get;
+use function DI\{autowire, get};
+
+use DI\Container;
 
 final class HttpDefinitions implements DefinitionsInterface
 {

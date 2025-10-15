@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Core\Infrastructure\Http;
 
 use AqHub\Core\ContainerFactory;
-use AqHub\Core\Infrastructure\Http\HttpDefinitions;
-use AqHub\Core\Infrastructure\Http\HttpHandler;
-use PHPUnit\Framework\Attributes\Test;
+use AqHub\Core\Infrastructure\Http\{HttpDefinitions, HttpHandler};
 use AqHub\Tests\TestCase;
 use DI\Container;
+use PHPUnit\Framework\Attributes\Test;
 
 final class HttpDefinitionsTest extends TestCase
 {

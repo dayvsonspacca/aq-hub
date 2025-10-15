@@ -22,7 +22,8 @@ final class Application
      */
     private function __construct(
         private readonly Container $container
-    ) {}
+    ) {
+    }
 
     /**
      * Factory method responsible for creating and configuring the Application instance.
@@ -36,8 +37,8 @@ final class Application
     public static function build(string $name, array $definitions): ?self
     {
         try {
-            $definitions = array_filter($definitions, fn(string $definition) => (new $definition) instanceof DefinitionsInterface);
-            $config = array_map(fn(string $definition) => $definition::dependencies(), $definitions);
+            $definitions = array_filter($definitions, fn (string $definition) => (new $definition()) instanceof DefinitionsInterface);
+            $config      = array_map(fn (string $definition) => $definition::dependencies(), $definitions);
 
             return new self(ContainerFactory::make(array_merge(...$config)));
         } catch (Throwable $e) {

@@ -8,9 +8,7 @@ use DI\Container;
 use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
-use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\Route as SymfonyRoute;
-use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\{RequestContext, Route as SymfonyRoute, RouteCollection};
 
 final class HttpHandler
 {
@@ -19,8 +17,7 @@ final class HttpHandler
     public function __construct(
         private readonly Container $container,
         private readonly array $controllers
-        )
-    {
+    ) {
         $this->routes = $this->registerRoutes();
     }
 
@@ -64,8 +61,8 @@ final class HttpHandler
         $context = new RequestContext();
         $context->fromRequest($request);
 
-        $matcher    = new UrlMatcher($this->routes, $context);
-        $parameters = $matcher->match($request->getPathInfo());
+        $matcher                    = new UrlMatcher($this->routes, $context);
+        $parameters                 = $matcher->match($request->getPathInfo());
         [$controllerClass, $method] = $parameters['_controller'];
 
         $controller = $this->container->get($controllerClass);
