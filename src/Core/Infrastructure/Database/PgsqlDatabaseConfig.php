@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Shared\Infrastructure\Env;
+namespace AqHub\Core\Infrastructure\Database;
 
 use AqHub\Shared\Domain\ValueObjects\Result;
 
-class DatabaseConfig
+class PgsqlDatabaseConfig
 {
     private function __construct(
         public readonly string $host,
@@ -18,7 +18,7 @@ class DatabaseConfig
     }
 
     /**
-     * @return Result<DatabaseConfig|null>
+     * @return Result<PgsqlDatabaseConfig|null>
      */
     public static function fromEnvironment(array $env): Result
     {

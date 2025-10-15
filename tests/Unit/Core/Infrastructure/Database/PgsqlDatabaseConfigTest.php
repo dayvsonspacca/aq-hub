@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace AqHub\Tests\Unit\Shared\Infrastructure\Env;
 
-use AqHub\Shared\Infrastructure\Env\DatabaseConfig;
+use AqHub\Core\Infrastructure\Database\PgsqlDatabaseConfig;
 use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
-final class DatabaseConfigTest extends TestCase
+final class PgsqlDatabaseConfigTest extends TestCase
 {
     /**
      * @return array<string, array<string, string|int>>
@@ -29,14 +29,14 @@ final class DatabaseConfigTest extends TestCase
     {
         $env = $this->getDefaultEnv();
 
-        $result = DatabaseConfig::fromEnvironment($env);
+        $result = PgsqlDatabaseConfig::fromEnvironment($env);
 
         $this->assertTrue($result->isSuccess());
 
-        /** @var DatabaseConfig $config */
+        /** @var PgsqlDatabaseConfig $config */
         $config = $result->unwrap();
 
-        $this->assertInstanceOf(DatabaseConfig::class, $config);
+        $this->assertInstanceOf(PgsqlDatabaseConfig::class, $config);
         $this->assertEquals('localhost', $config->host);
         $this->assertEquals(5432, $config->port);
         $this->assertEquals('test_db', $config->name);
@@ -50,7 +50,7 @@ final class DatabaseConfigTest extends TestCase
         $env            = $this->getDefaultEnv();
         $env['DB_PORT'] = '3306';
 
-        $result = DatabaseConfig::fromEnvironment($env);
+        $result = PgsqlDatabaseConfig::fromEnvironment($env);
 
         $this->assertTrue($result->isSuccess());
 
@@ -66,7 +66,7 @@ final class DatabaseConfigTest extends TestCase
         $env = $this->getDefaultEnv();
         unset($env['DB_USER']);
 
-        $result = DatabaseConfig::fromEnvironment($env);
+        $result = PgsqlDatabaseConfig::fromEnvironment($env);
 
         $this->assertTrue($result->isError());
         $this->assertStringContainsString("Required environment variable 'DB_USER' is missing.", $result->getMessage());
@@ -78,7 +78,7 @@ final class DatabaseConfigTest extends TestCase
         $env            = $this->getDefaultEnv();
         $env['DB_HOST'] = '';
 
-        $result = DatabaseConfig::fromEnvironment($env);
+        $result = PgsqlDatabaseConfig::fromEnvironment($env);
 
         $this->assertTrue($result->isError());
         $this->assertStringContainsString("Required environment variable 'DB_HOST' is missing.", $result->getMessage());
@@ -90,7 +90,7 @@ final class DatabaseConfigTest extends TestCase
         $env            = $this->getDefaultEnv();
         $env['DB_PORT'] = 'not-a-number';
 
-        $result = DatabaseConfig::fromEnvironment($env);
+        $result = PgsqlDatabaseConfig::fromEnvironment($env);
 
         $this->assertTrue($result->isError());
         $this->assertStringContainsString("Environment variable 'DB_PORT' must be an integer, but got 'not-a-number'.", $result->getMessage());
@@ -107,7 +107,7 @@ final class DatabaseConfigTest extends TestCase
             'DB_PASSWORD' => 'pwd',
         ];
 
-        $result = DatabaseConfig::fromEnvironment($env);
+        $result = PgsqlDatabaseConfig::fromEnvironment($env);
 
         $this->assertTrue($result->isError());
         $message = $result->getMessage();
