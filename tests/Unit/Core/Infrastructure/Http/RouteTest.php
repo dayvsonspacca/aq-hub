@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Tests\Unit\Shared\Infrastructure\Http;
+namespace AqHub\Tests\Unit\Core\Infrastructure\Http;
 
-use AqHub\Shared\Infrastructure\Http\Route;
+use AqHub\Core\Infrastructure\Http\Route;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

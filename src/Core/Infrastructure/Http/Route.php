@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Shared\Infrastructure\Http;
+namespace AqHub\Core\Infrastructure\Http;
 
 use Attribute;
 
