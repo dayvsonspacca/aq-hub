@@ -68,9 +68,7 @@ class Application
 
     public function handle(): void
     {
-        $request = Request::createFromGlobals();
-        $context = new RequestContext();
-        $context->fromRequest($request);
+        
 
         $matcher = new UrlMatcher($this->routes, $context);
 

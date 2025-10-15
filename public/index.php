@@ -2,20 +2,12 @@
 
 declare(strict_types=1);
 
-use Dotenv\Dotenv;
+use AqHub\Core\Infrastructure\Http\{HttpHandler, HttpDefinations};
+use AqHub\Core\{Application, CoreDefinations};
 
-define('ROOT_PATH', __DIR__ . '/../');
-define('LOGS_PATH', ROOT_PATH . 'logs/');
-define('CACHE_PATH', ROOT_PATH . 'cache/');
+require __DIR__ . '/../vendor/autoload.php';
 
-require ROOT_PATH . 'vendor/autoload.php';
+$app     = Application::build('api', [CoreDefinations::class, HttpDefinations::class]);
+$handler = $app->get(HttpHandler::class);
 
-$dotenv = Dotenv::createImmutable(ROOT_PATH);
-$dotenv->load();
-
-use AqHub\Shared\Infrastructure\Container\Container;
-use AqHub\Shared\Infrastructure\Http\Application;
-
-$container = Container::build();
-$application = $container->get(Application::class);
-$application->handle();
+$handler->handle();
