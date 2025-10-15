@@ -14,6 +14,7 @@ final class HttpDefinations implements DefinitionsInterface
     public static function dependencies(): array
     {
         return [
+            'Controllers.Rest' => [],
             HttpHandler::class => autowire()->constructor(get('Controllers.Rest'))
         ];
     }
