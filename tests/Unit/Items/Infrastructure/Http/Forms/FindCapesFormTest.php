@@ -45,7 +45,7 @@ final class FindCapesFormTest extends TestRequests
         $result = FindCapesForm::fromRequest($request);
 
         $this->assertTrue($result->isSuccess());
-        $this->assertSame($result->getData()->name->value,  'Cape of Awe');
+        $this->assertSame($result->getData()->name->value, 'Cape of Awe');
     }
 
     #[Test]
@@ -56,6 +56,6 @@ final class FindCapesFormTest extends TestRequests
         $result = FindCapesForm::fromRequest($request);
 
         $this->assertTrue($result->isSuccess());
-        $this->assertSame($result->getData()->canAccessBank,  true);
+        $this->assertSame($result->getData()->canAccessBank, true);
     }
 }
