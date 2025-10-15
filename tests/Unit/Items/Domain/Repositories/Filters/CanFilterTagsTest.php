@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Items\Domain\Repositories\Filters;
 
 use AqHub\Items\Domain\Repositories\Filters\CanFilterTags;
-use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\Enums\ItemTag;
 use AqHub\Tests\Unit\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -30,7 +30,7 @@ final class CanFilterTagsTest extends TestCase
 
         $this->assertEquals([], $filter->tags);
 
-        $tags = [TagType::AdventureCoins, TagType::Legend];
+        $tags = [ItemTag::AdventureCoins, ItemTag::Legend];
         $filter->setTags($tags);
 
         $this->assertSame($filter->tags, $tags);

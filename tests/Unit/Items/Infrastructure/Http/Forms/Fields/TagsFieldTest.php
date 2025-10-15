@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Items\Infrastructure\Http\Forms\Fields;
 
 use AqHub\Items\Infrastructure\Http\Forms\Fields\TagsField;
-use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\Enums\ItemTag;
 use AqHub\Tests\Unit\TestRequests;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -19,6 +19,6 @@ final class TagsFieldTest extends TestRequests
         $tags = TagsField::fromRequest($request);
 
         $this->assertCount(2, $tags);
-        $this->assertSame(array_values($tags), [TagType::Legend, TagType::AdventureCoins]);
+        $this->assertSame(array_values($tags), [ItemTag::Legend, ItemTag::AdventureCoins]);
     }
 }

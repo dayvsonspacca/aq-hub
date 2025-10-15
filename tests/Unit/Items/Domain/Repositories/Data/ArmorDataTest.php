@@ -9,7 +9,7 @@ use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
-use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\Enums\ItemTag;
 use AqHub\Tests\Unit\TestCase;
 use DateTime;
 use PHPUnit\Framework\Attributes\Test;
@@ -21,7 +21,7 @@ final class ArmorDataTest extends TestCase
     {
         $name        = Name::create('ArchFiend DoomLord')->unwrap();
         $description = Description::create("Not even the dark magic of the Shadowscythe is enough to satisfy this soul's lust for power.")->unwrap();
-        $tags        = new ItemTags([TagType::AdventureCoins]);
+        $tags        = new ItemTags([ItemTag::AdventureCoins]);
         $rarity      = ItemRarity::Epic;
 
         $itemInfo     = ItemInfo::create($name, $description, $tags, $rarity)->unwrap();
@@ -51,7 +51,7 @@ final class ArmorDataTest extends TestCase
     {
         $name        = Name::create('ArchFiend DoomLord')->unwrap();
         $description = Description::create("Not even the dark magic of the Shadowscythe is enough to satisfy this soul's lust for power.")->unwrap();
-        $tags        = new ItemTags([TagType::AdventureCoins]);
+        $tags        = new ItemTags([ItemTag::AdventureCoins]);
         $rarity      = ItemRarity::Epic;
 
         $itemInfo     = ItemInfo::create($name, $description, $tags, $rarity)->unwrap();

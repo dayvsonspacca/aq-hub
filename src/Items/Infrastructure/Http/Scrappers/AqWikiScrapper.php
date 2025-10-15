@@ -7,7 +7,7 @@ namespace AqHub\Items\Infrastructure\Http\Scrappers;
 use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, Name};
 use AqHub\Items\Infrastructure\Data\WikiItemData;
-use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\Enums\ItemTag;
 use AqHub\Shared\Domain\ValueObjects\Result;
 use GuzzleHttp\Client;
 
@@ -37,7 +37,7 @@ class AqWikiScrapper
                     preg_match_all('/\/image-tags\/(ac|rare|pseudo|legend|special|seasonal)large\.png/i', $html, $tagMatches);
                     if (!empty($tagMatches[1])) {
                         foreach ($tagMatches[1] as $tagString) {
-                            $result = TagType::fromString($tagString);
+                            $result = ItemTag::fromString($tagString);
                             if ($result->isSuccess()) {
                                 $itemTags->add($result->getData());
                             }

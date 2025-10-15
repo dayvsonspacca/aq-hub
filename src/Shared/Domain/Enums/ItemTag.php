@@ -8,7 +8,7 @@ use AqHub\Shared\Domain\Contracts\{FromString, ToString};
 use AqHub\Shared\Domain\ValueObjects\Result;
 use InvalidArgumentException;
 
-enum TagType implements FromString, ToString
+enum ItemTag implements FromString, ToString
 {
     case Legend;
     case AdventureCoins;
@@ -18,7 +18,7 @@ enum TagType implements FromString, ToString
     case SpecialOffer;
 
     /**
-     * @return Result<TagType>
+     * @return Result<ItemTag>
      */
     public static function fromString(string $string): Result
     {

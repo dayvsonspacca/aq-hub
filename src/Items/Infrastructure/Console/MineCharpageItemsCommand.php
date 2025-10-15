@@ -10,7 +10,7 @@ use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
 use AqHub\Player\Application\UseCases\AddPlayer;
 use AqHub\Player\Domain\ValueObjects\{Name as PlayerName};
-use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\Enums\ItemTag;
 use GuzzleHttp\Client;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\{InputArgument, InputInterface};
@@ -184,10 +184,10 @@ class MineCharpageItemsCommand extends Command
 
             $itemTags = new ItemTags();
             if ($object['bUpgrade']) {
-                $itemTags->add(TagType::Legend);
+                $itemTags->add(ItemTag::Legend);
             }
             if ($object['bCoins']) {
-                $itemTags->add(TagType::AdventureCoins);
+                $itemTags->add(ItemTag::AdventureCoins);
             }
 
             $itemInfo = ItemInfo::create($itemName, $description, $itemTags)->getData();
@@ -252,10 +252,10 @@ class MineCharpageItemsCommand extends Command
 
             $itemTags = new ItemTags();
             if ($object['bUpgrade']) {
-                $itemTags->add(TagType::Legend);
+                $itemTags->add(ItemTag::Legend);
             }
             if ($object['bCoins']) {
-                $itemTags->add(TagType::AdventureCoins);
+                $itemTags->add(ItemTag::AdventureCoins);
             }
 
             $itemInfo = ItemInfo::create($itemName, $description, $itemTags)->getData();

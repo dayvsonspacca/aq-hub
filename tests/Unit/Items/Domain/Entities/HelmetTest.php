@@ -8,7 +8,7 @@ use AqHub\Items\Domain\Entities\Helmet;
 use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
-use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\Enums\ItemTag;
 use AqHub\Tests\Unit\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -19,7 +19,7 @@ final class HelmetTest extends TestCase
     {
         $name        = 'Auroran Cryomagus Ponytail';
         $description = 'I forgot the description';
-        $tags        = new ItemTags([TagType::AdventureCoins]);
+        $tags        = new ItemTags([ItemTag::AdventureCoins]);
         $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Epic)->unwrap();
         $id          = ItemIdentifierGenerator::generate($itemInfo, Helmet::class)->unwrap();
 

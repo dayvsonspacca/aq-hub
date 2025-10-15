@@ -7,7 +7,7 @@ namespace AqHub\Tests\Integration\Items\Infrastructure\Http\Scrapper;
 use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, Name};
 use AqHub\Items\Infrastructure\Http\Scrappers\AqWikiScrapper;
-use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\Enums\ItemTag;
 use AqHub\Tests\Unit\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -26,7 +26,7 @@ final class AqWikiScrapperTest extends TestCase
         $this->assertSame($itemData->name, $name);
         $this->assertEquals($itemData->description->value, Description::create('An AWE-some cape for the truly awesome. Gives 25% more rep, gold, XP and class points when equipped.')->unwrap()->value);
         $this->assertEquals($itemData->rarity, ItemRarity::Awesome);
-        $this->assertEquals($itemData->tags, new ItemTags([TagType::AdventureCoins]));
+        $this->assertEquals($itemData->tags, new ItemTags([ItemTag::AdventureCoins]));
         $this->assertEquals($itemData->canAccessBank, null);
     }
 

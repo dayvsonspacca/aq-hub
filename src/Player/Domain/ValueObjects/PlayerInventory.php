@@ -6,7 +6,7 @@ namespace AqHub\Player\Domain\ValueObjects;
 
 use AqHub\Items\Domain\Abstractions\AqwItem;
 use AqHub\Shared\Domain\Abstractions\Inventory;
-use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\Enums\ItemTag;
 use AqHub\Shared\Domain\ValueObjects\Result;
 
 class PlayerInventory extends Inventory
@@ -30,7 +30,7 @@ class PlayerInventory extends Inventory
     /** @return Result<null> */
     public function delete(AqwItem $item)
     {
-        if ($item->getTags()->has(TagType::AdventureCoins)) {
+        if ($item->getTags()->has(ItemTag::AdventureCoins)) {
             return Result::error('You cant delete that item, AC tag present.', null);
         }
 

@@ -7,7 +7,7 @@ namespace AqHub\Tests\Unit\Items\Domain\Repositories\Filters;
 use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Repositories\Filters\DefaultFilters;
 use AqHub\Items\Domain\ValueObjects\Name;
-use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\Enums\ItemTag;
 use AqHub\Tests\Unit\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -80,7 +80,7 @@ final class DefaultFiltersTest extends TestCase
 
         $filter->setRarities([ItemRarity::Epic]);
         $filter->setName(Name::create('Archfiend Doomlord')->unwrap());
-        $filter->setTags([TagType::AdventureCoins]);
+        $filter->setTags([ItemTag::AdventureCoins]);
 
         $this->assertSame($filter->generateUniqueKey(), '5e0541a095e2b8d0a0caa81b7b885bc5');
     }

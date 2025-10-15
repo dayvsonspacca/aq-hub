@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Domain\Repositories\Filters;
 
-use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\Enums\ItemTag;
 
 trait CanFilterTags
 {
     /**
-     * @var TagType[] $tags
+     * @var ItemTag[] $tags
      */
     public array $tags = [];
 
     /**
-     * @param TagType[] $tags
+     * @param ItemTag[] $tags
      */
     public function setTags(array $tags)
     {

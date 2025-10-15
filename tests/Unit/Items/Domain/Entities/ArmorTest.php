@@ -8,7 +8,7 @@ use AqHub\Items\Domain\Entities\Armor;
 use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
-use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\Enums\ItemTag;
 use AqHub\Tests\Unit\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -19,7 +19,7 @@ final class ArmorTest extends TestCase
     {
         $name        = 'ArchFiend DoomLord';
         $description = "Not even the dark magic of the Shadowscythe is enough to satisfy this soul's lust for power.";
-        $tags        = new ItemTags([TagType::AdventureCoins]);
+        $tags        = new ItemTags([ItemTag::AdventureCoins]);
         $itemInfo    = ItemInfo::create(Name::create($name)->unwrap(), Description::create($description)->unwrap(), $tags, ItemRarity::Epic)->unwrap();
         $id          = ItemIdentifierGenerator::generate($itemInfo, Armor::class)->unwrap();
 

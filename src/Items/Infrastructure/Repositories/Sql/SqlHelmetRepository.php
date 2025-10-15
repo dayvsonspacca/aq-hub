@@ -9,7 +9,7 @@ use AqHub\Items\Domain\Repositories\Data\HelmetData;
 use AqHub\Items\Domain\Repositories\HelmetRepository;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
-use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\Enums\ItemTag;
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 use AqHub\Shared\Infrastructure\Database\Connection;
 use DateTime;
@@ -48,7 +48,7 @@ class SqlHelmetRepository implements HelmetRepository
             ->bindValue('helmet_id', $helmetData['id']);
 
         $tagsData  = $this->db->fetchAll($select->getStatement(), ['helmet_id' => $helmetData['id']]);
-        $tags      = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+        $tags      = new ItemTags(array_map(fn ($row) => ItemTag::fromString($row['tag'])->unwrap(), $tagsData));
 
         return Result::success(
             null,

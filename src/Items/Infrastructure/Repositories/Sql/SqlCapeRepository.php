@@ -11,7 +11,7 @@ use AqHub\Items\Domain\Repositories\Data\CapeData;
 use AqHub\Items\Domain\Repositories\Filters\CapeFilter;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
-use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\Enums\ItemTag;
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 use AqHub\Shared\Infrastructure\Database\Connection;
 use DateTime;
@@ -163,7 +163,7 @@ class SqlCapeRepository implements CapeRepository
 
         $tagsMap = [];
         foreach ($tagsData as $row) {
-            $tagsMap[(int)$row['cape_id']][] = TagType::fromString($row['tag'])->unwrap();
+            $tagsMap[(int)$row['cape_id']][] = ItemTag::fromString($row['tag'])->unwrap();
         }
 
         return $tagsMap;
@@ -189,7 +189,7 @@ class SqlCapeRepository implements CapeRepository
             ->bindValue('cape_id', $capeId);
 
         $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), $tagsSelect->getBindValues());
-        $tags     = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+        $tags     = new ItemTags(array_map(fn ($row) => ItemTag::fromString($row['tag'])->unwrap(), $tagsData));
 
         return Result::success(null, $this->buildCapeData($capeData, $tags));
     }

@@ -10,7 +10,7 @@ use AqHub\Items\Domain\Repositories\Data\WeaponData;
 use AqHub\Items\Domain\Repositories\WeaponRepository;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
-use AqHub\Shared\Domain\Enums\TagType;
+use AqHub\Shared\Domain\Enums\ItemTag;
 use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
 use AqHub\Shared\Infrastructure\Database\Connection;
 use DateTime;
@@ -46,7 +46,7 @@ class SqlWeaponRepository implements WeaponRepository
             ->bindValue('weapon_id', $weaponData['id']);
 
         $tagsData = $this->db->fetchAll($tagsSelect->getStatement(), ['weapon_id' => $weaponData['id']]);
-        $tags     = new ItemTags(array_map(fn ($row) => TagType::fromString($row['tag'])->unwrap(), $tagsData));
+        $tags     = new ItemTags(array_map(fn ($row) => ItemTag::fromString($row['tag'])->unwrap(), $tagsData));
 
         $name        = Name::create($weaponData['name'])->unwrap();
         $description = Description::create($weaponData['description'])->unwrap();
