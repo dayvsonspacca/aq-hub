@@ -6,8 +6,8 @@ namespace AqHub\Core\Infrastructure\Database;
 
 use AqHub\Core\Env;
 use PDO;
-use PDOException;
 use RuntimeException;
+use Throwable;
 
 class PgsqlConnection
 {
@@ -20,9 +20,9 @@ class PgsqlConnection
         $this->establishConnection($env);
     }
 
-    public static function instance(Env $env): self
+    public static function instance(Env $env, bool $forceReload = false): self
     {
-        if (self::$instance === null) {
+        if (self::$instance === null || $forceReload) {
             self::$instance = new self($env);
         }
         return self::$instance;
@@ -46,8 +46,8 @@ class PgsqlConnection
             ];
 
             $this->connection = new PDO($dsn, $username, $password, $options);
-        } catch (PDOException $e) {
-            throw new RuntimeException('PostgreSQL Singleton connection failed: ' . $e->getMessage());
+        } catch (Throwable $e) {
+            throw new RuntimeException('PostgreSQL connection failed: ' . $e->getMessage());
         }
     }
 }

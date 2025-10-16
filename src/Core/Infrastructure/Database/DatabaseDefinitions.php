@@ -16,7 +16,7 @@ class DatabaseDefinitions implements DefinitionsInterface
     public static function dependencies(): array
     {
         return [
-            PgsqlConnection::class => factory([PgsqlConnection::class, 'instance'])->parameter('env', get(Env::class)),
+            PgsqlConnection::class => factory([PgsqlConnection::class, 'instance'])->parameter('env', get(Env::class))->parameter('forceReload', false),
             'QueryBuilder.Pgsql' => new QueryFactory('pgsql')
         ];
     }
