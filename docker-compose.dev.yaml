@@ -18,6 +18,7 @@ services:
     volumes:
       - dev_db_data:/var/lib/postgresql/data
       - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql 
+      - ./docker/inserts.sql:/docker-entrypoint-initdb.d/inserts.sql 
     container_name: aqhub-db
     environment:
       POSTGRES_DB: postgres
