@@ -11,7 +11,7 @@ use AqHub\Items\Infrastructure\Repositories\Pgsql\PgsqlArmorRepository;
 
 use function DI\{autowire, get};
 
-class ItemsDefinations implements DefinitionsInterface
+class ItemsDefinitions implements DefinitionsInterface
 {
     public static function dependencies(): array
     {
