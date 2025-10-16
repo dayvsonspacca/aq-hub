@@ -65,6 +65,9 @@ class PgsqlArmorRepository implements ArmorRepository
             return null;
         }
 
+        $tags           = $this->findAllTags([$result['id']]);
+        $result['tags'] = $tags[$result['id']];
+
         return $this->hydrate($result);
     }
 
