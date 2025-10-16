@@ -7,7 +7,6 @@ namespace AqHub\Items\Infrastructure\Repositories\Sql;
 use AqHub\Core\Result;
 use AqHub\Items\Domain\Entities\Armor;
 use AqHub\Items\Domain\Enums\ItemRarity;
-use AqHub\Items\Domain\Repositories\ArmorRepository;
 use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
 use AqHub\Items\Domain\Services\ItemIdentifierGenerator;

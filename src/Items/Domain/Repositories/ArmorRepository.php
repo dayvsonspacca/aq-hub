@@ -6,8 +6,7 @@ namespace AqHub\Items\Domain\Repositories;
 
 use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
-use AqHub\Shared\Domain\Repositories\CanFindAll;
-use AqHub\Shared\Domain\Repositories\CanFindByIdentifier;
+use AqHub\Shared\Domain\Repositories\{CanFindAll, CanFindByIdentifier};
 use AqHub\Shared\Domain\ValueObjects\StringIdentifier;
 
 /**

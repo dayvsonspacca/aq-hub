@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Infrastructure\Http\Clients;
 
-use AqHub\Player\Domain\ValueObjects\Name;
 use AqHub\Core\Result;
+use AqHub\Player\Domain\ValueObjects\Name;
 use DomainException;
 use GuzzleHttp\Client;
 

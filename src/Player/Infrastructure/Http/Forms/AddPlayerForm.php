@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Http\Forms;
 
-use AqHub\Player\Domain\ValueObjects\Name;
 use AqHub\Core\Result;
+use AqHub\Player\Domain\ValueObjects\Name;
 use Symfony\Component\HttpFoundation\Request;
 
 class AddPlayerForm

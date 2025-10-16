@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Domain\Repositories;
 
-use AqHub\Shared\Domain\Abstractions\Data;
-use AqHub\Shared\Domain\Abstractions\Filter;
+use AqHub\Shared\Domain\Abstractions\{Data, Filter};
 
 interface CanFindAll
 {

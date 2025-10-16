@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Application\UseCases;
 
+use AqHub\Core\Result;
 use AqHub\Player\Domain\Entities\Player;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Player\Domain\ValueObjects\Name;
 use AqHub\Player\Infrastructure\Http\Scrappers\CharpageScrapper;
 use AqHub\Shared\Domain\Contracts\Cache;
-use AqHub\Core\Result;
 
 class AddPlayer
 {

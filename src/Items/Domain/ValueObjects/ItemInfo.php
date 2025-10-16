@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Domain\ValueObjects;
 
-use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Core\Result;
+use AqHub\Items\Domain\Enums\ItemRarity;
 
 class ItemInfo
 {

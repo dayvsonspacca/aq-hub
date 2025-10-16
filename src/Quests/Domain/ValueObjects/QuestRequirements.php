@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Quests\Domain\ValueObjects;
 
-use AqHub\Quests\Domain\Contracts\QuestRequirementInterface;
 use AqHub\Core\Result;
+use AqHub\Quests\Domain\Contracts\QuestRequirementInterface;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;

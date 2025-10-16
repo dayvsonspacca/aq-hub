@@ -8,7 +8,6 @@ use AqHub\Core\Env;
 use AqHub\Core\Infrastructure\Database\PgsqlConnection;
 use AqHub\Tests\TestCase;
 use AqHub\Tests\Traits\HasContainer;
-use PDOException;
 use PHPUnit\Framework\Attributes\Test;
 use RuntimeException;
 

@@ -38,11 +38,11 @@ class PgsqlConnection
             $dbname   = $config->name;
             $username = $config->user;
             $password = $config->password;
-            $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
+            $dsn      = "pgsql:host=$host;port=$port;dbname=$dbname";
 
             $options = [
                 PDO::ATTR_PERSISTENT => false,
-                PDO::ATTR_ERRMODE    => PDO::ERRMODE_EXCEPTION
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
             ];
 
             $this->connection = new PDO($dsn, $username, $password, $options);

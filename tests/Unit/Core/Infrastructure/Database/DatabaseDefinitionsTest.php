@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Tests\Unit\Core\Infrastructure\Database;
 
-use AqHub\Core\{ContainerFactory, CoreDefinitions, Env};
-use AqHub\Core\Infrastructure\Database\DatabaseDefinitions;
-use AqHub\Core\Infrastructure\Database\PgsqlConnection;
+use AqHub\Core\{ContainerFactory};
+use AqHub\Core\Infrastructure\Database\{DatabaseDefinitions, PgsqlConnection};
 use AqHub\Tests\TestCase;
 use DI\Container;
 use PHPUnit\Framework\Attributes\Test;

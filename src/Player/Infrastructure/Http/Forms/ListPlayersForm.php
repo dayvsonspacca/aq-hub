@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Infrastructure\Http\Forms;
 
-use AqHub\Player\Domain\Repositories\Filters\PlayerFilter;
 use AqHub\Core\Result;
+use AqHub\Player\Domain\Repositories\Filters\PlayerFilter;
 use Symfony\Component\HttpFoundation\Request;
 
 class ListPlayersForm

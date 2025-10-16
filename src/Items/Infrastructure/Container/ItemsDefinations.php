@@ -23,7 +23,7 @@ class ItemsDefinations implements DefinitionsInterface
     private static function repositories(): array
     {
         return [
-            ArmorRepository::class      => autowire(PgsqlArmorRepository::class),
+            ArmorRepository::class => autowire(PgsqlArmorRepository::class),
             PgsqlArmorRepository::class => autowire()->constructor(get(PgsqlConnection::class), get('QueryBuilder.Pgsql'))
         ];
     }

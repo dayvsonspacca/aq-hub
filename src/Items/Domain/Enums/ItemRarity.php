@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Domain\Enums;
 
-use AqHub\Shared\Domain\Contracts\{FromString, ToString};
 use AqHub\Core\Result;
+use AqHub\Shared\Domain\Contracts\{FromString, ToString};
 use InvalidArgumentException;
 
 enum ItemRarity implements FromString, ToString

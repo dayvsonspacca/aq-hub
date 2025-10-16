@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace AqHub\Core\Infrastructure\Database;
 
+use AqHub\Core\Env;
 use AqHub\Core\Interfaces\DefinitionsInterface;
 use Aura\SqlQuery\QueryFactory;
-use AqHub\Core\Env;
 
-use function DI\factory;
-use function DI\get;
+use function DI\{factory, get};
 
 class DatabaseDefinitions implements DefinitionsInterface
 {

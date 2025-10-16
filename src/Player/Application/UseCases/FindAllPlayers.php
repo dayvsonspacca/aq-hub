@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Application\UseCases;
 
+use AqHub\Core\Result;
 use AqHub\Player\Domain\Repositories\Data\PlayerData;
 use AqHub\Player\Domain\Repositories\Filters\PlayerFilter;
 use AqHub\Player\Domain\Repositories\PlayerRepository;
 use AqHub\Shared\Domain\Contracts\Cache;
-use AqHub\Core\Result;
 use Symfony\Contracts\Cache\ItemInterface;
 
 class FindAllPlayers
