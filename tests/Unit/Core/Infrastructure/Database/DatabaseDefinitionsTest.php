@@ -25,12 +25,13 @@ final class DatabaseDefinitionsTest extends TestCase
     {
         $dependencies = DatabaseDefinitions::dependencies();
 
-        $this->assertCount(1, $dependencies);
+        $this->assertCount(2, $dependencies);
     }
 
     #[Test]
     public function should_have_database_definitions()
     {
         $this->assertTrue($this->container->has(PgsqlConnection::class));
+        $this->assertTrue($this->container->has('QueryBuilder.Pgsql'));
     }
 }
