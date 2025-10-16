@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Tests\Integration\Items\Infrastructure\Repositories\Pgsql;
 
-use AqHub\Core\ContainerFactory;
-use AqHub\Core\CoreDefinitions;
+use AqHub\Core\{ContainerFactory, CoreDefinitions};
 use AqHub\Core\Infrastructure\Database\DatabaseDefinitions;
-use AqHub\Items\Domain\Entities\Armor;
 use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Items\Infrastructure\Container\ItemsDefinitions;
 use AqHub\Items\Infrastructure\Repositories\Pgsql\PgsqlArmorRepository;

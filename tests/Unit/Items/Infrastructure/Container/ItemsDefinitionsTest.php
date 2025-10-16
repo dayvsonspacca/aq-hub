@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Items\Infrastructure\Container;
 
 use AqHub\Items\Infrastructure\Container\ItemsDefinitions;
-use PHPUnit\Framework\Attributes\Test;
 use AqHub\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 final class ItemsDefinitionsTest extends TestCase
 {

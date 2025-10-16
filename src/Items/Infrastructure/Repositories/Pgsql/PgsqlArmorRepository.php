@@ -23,14 +23,15 @@ class PgsqlArmorRepository implements ArmorRepository
     public function __construct(
         private readonly PgsqlConnection $db,
         private readonly QueryFactory $query
-    ) {}
+    ) {
+    }
 
     public function hydrate(array $data): ArmorData
     {
         $name         = Name::create($data['name'])->unwrap();
         $description  = Description::create($data['description'])->unwrap();
         $identifier   = StringIdentifier::create($data['hash'])->unwrap();
-        $tags         = new ItemTags(array_map(fn(string $tag) => ItemTag::fromString($tag)->unwrap(), $data['tags']));
+        $tags         = new ItemTags(array_map(fn (string $tag) => ItemTag::fromString($tag)->unwrap(), $data['tags']));
         $registeredAt = new DateTime($data['registered_at']);
 
         $rarity = ItemRarity::fromString($data['rarity'] ?? '');
@@ -85,12 +86,12 @@ class PgsqlArmorRepository implements ArmorRepository
             ->cols(['a.*']);
 
         if (count($filter->rarities) > 0) {
-            $select->where('rarity IN (:rarities)', ['rarities' => array_map(fn($rarity) => $rarity->toString(), $filter->rarities)]);
+            $select->where('rarity IN (:rarities)', ['rarities' => array_map(fn ($rarity) => $rarity->toString(), $filter->rarities)]);
         }
 
         if (count($filter->tags) > 0) {
             $select->join('INNER', 'armor_tags as at', 'a.id = at.armor_id');
-            $select->where('at.tag IN (:tags)', ['tags' => array_map(fn($tag) => $tag->toString(), $filter->tags)]);
+            $select->where('at.tag IN (:tags)', ['tags' => array_map(fn ($tag) => $tag->toString(), $filter->tags)]);
             $select->distinct();
         }
 
