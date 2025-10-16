@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Domain\Abstractions;
 
-abstract class Identifier
+abstract class Filter
 {
-    abstract public function getValue();
 }

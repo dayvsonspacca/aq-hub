@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Shared\Domain\ValueObjects;
 
 use AqHub\Core\Result;
-use AqHub\Shared\Domain\Abstractions\Identifier;
+use AqHub\Shared\Domain\Contracts\Identifier;
 
 /**
  * Represents an identifier based on a positive integer value.
@@ -23,7 +23,7 @@ use AqHub\Shared\Domain\Abstractions\Identifier;
  * }
  * ```
  */
-class IntIdentifier extends Identifier
+class IntIdentifier implements Identifier
 {
     /**
      * Private constructor to enforce controlled instantiation

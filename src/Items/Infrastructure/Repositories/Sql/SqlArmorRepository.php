@@ -18,7 +18,7 @@ use AqHub\Shared\Infrastructure\Database\Connection;
 use DateTime;
 use DomainException;
 
-class SqlArmorRepository implements ArmorRepository
+class SqlArmorRepository
 {
     public function __construct(private readonly Connection $db)
     {
@@ -27,7 +27,7 @@ class SqlArmorRepository implements ArmorRepository
     /**
      * @return Result<ArmorData|null>
      */
-    public function findByIdentifier(StringIdentifier $identifier): Result
+    public function findByIdentdsadaifier(StringIdentifier $identifier): Result
     {
         $select = $this->db->builder->newSelect()
             ->from('armors')
@@ -46,7 +46,7 @@ class SqlArmorRepository implements ArmorRepository
     /**
      * @return Result<array<ArmorData>>
      */
-    public function findAll(ArmorFilter $filter): Result
+    public function dasd(ArmorFilter $filter): Result
     {
         $select = $this->db->builder->newSelect()
             ->from('armors as a')

@@ -4,84 +4,27 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Infrastructure\Container;
 
-use AqHub\Items\Application\UseCases\Armor\{AddArmor, FindAllArmors};
-use AqHub\Items\Application\UseCases\Cape\{AddCape, FindAllCapes};
-use AqHub\Items\Application\UseCases\Helmet\AddHelmet;
-use AqHub\Items\Application\UseCases\Weapon\AddWeapon;
-use AqHub\Items\Domain\Repositories\{ArmorRepository, CapeRepository, HelmetRepository, WeaponRepository};
-use AqHub\Items\Infrastructure\Console\{MineAllPlayersItemsCommand, MineCharpageItemsCommand};
-use AqHub\Items\Infrastructure\Http\Controllers\ArmorController;
-use AqHub\Items\Infrastructure\Repositories\Sql\{SqlArmorRepository, SqlCapeRepository, SqlHelmetRepository, SqlWeaponRepository};
-use AqHub\Shared\Infrastructure\Container\Definations;
-use AqHub\Shared\Infrastructure\Database\Connection;
+use AqHub\Core\Infrastructure\Database\PgsqlConnection;
+use AqHub\Core\Interfaces\DefinitionsInterface;
+use AqHub\Items\Domain\Repositories\ArmorRepository;
+use AqHub\Items\Infrastructure\Repositories\Pgsql\PgsqlArmorRepository;
 
 use function DI\{autowire, get};
 
-class ItemsDefinations implements Definations
+class ItemsDefinations implements DefinitionsInterface
 {
-    public static function getDefinitions(): array
+    public static function dependencies(): array
     {
         return array_merge(
-            self::repositories(),
-            self::commands(),
-            self::useCases(),
-            self::controllers()
+            self::repositories()
         );
     }
 
     private static function repositories(): array
     {
         return [
-            SqlWeaponRepository::class => autowire()->constructor(get(Connection::class)),
-            SqlArmorRepository::class => autowire()->constructor(get(Connection::class)),
-            SqlHelmetRepository::class => autowire()->constructor(get(Connection::class)),
-            SqlCapeRepository::class => autowire()->constructor(get(Connection::class)),
-            WeaponRepository::class => autowire(SqlWeaponRepository::class),
-            ArmorRepository::class => autowire(SqlArmorRepository::class),
-            HelmetRepository::class => autowire(SqlHelmetRepository::class),
-            CapeRepository::class => autowire(SqlCapeRepository::class)
-        ];
-    }
-
-    private static function commands(): array
-    {
-        return [
-            MineAllPlayersItemsCommand::class => autowire(),
-            MineCharpageItemsCommand::class => autowire()
-        ];
-    }
-
-    private static function useCases(): array
-    {
-        return [
-            AddWeapon::class => autowire(),
-            AddArmor::class => autowire()->constructor(
-                get(ArmorRepository::class),
-                get('Cache.Armors')
-            ),
-            AddHelmet::class => autowire()->constructor(
-                get(HelmetRepository::class),
-                get('Cache.Helmets')
-            ),
-            AddCape::class => autowire()->constructor(
-                get(CapeRepository::class),
-                get('Cache.Capes')
-            ),
-            FindAllArmors::class => autowire()->constructor(
-                get(ArmorRepository::class),
-                get('Cache.Armors')
-            ),
-            FindAllCapes::class => autowire()->constructor(
-                get(CapeRepository::class),
-                get('Cache.Capes')
-            ),
-        ];
-    }
-
-    private static function controllers(): array
-    {
-        return [
-            ArmorController::class => autowire()
+            ArmorRepository::class      => autowire(PgsqlArmorRepository::class),
+            PgsqlArmorRepository::class => autowire()->constructor(get(PgsqlConnection::class), get('QueryBuilder.Pgsql'))
         ];
     }
 }

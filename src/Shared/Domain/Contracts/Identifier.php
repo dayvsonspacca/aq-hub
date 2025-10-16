@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Domain\Contracts;
 
-interface Filter
+interface Identifier
 {
-    public function toArray(): array;
+    public function getValue();
 }

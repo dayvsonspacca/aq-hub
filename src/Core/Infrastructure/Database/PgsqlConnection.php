@@ -13,7 +13,7 @@ final class PgsqlConnection
 {
     private static ?self $instance = null;
 
-    private PDO $connection;
+    public readonly PDO $connection;
 
     private function __construct(Env $env)
     {
