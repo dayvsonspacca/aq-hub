@@ -6,7 +6,7 @@ namespace AqHub\Player\Infrastructure\Container;
 
 use AqHub\Core\Interfaces\DefinitionsInterface;
 
-class PlayerDefinations implements DefinitionsInterface
+class PlayerDefinitions implements DefinitionsInterface
 {
     public static function dependencies(): array
     {
