@@ -4,41 +4,16 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Infrastructure\Http\Controllers;
 
-use AqHub\Items\Application\UseCases\Armor\ArmorUseCases;
-use AqHub\Items\Infrastructure\Http\Forms\FindArmorsForm;
-use AqHub\Items\Infrastructure\Http\Presenters\ArmorPresenter;
-use AqHub\Shared\Infrastructure\Http\Route;
-use RuntimeException;
-use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
+use AqHub\Core\Infrastructure\Http\Interfaces\RestController;
+use AqHub\Core\Infrastructure\Http\Route;
+use Symfony\Component\HttpFoundation\Request;
 
-class ArmorController
+class ArmorController implements RestController
 {
-    public function __construct(
-        private readonly ArmorUseCases $armorUseCases
-    ) {
-    }
+    public function __construct() {}
 
     #[Route(path: '/armors/list', methods: ['GET'])]
-    public function list(Request $request): JsonResponse
+    public function list(Request $request)
     {
-        $result = FindArmorsForm::fromRequest($request);
-        if ($result->isError()) {
-            return new JsonResponse(['message' => $result->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        $filter = $result->getData();
-        $armors = $this->armorUseCases->findAll->execute($filter);
-
-        if ($armors->isError()) {
-            throw new RuntimeException($armors->getMessage());
-        }
-
-        $armors = $armors->getData();
-        $armors = ArmorPresenter::array($armors);
-
-        return new JsonResponse([
-            'filter' => $filter->toArray(),
-            'armors' => $armors
-        ], Response::HTTP_OK);
     }
 }
