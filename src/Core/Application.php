@@ -15,7 +15,7 @@ use Throwable;
  * This class is responsible for bootstrapping the Dependency Injection (DI)
  * Container and providing access to the application's core services.
  */
-final class Application
+class Application
 {
     /**
      * @param Container $container The configured Dependency Injection container instance.

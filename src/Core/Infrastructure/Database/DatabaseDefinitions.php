@@ -11,7 +11,7 @@ use AqHub\Core\Env;
 use function DI\factory;
 use function DI\get;
 
-final class DatabaseDefinitions implements DefinitionsInterface
+class DatabaseDefinitions implements DefinitionsInterface
 {
     public static function dependencies(): array
     {

@@ -10,7 +10,7 @@ use function DI\{autowire, get};
 
 use DI\Container;
 
-final class HttpDefinitions implements DefinitionsInterface
+class HttpDefinitions implements DefinitionsInterface
 {
     public static function dependencies(): array
     {

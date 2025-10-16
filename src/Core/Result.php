@@ -9,7 +9,7 @@ use DomainException;
 /**
  * @template T
  */
-final class Result
+class Result
 {
     private ResultStatus $status;
     private ?string $message;

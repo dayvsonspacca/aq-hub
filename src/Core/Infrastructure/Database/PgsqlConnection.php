@@ -9,7 +9,7 @@ use PDO;
 use PDOException;
 use RuntimeException;
 
-final class PgsqlConnection
+class PgsqlConnection
 {
     private static ?self $instance = null;
 

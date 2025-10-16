@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\{RequestContext, Route as SymfonyRoute, RouteCollection};
 
-final class HttpHandler
+class HttpHandler
 {
     private RouteCollection $routes;
 

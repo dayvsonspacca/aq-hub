@@ -10,7 +10,7 @@ use AqHub\Shared\Domain\Abstractions\Data;
 use AqHub\Shared\Domain\ValueObjects\StringIdentifier;
 use DateTime;
 
-final class ArmorData extends Data
+class ArmorData extends Data
 {
     public function __construct(
         public readonly StringIdentifier $identifier,

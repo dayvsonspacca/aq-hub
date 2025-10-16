@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Core;
 
-final class Env
+class Env
 {
     private static ?self $instance = null;
 

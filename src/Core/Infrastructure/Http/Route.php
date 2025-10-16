@@ -7,7 +7,7 @@ namespace AqHub\Core\Infrastructure\Http;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_METHOD)]
-final class Route
+class Route
 {
     public function __construct(
         public string $path,
