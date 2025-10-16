@@ -12,9 +12,9 @@ class Env
     {
     }
 
-    public static function load(array $vars): self
+    public static function load(array $vars, bool $forceReload = false): self
     {
-        if (self::$instance === null) {
+        if (self::$instance === null || $forceReload) {
             self::$instance = new self($vars);
         }
 
