@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Domain\Entities;
 
+use AqHub\Core\Result;
 use AqHub\Player\Domain\ValueObjects\{Level, Name, PlayerInventory};
 use AqHub\Shared\Domain\Abstractions\Entity;
-use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
+use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 
 class Player extends Entity
 {

@@ -6,7 +6,7 @@ namespace AqHub\Tests\Unit\Items\Domain\ValueObjects;
 
 use AqHub\Items\Domain\ValueObjects\ItemTags;
 use AqHub\Shared\Domain\Enums\ItemTag;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class ItemTagsTest extends TestCase

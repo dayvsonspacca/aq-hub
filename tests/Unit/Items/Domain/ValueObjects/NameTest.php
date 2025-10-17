@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Items\Domain\ValueObjects;
 
 use AqHub\Items\Domain\ValueObjects\Name;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class NameTest extends TestCase

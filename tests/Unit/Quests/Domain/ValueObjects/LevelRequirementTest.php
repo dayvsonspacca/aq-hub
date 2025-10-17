@@ -8,7 +8,7 @@ use AqHub\Player\Domain\Entities\Player;
 use AqHub\Player\Domain\ValueObjects\{Level, Name, PlayerInventory};
 use AqHub\Quests\Domain\ValueObjects\LevelRequirement;
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class LevelRequirementTest extends TestCase

@@ -10,7 +10,7 @@ use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
 use AqHub\Player\Domain\ValueObjects\PlayerInventory;
 use AqHub\Shared\Domain\Enums\ItemTag;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class PlayerInventoryTest extends TestCase

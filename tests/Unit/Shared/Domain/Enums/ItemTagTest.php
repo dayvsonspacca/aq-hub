@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Shared\Domain\Enums;
 
 use AqHub\Shared\Domain\Enums\ItemTag;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class ItemTagTest extends TestCase

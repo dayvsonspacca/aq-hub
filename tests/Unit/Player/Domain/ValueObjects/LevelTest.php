@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Player\Domain\ValueObjects;
 
 use AqHub\Player\Domain\ValueObjects\Level;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class LevelTest extends TestCase

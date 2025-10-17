@@ -6,10 +6,11 @@ namespace AqHub\Items\Domain\Repositories\Data;
 
 use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, Name};
+use AqHub\Shared\Domain\Abstractions\Data;
 use AqHub\Shared\Domain\ValueObjects\StringIdentifier;
 use DateTime;
 
-class ArmorData
+class ArmorData extends Data
 {
     public function __construct(
         public readonly StringIdentifier $identifier,
@@ -21,7 +22,7 @@ class ArmorData
     ) {
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->identifier->getValue(),

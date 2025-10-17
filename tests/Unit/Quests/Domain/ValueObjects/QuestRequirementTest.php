@@ -9,7 +9,7 @@ use AqHub\Player\Domain\ValueObjects\{Level, Name, PlayerInventory};
 use AqHub\Quests\Domain\Entities\Quest;
 use AqHub\Quests\Domain\ValueObjects\{LevelRequirement, QuestRequirement, QuestRequirements};
 use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class QuestRequirementTest extends TestCase
