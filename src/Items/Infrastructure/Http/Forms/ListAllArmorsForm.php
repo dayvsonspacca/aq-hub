@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Items\Infrastructure\Http\Forms;
 
 use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
-use AqHub\Items\Infrastructure\Http\Forms\Traits\MapsName;
-use AqHub\Items\Infrastructure\Http\Forms\Traits\MapsPagination;
-use AqHub\Items\Infrastructure\Http\Forms\Traits\MapsRarities;
-use AqHub\Items\Infrastructure\Http\Forms\Traits\MapsTags;
+use AqHub\Items\Infrastructure\Http\Forms\Traits\{MapsName, MapsPagination, MapsRarities, MapsTags};
 use Symfony\Component\HttpFoundation\Request;
 
 class ListAllArmorsForm

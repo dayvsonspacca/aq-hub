@@ -56,7 +56,7 @@ final class QuestRequirementsTest extends TestCase
     #[Test]
     public function should_remove_quest_requirement()
     {
-        $levelRequirement = $this->createMock(LevelRequirement::class);
+        $levelRequirement  = $this->createMock(LevelRequirement::class);
         $questRequirements = new QuestRequirements([$levelRequirement]);
 
         $this->assertSame(1, $questRequirements->count());

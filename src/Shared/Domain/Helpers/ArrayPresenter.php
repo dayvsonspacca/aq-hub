@@ -14,10 +14,10 @@ class ArrayPresenter
     }
 
     /**
-     * @param Data[] $data 
-     * */    
+     * @param Data[] $data
+     * */
     public static function presentCollection(array $data): array
     {
-        return array_map(fn(Data $data) => $data->toArray(), $data);
+        return array_map(fn (Data $data) => $data->toArray(), $data);
     }
 }

@@ -60,7 +60,7 @@ final class PgsqlArmorRepositoryTest extends TestCase
     #[Test]
     public function should_find_all_match_armors_data()
     {
-        $filter = new ArmorFilter();    
+        $filter = new ArmorFilter();
         $armors = $this->repository->findAll($filter);
 
         $this->assertIsArray($armors);
@@ -88,7 +88,7 @@ final class PgsqlArmorRepositoryTest extends TestCase
         $this->assertIsArray($armors);
         $this->assertGreaterThanOrEqual(1, $armors);
     }
-    
+
     #[Test]
     public function should_filter_by_tags()
     {
