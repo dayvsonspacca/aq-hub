@@ -16,18 +16,18 @@ use PHPUnit\Framework\MockObject\MockObject;
 class FindAllTest extends TestCase
 {
     private MockObject&ArmorRepository $repositoryMock;
-    
+
     private FindAll $findAllQuery;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->repositoryMock = $this->createMock(ArmorRepository::class);
-        
+
         $this->findAllQuery = new FindAll($this->repositoryMock);
     }
-    
+
     #[Test]
     public function should_create_find_all_query()
     {
@@ -38,19 +38,19 @@ class FindAllTest extends TestCase
     public function should_call_repository_with_filter_and_return_armors()
     {
         $filter = $this->createMock(ArmorFilter::class);
-        
+
         $expectedArmors = ArmorDataProvider::make()->buildCollection(3);
-        
+
         $this->repositoryMock
              ->expects($this->once())
-             ->method('findAll') 
+             ->method('findAll')
              ->with($this->equalTo($filter))
              ->willReturn($expectedArmors);
-        
+
         $actualArmors = $this->findAllQuery->execute($filter);
-        
+
         $this->assertSame($expectedArmors, $actualArmors);
-        
+
         $this->assertCount(3, $actualArmors);
         $this->assertInstanceOf(ArmorData::class, $actualArmors[0]);
     }
