@@ -8,7 +8,7 @@ use AqHub\Shared\Domain\Abstractions\Filter;
 
 class ArmorFilter extends Filter
 {
-    use DefaultFilters;
+    use HasDefaultFilters;
 
     public function toArray(): array
     {

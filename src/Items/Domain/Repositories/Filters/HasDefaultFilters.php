@@ -6,7 +6,7 @@ namespace AqHub\Items\Domain\Repositories\Filters;
 
 use AqHub\Shared\Domain\Repositories\Filters\CanPaginate;
 
-trait DefaultFilters
+trait HasDefaultFilters
 {
     use CanFilterTags;
     use CanFilterRarities;

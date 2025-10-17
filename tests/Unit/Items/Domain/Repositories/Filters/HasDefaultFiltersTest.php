@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Items\Domain\Repositories\Filters;
 
 use AqHub\Items\Domain\Enums\ItemRarity;
-use AqHub\Items\Domain\Repositories\Filters\DefaultFilters;
+use AqHub\Items\Domain\Repositories\Filters\HasDefaultFilters;
 use AqHub\Items\Domain\ValueObjects\Name;
 use AqHub\Shared\Domain\Enums\ItemTag;
 use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
-final class DefaultFiltersTest extends TestCase
+final class HasDefaultFiltersTest extends TestCase
 {
     #[Test]
     public function should_create_default_filters()
     {
         $filter = new class () {
-            use DefaultFilters;
+            use HasDefaultFilters;
         };
 
         $this->assertCount(5, get_object_vars($filter));
@@ -33,7 +33,7 @@ final class DefaultFiltersTest extends TestCase
     public function should_can_return_array()
     {
         $filter = new class () {
-            use DefaultFilters;
+            use HasDefaultFilters;
 
             public function toArray(): array
             {
@@ -55,7 +55,7 @@ final class DefaultFiltersTest extends TestCase
     public function should_can_generate_filter_unique_key_without_change_values()
     {
         $filter = new class () {
-            use DefaultFilters;
+            use HasDefaultFilters;
 
             public function generateUniqueKey(): string
             {
@@ -70,7 +70,7 @@ final class DefaultFiltersTest extends TestCase
     public function should_can_generate_filter_unique_key_changing_values()
     {
         $filter = new class () {
-            use DefaultFilters;
+            use HasDefaultFilters;
 
             public function generateUniqueKey(): string
             {
