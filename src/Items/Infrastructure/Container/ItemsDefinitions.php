@@ -10,7 +10,7 @@ use AqHub\Items\Domain\Repositories\ArmorRepository;
 use AqHub\Items\Infrastructure\Http\Controllers\Rest\ArmorController;
 use AqHub\Items\Infrastructure\Repositories\Pgsql\PgsqlArmorRepository;
 
-use function DI\{autowire, get};
+use function DI\{add, autowire, get};
 
 class ItemsDefinitions implements DefinitionsInterface
 {
@@ -18,7 +18,7 @@ class ItemsDefinitions implements DefinitionsInterface
     {
         return array_merge(
             self::repositories(),
-            self::controllers()
+            ['Controllers.Rest' => add(self::controllers())]
         );
     }
 
