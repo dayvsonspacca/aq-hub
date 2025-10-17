@@ -7,7 +7,7 @@ namespace AqHub\Items\Infrastructure\Container;
 use AqHub\Core\Infrastructure\Database\PgsqlConnection;
 use AqHub\Core\Interfaces\DefinitionsInterface;
 use AqHub\Items\Domain\Repositories\ArmorRepository;
-use AqHub\Items\Infrastructure\Http\Controllers\ArmorController;
+use AqHub\Items\Infrastructure\Http\Controllers\Rest\ArmorController;
 use AqHub\Items\Infrastructure\Repositories\Pgsql\PgsqlArmorRepository;
 
 use function DI\{autowire, get};

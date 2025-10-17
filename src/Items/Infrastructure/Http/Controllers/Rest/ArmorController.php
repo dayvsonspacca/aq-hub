@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Items\Infrastructure\Http\Controllers;
+namespace AqHub\Items\Infrastructure\Http\Controllers\Rest;
 
 use AqHub\Core\Infrastructure\Http\Interfaces\RestController;
 use AqHub\Core\Infrastructure\Http\Route;
