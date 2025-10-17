@@ -11,7 +11,7 @@ trait HasDefaultFilters
     use FilterableByTags;
     use FilterableByRarities;
     use HandlesPagination;
-    use CanFilterName;
+    use FilterableByName;
 
     protected function defaultsArray(): array
     {

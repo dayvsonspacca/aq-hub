@@ -6,7 +6,7 @@ namespace AqHub\Items\Domain\Repositories\Filters;
 
 use AqHub\Items\Domain\ValueObjects\Name;
 
-trait CanFilterName
+trait FilterableByName
 {
     public ?Name $name = null;
 
