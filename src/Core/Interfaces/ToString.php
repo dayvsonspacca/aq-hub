@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Shared\Domain\Contracts;
+namespace AqHub\Core\Interfaces;
 
 interface ToString
 {
