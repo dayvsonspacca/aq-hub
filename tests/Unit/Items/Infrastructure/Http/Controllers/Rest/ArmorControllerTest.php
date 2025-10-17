@@ -56,8 +56,6 @@ class ArmorControllerTest extends TestCase
              ->with($this->isInstanceOf(ArmorFilter::class)) 
              ->willReturn($mockArmors);
         
-        // ACT (Ação)
-        
         $request = $this->makeRequest(method: 'GET', uri: '/armors/list?page=1');
         $response = $this->controller->list($request);
         
