@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Domain\Abstractions;
 
-abstract class Filter
+use AqHub\Core\Interfaces\ToArray;
+
+abstract class Filter implements ToArray
 {
 }
