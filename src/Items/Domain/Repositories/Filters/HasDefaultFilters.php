@@ -9,7 +9,7 @@ use AqHub\Shared\Domain\Repositories\Filters\HandlesPagination;
 trait HasDefaultFilters
 {
     use FilterableByTags;
-    use CanFilterRarities;
+    use FilterableByRarities;
     use HandlesPagination;
     use CanFilterName;
 

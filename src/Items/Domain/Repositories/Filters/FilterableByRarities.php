@@ -6,7 +6,7 @@ namespace AqHub\Items\Domain\Repositories\Filters;
 
 use AqHub\Items\Domain\Enums\ItemRarity;
 
-trait CanFilterRarities
+trait FilterableByRarities
 {
     /**
      * @var ItemRarity[] $rarities
