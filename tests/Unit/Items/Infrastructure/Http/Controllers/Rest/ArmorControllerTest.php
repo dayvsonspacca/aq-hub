@@ -8,6 +8,7 @@ use AqHub\Core\ContainerFactory;
 use AqHub\Core\CoreDefinitions;
 use AqHub\Core\Infrastructure\Database\DatabaseDefinitions;
 use AqHub\Core\Infrastructure\Http\HttpDefinitions;
+use AqHub\Items\Infrastructure\Container\ItemsDefinitions;
 use AqHub\Items\Infrastructure\Http\Controllers\Rest\ArmorController;
 use AqHub\Tests\TestCase;
 use AqHub\Tests\Traits\DoRequests;
@@ -26,7 +27,8 @@ class ArmorControllerTest extends TestCase
         $this->container = ContainerFactory::make(array_merge(
             CoreDefinitions::dependencies(),
             HttpDefinitions::dependencies(),
-            DatabaseDefinitions::dependencies()
+            DatabaseDefinitions::dependencies(),
+            ItemsDefinitions::dependencies()
         ));
 
         $this->controller = $this->container->get(ArmorController::class);

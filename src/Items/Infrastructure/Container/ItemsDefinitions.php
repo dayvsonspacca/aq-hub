@@ -9,6 +9,7 @@ use AqHub\Core\Interfaces\DefinitionsInterface;
 use AqHub\Items\Domain\Repositories\ArmorRepository;
 use AqHub\Items\Infrastructure\Http\Controllers\Rest\ArmorController;
 use AqHub\Items\Infrastructure\Repositories\Pgsql\PgsqlArmorRepository;
+use AqHub\Items\Application\Armors;
 
 use function DI\{add, autowire, get};
 
@@ -18,6 +19,7 @@ class ItemsDefinitions implements DefinitionsInterface
     {
         return array_merge(
             self::repositories(),
+            self::queries(),
             ['Controllers.Rest' => add(self::controllers())]
         );
     }
@@ -25,8 +27,8 @@ class ItemsDefinitions implements DefinitionsInterface
     private static function repositories(): array
     {
         return [
-            ArmorRepository::class => autowire(PgsqlArmorRepository::class),
-            PgsqlArmorRepository::class => autowire()->constructor(get(PgsqlConnection::class), get('QueryBuilder.Pgsql'))
+            PgsqlArmorRepository::class => autowire()->constructor(get(PgsqlConnection::class), get('QueryBuilder.Pgsql')),
+            ArmorRepository::class => get(PgsqlArmorRepository::class)
         ];
     }
 
@@ -34,6 +36,13 @@ class ItemsDefinitions implements DefinitionsInterface
     {
         return [
             ArmorController::class => autowire()
+        ];
+    }
+
+    private static function queries(): array
+    {
+        return [
+            Armors\Queries\FindAll::class => autowire()
         ];
     }
 }
