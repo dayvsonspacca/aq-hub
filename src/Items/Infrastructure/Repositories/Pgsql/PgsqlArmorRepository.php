@@ -123,7 +123,7 @@ class PgsqlArmorRepository implements ArmorRepository
             $result
         );
 
-        return array_map(['this', 'hydrate'], $armors);
+        return array_map([$this, 'hydrate'], $armors);
     }
 
     private function findAllTags(array $identifiers)

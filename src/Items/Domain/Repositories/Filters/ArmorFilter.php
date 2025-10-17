@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Domain\Repositories\Filters;
 
-class ArmorFilter
+use AqHub\Shared\Domain\Abstractions\Filter;
+
+class ArmorFilter extends Filter
 {
     use DefaultFilters;
 

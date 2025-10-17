@@ -3,3 +3,9 @@ INSERT INTO armors (name, hash, description, rarity) VALUES
 
 INSERT INTO armor_tags (armor_id, tag) VALUES
 (1, 'Adventure Coins');
+
+INSERT INTO armors (name, hash, description, rarity) VALUES
+('Awescended', '28cc7801a650c453681bb1e9f6c802a2', 'A symbol of the preservation of Lore''s history. This item gives 30% more gold and 50% more class points and rep when equipped.', 'Legendary');
+
+INSERT INTO armor_tags (armor_id, tag) VALUES
+(2, 'Adventure Coins');
