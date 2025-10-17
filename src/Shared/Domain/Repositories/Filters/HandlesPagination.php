@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Domain\Repositories\Filters;
 
-trait CanPaginate
+trait HandlesPagination
 {
     public int $page     = 1;
     public int $pageSize = 25;

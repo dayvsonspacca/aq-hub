@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Domain\Repositories\Filters;
 
-use AqHub\Shared\Domain\Repositories\Filters\CanPaginate;
+use AqHub\Shared\Domain\Repositories\Filters\HandlesPagination;
 
 trait HasDefaultFilters
 {
     use CanFilterTags;
     use CanFilterRarities;
-    use CanPaginate;
+    use HandlesPagination;
     use CanFilterName;
 
     protected function defaultsArray(): array
