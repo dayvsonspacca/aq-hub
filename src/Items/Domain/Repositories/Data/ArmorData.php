@@ -22,7 +22,7 @@ class ArmorData extends Data
     ) {
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->identifier->getValue(),
