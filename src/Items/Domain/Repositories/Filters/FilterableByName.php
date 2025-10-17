@@ -10,7 +10,7 @@ trait FilterableByName
 {
     public ?Name $name = null;
 
-    public function setName(Name $name)
+    public function setName(?Name $name = null)
     {
         $this->name = $name;
     }

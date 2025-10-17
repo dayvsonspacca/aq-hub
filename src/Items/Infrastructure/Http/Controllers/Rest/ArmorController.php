@@ -6,6 +6,7 @@ namespace AqHub\Items\Infrastructure\Http\Controllers\Rest;
 
 use AqHub\Core\Infrastructure\Http\Interfaces\RestController;
 use AqHub\Core\Infrastructure\Http\Route;
+use AqHub\Items\Infrastructure\Http\Forms\ListAllArmorsForm;
 use Symfony\Component\HttpFoundation\Request;
 
 class ArmorController implements RestController
@@ -17,5 +18,6 @@ class ArmorController implements RestController
     #[Route(path: '/armors/list', methods: ['GET'])]
     public function list(Request $request)
     {
+        $filter = ListAllArmorsForm::fromRequest($request);
     }
 }
