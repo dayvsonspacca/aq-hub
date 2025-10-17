@@ -52,4 +52,17 @@ final class QuestRequirementsTest extends TestCase
         $this->assertSame(1, $questRequirements->count());
         $this->assertSame($result->getMessage(), 'A quest cant have more than one level requirement.');
     }
+
+    #[Test]
+    public function should_remove_quest_requirement()
+    {
+        $levelRequirement = $this->createMock(LevelRequirement::class);
+        $questRequirements = new QuestRequirements([$levelRequirement]);
+
+        $this->assertSame(1, $questRequirements->count());
+
+        $questRequirements->remove($levelRequirement);
+
+        $this->assertSame(0, $questRequirements->count());
+    }
 }
