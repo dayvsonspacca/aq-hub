@@ -4,45 +4,69 @@ declare(strict_types=1);
 
 namespace AqHub\Tests\Unit\Items\Infrastructure\Http\Controllers\Rest;
 
-use AqHub\Core\ContainerFactory;
-use AqHub\Core\CoreDefinitions;
-use AqHub\Core\Infrastructure\Database\DatabaseDefinitions;
-use AqHub\Core\Infrastructure\Http\HttpDefinitions;
-use AqHub\Items\Infrastructure\Container\ItemsDefinitions;
+use AqHub\Items\Application\Armors\Queries\FindAll;
+use AqHub\Items\Domain\Repositories\Data\ArmorData;
+use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
 use AqHub\Items\Infrastructure\Http\Controllers\Rest\ArmorController;
+use AqHub\Tests\DataProviders\ArmorDataProvider;
 use AqHub\Tests\TestCase;
-use AqHub\Tests\Traits\DoRequests;
-use DI\Container;
+use AqHub\Tests\Traits\DoRequests; 
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class ArmorControllerTest extends TestCase
 {
     use DoRequests;
 
-    private Container $container;
+    private MockObject&FindAll $findAllQueryMock;
     private ArmorController $controller;
 
     protected function setUp(): void
     {
-        $this->container = ContainerFactory::make(array_merge(
-            CoreDefinitions::dependencies(),
-            HttpDefinitions::dependencies(),
-            DatabaseDefinitions::dependencies(),
-            ItemsDefinitions::dependencies()
-        ));
-
-        $this->controller = $this->container->get(ArmorController::class);
+        parent::setUp();
+        
+        $this->findAllQueryMock = $this->createMock(FindAll::class);
+        
+        $this->controller = new ArmorController(
+            $this->findAllQueryMock
+        );
     }
-
+    
     #[Test]
     public function should_create_armor_controller()
     {
         $this->assertInstanceOf(ArmorController::class, $this->controller);
     }
-
+    
     #[Test]
-    public function should_list_armors()
+    public function should_list_armors_by_executing_query_and_return_ok_response()
     {
-        $this->assertNull($this->controller->list($this->makeRequest()));
+        $mockArmors = ArmorDataProvider::make()->buildCollection(2);
+        
+        $expectedJsonResponseData = [
+            $mockArmors[0]->toArray(),
+            $mockArmors[1]->toArray(),
+        ];
+        
+        $this->findAllQueryMock
+             ->expects($this->once())
+             ->method('execute') 
+             ->with($this->isInstanceOf(ArmorFilter::class)) 
+             ->willReturn($mockArmors);
+        
+        // ACT (Ação)
+        
+        $request = $this->makeRequest(method: 'GET', uri: '/armors/list?page=1');
+        $response = $this->controller->list($request);
+        
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
+
+        $decodedContent = json_decode($response->getContent(), true);
+        
+        $this->assertIsArray($decodedContent);
+        $this->assertEquals($expectedJsonResponseData, $decodedContent);
     }
 }
