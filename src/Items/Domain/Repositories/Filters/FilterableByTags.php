@@ -6,7 +6,7 @@ namespace AqHub\Items\Domain\Repositories\Filters;
 
 use AqHub\Shared\Domain\Enums\ItemTag;
 
-trait CanFilterTags
+trait FilterableByTags
 {
     /**
      * @var ItemTag[] $tags
