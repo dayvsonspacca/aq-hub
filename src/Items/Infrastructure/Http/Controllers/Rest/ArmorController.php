@@ -9,9 +9,7 @@ use AqHub\Core\Infrastructure\Http\Route;
 use AqHub\Items\Application\Armors\Queries\FindAll;
 use AqHub\Items\Infrastructure\Http\Forms\ListAllArmorsForm;
 use AqHub\Shared\Domain\Helpers\ArrayPresenter;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
 
 class ArmorController implements RestController
 {

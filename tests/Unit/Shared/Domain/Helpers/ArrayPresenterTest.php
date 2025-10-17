@@ -14,7 +14,7 @@ final class ArrayPresenterTest extends TestCase
     #[Test]
     public function should_convert_data_class_to_array()
     {
-        $data = new class extends Data {
+        $data = new class () extends Data {
             public function toArray(): array
             {
                 return [
@@ -33,7 +33,7 @@ final class ArrayPresenterTest extends TestCase
     #[Test]
     public function should_convert_array_of_data_class_to_array_of_arrays()
     {
-        $data = new class extends Data {
+        $data = new class () extends Data {
             public function toArray(): array
             {
                 return [

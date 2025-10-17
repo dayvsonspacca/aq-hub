@@ -13,7 +13,7 @@ trait MapsPagination
      */
     private static function mapPagination(Request $request): array
     {
-        $page = $request->query->getInt('page', 1);
+        $page     = $request->query->getInt('page', 1);
         $pageSize = $request->query->getInt('page_size', 20);
 
         if ($pageSize > 100) {
