@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Domain\Services;
 
+use AqHub\Core\Result;
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
-use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
+use AqHub\Shared\Domain\ValueObjects\StringIdentifier;
 
 class ItemIdentifierGenerator
 {

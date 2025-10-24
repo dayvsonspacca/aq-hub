@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Domain\ValueObjects;
 
+use AqHub\Core\Result;
 use AqHub\Shared\Domain\Enums\ItemTag;
-use AqHub\Shared\Domain\ValueObjects\Result;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;

@@ -6,18 +6,14 @@ namespace AqHub\Items\Domain\Repositories;
 
 use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
-use AqHub\Items\Domain\ValueObjects\ItemInfo;
-use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Shared\Domain\Repositories\{CanFindAll, CanFindByIdentifier};
+use AqHub\Shared\Domain\ValueObjects\StringIdentifier;
 
-interface ArmorRepository extends AqwItemRepository
+/**
+ * @method ArmorData|null findByIdentifier(StringIdentifier $identifier)
+ * @method ArmorData[] findAll(ArmorFilter $filter)
+ */
+interface ArmorRepository extends CanFindByIdentifier, CanFindAll
 {
-    /**
-     * @return Result<ArmorData|null>
-     */
-    public function persist(ItemInfo $itemInfo): Result;
-
-    /**
-     * @return Result<array<PlayerData>>
-     */
-    public function findAll(ArmorFilter $filter): Result;
+    public function hydrate(array $data): ArmorData;
 }

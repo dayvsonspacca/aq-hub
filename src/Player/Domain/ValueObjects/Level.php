@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Player\Domain\ValueObjects;
 
-use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Core\Result;
 
 class Level
 {

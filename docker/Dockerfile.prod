@@ -13,12 +13,12 @@ COPY . .
 
 USER root
 
+RUN mkdir -p logs cache
+
 RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
-RUN chown -R www-data:www-data /var/www/html/logs \
-    && chown -R www-data:www-data /var/www/html/cache \
-    && chmod -R 775 /var/www/html/logs \
-    && chmod -R 775 /var/www/html/cache
+RUN chown -R www-data:www-data logs cache && \
+    chmod -R 775 logs cache
 
 USER www-data

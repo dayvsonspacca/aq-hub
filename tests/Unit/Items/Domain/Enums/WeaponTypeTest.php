@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Items\Domain\Enums;
 
 use AqHub\Items\Domain\Enums\WeaponType;
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class WeaponTypeTest extends TestCase

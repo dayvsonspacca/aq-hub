@@ -17,4 +17,10 @@ RUN apt-get update && \
 RUN pecl install pcov && \
     docker-php-ext-enable pcov
 
+RUN mkdir -p cache logs
+
+RUN chown -R www-data:www-data cache logs
+
+RUN chmod -R 755 cache logs
+
 USER www-data

@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Domain\Enums;
 
-use AqHub\Shared\Domain\ValueObjects\Result;
+use AqHub\Core\Interfaces\{FromString, ToString};
+use AqHub\Core\Result;
 use InvalidArgumentException;
 
-enum WeaponType
+enum WeaponType implements FromString, ToString
 {
     case Axe;
     case Bow;
@@ -23,9 +24,9 @@ enum WeaponType
     /**
      * @return Result<WeaponType|null>
      */
-    public static function fromString(string $type): Result
+    public static function fromString(string $string): Result
     {
-        $type = mb_strtolower($type);
+        $type = mb_strtolower($string);
 
         try {
             return match ($type) {

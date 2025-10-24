@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Quests\Domain\ValueObjects;
 
 use AqHub\Quests\Domain\ValueObjects\{ItemRequirement, LevelRequirement, QuestRequirements};
-use AqHub\Tests\Unit\TestCase;
+use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class QuestRequirementsTest extends TestCase
@@ -51,5 +51,18 @@ final class QuestRequirementsTest extends TestCase
         $this->assertTrue($result->isError());
         $this->assertSame(1, $questRequirements->count());
         $this->assertSame($result->getMessage(), 'A quest cant have more than one level requirement.');
+    }
+
+    #[Test]
+    public function should_remove_quest_requirement()
+    {
+        $levelRequirement  = $this->createMock(LevelRequirement::class);
+        $questRequirements = new QuestRequirements([$levelRequirement]);
+
+        $this->assertSame(1, $questRequirements->count());
+
+        $questRequirements->remove($levelRequirement);
+
+        $this->assertSame(0, $questRequirements->count());
     }
 }

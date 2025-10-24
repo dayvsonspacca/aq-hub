@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Domain\Repositories\Filters;
 
-class ArmorFilter
+use AqHub\Shared\Domain\Abstractions\Filter;
+
+class ArmorFilter extends Filter
 {
-    use DefaultFilters;
+    use HasDefaultFilters;
 
     public function toArray(): array
     {
@@ -15,6 +17,6 @@ class ArmorFilter
 
     public function generateUniqueKey(): string
     {
-        return md5($this->defaultsUniqueKey());
+        return $this->defaultsUniqueKey();
     }
 }

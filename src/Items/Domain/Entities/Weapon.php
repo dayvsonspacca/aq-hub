@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace AqHub\Items\Domain\Entities;
 
+use AqHub\Core\Result;
 use AqHub\Items\Domain\Abstractions\AqwItem;
 use AqHub\Items\Domain\Enums\WeaponType;
 use AqHub\Items\Domain\ValueObjects\ItemInfo;
-use AqHub\Shared\Domain\ValueObjects\{Result, StringIdentifier};
+use AqHub\Shared\Domain\ValueObjects\StringIdentifier;
 
 class Weapon extends AqwItem
 {

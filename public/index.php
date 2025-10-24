@@ -2,20 +2,19 @@
 
 declare(strict_types=1);
 
-use Dotenv\Dotenv;
+use AqHub\Core\Infrastructure\Http\{HttpHandler, HttpDefinitions};
+use AqHub\Core\{Application, CoreDefinitions};
+use AqHub\Core\Infrastructure\Database\DatabaseDefinitions;
+use AqHub\Items\Infrastructure\Container\ItemsDefinitions;
+use DI\Container;
+use Symfony\Component\HttpFoundation\Request;
 
-define('ROOT_PATH', __DIR__ . '/../');
-define('LOGS_PATH', ROOT_PATH . 'logs/');
-define('CACHE_PATH', ROOT_PATH . 'cache/');
+require __DIR__ . '/../vendor/autoload.php';
 
-require ROOT_PATH . 'vendor/autoload.php';
+$app     = Application::build('api', [CoreDefinitions::class, HttpDefinitions::class, DatabaseDefinitions::class, ItemsDefinitions::class]);
+$handler = $app->get(HttpHandler::class);
 
-$dotenv = Dotenv::createImmutable(ROOT_PATH);
-$dotenv->load();
+$request = Request::createFromGlobals();
+$response = $handler->handle($request);
 
-use AqHub\Shared\Infrastructure\Container\Container;
-use AqHub\Shared\Infrastructure\Http\Application;
-
-$container = Container::build();
-$application = $container->get(Application::class);
-$application->handle();
+$response->send();

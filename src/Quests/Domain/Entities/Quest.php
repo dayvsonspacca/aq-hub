@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace AqHub\Quests\Domain\Entities;
 
+use AqHub\Core\Result;
 use AqHub\Quests\Domain\ValueObjects\QuestRequirements;
 use AqHub\Shared\Domain\Abstractions\Entity;
-use AqHub\Shared\Domain\ValueObjects\{IntIdentifier, Result};
+use AqHub\Shared\Domain\ValueObjects\IntIdentifier;
 
 class Quest extends Entity
 {
