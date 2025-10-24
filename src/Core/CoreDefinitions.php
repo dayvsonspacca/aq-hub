@@ -21,8 +21,8 @@ class CoreDefinitions implements DefinitionsInterface
 
         return [
             'Path.Root' => $rootDir,
-            'Path.Cache' => $rootDir . '/cache',
-            'Path.Logs' => $rootDir . '/logs',
+            'Path.Cache' => $rootDir . 'cache',
+            'Path.Logs' => $rootDir . 'logs',
             Env::class => factory([Env::class, 'load'])->parameter('vars', $_ENV)->parameter('forceReload', false)
         ];
     }
