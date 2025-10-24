@@ -1,4 +1,4 @@
-name: Run Tests and Format
+name: Run Tests, Format, and Generate API Docs
 
 on:
   push:
@@ -27,12 +27,39 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
       
-      - name: Run tests
+      - name: Run tests (composer test)
         run: composer test
+
+  generate-docs:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: Create .env file from example
+        run: cp .env.example .env
+          
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+      
+      - name: Generate API Documentation (composer run gen-api-doc)
+        run: composer run gen-api-doc
+
+      - name: Commit Generated API Documentation
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'ci: generate latest OpenAPI documentation'
 
   format:
     runs-on: ubuntu-latest
-    needs: test
+    needs: generate-docs
     permissions:
       contents: write
     steps:
