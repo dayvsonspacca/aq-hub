@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: 'AQHub API'
+  contact:
+    name: 'Dayvson Spacca'
+    email: spacca.dayvson@gmail.com
+  version: 1.0.0
+servers:
+  -
+    url: 'https://aqhub-api.dayvsonspacca.com'
+paths:
+  /armors/list:
+    get:
+      tags:
+        - Armors
+      summary: 'List armors'
+      operationId: e99d4ba03b1f0583bbec1d89516fa4ba
+      responses:
+        '200':
+          description: 'List of armors'
+          content:
+            application/json:
+              schema:
+                properties:
+                  filter: { $ref: '#/components/schemas/ArmorFilterSchema' }
+                  armors: { description: 'Collection of items.', type: array, items: { $ref: '#/components/schemas/ArmorSchema' } }
+                type: object
+components:
+  schemas:
+    ArmorFilterSchema:
+      title: 'Armor List Filters'
+      description: 'Available filters and pagination parameters for listing Armors.'
+      properties:
+        page:
+          description: 'The requested page number for pagination.'
+          type: integer
+          minimum: 1
+          example: 1
+        page_size:
+          description: 'The number of results per page.'
+          type: integer
+          maximum: 100
+          minimum: 1
+          example: 20
+        rarities:
+          description: 'A list of armor rarity types to filter by (e.g., Rare, Epic).'
+          type: array
+          items:
+            type: string
+          example:
+            - Rare
+            - Legendary
+          nullable: true
+        tags:
+          description: 'A list of tags associated with the armors to filter by.'
+          type: array
+          items:
+            type: string
+          example:
+            - Seasonal
+            - ac
+          nullable: true
+        name:
+          description: 'A partial or full name to filter the armors (e.g., name_contains).'
+          type: string
+          example: ArchPaladin
+          nullable: true
+      type: object
+    ArmorSchema:
+      title: 'Armor Item Details'
+      description: 'The complete structure of an armor item returned by the API.'
+      properties:
+        id:
+          description: 'The unique identifier of the armor.'
+          type: string
+          example: 5a3e1b7c-2d9f-4e0a-9c8b-6f7d5c4b3a21
+        name:
+          description: 'The name of the armor.'
+          type: string
+          example: 'ArchPaladin Armor'
+        description:
+          description: 'The full description of the armor.'
+          type: string
+          example: 'As a warrior in one of the Paladin Order’s highest ranks, you have access to powers the likes of which Lore has not yet seen. Use your newfound abilities to fight for virtue and justice, because darkness will flee at the very sight of your righteous light!'
+        registered_at:
+          description: 'Date and time the armor was registered (Y-m-d H:i:s format).'
+          type: string
+          format: date-time
+          example: '2025-10-24 16:30:00'
+        rarity:
+          description: 'The rarity of the armor.'
+          type: string
+          example: Rare
+          nullable: true
+        tags:
+          description: 'List of tags associated with the armor.'
+          type: array
+          items:
+            type: string
+          example:
+            - Legendary
+            - Seasonal
+      type: object
+tags:
+  -
+    name: Armors

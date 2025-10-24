@@ -44,15 +44,24 @@ class ArmorControllerTest extends TestCase
         $mockArmors = ArmorDataProvider::make()->buildCollection(2);
 
         $expectedJsonResponseData = [
-            $mockArmors[0]->toArray(),
-            $mockArmors[1]->toArray(),
+            'filter' => [
+                'page' => 1,
+                'page_size' => 20,
+                'rarities' => [],
+                'tags' => [],
+                'name' => null
+            ],
+            'armors' => [
+                $mockArmors[0]->toArray(),
+                $mockArmors[1]->toArray(),
+            ]
         ];
 
         $this->findAllQueryMock
-             ->expects($this->once())
-             ->method('execute')
-             ->with($this->isInstanceOf(ArmorFilter::class))
-             ->willReturn($mockArmors);
+            ->expects($this->once())
+            ->method('execute')
+            ->with($this->isInstanceOf(ArmorFilter::class))
+            ->willReturn($mockArmors);
 
         $request  = $this->makeRequest(method: 'GET', uri: '/armors/list?page=1');
         $response = $this->controller->list($request);

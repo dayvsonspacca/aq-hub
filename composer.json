@@ -5,7 +5,8 @@
         "test": "./vendor/bin/pest --testsuite='Unit tests'",
         "test-all": "./vendor/bin/pest",
         "fmt": "./vendor/bin/php-cs-fixer fix --allow-risky=yes",
-        "tests-coverage": "./vendor/bin/phpunit --coverage-html coverage/"
+        "tests-coverage": "./vendor/bin/phpunit --coverage-html coverage/",
+        "gen-api-doc": "./vendor/bin/openapi src -o public/api-docs.yaml"
     },
     "autoload": {
         "psr-4": {
@@ -30,7 +31,8 @@
         "aura/sqlquery": "*",
         "monolog/monolog": "^3.9",
         "vlucas/phpdotenv": "^5.6",
-        "symfony/cache": "^7.3"
+        "symfony/cache": "^7.3",
+        "zircote/swagger-php": "^5.5"
     },
     "require-dev": {
         "pestphp/pest": "^3.7",
