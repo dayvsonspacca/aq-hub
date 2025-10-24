@@ -71,15 +71,7 @@ class HttpHandler
 
             $controllerClassName = is_object($controllerClass) ? $controllerClass::class : $controllerClass;
 
-            if (!class_exists($controllerClassName)) {
-                return new Response('Not Found', Response::HTTP_NOT_FOUND);
-            }
-
             $controller = $this->container->get($controllerClassName);
-
-            if (!method_exists($controller, $method)) {
-                return new Response('Not Found', Response::HTTP_NOT_FOUND);
-            }
 
             $response = $controller->$method($request);
 

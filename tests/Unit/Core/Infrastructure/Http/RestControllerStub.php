@@ -6,6 +6,7 @@ namespace AqHub\Tests\Unit\Core\Infrastructure\Http;
 
 use AqHub\Core\Infrastructure\Http\Interfaces\RestController;
 use AqHub\Core\Infrastructure\Http\Route;
+use DomainException;
 use Symfony\Component\HttpFoundation\Response;
 
 final class RestControllerStub implements RestController
@@ -14,5 +15,11 @@ final class RestControllerStub implements RestController
     public function list()
     {
         return new Response(status: 200);
+    }
+
+    #[Route(path: '/api/error', methods: ['GET'])]
+    public function error()
+    {
+        throw new DomainException('Forced error');
     }
 }

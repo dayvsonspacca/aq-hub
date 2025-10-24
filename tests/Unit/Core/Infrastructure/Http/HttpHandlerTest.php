@@ -43,6 +43,36 @@ final class HttpHandlerTest extends TestCase
         $response = $httpHandler->handle($request);
 
         $this->assertInstanceOf(Response::class, $response);
-        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
+    }
+
+    #[Test]
+    public function should_result_in_not_found_when_no_endpoint()
+    {
+        $httpHandler = $this->container->get(HttpHandler::class);
+        $request     = $this->makeRequest(
+            uri: '/api/this-endpoint-will-never-exists'
+        );
+
+        /** @var Response $response */
+        $response = $httpHandler->handle($request);
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertSame(Response::HTTP_NOT_FOUND, $response->getStatusCode());
+    }
+
+    #[Test]
+    public function should_result_in_internal_server_error_when_error()
+    {
+        $httpHandler = $this->container->get(HttpHandler::class);
+        $request     = $this->makeRequest(
+            uri: '/api/error'
+        );
+
+        /** @var Response $response */
+        $response = $httpHandler->handle($request);
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertSame(Response::HTTP_INTERNAL_SERVER_ERROR, $response->getStatusCode());
     }
 }
