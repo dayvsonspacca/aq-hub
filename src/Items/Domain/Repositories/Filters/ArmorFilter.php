@@ -17,6 +17,6 @@ class ArmorFilter extends Filter
 
     public function generateUniqueKey(): string
     {
-        return md5($this->defaultsUniqueKey());
+        return $this->defaultsUniqueKey();
     }
 }
