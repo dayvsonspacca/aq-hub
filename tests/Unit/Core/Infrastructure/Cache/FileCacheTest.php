@@ -31,7 +31,7 @@ final class FileCacheTest extends TestCase
     {
         $this->assertFalse($this->cache->has('test-cache'));
 
-        $callback = fn() => 'cached';
+        $callback = fn () => 'cached';
 
         $this->cache->get('test-cache', $callback, expiresAfter: 1);
     }
@@ -39,7 +39,7 @@ final class FileCacheTest extends TestCase
     #[Test]
     public function should_cache()
     {
-        $callback = fn() => 'cached';
+        $callback = fn () => 'cached';
 
         $this->assertTrue($this->cache->has('test-cache'));
         $this->assertSame($this->cache->get('test-cache', $callback, expiresAfter: 1), 'cached');

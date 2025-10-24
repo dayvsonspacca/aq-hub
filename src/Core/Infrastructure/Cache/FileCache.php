@@ -38,7 +38,7 @@ class FileCache
     {
         return $this->cache->get($key, function (ItemInterface $item) use ($callback, $expiresAfter, $cacheTags) {
             $item->tag($cacheTags);
-            
+
             if (is_int($expiresAfter) && $expiresAfter > 0) {
                 $item->expiresAfter($expiresAfter);
             }

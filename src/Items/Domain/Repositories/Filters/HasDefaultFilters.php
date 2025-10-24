@@ -18,8 +18,8 @@ trait HasDefaultFilters
         return [
             'page' => $this->page,
             'page_size' => $this->pageSize,
-            'rarities' => array_map(fn($rarity) => $rarity->toString(), $this->rarities),
-            'tags' => array_map(fn($tag) => $tag->toString(), $this->tags),
+            'rarities' => array_map(fn ($rarity) => $rarity->toString(), $this->rarities),
+            'tags' => array_map(fn ($tag) => $tag->toString(), $this->tags),
             'name' => isset($this->name) && !is_null($this->name) ? $this->name->value : null
         ];
     }
@@ -28,8 +28,8 @@ trait HasDefaultFilters
     {
         $data = [
             'page' => $this->page,
-            'rarities' => array_map(fn($rarity) => $rarity->toString(), $this->rarities),
-            'tags' => array_map(fn($tag) => $tag->toString(), $this->tags),
+            'rarities' => array_map(fn ($rarity) => $rarity->toString(), $this->rarities),
+            'tags' => array_map(fn ($tag) => $tag->toString(), $this->tags),
             'name' => isset($this->name) ? $this->name->value : null,
         ];
 

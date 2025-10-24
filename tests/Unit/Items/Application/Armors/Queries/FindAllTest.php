@@ -7,12 +7,9 @@ namespace AqHub\Tests\Unit\Items\Application\Armors\Queries;
 use AqHub\Core\Infrastructure\Cache\FileCache;
 use AqHub\Items\Application\Armors\Queries\FindAll;
 use AqHub\Items\Domain\Repositories\ArmorRepository;
-use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
-use AqHub\Shared\Infrastructure\Cache\FileCacheFactory;
 use AqHub\Tests\DataProviders\ArmorDataProvider;
 use AqHub\Tests\TestCase;
-use AqHub\Tests\Traits\HasContainer;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -28,8 +25,8 @@ class FindAllTest extends TestCase
         parent::setUp();
 
         $this->repositoryMock = $this->createMock(ArmorRepository::class);
-        $this->cacheMock = $this->createMock(FileCache::class);
-        
+        $this->cacheMock      = $this->createMock(FileCache::class);
+
         $this->findAllQuery = new FindAll($this->repositoryMock, $this->cacheMock);
     }
 
@@ -57,7 +54,7 @@ class FindAllTest extends TestCase
                 $this->equalTo(['new-armor'])
             )
             ->willReturnCallback(
-                fn($key, $callback, $expiresAfter, $tags) => $callback()
+                fn ($key, $callback, $expiresAfter, $tags) => $callback()
             );
 
         $this->repositoryMock
