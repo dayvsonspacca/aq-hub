@@ -117,7 +117,7 @@ class PgsqlArmorRepository implements ArmorRepository
 
         $armors = array_map(
             function ($data) use ($tags) {
-                $data['tags'] = $tags[$data['id']];
+                $data['tags'] = isset($tags[$data['id']]) ? $tags[$data['id']] : [];
                 return $data;
             },
             $result
