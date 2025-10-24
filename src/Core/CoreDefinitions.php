@@ -23,7 +23,7 @@ class CoreDefinitions implements DefinitionsInterface
             'Path.Root' => $rootDir,
             'Path.Cache' => $rootDir . 'cache',
             'Path.Logs' => $rootDir . 'logs',
-            Env::class => factory([Env::class, 'load'])->parameter('vars', $_ENV)->parameter('forceReload', false)
+            Env::class => factory([Env::class, 'load'])->parameter('vars', array_merge($_ENV, $_SERVER))->parameter('forceReload', false)
         ];
     }
 }
