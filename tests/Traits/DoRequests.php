@@ -30,7 +30,7 @@ trait DoRequests
             [],
             [],
             [],
-            json_encode($content) // Content (para simular um corpo JSON)
+            json_encode($content)
         );
     }
 }
