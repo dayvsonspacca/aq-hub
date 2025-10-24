@@ -23,6 +23,9 @@ class ArmorController implements RestController
         $filter = ListAllArmorsForm::fromRequest($request);
         $armors = $this->findAll->execute($filter);
 
-        return new JsonResponse(ArrayPresenter::presentCollection($armors), Response::HTTP_OK);
+        return new JsonResponse([
+            'filter' => $filter->toArray(),
+            'armors' => ArrayPresenter::presentCollection($armors)
+        ], Response::HTTP_OK);
     }
 }
