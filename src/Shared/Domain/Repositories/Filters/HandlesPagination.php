@@ -19,7 +19,7 @@ trait HandlesPagination
         if ($pageSize > 100) {
             $pageSize = 100;
         }
-        
+
         $this->pageSize = $pageSize;
     }
 }
