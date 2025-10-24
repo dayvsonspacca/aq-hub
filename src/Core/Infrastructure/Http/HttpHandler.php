@@ -6,11 +6,10 @@ namespace AqHub\Core\Infrastructure\Http;
 
 use DI\Container;
 use ReflectionClass;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{Request, Response};
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\{RequestContext, Route as SymfonyRoute, RouteCollection};
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class HttpHandler
 {
