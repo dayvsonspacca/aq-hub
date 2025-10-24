@@ -65,7 +65,7 @@ class HttpHandler
         $parameters                 = $matcher->match($request->getPathInfo());
         [$controllerClass, $method] = $parameters['_controller'];
 
-        $controller = $this->container->get($controllerClass);
+        $controller = $this->container->get(is_object($controllerClass) ? $controllerClass::class : $controllerClass);
         $response   = $controller->$method($request);
 
         return $response;

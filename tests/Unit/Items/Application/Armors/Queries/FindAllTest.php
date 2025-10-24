@@ -4,18 +4,22 @@ declare(strict_types=1);
 
 namespace AqHub\Tests\Unit\Items\Application\Armors\Queries;
 
+use AqHub\Core\Infrastructure\Cache\FileCache;
 use AqHub\Items\Application\Armors\Queries\FindAll;
 use AqHub\Items\Domain\Repositories\ArmorRepository;
 use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
+use AqHub\Shared\Infrastructure\Cache\FileCacheFactory;
 use AqHub\Tests\DataProviders\ArmorDataProvider;
 use AqHub\Tests\TestCase;
+use AqHub\Tests\Traits\HasContainer;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class FindAllTest extends TestCase
 {
     private MockObject&ArmorRepository $repositoryMock;
+    private MockObject&FileCache $cacheMock;
 
     private FindAll $findAllQuery;
 
@@ -24,8 +28,9 @@ class FindAllTest extends TestCase
         parent::setUp();
 
         $this->repositoryMock = $this->createMock(ArmorRepository::class);
-
-        $this->findAllQuery = new FindAll($this->repositoryMock);
+        $this->cacheMock = $this->createMock(FileCache::class);
+        
+        $this->findAllQuery = new FindAll($this->repositoryMock, $this->cacheMock);
     }
 
     #[Test]
@@ -35,23 +40,33 @@ class FindAllTest extends TestCase
     }
 
     #[Test]
-    public function should_call_repository_with_filter_and_return_armors()
+    public function should_call_cache_with_correct_parameters_and_callback()
     {
         $filter = $this->createMock(ArmorFilter::class);
+        $filter->method('generateUniqueKey')->willReturn('mock-cache-key');
 
         $expectedArmors = ArmorDataProvider::make()->buildCollection(3);
 
+        $this->cacheMock
+            ->expects($this->once())
+            ->method('get')
+            ->with(
+                $this->equalTo('mock-cache-key'),
+                $this->isCallable('callable'),
+                $this->isNull(),
+                $this->equalTo(['new-armor'])
+            )
+            ->willReturnCallback(
+                fn($key, $callback, $expiresAfter, $tags) => $callback()
+            );
+
         $this->repositoryMock
-             ->expects($this->once())
-             ->method('findAll')
-             ->with($this->equalTo($filter))
-             ->willReturn($expectedArmors);
+            ->expects($this->once())
+            ->method('findAll')
+            ->willReturn($expectedArmors);
 
         $actualArmors = $this->findAllQuery->execute($filter);
 
         $this->assertSame($expectedArmors, $actualArmors);
-
-        $this->assertCount(3, $actualArmors);
-        $this->assertInstanceOf(ArmorData::class, $actualArmors[0]);
     }
 }

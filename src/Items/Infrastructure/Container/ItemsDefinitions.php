@@ -10,8 +10,9 @@ use AqHub\Items\Application\Armors;
 use AqHub\Items\Domain\Repositories\ArmorRepository;
 use AqHub\Items\Infrastructure\Http\Controllers\Rest\ArmorController;
 use AqHub\Items\Infrastructure\Repositories\Pgsql\PgsqlArmorRepository;
+use AqHub\Shared\Infrastructure\Cache\FileCacheFactory;
 
-use function DI\{add, autowire, get};
+use function DI\{add, autowire, factory, get};
 
 class ItemsDefinitions implements DefinitionsInterface
 {
@@ -20,7 +21,7 @@ class ItemsDefinitions implements DefinitionsInterface
         return array_merge(
             self::repositories(),
             self::queries(),
-            ['Controllers.Rest' => add(self::controllers())]
+            self::controllers()
         );
     }
 
@@ -35,14 +36,21 @@ class ItemsDefinitions implements DefinitionsInterface
     private static function controllers(): array
     {
         return [
-            ArmorController::class => autowire()
+            ArmorController::class => autowire(),
+            'Controllers.Rest' => add([
+                get(ArmorController::class)
+            ])
         ];
     }
 
     private static function queries(): array
     {
         return [
-            Armors\Queries\FindAll::class => autowire()
+            Armors\Queries\FindAll::class => autowire()->constructor(
+                get(ArmorRepository::class),
+                factory([FileCacheFactory::class, 'armors'])
+                    ->parameter('cachePath', get('Path.Cache'))
+            )
         ];
     }
 }
