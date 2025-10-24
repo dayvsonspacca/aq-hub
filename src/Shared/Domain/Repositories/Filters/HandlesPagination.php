@@ -16,6 +16,10 @@ trait HandlesPagination
 
     public function setPageSize(int $pageSize)
     {
+        if ($pageSize > 100) {
+            $pageSize = 100;
+        }
+        
         $this->pageSize = $pageSize;
     }
 }

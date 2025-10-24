@@ -37,4 +37,16 @@ final class HandlesPaginationTest extends TestCase
         $this->assertSame(2, $filter->page);
         $this->assertSame(50, $filter->pageSize);
     }
+
+    #[Test]
+    public function should_set_page_size_to_max_if_greater_than_max()
+    {
+        $filter = new class () {
+            use HandlesPagination;
+        };
+
+        $filter->setPageSize(2549);
+
+        $this->assertSame(100, $filter->pageSize);
+    }
 }
