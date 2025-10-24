@@ -7,8 +7,10 @@ namespace AqHub\Core\Infrastructure\Http;
 use DI\Container;
 use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\{RequestContext, Route as SymfonyRoute, RouteCollection};
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class HttpHandler
 {
@@ -56,18 +58,37 @@ class HttpHandler
         return $routes;
     }
 
-    public function handle(Request $request)
+    public function handle(Request $request): Response
     {
         $context = new RequestContext();
         $context->fromRequest($request);
 
-        $matcher                    = new UrlMatcher($this->routes, $context);
-        $parameters                 = $matcher->match($request->getPathInfo());
-        [$controllerClass, $method] = $parameters['_controller'];
+        $matcher = new UrlMatcher($this->routes, $context);
 
-        $controller = $this->container->get(is_object($controllerClass) ? $controllerClass::class : $controllerClass);
-        $response   = $controller->$method($request);
+        try {
+            $parameters = $matcher->match($request->getPathInfo());
 
-        return $response;
+            [$controllerClass, $method] = $parameters['_controller'];
+
+            $controllerClassName = is_object($controllerClass) ? $controllerClass::class : $controllerClass;
+
+            if (!class_exists($controllerClassName)) {
+                return new Response('Not Found', Response::HTTP_NOT_FOUND);
+            }
+
+            $controller = $this->container->get($controllerClassName);
+
+            if (!method_exists($controller, $method)) {
+                return new Response('Not Found', Response::HTTP_NOT_FOUND);
+            }
+
+            $response = $controller->$method($request);
+
+            return $response;
+        } catch (ResourceNotFoundException $e) {
+            return new Response('Not Found', Response::HTTP_NOT_FOUND);
+        } catch (\Throwable $e) {
+            return new Response('Internal Server Error', Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
