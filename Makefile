@@ -4,11 +4,11 @@ DOCKER_COMPOSE_DEV_FILE := docker-compose.dev.yaml
 
 dev-up:
 	@echo "🚀 Starting dev environment..."
-	docker compose -f $(DOCKER_COMPOSE_DEV_FILE) up --build -d
+	docker compose -f $(DOCKER_COMPOSE_DEV_FILE) up -d
 
 dev-build:
 	@echo "🏗️ Building dev images..."
-	docker compose -f $(DOCKER_COMPOSE_DEV_FILE) build
+	docker compose -f $(DOCKER_COMPOSE_DEV_FILE) up --build -d
 
 dev-down:
 	@echo "🛑 Stopping dev environment..."
