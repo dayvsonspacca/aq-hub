@@ -8,9 +8,6 @@ use OpenApi\Attributes as OA;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_METHOD)]
-/**
- * @codeCoverageIgnore
- */
 class ListResponse extends OA\Response
 {
     public function __construct(

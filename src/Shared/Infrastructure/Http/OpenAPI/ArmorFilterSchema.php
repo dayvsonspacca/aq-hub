@@ -11,9 +11,6 @@ use OpenApi\Attributes as OA;
     title: "Armor List Filters",
     description: "Available filters and pagination parameters for listing Armors."
 )]
-/**
- * @codeCoverageIgnore
- */
 class ArmorFilterSchema
 {
     #[OA\Property(

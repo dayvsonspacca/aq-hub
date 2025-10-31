@@ -11,9 +11,6 @@ use OpenApi\Attributes as OA;
     title: "Armor Item Details",
     description: "The complete structure of an armor item returned by the API."
 )]
-/**
- * @codeCoverageIgnore
- */
 class ArmorSchema
 {
     #[OA\Property(
