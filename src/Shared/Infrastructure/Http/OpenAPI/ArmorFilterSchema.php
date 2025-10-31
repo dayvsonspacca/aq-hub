@@ -7,9 +7,9 @@ namespace AqHub\Shared\Infrastructure\Http\OpenAPI;
 use OpenApi\Attributes as OA;
 
 #[OA\Schema(
-    schema: "ArmorFilterSchema",
-    title: "Armor List Filters",
-    description: "Available filters and pagination parameters for listing Armors."
+    schema: 'ArmorFilterSchema',
+    title: 'Armor List Filters',
+    description: 'Available filters and pagination parameters for listing Armors.'
 )]
 class ArmorFilterSchema
 {

@@ -11,15 +11,15 @@ use OpenApi\Attributes as OA;
         title: 'AQHub API',
         version: '1.0.0',
         contact: new OA\Contact(
-            name: "Dayvson Spacca",
-            email: "spacca.dayvson@gmail.com"
+            name: 'Dayvson Spacca',
+            email: 'spacca.dayvson@gmail.com'
         )
     ),
     tags: [
         new OA\Tag(name: 'Armors')
     ],
     servers: [
-        new OA\Server(url: "https://aqhub-api.dayvsonspacca.com")
+        new OA\Server(url: 'https://aqhub-api.dayvsonspacca.com')
     ]
 )]
 class OpenAPIDocumentation

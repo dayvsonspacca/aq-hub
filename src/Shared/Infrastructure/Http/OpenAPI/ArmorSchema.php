@@ -7,9 +7,9 @@ namespace AqHub\Shared\Infrastructure\Http\OpenAPI;
 use OpenApi\Attributes as OA;
 
 #[OA\Schema(
-    schema: "ArmorSchema",
-    title: "Armor Item Details",
-    description: "The complete structure of an armor item returned by the API."
+    schema: 'ArmorSchema',
+    title: 'Armor Item Details',
+    description: 'The complete structure of an armor item returned by the API.'
 )]
 class ArmorSchema
 {

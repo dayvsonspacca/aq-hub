@@ -9,17 +9,17 @@ use AqHub\Core\Infrastructure\Http\Route;
 use AqHub\Items\Application\Armors\Queries\FindAll;
 use AqHub\Items\Infrastructure\Http\Forms\ListAllArmorsForm;
 use AqHub\Shared\Domain\Helpers\ArrayPresenter;
-use AqHub\Shared\Infrastructure\Http\OpenAPI\ArmorFilterSchema;
-use AqHub\Shared\Infrastructure\Http\OpenAPI\ArmorSchema;
-use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
+use AqHub\Shared\Infrastructure\Http\OpenAPI\{ArmorFilterSchema, ArmorSchema, ListResponse};
 use OpenApi\Attributes as OA;
-use AqHub\Shared\Infrastructure\Http\OpenAPI\ListResponse;
+use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
 
 class ArmorController implements RestController
 {
-    public function __construct(private readonly FindAll $findAll) {}
+    public function __construct(private readonly FindAll $findAll)
+    {
+    }
 
-    #[OA\Get(path: '/armors/list', summary: "List armors", tags: ["Armors"])]
+    #[OA\Get(path: '/armors/list', summary: 'List armors', tags: ['Armors'])]
     #[ListResponse(
         statusCode: 200,
         listSchema: ArmorSchema::class,

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Infrastructure\Http\OpenAPI;
 
-use OpenApi\Attributes as OA;
 use Attribute;
+use OpenApi\Attributes as OA;
 
 #[Attribute(Attribute::TARGET_METHOD)]
 class ListResponse extends OA\Response
