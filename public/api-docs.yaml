@@ -15,6 +15,41 @@ paths:
         - Armors
       summary: 'List armors'
       operationId: e99d4ba03b1f0583bbec1d89516fa4ba
+      parameters:
+        -
+          parameter: page
+          name: page
+          in: query
+          description: 'The requested page number for pagination.'
+          example: 1
+        -
+          parameter: page_size
+          name: page_size
+          in: query
+          description: 'The number of results per page (max: 100).'
+          example: 1
+        -
+          parameter: name
+          name: name
+          in: query
+          description: 'A partial or full name of an item.'
+          example: ArchPaladin
+        -
+          parameter: rarities
+          name: rarities
+          in: query
+          description: 'A list of items rarities separeted by comma.'
+          example:
+            - Rare
+            - Epic
+        -
+          parameter: tags
+          name: tags
+          in: query
+          description: 'A list of tags associated to the item separed by comma'
+          example:
+            - Seasonal
+            - ac
       responses:
         '200':
           description: 'List of armors'
@@ -23,27 +58,32 @@ paths:
               schema:
                 properties:
                   filter: { $ref: '#/components/schemas/ArmorFilterSchema' }
-                  armors: { description: 'Collection of items.', type: array, items: { $ref: '#/components/schemas/ArmorSchema' } }
+                  armors: { description: 'The list of armors.', type: array, items: { $ref: '#/components/schemas/ArmorSchema' } }
                 type: object
 components:
   schemas:
     ArmorFilterSchema:
-      title: 'Armor List Filters'
-      description: 'Available filters and pagination parameters for listing Armors.'
+      title: 'Armor Filters Details'
+      description: 'Available filters for listing Armors.'
       properties:
+        name:
+          description: 'The requested item name.'
+          type: string
+          example: 'ArchPaladin Armor'
+          nullable: true
         page:
-          description: 'The requested page number for pagination.'
+          description: 'The requested page number.'
           type: integer
           minimum: 1
           example: 1
         page_size:
-          description: 'The number of results per page.'
+          description: 'The requested results per page.'
           type: integer
           maximum: 100
           minimum: 1
           example: 20
         rarities:
-          description: 'A list of armor rarity types to filter by (e.g., Rare, Epic).'
+          description: 'The requested items rarities.'
           type: array
           items:
             type: string
@@ -52,7 +92,7 @@ components:
             - Legendary
           nullable: true
         tags:
-          description: 'A list of tags associated with the armors to filter by.'
+          description: 'The requested items tags.'
           type: array
           items:
             type: string
@@ -60,14 +100,9 @@ components:
             - Seasonal
             - ac
           nullable: true
-        name:
-          description: 'A partial or full name to filter the armors (e.g., name_contains).'
-          type: string
-          example: ArchPaladin
-          nullable: true
       type: object
     ArmorSchema:
-      title: 'Armor Item Details'
+      title: 'Armor Details'
       description: 'The complete structure of an armor item returned by the API.'
       properties:
         id:

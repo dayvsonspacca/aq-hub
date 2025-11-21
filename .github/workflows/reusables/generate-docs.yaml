@@ -1,0 +1,31 @@
+name: Generate API Docs
+
+on:
+  workflow_call:
+  
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: Create .env file from example
+        run: cp .env.example .env
+          
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+      
+      - name: Generate API Documentation (composer run gen-api-doc)
+        run: composer run gen-api-doc
+
+      - name: Commit Generated API Documentation
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'ci: generate latest OpenAPI documentation'
