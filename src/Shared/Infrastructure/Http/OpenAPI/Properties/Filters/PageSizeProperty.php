@@ -6,15 +6,17 @@ namespace AqHub\Shared\Infrastructure\Http\OpenAPI\Properties\Filters;
 
 use OpenApi\Attributes as OA;
 
-trait PageSizeProperty
+class PageSizeProperty extends OA\Property
 {
-    #[OA\Property(
-        property: 'page_size',
-        type: 'integer',
-        description: 'The requested results per page.',
-        example: 20,
-        minimum: 1,
-        maximum: 100
-    )]
-    public int $pageSize;
+    public function __construct()
+    {
+        parent::__construct(
+            property: 'page_size',
+            type: 'integer',
+            description: 'The requested results per page.',
+            example: 20,
+            minimum: 1,
+            maximum: 100
+        );
+    }
 }

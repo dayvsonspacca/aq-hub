@@ -11,13 +11,15 @@ use OpenApi\Attributes as OA;
 #[OA\Schema(
     schema: 'ArmorFilterSchema',
     title: 'Armor Filters Details',
-    description: 'The armor requested filter.'
+    description: 'The armor requested filter.',
+    properties: [
+        new NameProperty(),
+        new PageProperty(),
+        new PageSizeProperty(),
+        new RaritiesProperty(),
+        new TagsProperty()
+    ]
 )]
 class ArmorFilterSchema
 {
-    use NameProperty;
-    use PageProperty;
-    use PageSizeProperty;
-    use RaritiesProperty;
-    use TagsProperty;
 }

@@ -6,14 +6,16 @@ namespace AqHub\Items\Infrastructure\Http\OpenAPI\Properties\Filters;
 
 use OpenApi\Attributes as OA;
 
-trait NameProperty
+class NameProperty extends OA\Property
 {
-    #[OA\Property(
-        property: 'name',
-        type: 'string',
-        description: 'The requested item name.',
-        example: 'ArchPaladin Armor',
-        nullable: true
-    )]
-    public string $name;
+    public function __construct()
+    {
+        parent::__construct(
+            property: 'name',
+            type: 'string',
+            description: 'The requested item name.',
+            example: 'ArchPaladin Armor',
+            nullable: true
+        );
+    }
 }
