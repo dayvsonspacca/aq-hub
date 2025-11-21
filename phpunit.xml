@@ -21,8 +21,9 @@
         </include>
         
         <exclude>
-            <directory>src/Shared/Infrastructure/Http/OpenAPI</directory> 
-            <directory>src/Items/Infrastructure/Http/OpenAPI</directory> 
+            <directory>src/Shared/Infrastructure/Http/OpenAPI</directory>
+            <directory>src/Items/Infrastructure/Http/OpenAPI</directory>
+            <directory>src/**/Infrastructure/Repositories/**</directory>
         </exclude>
     </source>
     
