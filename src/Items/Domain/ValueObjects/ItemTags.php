@@ -43,6 +43,9 @@ class ItemTags implements Countable, IteratorAggregate
         return count($this->tags);
     }
 
+    /**
+     * @return ArrayIterator<ItemTag>
+     */
     public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->tags);
