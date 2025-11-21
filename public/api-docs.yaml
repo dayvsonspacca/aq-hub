@@ -64,7 +64,7 @@ components:
   schemas:
     ArmorFilterSchema:
       title: 'Armor Filters Details'
-      description: 'Available filters for listing Armors.'
+      description: 'The armor requested filter.'
       properties:
         name:
           description: 'The requested item name.'
