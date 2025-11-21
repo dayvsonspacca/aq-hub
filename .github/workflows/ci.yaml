@@ -16,9 +16,13 @@ jobs:
   call-generate-docs:
     name: Generate API Documentation
     needs: call-tests
+    permissions:
+      contents: write
     uses: ./.github/workflows/generate-docs.yaml
 
   call-format:
     name: Format Code
     needs: call-generate-docs
+    permissions:
+      contents: write
     uses: ./.github/workflows/format-code.yaml
