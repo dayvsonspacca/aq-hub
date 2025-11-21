@@ -22,6 +22,6 @@ use OpenApi\Attributes as OA;
         new OA\Server(url: 'https://aqhub-api.dayvsonspacca.com')
     ]
 )]
-class OpenAPIDocumentation
+class Documentation
 {
 }
