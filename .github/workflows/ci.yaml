@@ -11,14 +11,14 @@ on:
 jobs:
   call-tests:
     name: Run Tests
-    uses: ./.github/workflows/reusables/run-tests.yaml 
+    uses: ./.github/workflows/run-tests.yaml 
 
   call-generate-docs:
     name: Generate API Documentation
     needs: call-tests
-    uses: ./.github/workflows/reusables/generate-docs.yaml
+    uses: ./.github/workflows/generate-docs.yaml
 
   call-format:
     name: Format Code
     needs: call-generate-docs
-    uses: ./.github/workflows/reusables/format-code.yaml
+    uses: ./.github/workflows/format-code.yaml
