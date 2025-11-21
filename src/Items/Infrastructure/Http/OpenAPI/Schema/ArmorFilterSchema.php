@@ -11,7 +11,7 @@ use OpenApi\Attributes as OA;
 #[OA\Schema(
     schema: 'ArmorFilterSchema',
     title: 'Armor Filters Details',
-    description: 'Available filters for listing Armors.'
+    description: 'The armor requested filter.'
 )]
 class ArmorFilterSchema
 {
