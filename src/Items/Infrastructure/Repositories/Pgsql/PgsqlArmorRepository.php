@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace AqHub\Items\Infrastructure\Repositories\Pgsql;
 
 use AqHub\Core\Infrastructure\Database\PgsqlConnection;
+use AqHub\Core\Result;
+use AqHub\Items\Domain\Entities\Armor;
 use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Repositories\ArmorRepository;
 use AqHub\Items\Domain\Repositories\Data\ArmorData;
 use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
-use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, Name};
+use AqHub\Items\Domain\Services\ItemIdentifierGenerator;
+use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
 use AqHub\Shared\Domain\Abstractions\Filter;
 use AqHub\Shared\Domain\Contracts\Identifier;
 use AqHub\Shared\Domain\Enums\ItemTag;
@@ -17,21 +20,21 @@ use AqHub\Shared\Domain\ValueObjects\StringIdentifier;
 use Aura\SqlQuery\QueryFactory;
 use DateTime;
 use PDO;
+use PDOException;
 
 class PgsqlArmorRepository implements ArmorRepository
 {
     public function __construct(
         private readonly PgsqlConnection $db,
         private readonly QueryFactory $query
-    ) {
-    }
+    ) {}
 
     public function hydrate(array $data): ArmorData
     {
         $name         = Name::create($data['name'])->unwrap();
         $description  = Description::create($data['description'])->unwrap();
         $identifier   = StringIdentifier::create($data['hash'])->unwrap();
-        $tags         = new ItemTags(array_map(fn (string $tag) => ItemTag::fromString($tag)->unwrap(), $data['tags']));
+        $tags         = new ItemTags(array_map(fn(string $tag) => ItemTag::fromString($tag)->unwrap(), $data['tags']));
         $registeredAt = new DateTime($data['registered_at']);
 
         $rarity = ItemRarity::fromString($data['rarity'] ?? '');
@@ -67,7 +70,7 @@ class PgsqlArmorRepository implements ArmorRepository
         }
 
         $tags           = $this->findAllTags([$result['id']]);
-        $result['tags'] = $tags[$result['id']];
+        $result['tags'] = key_exists($result['id'], $tags) ? $tags[$result['id']] : [];
 
         return $this->hydrate($result);
     }
@@ -86,12 +89,12 @@ class PgsqlArmorRepository implements ArmorRepository
             ->cols(['a.*']);
 
         if (count($filter->rarities) > 0) {
-            $select->where('rarity IN (:rarities)', ['rarities' => array_map(fn ($rarity) => $rarity->toString(), $filter->rarities)]);
+            $select->where('rarity IN (:rarities)', ['rarities' => array_map(fn($rarity) => $rarity->toString(), $filter->rarities)]);
         }
 
         if (count($filter->tags) > 0) {
             $select->join('INNER', 'armor_tags as at', 'a.id = at.armor_id');
-            $select->where('at.tag IN (:tags)', ['tags' => array_map(fn ($tag) => $tag->toString(), $filter->tags)]);
+            $select->where('at.tag IN (:tags)', ['tags' => array_map(fn($tag) => $tag->toString(), $filter->tags)]);
             $select->distinct();
         }
 
@@ -145,5 +148,57 @@ class PgsqlArmorRepository implements ArmorRepository
         }
 
         return $tags ?? [];
+    }
+
+    public function save(ItemInfo $info): Result
+    {
+        $identifier = ItemIdentifierGenerator::generate($info, Armor::class)->unwrap();
+        if ($this->findByIdentifier($identifier)) {
+            return Result::error('An item with same identifier already exists.', null);
+        }
+
+        $insert = $this->query->newInsert();
+
+        $insert
+            ->into('armors')
+            ->cols([
+                'hash' => $identifier->getValue(),
+                'name' => $info->getName(),
+                'description' => $info->getDescription(),
+                'rarity' => $info->getRarity()->toString()
+            ]);
+
+        try {
+            $this->db->connection->beginTransaction();
+            $statement = $this->db->connection->prepare($insert->getStatement());
+
+            $executed = $statement->execute($insert->getBindValues());
+            if (!$executed) {
+                return Result::error('Failed to insert armor data.', null);
+            }
+
+            $armorId = $this->db->connection->lastInsertId('armors_id_seq');
+
+            $insert = $this->query->newInsert();
+            $insert->into('armor_tags');
+
+            foreach ($info->tags as $tag) {
+                $insert->addRow([
+                    'tag' => $tag->toString(),
+                    'armor_id' => $armorId
+                ]);
+            }
+
+            $statement = $this->db->connection->prepare($insert->getStatement());
+            $statement->execute($insert->getBindValues());
+
+            $this->db->connection->commit();
+            return Result::success(null, 'Armor saved successfully.');
+        } catch (PDOException $e) {
+            $this->db->connection->rollBack();
+            return Result::error('Database error: ' . $e->getMessage(), null);
+        }
+
+        return Result::success(null, null);
     }
 }

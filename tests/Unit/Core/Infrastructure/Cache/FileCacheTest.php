@@ -44,4 +44,16 @@ final class FileCacheTest extends TestCase
         $this->assertTrue($this->cache->has('test-cache'));
         $this->assertSame($this->cache->get('test-cache', $callback, expiresAfter: 1), 'cached');
     }
+
+    #[Test]
+    public function should_invalidate_tags()
+    {
+        $callback = fn () => 'cached';
+        $this->cache->get('test-cache2', $callback, expiresAfter: 3600, cacheTags: ['test-tag']);
+        $this->assertTrue($this->cache->has('test-cache2'));
+
+        $this->cache->invalidateTags(['test-tag']);
+
+        $this->assertFalse($this->cache->has('test-cache2'));
+    }
 }

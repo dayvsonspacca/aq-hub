@@ -55,4 +55,9 @@ class FileCache
     {
         return $this->cache->hasItem($key);
     }
+
+    public function invalidateTags(array $tags): bool
+    {
+        return $this->cache->invalidateTags([$tags]);
+    }
 }
