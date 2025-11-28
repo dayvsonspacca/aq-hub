@@ -11,6 +11,8 @@ RUN composer install --no-dev --optimize-autoloader
 
 COPY . .
 
+RUN touch .env
+
 USER root
 
 RUN mkdir -p logs cache
