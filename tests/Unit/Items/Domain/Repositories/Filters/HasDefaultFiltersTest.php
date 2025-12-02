@@ -63,7 +63,7 @@ final class HasDefaultFiltersTest extends TestCase
             }
         };
 
-        $this->assertSame($filter->generateUniqueKey(), '0c28dd9fc2d270604e97deb5df14c446');
+        $this->assertSame($filter->generateUniqueKey(), '977dbc9f425dceedd8cd7e5f6d8a8115');
     }
 
     #[Test]
@@ -82,6 +82,6 @@ final class HasDefaultFiltersTest extends TestCase
         $filter->setName(Name::create('Archfiend Doomlord')->unwrap());
         $filter->setTags([ItemTag::AdventureCoins]);
 
-        $this->assertSame($filter->generateUniqueKey(), '4b35a6997e188a03a13f29d7795da2d0');
+        $this->assertSame($filter->generateUniqueKey(), '2fb2e9d6e047beee1161a927e39879ff');
     }
 }

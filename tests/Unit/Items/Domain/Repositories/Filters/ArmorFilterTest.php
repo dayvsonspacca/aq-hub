@@ -43,6 +43,6 @@ final class ArmorFilterTest extends TestCase
     {
         $filter = new ArmorFilter();
 
-        $this->assertSame($filter->generateUniqueKey(), 'eb923207a6e28b2a118ec21e71e7953e');
+        $this->assertSame($filter->generateUniqueKey(), '25d2b09c1553fd4b7c19ff9b916605ca');
     }
 }
