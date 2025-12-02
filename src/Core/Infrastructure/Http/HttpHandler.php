@@ -76,7 +76,7 @@ class HttpHandler
             $response = $controller->$method($request);
 
             $this->addCorsHeaders($response);
-            
+
             return $response;
         } catch (ResourceNotFoundException $e) {
             return new Response('Not Found', Response::HTTP_NOT_FOUND);
