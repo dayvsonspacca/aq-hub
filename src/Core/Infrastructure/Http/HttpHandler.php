@@ -75,11 +75,22 @@ class HttpHandler
 
             $response = $controller->$method($request);
 
+            $this->addCorsHeaders($response);
+            
             return $response;
         } catch (ResourceNotFoundException $e) {
             return new Response('Not Found', Response::HTTP_NOT_FOUND);
         } catch (\Throwable $e) {
             return new Response('Internal Server Error', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    private function addCorsHeaders(Response $response): void
+    {
+        $origin = '*';
+
+        $response->headers->set('Access-Control-Allow-Origin', $origin);
+        $response->headers->set('Access-Control-Allow-Methods', 'GET');
+        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     }
 }

@@ -75,4 +75,23 @@ final class HttpHandlerTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertSame(Response::HTTP_INTERNAL_SERVER_ERROR, $response->getStatusCode());
     }
+
+    #[Test]
+    public function should_add_cors_headers()
+    {
+        $httpHandler = $this->container->get(HttpHandler::class);
+        $request     = $this->makeRequest(
+            uri: '/api/list'
+        );
+
+        /** @var Response $response */
+        $response = $httpHandler->handle($request);
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
+
+        $this->assertSame('*', $response->headers->get('Access-Control-Allow-Origin'));
+        $this->assertSame('GET', $response->headers->get('Access-Control-Allow-Methods'));
+        $this->assertSame('Content-Type, Authorization', $response->headers->get('Access-Control-Allow-Headers'));
+    }
 }
