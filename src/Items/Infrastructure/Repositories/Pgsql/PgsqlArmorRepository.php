@@ -17,6 +17,7 @@ use AqHub\Shared\Domain\Abstractions\Filter;
 use AqHub\Shared\Domain\Contracts\Identifier;
 use AqHub\Shared\Domain\Enums\ItemTag;
 use AqHub\Shared\Domain\ValueObjects\StringIdentifier;
+use Aura\SqlQuery\Common\SelectInterface;
 use Aura\SqlQuery\QueryFactory;
 use DateTime;
 use PDO;
@@ -27,15 +28,14 @@ class PgsqlArmorRepository implements ArmorRepository
     public function __construct(
         private readonly PgsqlConnection $db,
         private readonly QueryFactory $query
-    ) {
-    }
+    ) {}
 
     public function hydrate(array $data): ArmorData
     {
         $name         = Name::create($data['name'])->unwrap();
         $description  = Description::create($data['description'])->unwrap();
         $identifier   = StringIdentifier::create($data['hash'])->unwrap();
-        $tags         = new ItemTags(array_map(fn (string $tag) => ItemTag::fromString($tag)->unwrap(), $data['tags']));
+        $tags         = new ItemTags(array_map(fn(string $tag) => ItemTag::fromString($tag)->unwrap(), $data['tags']));
         $registeredAt = new DateTime($data['registered_at']);
 
         $rarity = ItemRarity::fromString($data['rarity'] ?? '');
@@ -76,7 +76,6 @@ class PgsqlArmorRepository implements ArmorRepository
         return $this->hydrate($result);
     }
 
-
     /**
      * @param ArmorFilter $filter
      * @return ArmorData[]
@@ -89,24 +88,9 @@ class PgsqlArmorRepository implements ArmorRepository
             ->from('armors as a')
             ->cols(['a.*']);
 
-        if (count($filter->rarities) > 0) {
-            $select->where('rarity IN (:rarities)', ['rarities' => array_map(fn ($rarity) => $rarity->toString(), $filter->rarities)]);
-        }
+        $select = $this->buildWhere($filter, $select);
 
-        if (count($filter->tags) > 0) {
-            $select->join('INNER', 'armor_tags as at', 'a.id = at.armor_id');
-            $select->where('at.tag IN (:tags)', ['tags' => array_map(fn ($tag) => $tag->toString(), $filter->tags)]);
-            $select->distinct();
-        }
-
-        if (isset($filter->name) && !is_null($filter->name)) {
-            $select->where('a.name ILIKE :name', ['name' => '%' . $filter->name->value . '%']);
-        }
-
-        $limit  = $filter->pageSize;
-        $offset = ($filter->page - 1) * $filter->pageSize;
-
-        $select->limit($limit)->offset($offset)->orderBy(['id ASC']);
+        $select->orderBy(['id ASC']);
 
         $statement = $this->db->connection->prepare($select->getStatement());
         $statement->execute($select->getBindValues());
@@ -201,5 +185,51 @@ class PgsqlArmorRepository implements ArmorRepository
         }
 
         return Result::success(null, null);
+    }
+
+    /**
+     * @param ArmorFilter $filter
+     * @return int
+     */
+    public function countAll(Filter $filter)
+    {
+        $select = $this->query->newSelect();
+
+        $select
+            ->from('armors as a')
+            ->cols(['a.*']);
+
+        $select = $this->buildWhere($filter, $select);
+
+
+        $statement = $this->db->connection->prepare($select->getStatement());
+        $statement->execute($select->getBindValues());
+        $total = $statement->rowCount();
+
+        return $total;
+    }
+
+    private function buildWhere(ArmorFilter $filter, SelectInterface $select): SelectInterface
+    {
+        if (count($filter->rarities) > 0) {
+            $select->where('rarity IN (:rarities)', ['rarities' => array_map(fn($rarity) => $rarity->toString(), $filter->rarities)]);
+        }
+
+        if (count($filter->tags) > 0) {
+            $select->join('INNER', 'armor_tags as at', 'a.id = at.armor_id');
+            $select->where('at.tag IN (:tags)', ['tags' => array_map(fn($tag) => $tag->toString(), $filter->tags)]);
+            $select->distinct();
+        }
+
+        if (isset($filter->name) && !is_null($filter->name)) {
+            $select->where('a.name ILIKE :name', ['name' => '%' . $filter->name->value . '%']);
+        }
+
+        $limit  = $filter->pageSize;
+        $offset = ($filter->page - 1) * $filter->pageSize;
+
+        $select->limit($limit)->offset($offset);
+
+        return $select;
     }
 }
