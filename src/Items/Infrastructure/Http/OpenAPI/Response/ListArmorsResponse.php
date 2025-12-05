@@ -26,6 +26,11 @@ class ListArmorsResponse extends OA\Response
                         type: 'array',
                         description: 'The list of armors.',
                         items: new OA\Items(ref: '#/components/schemas/ArmorSchema')
+                    ),
+                    new OA\Property(
+                        property: 'total',
+                        type: 'integer',
+                        description: 'The total of armors by filter.'
                     )
                 ]
             )

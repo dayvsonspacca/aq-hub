@@ -6,6 +6,7 @@ namespace AqHub\Tests\Unit\Items\Application\Armors\Queries;
 
 use AqHub\Core\Infrastructure\Cache\FileCache;
 use AqHub\Items\Application\Armors\Queries\FindAll;
+use AqHub\Items\Application\Armors\Queries\Outputs\FindAllOutput;
 use AqHub\Items\Domain\Repositories\ArmorRepository;
 use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
 use AqHub\Tests\DataProviders\ArmorDataProvider;
@@ -62,8 +63,18 @@ class FindAllTest extends TestCase
             ->method('findAll')
             ->willReturn($expectedArmors);
 
-        $actualArmors = $this->findAllQuery->execute($filter);
+        $expectedTotal = 3;
 
-        $this->assertSame($expectedArmors, $actualArmors);
+        $this->repositoryMock
+            ->expects($this->once())
+            ->method('countAll')
+            ->willReturn($expectedTotal);
+
+        $output = $this->findAllQuery->execute($filter);
+
+        $this->assertInstanceOf(FindAllOutput::class, $output);
+
+        $this->assertSame($expectedArmors, $output->armors);
+        $this->assertSame($expectedTotal, $output->total);
     }
 }

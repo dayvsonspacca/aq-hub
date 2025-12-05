@@ -191,7 +191,7 @@ class PgsqlArmorRepository implements ArmorRepository
      * @param ArmorFilter $filter
      * @return int
      */
-    public function countAll(Filter $filter)
+    public function countAll(Filter $filter): int
     {
         $select = $this->query->newSelect();
 

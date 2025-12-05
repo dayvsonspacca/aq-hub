@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Items\Infrastructure\Http\Controllers\Rest;
 
 use AqHub\Items\Application\Armors\Queries\FindAll;
+use AqHub\Items\Application\Armors\Queries\Outputs\FindAllOutput;
 use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
 use AqHub\Items\Infrastructure\Http\Controllers\Rest\ArmorController;
 use AqHub\Tests\DataProviders\ArmorDataProvider;
@@ -54,14 +55,17 @@ class ArmorControllerTest extends TestCase
             'armors' => [
                 $mockArmors[0]->toArray(),
                 $mockArmors[1]->toArray(),
-            ]
+            ],
+            'total' => count($mockArmors)
         ];
+
+        $output = new FindAllOutput($mockArmors, count($mockArmors));
 
         $this->findAllQueryMock
             ->expects($this->once())
             ->method('execute')
             ->with($this->isInstanceOf(ArmorFilter::class))
-            ->willReturn($mockArmors);
+            ->willReturn($output);
 
         $request  = $this->makeRequest(method: 'GET', uri: '/armors/list?page=1');
         $response = $this->controller->list($request);

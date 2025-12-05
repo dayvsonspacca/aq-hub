@@ -32,11 +32,12 @@ class ArmorController implements RestController
     public function list(Request $request): JsonResponse
     {
         $filter = ListAllArmorsForm::fromRequest($request);
-        $armors = $this->findAll->execute($filter);
+        $output = $this->findAll->execute($filter);
 
         return new JsonResponse([
             'filter' => $filter->toArray(),
-            'armors' => ArrayPresenter::presentCollection($armors)
+            'armors' => ArrayPresenter::presentCollection($output->armors),
+            'total' => $output->total
         ], Response::HTTP_OK);
     }
 }
