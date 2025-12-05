@@ -12,17 +12,10 @@ jobs:
   call-tests:
     name: Run Tests
     uses: ./.github/workflows/run-tests.yaml 
-
-  call-generate-docs:
-    name: Generate API Documentation
+    
+  call-format-and-generate-docs:
+    name: Format Code and Generate API Documentation
     needs: call-tests
     permissions:
       contents: write
-    uses: ./.github/workflows/generate-docs.yaml
-
-  call-format:
-    name: Format Code
-    needs: call-generate-docs
-    permissions:
-      contents: write
-    uses: ./.github/workflows/format-code.yaml
+    uses: ./.github/workflows/format-and-generate-docs.yaml

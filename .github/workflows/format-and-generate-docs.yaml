@@ -1,10 +1,10 @@
-name: Generate API Docs
+name: Format Code and Generate API Docs
 
 on:
   workflow_call:
   
 jobs:
-  generate-docs:
+  format-and-generate-docs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -22,10 +22,13 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
       
+      - name: Run code formatter (composer fmt)
+        run: composer fmt
+      
       - name: Generate API Documentation (composer run gen-api-doc)
         run: composer run gen-api-doc
 
-      - name: Commit Generated API Documentation
+      - name: Commit all changes (Format and Docs)
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'ci: generate latest OpenAPI documentation'
+          commit_message: 'ci: apply formatting and generate latest OpenAPI documentation'
