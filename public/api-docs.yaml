@@ -59,7 +59,7 @@ paths:
                 properties:
                   filter: { $ref: '#/components/schemas/ArmorFilterSchema' }
                   armors: { description: 'The list of armors.', type: array, items: { $ref: '#/components/schemas/ArmorSchema' } }
-                  total: { description: 'The total of armors by filter.', type: integer }
+                  total: { description: 'The total of armors by filter ignoring pagination.', type: integer }
                 type: object
 components:
   schemas:
