@@ -199,7 +199,7 @@ class PgsqlArmorRepository implements ArmorRepository
             ->from('armors as a')
             ->cols(['a.*']);
 
-        $select = $this->buildWhere($filter, $select);
+        $select = $this->buildWhere($filter, $select, ignorePagination: true);
 
 
         $statement = $this->db->connection->prepare($select->getStatement());
@@ -209,7 +209,7 @@ class PgsqlArmorRepository implements ArmorRepository
         return $total;
     }
 
-    private function buildWhere(ArmorFilter $filter, SelectInterface $select): SelectInterface
+    private function buildWhere(ArmorFilter $filter, SelectInterface $select, bool $ignorePagination = false): SelectInterface
     {
         if (count($filter->rarities) > 0) {
             $select->where('rarity IN (:rarities)', ['rarities' => array_map(fn($rarity) => $rarity->toString(), $filter->rarities)]);
@@ -225,10 +225,12 @@ class PgsqlArmorRepository implements ArmorRepository
             $select->where('a.name ILIKE :name', ['name' => '%' . $filter->name->value . '%']);
         }
 
-        $limit  = $filter->pageSize;
-        $offset = ($filter->page - 1) * $filter->pageSize;
+        if (!$ignorePagination) {
+            $limit  = $filter->pageSize;
+            $offset = ($filter->page - 1) * $filter->pageSize;
 
-        $select->limit($limit)->offset($offset);
+            $select->limit($limit)->offset($offset);
+        }
 
         return $select;
     }

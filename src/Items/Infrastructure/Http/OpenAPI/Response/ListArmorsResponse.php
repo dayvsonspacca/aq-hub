@@ -30,7 +30,7 @@ class ListArmorsResponse extends OA\Response
                     new OA\Property(
                         property: 'total',
                         type: 'integer',
-                        description: 'The total of armors by filter.'
+                        description: 'The total of armors by filter ignoring pagination.'
                     )
                 ]
             )

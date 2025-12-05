@@ -63,7 +63,7 @@ class FindAllTest extends TestCase
             ->method('findAll')
             ->willReturn($expectedArmors);
 
-        $expectedTotal = 3;
+        $expectedTotal = 5;
 
         $this->repositoryMock
             ->expects($this->once())
