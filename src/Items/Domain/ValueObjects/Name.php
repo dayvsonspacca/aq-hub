@@ -17,6 +17,7 @@ class Name
      */
     public static function create(string $name): Result
     {
+        $name = str_replace(['(Rare)'], '', $name);
         $name = trim($name);
 
         if (empty($name)) {

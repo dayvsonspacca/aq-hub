@@ -30,4 +30,15 @@ final class NameTest extends TestCase
         $this->assertTrue($result->isError());
         $this->assertSame(null, $result->getData());
     }
+
+    #[Test]
+    public function should_remove_unwanted_words()
+    {
+        $name = 'Sword (Rare)';
+        $result = Name::create($name);
+
+        $this->assertTrue($result->isSuccess());
+        $this->assertInstanceOf(Name::class, $result->getData());
+        $this->assertSame('Sword', $result->getData()->value);
+    }
 }
