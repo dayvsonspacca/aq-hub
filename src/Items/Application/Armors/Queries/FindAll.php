@@ -14,13 +14,14 @@ class FindAll
     public function __construct(
         private readonly ArmorRepository $repository,
         private FileCache $cache
-    ) {}
+    ) {
+    }
 
     public function execute(ArmorFilter $filter): FindAllOutput
     {
         $callback = function () use ($filter): FindAllOutput {
             $armors = $this->repository->findAll($filter);
-            $total = $this->repository->countAll($filter);
+            $total  = $this->repository->countAll($filter);
 
             return new FindAllOutput(
                 armors: $armors,
