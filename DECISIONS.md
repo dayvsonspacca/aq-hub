@@ -89,3 +89,14 @@ This approach brings several benefits:
 - **Flexibility:** Changes to internal entity structures don’t directly impact consumers, as the `DataObject` serves as a stable interface.
 
 > Conclusion: All repositories will return `DataObjects` as DTOs, defining a consistent way for data to leave the repository layer and ensuring clarity and safety across the system.
+
+### #8 Where Will the Initial Data for the System Come From?  
+2025-12-19  
+
+This question arose during the definition of the data acquisition strategy. Currently, the system needs a reliable source of information to populate its database and become functional as a wiki-style resource.  
+
+While the ultimate goal is to extract high-fidelity data directly from the game's infrastructure using the tools developed in [dayvsonspacca/aqw-miner](https://github.com/dayvsonspacca/aqw-miner), implementing and refining these specialized miners takes time. To ensure a usable version of the API can be launched sooner, a more immediate approach is required.  
+
+The AQW Wiki, despite not having all the technical parameters I eventually want to store, provides a structured and comprehensive base of items.  
+
+> **Conclusion:** For now, the system's data will come exclusively from **Web Scraping the official AQW Wiki**. This allows for a faster initial release of the API. The integration of more precise data directly from the game via [aqw-miner](https://github.com/dayvsonspacca/aqw-miner) will be treated as a future enhancement to enrich the existing records.
