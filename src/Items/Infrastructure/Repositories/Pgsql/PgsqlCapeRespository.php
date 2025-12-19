@@ -6,7 +6,7 @@ namespace AqHub\Items\Infrastructure\Repositories\Pgsql;
 
 use AqHub\Core\Infrastructure\Database\PgsqlConnection;
 use AqHub\Items\Domain\Enums\ItemRarity;
-use AqHub\Items\Domain\Repositories\CapeRespository;
+use AqHub\Items\Domain\Repositories\CapeRepository;
 use AqHub\Items\Domain\Repositories\Data\CapeData;
 use AqHub\Items\Domain\Repositories\Filters\CapeFilter;
 use AqHub\Items\Domain\ValueObjects\Description;
@@ -21,7 +21,7 @@ use Aura\SqlQuery\QueryFactory;
 use DateTime;
 use PDO;
 
-class PgsqlCapeRespository implements CapeRespository
+class PgsqlCapeRepository implements CapeRepository
 {
     public function __construct(
         private readonly PgsqlConnection $db,

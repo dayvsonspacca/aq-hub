@@ -8,10 +8,10 @@ use AqHub\Core\Infrastructure\Database\PgsqlConnection;
 use AqHub\Core\Interfaces\DefinitionsInterface;
 use AqHub\Items\Application\Armors;
 use AqHub\Items\Domain\Repositories\ArmorRepository;
-use AqHub\Items\Domain\Repositories\CapeRespository;
+use AqHub\Items\Domain\Repositories\CapeRepository;
 use AqHub\Items\Infrastructure\Http\Controllers\Rest\ArmorController;
 use AqHub\Items\Infrastructure\Repositories\Pgsql\PgsqlArmorRepository;
-use AqHub\Items\Infrastructure\Repositories\Pgsql\PgsqlCapeRespository;
+use AqHub\Items\Infrastructure\Repositories\Pgsql\PgsqlCapeRepository;
 use AqHub\Shared\Infrastructure\Cache\FileCacheFactory;
 
 use function DI\{add, autowire, factory, get};
@@ -31,10 +31,10 @@ class ItemsDefinitions implements DefinitionsInterface
     {
         return [
             PgsqlArmorRepository::class => autowire()->constructor(get(PgsqlConnection::class), get('QueryBuilder.Pgsql')),
-            PgsqlCapeRespository::class => autowire()->constructor(get(PgsqlConnection::class), get('QueryBuilder.Pgsql')),
+            PgsqlCapeRepository::class => autowire()->constructor(get(PgsqlConnection::class), get('QueryBuilder.Pgsql')),
 
             ArmorRepository::class => get(PgsqlArmorRepository::class),
-            CapeRespository::class => get(PgsqlArmorRepository::class)
+            CapeRepository::class => get(PgsqlArmorRepository::class)
         ];
     }
 

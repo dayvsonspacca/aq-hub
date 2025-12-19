@@ -14,7 +14,7 @@ use AqHub\Shared\Domain\ValueObjects\StringIdentifier;
  * @method CapeData[] findAll(CapeFilter $filter)
  * @method int countAll(CapeFilter $filter)
  */
-interface CapeRespository extends CanFindByIdentifier, CanFindAll, CanCountAll
+interface CapeRepository extends CanFindByIdentifier, CanFindAll, CanCountAll
 {
     public function hydrate(array $data): CapeData;
 }
