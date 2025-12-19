@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Tests\Unit\Items\Infrastructure\Http\Controllers\Rest;
 
+use AqHub\Items\Application\Armors\Commands\Add;
 use AqHub\Items\Application\Armors\Queries\FindAll;
 use AqHub\Items\Application\Armors\Queries\Outputs\FindAllOutput;
 use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
@@ -21,15 +22,19 @@ class ArmorControllerTest extends TestCase
 
     private MockObject&FindAll $findAllQueryMock;
     private ArmorController $controller;
+    private MockObject&Add $addCommandMock;
+
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->findAllQueryMock = $this->createMock(FindAll::class);
+        $this->addCommandMock = $this->createMock(Add::class);
 
         $this->controller = new ArmorController(
-            $this->findAllQueryMock
+            $this->findAllQueryMock,
+            $this->addCommandMock
         );
     }
 
