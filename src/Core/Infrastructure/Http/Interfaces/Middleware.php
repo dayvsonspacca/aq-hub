@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Core\Infrastructure\Http\Interfaces;
 
 use Closure;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\{Request, Response};
 
 interface Middleware
 {

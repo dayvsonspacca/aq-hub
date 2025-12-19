@@ -13,7 +13,7 @@ class ContainerFactory
     {
         $builder = new ContainerBuilder();
         $builder->useAutowiring(true);
-        foreach($definitions as $definition) {
+        foreach ($definitions as $definition) {
             $builder->addDefinitions($definition);
         }
 

@@ -30,7 +30,7 @@ class ArmorControllerTest extends TestCase
         parent::setUp();
 
         $this->findAllQueryMock = $this->createMock(FindAll::class);
-        $this->addCommandMock = $this->createMock(Add::class);
+        $this->addCommandMock   = $this->createMock(Add::class);
 
         $this->controller = new ArmorController(
             $this->findAllQueryMock,

@@ -8,8 +8,7 @@ use AqHub\Core\Infrastructure\Http\Interfaces\RestController;
 use AqHub\Core\Infrastructure\Http\Route;
 use AqHub\Items\Application\Armors\Commands\Add;
 use AqHub\Items\Application\Armors\Queries\FindAll;
-use AqHub\Items\Infrastructure\Http\Forms\AddArmorForm;
-use AqHub\Items\Infrastructure\Http\Forms\ListAllArmorsForm;
+use AqHub\Items\Infrastructure\Http\Forms\{AddArmorForm, ListAllArmorsForm};
 use AqHub\Items\Infrastructure\Http\OpenAPI\QueryParameters\{NameParameter, RaritiesParameter, TagsParamenter};
 use AqHub\Items\Infrastructure\Http\OpenAPI\Response\ListArmorsResponse;
 use AqHub\Shared\Domain\Helpers\ArrayPresenter;
@@ -23,7 +22,8 @@ class ArmorController implements RestController
     public function __construct(
         private readonly FindAll $findAll,
         private readonly Add $add
-    ) {}
+    ) {
+    }
 
     #[OA\Get(
         path: '/armors/list',
@@ -58,7 +58,7 @@ class ArmorController implements RestController
         $itemInfo = $input->getData();
 
         $result = $this->add->execute($itemInfo);
-        
+
         if ($result->isError()) {
             return new JsonResponse([
                 'message' => $result->getMessage()

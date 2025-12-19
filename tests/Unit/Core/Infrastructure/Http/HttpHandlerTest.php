@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Tests\Unit\Core\Infrastructure\Http;
 
-use AqHub\Core\ContainerFactory;
-use AqHub\Core\CoreDefinitions;
+use AqHub\Core\{ContainerFactory, CoreDefinitions};
 use AqHub\Core\Infrastructure\Http\{HttpDefinitions, HttpHandler};
 use AqHub\Tests\TestCase;
 use AqHub\Tests\Traits\DoRequests;

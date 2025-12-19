@@ -13,7 +13,8 @@ class PgsqlUsersApiRepository
     public function __construct(
         private readonly PgsqlConnection $db,
         private readonly QueryFactory $query
-    ) {}
+    ) {
+    }
 
     public function exists(string $username, string $password): bool
     {

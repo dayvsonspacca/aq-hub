@@ -9,16 +9,15 @@ use AqHub\Core\Infrastructure\Http\Route;
 use AqHub\Shared\Infrastructure\Http\Services\JwtAuthService;
 use AqHub\Shared\Infrastructure\Repositories\Pgsql\PgsqlUsersApiRepository;
 use Symfony\Component\HttpFoundation\Exception\JsonException;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{JsonResponse, Request, Response};
 
 class ApiAuthController implements RestController
 {
     public function __construct(
         private readonly JwtAuthService $authService,
         private readonly PgsqlUsersApiRepository $usersApiRepository
-    ) {}
+    ) {
+    }
 
     #[Route('/auth/login', methods: ['POST'])]
     public function login(Request $request): JsonResponse

@@ -6,10 +6,7 @@ namespace AqHub\Items\Infrastructure\Http\Forms;
 
 use AqHub\Core\Result;
 use AqHub\Items\Domain\Enums\ItemRarity;
-use AqHub\Items\Domain\ValueObjects\Description;
-use AqHub\Items\Domain\ValueObjects\ItemInfo;
-use AqHub\Items\Domain\ValueObjects\ItemTags;
-use AqHub\Items\Domain\ValueObjects\Name;
+use AqHub\Items\Domain\ValueObjects\{Description, ItemInfo, ItemTags, Name};
 use AqHub\Shared\Domain\Enums\ItemTag;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,11 +19,11 @@ class AddArmorForm
         try {
             $payload = $request->toArray();
 
-            $name = Name::create($payload['name'] ?? '')->unwrap();
+            $name        = Name::create($payload['name'] ?? '')->unwrap();
             $description = Description::create($payload['description'] ?? '')->unwrap();
-            $rarity = isset($payload['rarity']) ? ItemRarity::fromString($payload['rarity']) : null;
-            $rarity = !is_null($rarity) ? $rarity->unwrap() : null;
-            $tags = new ItemTags();
+            $rarity      = isset($payload['rarity']) ? ItemRarity::fromString($payload['rarity']) : null;
+            $rarity      = !is_null($rarity) ? $rarity->unwrap() : null;
+            $tags        = new ItemTags();
 
             foreach ($payload['tags'] ?? [] as $tag) {
                 $itemTag = ItemTag::fromString($tag);
@@ -38,7 +35,8 @@ class AddArmorForm
             }
 
             return Result::success(
-                null, ItemInfo::create($name, $description, $tags, $rarity)->getData()
+                null,
+                ItemInfo::create($name, $description, $tags, $rarity)->getData()
             );
         } catch (Exception $e) {
             return Result::error($e->getMessage(), null);
