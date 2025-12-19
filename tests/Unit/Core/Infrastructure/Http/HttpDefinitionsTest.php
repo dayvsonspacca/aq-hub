@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Core\Infrastructure\Http;
 
 use AqHub\Core\ContainerFactory;
-use AqHub\Core\Infrastructure\Http\{HttpDefinitions, HttpHandler};
+use AqHub\Core\Infrastructure\Http\{HttpDefinitions, HttpHandler, JwtAuthMiddleware};
 use AqHub\Tests\TestCase;
 use DI\Container;
 use PHPUnit\Framework\Attributes\Test;
@@ -24,7 +24,7 @@ final class HttpDefinitionsTest extends TestCase
     {
         $dependencies = HttpDefinitions::dependencies();
 
-        $this->assertCount(2, $dependencies);
+        $this->assertCount(3, $dependencies);
     }
 
     #[Test]
@@ -32,5 +32,6 @@ final class HttpDefinitionsTest extends TestCase
     {
         $this->assertTrue($this->container->has('Controllers.Rest'));
         $this->assertTrue($this->container->has(HttpHandler::class));
+        $this->assertTrue($this->container->has(JwtAuthMiddleware::class));
     }
 }
