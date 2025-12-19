@@ -18,7 +18,9 @@ class HttpDefinitions implements DefinitionsInterface
         return [
             'Controllers.Rest' => [],
             HttpHandler::class => autowire()->constructor(get(Container::class), get('Controllers.Rest')),
-            JwtAuthMiddleware::class => autowire()->constructor(get(Env::class))
+
+            JwtAuthService::class => autowire()->constructor(get(Env::class)),
+            JwtAuthMiddleware::class => autowire()->constructor(get(JwtAuthService::class))
         ];
     }
 }

@@ -24,7 +24,7 @@ final class HttpDefinitionsTest extends TestCase
     {
         $dependencies = HttpDefinitions::dependencies();
 
-        $this->assertCount(3, $dependencies);
+        $this->assertCount(4, $dependencies);
     }
 
     #[Test]
