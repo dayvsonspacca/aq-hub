@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Items\Domain\Repositories\Data;
 
 use AqHub\Items\Domain\Enums\ItemRarity;
-use AqHub\Items\Domain\ValueObjects\Description;
-use AqHub\Items\Domain\ValueObjects\ItemTags;
-use AqHub\Items\Domain\ValueObjects\Name;
+use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, Name};
 use AqHub\Shared\Domain\Abstractions\Data;
 use AqHub\Shared\Domain\ValueObjects\StringIdentifier;
 use DateTime;
@@ -22,7 +20,8 @@ class CapeData extends Data
         public readonly DateTime $registeredAt,
         public readonly ?ItemRarity $rarity,
         public readonly bool $canAccessBank
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

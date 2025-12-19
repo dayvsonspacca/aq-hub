@@ -9,9 +9,7 @@ use AqHub\Items\Domain\Enums\ItemRarity;
 use AqHub\Items\Domain\Repositories\CapeRepository;
 use AqHub\Items\Domain\Repositories\Data\CapeData;
 use AqHub\Items\Domain\Repositories\Filters\CapeFilter;
-use AqHub\Items\Domain\ValueObjects\Description;
-use AqHub\Items\Domain\ValueObjects\ItemTags;
-use AqHub\Items\Domain\ValueObjects\Name;
+use AqHub\Items\Domain\ValueObjects\{Description, ItemTags, Name};
 use AqHub\Shared\Domain\Abstractions\Filter;
 use AqHub\Shared\Domain\Contracts\Identifier;
 use AqHub\Shared\Domain\Enums\ItemTag;
@@ -26,15 +24,16 @@ class PgsqlCapeRepository implements CapeRepository
     public function __construct(
         private readonly PgsqlConnection $db,
         private readonly QueryFactory $query
-    ) {}
+    ) {
+    }
 
     public function hydrate(array $data): CapeData
     {
-        $name         = Name::create($data['name'])->unwrap();
-        $description  = Description::create($data['description'])->unwrap();
-        $identifier   = StringIdentifier::create($data['hash'])->unwrap();
-        $tags         = new ItemTags(array_map(fn(string $tag) => ItemTag::fromString($tag)->unwrap(), $data['tags']));
-        $registeredAt = new DateTime($data['registered_at']);
+        $name          = Name::create($data['name'])->unwrap();
+        $description   = Description::create($data['description'])->unwrap();
+        $identifier    = StringIdentifier::create($data['hash'])->unwrap();
+        $tags          = new ItemTags(array_map(fn (string $tag) => ItemTag::fromString($tag)->unwrap(), $data['tags']));
+        $registeredAt  = new DateTime($data['registered_at']);
         $canAccessBank = (bool) $data['can_access_bank'];
 
         $rarity = ItemRarity::fromString($data['rarity'] ?? '');
@@ -160,12 +159,12 @@ class PgsqlCapeRepository implements CapeRepository
     private function buildWhere(CapeFilter $filter, SelectInterface $select, bool $ignorePagination = false): SelectInterface
     {
         if (count($filter->rarities) > 0) {
-            $select->where('rarity IN (:rarities)', ['rarities' => array_map(fn($rarity) => $rarity->toString(), $filter->rarities)]);
+            $select->where('rarity IN (:rarities)', ['rarities' => array_map(fn ($rarity) => $rarity->toString(), $filter->rarities)]);
         }
 
         if (count($filter->tags) > 0) {
             $select->join('INNER', 'cape_tags as ct', 'c.id = ct.cape_id');
-            $select->where('ct.tag IN (:tags)', ['tags' => array_map(fn($tag) => $tag->toString(), $filter->tags)]);
+            $select->where('ct.tag IN (:tags)', ['tags' => array_map(fn ($tag) => $tag->toString(), $filter->tags)]);
             $select->distinct();
         }
 
@@ -173,7 +172,7 @@ class PgsqlCapeRepository implements CapeRepository
             $select->where('c.name ILIKE :name', ['name' => '%' . $filter->name->value . '%']);
         }
 
-        if (isset($filter->canAccessBank) && !is_null($filter->canAccessBank))  {
+        if (isset($filter->canAccessBank) && !is_null($filter->canAccessBank)) {
             $select->where('c.can_access_bank = :can_access_bank', ['can_access_bank' => $filter->canAccessBank ? 1 : 0]);
         }
 

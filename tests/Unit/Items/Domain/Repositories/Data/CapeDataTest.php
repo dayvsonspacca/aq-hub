@@ -24,9 +24,9 @@ final class CapeDataTest extends TestCase
         $tags        = new ItemTags([ItemTag::AdventureCoins]);
         $rarity      = ItemRarity::Awesome;
 
-        $itemInfo     = ItemInfo::create($name, $description, $tags, $rarity)->unwrap();
-        $id           = ItemIdentifierGenerator::generate($itemInfo, Armor::class)->unwrap();
-        $registeredAt = new DateTime('2025-10-14');
+        $itemInfo      = ItemInfo::create($name, $description, $tags, $rarity)->unwrap();
+        $id            = ItemIdentifierGenerator::generate($itemInfo, Armor::class)->unwrap();
+        $registeredAt  = new DateTime('2025-10-14');
         $canAccessBank = false;
 
         $capeData = new CapeData(
@@ -57,9 +57,9 @@ final class CapeDataTest extends TestCase
         $tags        = new ItemTags([ItemTag::AdventureCoins]);
         $rarity      = ItemRarity::Awesome;
 
-        $itemInfo     = ItemInfo::create($name, $description, $tags, $rarity)->unwrap();
-        $id           = ItemIdentifierGenerator::generate($itemInfo, Armor::class)->unwrap();
-        $registeredAt = new DateTime('2025-10-14');
+        $itemInfo      = ItemInfo::create($name, $description, $tags, $rarity)->unwrap();
+        $id            = ItemIdentifierGenerator::generate($itemInfo, Armor::class)->unwrap();
+        $registeredAt  = new DateTime('2025-10-14');
         $canAccessBank = false;
 
         $capeData = new CapeData(

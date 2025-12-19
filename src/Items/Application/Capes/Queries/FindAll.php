@@ -20,7 +20,7 @@ class FindAll
     public function execute(CapeFilter $filter): FindAllOutput
     {
         $callback = function () use ($filter): FindAllOutput {
-            $capes = $this->repository->findAll($filter);
+            $capes  = $this->repository->findAll($filter);
             $total  = $this->repository->countAll($filter);
 
             return new FindAllOutput(
