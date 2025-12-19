@@ -12,6 +12,11 @@ class CapeFilter extends Filter
 
     public ?bool $canAccessBank = null;
 
+    public function setCanAccessBank(bool $can)
+    {
+        $this->canAccessBank = $can;
+    }
+
     public function toArray(): array
     {
         return array_merge($this->defaultsArray(), [
