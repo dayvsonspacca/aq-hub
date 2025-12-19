@@ -10,6 +10,7 @@ use AqHub\Items\Application\{Armors, Capes};
 use AqHub\Items\Domain\Repositories\ArmorRepository;
 use AqHub\Items\Domain\Repositories\CapeRepository;
 use AqHub\Items\Infrastructure\Http\Controllers\Rest\ArmorController;
+use AqHub\Items\Infrastructure\Http\Controllers\Rest\CapeController;
 use AqHub\Items\Infrastructure\Repositories\Pgsql\PgsqlArmorRepository;
 use AqHub\Items\Infrastructure\Repositories\Pgsql\PgsqlCapeRepository;
 use AqHub\Shared\Infrastructure\Cache\FileCacheFactory;
@@ -42,8 +43,10 @@ class ItemsDefinitions implements DefinitionsInterface
     {
         return [
             ArmorController::class => autowire(),
+            CapeController::class => autowire(),
             'Controllers.Rest' => add([
-                get(ArmorController::class)
+                get(ArmorController::class),
+                get(CapeController::class)
             ])
         ];
     }
