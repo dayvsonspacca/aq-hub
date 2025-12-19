@@ -6,10 +6,10 @@ namespace AqHub\Items\Infrastructure\Container;
 
 use AqHub\Core\Infrastructure\Database\PgsqlConnection;
 use AqHub\Core\Interfaces\DefinitionsInterface;
-use AqHub\Items\Application\Armors;
-use AqHub\Items\Domain\Repositories\ArmorRepository;
-use AqHub\Items\Infrastructure\Http\Controllers\Rest\ArmorController;
-use AqHub\Items\Infrastructure\Repositories\Pgsql\PgsqlArmorRepository;
+use AqHub\Items\Application\{Armors, Capes};
+use AqHub\Items\Domain\Repositories\{ArmorRepository, CapeRepository};
+use AqHub\Items\Infrastructure\Http\Controllers\Rest\{ArmorController, CapeController};
+use AqHub\Items\Infrastructure\Repositories\Pgsql\{PgsqlArmorRepository, PgsqlCapeRepository};
 use AqHub\Shared\Infrastructure\Cache\FileCacheFactory;
 
 use function DI\{add, autowire, factory, get};
@@ -29,7 +29,10 @@ class ItemsDefinitions implements DefinitionsInterface
     {
         return [
             PgsqlArmorRepository::class => autowire()->constructor(get(PgsqlConnection::class), get('QueryBuilder.Pgsql')),
-            ArmorRepository::class => get(PgsqlArmorRepository::class)
+            PgsqlCapeRepository::class => autowire()->constructor(get(PgsqlConnection::class), get('QueryBuilder.Pgsql')),
+
+            ArmorRepository::class => get(PgsqlArmorRepository::class),
+            CapeRepository::class => get(PgsqlCapeRepository::class)
         ];
     }
 
@@ -37,8 +40,10 @@ class ItemsDefinitions implements DefinitionsInterface
     {
         return [
             ArmorController::class => autowire(),
+            CapeController::class => autowire(),
             'Controllers.Rest' => add([
-                get(ArmorController::class)
+                get(ArmorController::class),
+                get(CapeController::class)
             ])
         ];
     }
@@ -50,7 +55,12 @@ class ItemsDefinitions implements DefinitionsInterface
                 get(ArmorRepository::class),
                 factory([FileCacheFactory::class, 'armors'])
                     ->parameter('cachePath', get('Path.Cache'))
-            )
+            ),
+            Capes\Queries\FindAll::class => autowire()->constructor(
+                get(CapeRepository::class),
+                factory([FileCacheFactory::class, 'capes'])
+                    ->parameter('cachePath', get('Path.Cache'))
+            ),
         ];
     }
 }

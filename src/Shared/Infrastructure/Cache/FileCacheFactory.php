@@ -16,4 +16,13 @@ class FileCacheFactory
             ttl: 0
         );
     }
+
+    public static function capes(string $cachePath): FileCache
+    {
+        return new FileCache(
+            namespace: 'capes',
+            directory: $cachePath,
+            ttl: 0
+        );
+    }
 }
