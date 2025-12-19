@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Core\Infrastructure\Http;
+namespace AqHub\Core\Infrastructure\Http\Interfaces;
 
 use Closure;
 use Symfony\Component\HttpFoundation\Response;

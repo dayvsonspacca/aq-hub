@@ -11,7 +11,8 @@ class Route
 {
     public function __construct(
         public string $path,
-        public array $methods
+        public array $methods,
+        public array $middlewares = []
     ) {
     }
 }

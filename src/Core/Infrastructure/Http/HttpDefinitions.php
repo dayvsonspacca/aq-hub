@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Core\Infrastructure\Http;
 
+use AqHub\Core\Env;
 use AqHub\Core\Interfaces\DefinitionsInterface;
 
 use function DI\{autowire, get};
@@ -16,7 +17,8 @@ class HttpDefinitions implements DefinitionsInterface
     {
         return [
             'Controllers.Rest' => [],
-            HttpHandler::class => autowire()->constructor(get(Container::class), get('Controllers.Rest'))
+            HttpHandler::class => autowire()->constructor(get(Container::class), get('Controllers.Rest')),
+            JwtAuthMiddleware::class => autowire()->constructor(get(Env::class))
         ];
     }
 }
