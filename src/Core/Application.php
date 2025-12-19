@@ -40,7 +40,7 @@ class Application
             $definitions = array_filter($definitions, fn (string $definition) => (new $definition()) instanceof DefinitionsInterface);
             $config      = array_map(fn (string $definition) => $definition::dependencies(), $definitions);
 
-            return new self(ContainerFactory::make(array_merge(...$config)));
+            return new self(ContainerFactory::make($config));
         } catch (Throwable $e) {
             throw new RuntimeException('Fatal error bootstraping ' . $name . ' cause: ' . $e->getMessage(), previous: $e);
         }

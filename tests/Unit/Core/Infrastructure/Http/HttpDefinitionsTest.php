@@ -16,7 +16,7 @@ final class HttpDefinitionsTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->container = ContainerFactory::make(HttpDefinitions::dependencies());
+        $this->container = ContainerFactory::make([HttpDefinitions::dependencies()]);
     }
 
     #[Test]
@@ -24,7 +24,7 @@ final class HttpDefinitionsTest extends TestCase
     {
         $dependencies = HttpDefinitions::dependencies();
 
-        $this->assertCount(4, $dependencies);
+        $this->assertCount(5, $dependencies);
     }
 
     #[Test]
