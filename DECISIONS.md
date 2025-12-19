@@ -61,7 +61,7 @@ So instead of generating a new internal ID for each Player, I decided to reuse t
 
 > Conclusion: The Player’s identifier will be the AQW user ID. This avoids unnecessary duplication and keeps the system aligned with its external reference.
 
-### #6 Should We Enforce Item Uniqueness by Name, or Something Else?  
+# #6 Should We Enforce Item Uniqueness by Name, or Something Else?  
 2025-09-24  
 
 While working on the persistence of `Items` like `Weapon` or `Armor`, I faced a critical question: should we enforce that two items with the same name cannot exist in the system? At first, this sounded like a reasonable rule, since the name feels like the most natural identifier.  
@@ -76,7 +76,7 @@ This approach would allow anyone with the same `ItemInfo` to generate the same i
 
 > Conclusion Since item names are not guaranteed to be unique in AQW, we will not rely on them to enforce uniqueness. Instead, we will create a deterministic internal identifier by combining key attributes of an item (`Name`, `Description`, `ItemTags`, and **The Item Type Classname**) and generating a hash from them. This ensures that each distinct item can be uniquely identified and consistently persisted, even when multiple items share the same name.
 
-### #7 How should repositories consistently return data across the system?
+# #7 How should repositories consistently return data across the system?
 2025-09-26
 
 Previously, different repositories returned raw entities, making it difficult to reason about data flow between layers.
@@ -90,7 +90,7 @@ This approach brings several benefits:
 
 > Conclusion: All repositories will return `DataObjects` as DTOs, defining a consistent way for data to leave the repository layer and ensuring clarity and safety across the system.
 
-### #8 Where Will the Initial Data for the System Come From?  
+# #8 Where Will the Initial Data for the System Come From?  
 2025-12-19  
 
 This question arose during the definition of the data acquisition strategy. Currently, the system needs a reliable source of information to populate its database and become functional as a wiki-style resource.  
