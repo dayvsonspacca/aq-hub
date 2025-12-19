@@ -6,7 +6,7 @@ namespace AqHub\Items\Infrastructure\Container;
 
 use AqHub\Core\Infrastructure\Database\PgsqlConnection;
 use AqHub\Core\Interfaces\DefinitionsInterface;
-use AqHub\Items\Application\Armors;
+use AqHub\Items\Application\{Armors, Capes};
 use AqHub\Items\Domain\Repositories\ArmorRepository;
 use AqHub\Items\Domain\Repositories\CapeRepository;
 use AqHub\Items\Infrastructure\Http\Controllers\Rest\ArmorController;
@@ -55,7 +55,12 @@ class ItemsDefinitions implements DefinitionsInterface
                 get(ArmorRepository::class),
                 factory([FileCacheFactory::class, 'armors'])
                     ->parameter('cachePath', get('Path.Cache'))
-            )
+            ),
+            Capes\Queries\FindAll::class => autowire()->constructor(
+                get(CapeRepository::class),
+                factory([FileCacheFactory::class, 'capes'])
+                    ->parameter('cachePath', get('Path.Cache'))
+            ),
         ];
     }
 }
