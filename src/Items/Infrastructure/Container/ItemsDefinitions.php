@@ -34,7 +34,7 @@ class ItemsDefinitions implements DefinitionsInterface
             PgsqlCapeRepository::class => autowire()->constructor(get(PgsqlConnection::class), get('QueryBuilder.Pgsql')),
 
             ArmorRepository::class => get(PgsqlArmorRepository::class),
-            CapeRepository::class => get(PgsqlArmorRepository::class)
+            CapeRepository::class => get(PgsqlCapeRepository::class)
         ];
     }
 
