@@ -103,7 +103,7 @@ class PgsqlCapeRepository implements CapeRepository
         $identifiers = array_column($result, 'id');
         $tags        = $this->findAllTags($identifiers);
 
-        $armors = array_map(
+        $capes = array_map(
             function ($data) use ($tags) {
                 $data['tags'] = isset($tags[$data['id']]) ? $tags[$data['id']] : [];
                 return $data;
@@ -111,7 +111,7 @@ class PgsqlCapeRepository implements CapeRepository
             $result
         );
 
-        return array_map([$this, 'hydrate'], $armors);
+        return array_map([$this, 'hydrate'], $capes);
     }
 
     private function findAllTags(array $identifiers)
@@ -144,8 +144,8 @@ class PgsqlCapeRepository implements CapeRepository
         $select = $this->query->newSelect();
 
         $select
-            ->from('armors as a')
-            ->cols(['a.*']);
+            ->from('capes as c')
+            ->cols(['c.*']);
 
         $select = $this->buildWhere($filter, $select, ignorePagination: true);
 
@@ -164,7 +164,7 @@ class PgsqlCapeRepository implements CapeRepository
         }
 
         if (count($filter->tags) > 0) {
-            $select->join('INNER', 'cape_tags as ct', 'a.id = ct.cape_id');
+            $select->join('INNER', 'cape_tags as ct', 'c.id = ct.cape_id');
             $select->where('ct.tag IN (:tags)', ['tags' => array_map(fn($tag) => $tag->toString(), $filter->tags)]);
             $select->distinct();
         }
@@ -174,9 +174,8 @@ class PgsqlCapeRepository implements CapeRepository
         }
 
         if (isset($filter->canAccessBank) && !is_null($filter->canAccessBank))  {
-            $select->where('c.can_access_bank = :can_access_bank', ['can_access_bank' => $filter->canAccessBank]);
+            $select->where('c.can_access_bank = :can_access_bank', ['can_access_bank' => $filter->canAccessBank ? 1 : 0]);
         }
-
 
         if (!$ignorePagination) {
             $limit  = $filter->pageSize;
