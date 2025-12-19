@@ -7,12 +7,9 @@ namespace AqHub\Items\Infrastructure\Container;
 use AqHub\Core\Infrastructure\Database\PgsqlConnection;
 use AqHub\Core\Interfaces\DefinitionsInterface;
 use AqHub\Items\Application\{Armors, Capes};
-use AqHub\Items\Domain\Repositories\ArmorRepository;
-use AqHub\Items\Domain\Repositories\CapeRepository;
-use AqHub\Items\Infrastructure\Http\Controllers\Rest\ArmorController;
-use AqHub\Items\Infrastructure\Http\Controllers\Rest\CapeController;
-use AqHub\Items\Infrastructure\Repositories\Pgsql\PgsqlArmorRepository;
-use AqHub\Items\Infrastructure\Repositories\Pgsql\PgsqlCapeRepository;
+use AqHub\Items\Domain\Repositories\{ArmorRepository, CapeRepository};
+use AqHub\Items\Infrastructure\Http\Controllers\Rest\{ArmorController, CapeController};
+use AqHub\Items\Infrastructure\Repositories\Pgsql\{PgsqlArmorRepository, PgsqlCapeRepository};
 use AqHub\Shared\Infrastructure\Cache\FileCacheFactory;
 
 use function DI\{add, autowire, factory, get};

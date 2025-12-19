@@ -33,7 +33,7 @@ class ListAllCapesForm
             'N' => false,
             default => null
         };
-        
+
         if (!is_null($canAccessBank)) {
             $filter->setCanAccessBank($canAccessBank);
         }

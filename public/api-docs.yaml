@@ -61,6 +61,64 @@ paths:
                   armors: { description: 'The list of armors.', type: array, items: { $ref: '#/components/schemas/ArmorSchema' } }
                   total: { description: 'The total of armors by filter ignoring pagination.', type: integer }
                 type: object
+  /capes/list:
+    get:
+      tags:
+        - Capes
+      summary: 'List capes'
+      operationId: 0932246925866a4310d04c83bd57db1e
+      parameters:
+        -
+          parameter: page
+          name: page
+          in: query
+          description: 'The requested page number for pagination.'
+          example: 1
+        -
+          parameter: page_size
+          name: page_size
+          in: query
+          description: 'The number of results per page (max: 100).'
+          example: 1
+        -
+          parameter: name
+          name: name
+          in: query
+          description: 'A partial or full name of an item.'
+          example: ArchPaladin
+        -
+          parameter: rarities
+          name: rarities
+          in: query
+          description: 'A list of items rarities separeted by comma.'
+          example:
+            - Rare
+            - Epic
+        -
+          parameter: tags
+          name: tags
+          in: query
+          description: 'A list of tags associated to the item separed by comma'
+          example:
+            - Seasonal
+            - ac
+        -
+          parameter: page_size
+          name: can_access_bank
+          in: query
+          description: 'The cape can access bank (Y or N).'
+          example: 'Y'
+      responses:
+        '200':
+          description: 'List of capes'
+          content:
+            application/json:
+              schema:
+                properties:
+                  filter: { $ref: '#/components/schemas/CapeFilterSchema' }
+                  capes: { description: 'The list of capes.', type: array, items: { $ref: '#/components/schemas/CapeSchema' } }
+                  total: { description: 'The total of capes by filter ignoring pagination.', type: integer }
+                type: object
 components:
   schemas:
     ArmorFilterSchema:
@@ -137,6 +195,87 @@ components:
             - Legendary
             - Seasonal
       type: object
+    CapeFilterSchema:
+      title: 'Cape Filters Details'
+      description: 'The cape requested filter.'
+      properties:
+        name:
+          description: 'The requested item name.'
+          type: string
+          example: 'ArchPaladin Armor'
+          nullable: true
+        page:
+          description: 'The requested page number.'
+          type: integer
+          minimum: 1
+          example: 1
+        page_size:
+          description: 'The requested results per page.'
+          type: integer
+          maximum: 100
+          minimum: 1
+          example: 20
+        rarities:
+          description: 'The requested items rarities.'
+          type: array
+          items:
+            type: string
+          example:
+            - Rare
+            - Legendary
+          nullable: true
+        tags:
+          description: 'The requested items tags.'
+          type: array
+          items:
+            type: string
+          example:
+            - Seasonal
+            - ac
+          nullable: true
+        can_access_bank:
+          description: 'The requested access to bank.'
+          type: boolean
+          nullable: true
+      type: object
+    CapeSchema:
+      title: 'Cape Details'
+      description: 'The complete structure of a cape item returned by the API.'
+      properties:
+        id:
+          description: 'The unique identifier of the cape.'
+          type: string
+          example: 0001e74ac568b93f9a0a92d859640a00
+        name:
+          description: 'The name of the cape.'
+          type: string
+          example: 'Soaring Moonlit Wings of Dage'
+        description:
+          description: 'The full description of the cape.'
+          type: string
+          example: 'Dage the Good spreads his broad wings to shelter the weak and protect the defenseless against the evils of the world of Lore.'
+        registered_at:
+          description: 'Date and time the cape was registered (Y-m-d H:i:s format).'
+          type: string
+          format: date-time
+          example: '2025-10-24 16:30:00'
+        rarity:
+          description: 'The rarity of the cape.'
+          type: string
+          example: Rare
+          nullable: true
+        tags:
+          description: 'List of tags associated with the cape.'
+          type: array
+          items:
+            type: string
+          example:
+            - Legendary
+            - Seasonal
+      type: object
 tags:
   -
     name: Armors
+  -
+    name: Capes
+    description: Capes
