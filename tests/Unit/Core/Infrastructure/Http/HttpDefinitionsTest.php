@@ -24,14 +24,12 @@ final class HttpDefinitionsTest extends TestCase
     {
         $dependencies = HttpDefinitions::dependencies();
 
-        $this->assertCount(5, $dependencies);
+        $this->assertCount(1, $dependencies);
     }
 
     #[Test]
     public function should_have_http_definitions()
     {
-        $this->assertTrue($this->container->has('Controllers.Rest'));
         $this->assertTrue($this->container->has(HttpHandler::class));
-        $this->assertTrue($this->container->has(JwtAuthMiddleware::class));
     }
 }

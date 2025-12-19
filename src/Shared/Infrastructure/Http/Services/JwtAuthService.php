@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Core\Infrastructure\Http;
+namespace AqHub\Shared\Infrastructure\Http\Services;
 
 use AqHub\Core\Env;
 use Firebase\JWT\JWT;
@@ -23,15 +23,17 @@ class JwtAuthService
         $this->secret = $this->env->vars['API_JWT_SECRET_TOKEN'];
     }
 
-    public function generateToken(array $payload, int $expiresIn = 3600): string
+    public function sign(array $payload, int $expiresIn = 3600): string
     {
+        $payload['iss'] = 'aqhub-api';
+        $payload['aud'] = 'aqhub-client';
         $payload['iat'] = time();
         $payload['exp'] = time() + $expiresIn;
 
         return JWT::encode($payload, $this->secret, 'HS256');
     }
 
-    public function validateToken(string $token): ?array
+    public function validate(string $token): ?array
     {
         try {
             $decoded = JWT::decode($token, new Key($this->secret, 'HS256'));

@@ -15,14 +15,7 @@ class HttpDefinitions implements DefinitionsInterface
     public static function dependencies(): array
     {
         return [
-            ApiAuthController::class => autowire(),
-            'Controllers.Rest' => add([
-                get(ApiAuthController::class)
-            ]),
-            HttpHandler::class => autowire()->constructor(get(Container::class), get('Controllers.Rest')),
-
-            JwtAuthService::class => autowire(),
-            JwtAuthMiddleware::class => autowire()
+            HttpHandler::class => autowire()->constructor(get(Container::class), get('Controllers.Rest'))
         ];
     }
 }

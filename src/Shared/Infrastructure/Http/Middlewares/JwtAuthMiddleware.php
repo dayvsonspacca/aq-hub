@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Core\Infrastructure\Http;
+namespace AqHub\Shared\Infrastructure\Http\Middlewares;
 
 use AqHub\Core\Infrastructure\Http\Interfaces\Middleware;
+use AqHub\Shared\Infrastructure\Http\Services\JwtAuthService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Closure;
@@ -25,7 +26,7 @@ class JwtAuthMiddleware implements Middleware
         }
 
         $token = str_replace('Bearer ', '', $authHeader);
-        $userData = $this->jwtService->validateToken($token);
+        $userData = $this->jwtService->validate($token);
 
         if (!$userData) {
             return new Response('Invalid or expired token.', Response::HTTP_UNAUTHORIZED);
