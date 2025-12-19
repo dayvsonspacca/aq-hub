@@ -26,6 +26,6 @@ class CapeFilter extends Filter
 
     public function generateUniqueKey(): string
     {
-        return md5(json_encode($this->toArray()));;
+        return md5(json_encode($this->toArray()));
     }
 }
