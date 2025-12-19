@@ -34,7 +34,7 @@ final class NameTest extends TestCase
     #[Test]
     public function should_remove_unwanted_words()
     {
-        $name = 'Sword (Rare)';
+        $name   = 'Sword (Rare)';
         $result = Name::create($name);
 
         $this->assertTrue($result->isSuccess());
