@@ -90,3 +90,10 @@ CREATE TABLE IF NOT EXISTS helmet_tags (
     PRIMARY KEY (helmet_id, tag),
     FOREIGN KEY (helmet_id) REFERENCES helmets(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS users_api (
+    id SERIAL PRIMARY KEY,
+    username TEXT NOT NULL,
+    password TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
