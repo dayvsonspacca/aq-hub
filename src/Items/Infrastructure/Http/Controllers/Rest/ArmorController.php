@@ -67,6 +67,6 @@ class ArmorController implements RestController
 
         return new JsonResponse([
             'message' => $result->getMessage()
-        ], Response::HTTP_OK);
+        ], Response::HTTP_CREATED);
     }
 }
