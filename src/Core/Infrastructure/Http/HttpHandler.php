@@ -71,7 +71,7 @@ class HttpHandler
             $parameters = $matcher->match($request->getPathInfo());
 
             [$controllerClass, $method] = $parameters['_controller'];
-            $middlewares = $parameters['_middlewares'] ?? [];
+            $middlewares                = $parameters['_middlewares'] ?? [];
 
             $controllerInstance = $this->container->get(
                 is_object($controllerClass) ? $controllerClass::class : $controllerClass

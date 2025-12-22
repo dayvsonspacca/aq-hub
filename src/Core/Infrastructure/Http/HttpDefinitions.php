@@ -6,7 +6,7 @@ namespace AqHub\Core\Infrastructure\Http;
 
 use AqHub\Core\Interfaces\DefinitionsInterface;
 
-use function DI\{add, autowire, get};
+use function DI\{autowire, get};
 
 use DI\Container;
 

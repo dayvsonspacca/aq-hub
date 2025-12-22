@@ -11,9 +11,7 @@ use AqHub\Shared\Infrastructure\Http\Middlewares\JwtAuthMiddleware;
 use AqHub\Shared\Infrastructure\Http\Services\JwtAuthService;
 use AqHub\Shared\Infrastructure\Repositories\Pgsql\PgsqlUsersApiRepository;
 
-use function DI\add;
-use function DI\autowire;
-use function DI\get;
+use function DI\{add, autowire, get};
 
 class SharedDefinitions implements DefinitionsInterface
 {

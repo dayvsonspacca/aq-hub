@@ -6,9 +6,8 @@ namespace AqHub\Shared\Infrastructure\Http\Middlewares;
 
 use AqHub\Core\Infrastructure\Http\Interfaces\Middleware;
 use AqHub\Shared\Infrastructure\Http\Services\JwtAuthService;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Closure;
+use Symfony\Component\HttpFoundation\{Request, Response};
 
 class JwtAuthMiddleware implements Middleware
 {
@@ -25,7 +24,7 @@ class JwtAuthMiddleware implements Middleware
             return new Response('Unauthorized', Response::HTTP_UNAUTHORIZED);
         }
 
-        $token = str_replace('Bearer ', '', $authHeader);
+        $token    = str_replace('Bearer ', '', $authHeader);
         $userData = $this->jwtService->validate($token);
 
         if (!$userData) {
