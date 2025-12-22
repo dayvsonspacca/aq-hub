@@ -15,7 +15,7 @@ final class CoreDefinitionsTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->container = ContainerFactory::make(CoreDefinitions::dependencies());
+        $this->container = ContainerFactory::make([CoreDefinitions::dependencies()]);
     }
 
     #[Test]

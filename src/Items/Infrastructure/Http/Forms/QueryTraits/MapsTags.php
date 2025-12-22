@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Items\Infrastructure\Http\Forms\Traits;
+namespace AqHub\Items\Infrastructure\Http\Forms\QueryTraits;
 
 use AqHub\Shared\Domain\Enums\ItemTag;
 use AqHub\Shared\Domain\Helpers\EnumListProcessor;

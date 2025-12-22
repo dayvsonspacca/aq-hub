@@ -10,8 +10,6 @@ trait HasContainer
 {
     public function container()
     {
-        return ContainerFactory::make(array_merge(
-            CoreDefinitions::dependencies()
-        ));
+        return ContainerFactory::make([CoreDefinitions::dependencies()]);
     }
 }

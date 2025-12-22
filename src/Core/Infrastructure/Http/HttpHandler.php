@@ -42,7 +42,10 @@ class HttpHandler
                         $routeName,
                         new SymfonyRoute(
                             $routeAttr->path,
-                            ['_controller' => [$controller, $method->getName()]],
+                            [
+                                '_controller' => [$controller, $method->getName()],
+                                '_middlewares' => $routeAttr->middlewares
+                            ],
                             [],
                             [],
                             '',
@@ -68,12 +71,28 @@ class HttpHandler
             $parameters = $matcher->match($request->getPathInfo());
 
             [$controllerClass, $method] = $parameters['_controller'];
+            $middlewares                = $parameters['_middlewares'] ?? [];
 
-            $controllerClassName = is_object($controllerClass) ? $controllerClass::class : $controllerClass;
+            $controllerInstance = $this->container->get(
+                is_object($controllerClass) ? $controllerClass::class : $controllerClass
+            );
 
-            $controller = $this->container->get($controllerClassName);
+            $coreAction = function (Request $req) use ($controllerInstance, $method): Response {
+                return $controllerInstance->$method($req);
+            };
 
-            $response = $controller->$method($request);
+            $pipeline = array_reduce(
+                array_reverse($middlewares),
+                function (callable $next, string $middlewareClass) {
+                    return function (Request $req) use ($next, $middlewareClass): Response {
+                        $middleware = $this->container->get($middlewareClass);
+                        return $middleware->handle($req, $next);
+                    };
+                },
+                $coreAction
+            );
+
+            $response = $pipeline($request);
 
             $this->addCorsHeaders($response);
 

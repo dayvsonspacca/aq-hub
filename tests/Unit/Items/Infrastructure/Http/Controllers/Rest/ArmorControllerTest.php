@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace AqHub\Tests\Unit\Items\Infrastructure\Http\Controllers\Rest;
 
+use AqHub\Core\Result;
+use AqHub\Items\Application\Armors\Commands\Add;
 use AqHub\Items\Application\Armors\Queries\FindAll;
 use AqHub\Items\Application\Armors\Queries\Outputs\FindAllOutput;
 use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
+use AqHub\Items\Domain\ValueObjects\ItemInfo;
 use AqHub\Items\Infrastructure\Http\Controllers\Rest\ArmorController;
 use AqHub\Tests\DataProviders\ArmorDataProvider;
 use AqHub\Tests\TestCase;
@@ -21,15 +24,19 @@ class ArmorControllerTest extends TestCase
 
     private MockObject&FindAll $findAllQueryMock;
     private ArmorController $controller;
+    private MockObject&Add $addCommandMock;
+
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->findAllQueryMock = $this->createMock(FindAll::class);
+        $this->addCommandMock   = $this->createMock(Add::class);
 
         $this->controller = new ArmorController(
-            $this->findAllQueryMock
+            $this->findAllQueryMock,
+            $this->addCommandMock
         );
     }
 
@@ -77,5 +84,52 @@ class ArmorControllerTest extends TestCase
 
         $this->assertIsArray($decodedContent);
         $this->assertEquals($expectedJsonResponseData, $decodedContent);
+    }
+
+    #[Test]
+    public function should_fail_when_required_param_not_in_body()
+    {
+        $request = $this->makeRequest(
+            method: 'POST',
+            uri: '/amors/add',
+            content: []
+        );
+
+        $response = $this->controller->add($request);
+
+        $this->assertSame(Response::HTTP_UNPROCESSABLE_ENTITY, $response->getStatusCode());
+        $this->assertSame('{"message":"The name of an item cant be empty."}', $response->getContent());
+    }
+
+    #[Test]
+    public function should_add_an_armor()
+    {
+        $content = [
+            'name' => 'Awesome armor',
+            'description' => 'A legendary armor.',
+            'rarity' => 'Legendary',
+            'tags' => []
+        ];
+
+        $result = Result::success('Armor saved successfully.', null);
+
+        $this->addCommandMock
+            ->expects($this->once())
+            ->method('execute')
+            ->with($this->isInstanceOf(ItemInfo::class))
+            ->willReturn($result);
+
+        $request = $this->makeRequest(
+            method: 'POST',
+            uri: '/amors/add',
+            content: $content
+        );
+
+        $response = $this->controller->add($request);
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertSame(Response::HTTP_CREATED, $response->getStatusCode());
+
+        $decodedContent = json_decode($response->getContent(), true);
+        $this->assertSame('Armor saved successfully.', $decodedContent['message']);
     }
 }
