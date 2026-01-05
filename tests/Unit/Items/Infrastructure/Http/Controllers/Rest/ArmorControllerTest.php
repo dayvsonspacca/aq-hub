@@ -128,7 +128,7 @@ class ArmorControllerTest extends TestCase
         $response = $this->controller->add($request);
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertSame(Response::HTTP_CREATED, $response->getStatusCode());
-        
+
         $decodedContent = json_decode($response->getContent(), true);
         $this->assertSame('Armor saved successfully.', $decodedContent['message']);
     }
