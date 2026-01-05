@@ -17,7 +17,7 @@ class HomeControllerTest extends TestCase
     #[Test]
     public function should_redirect_to_api_docs_page()
     {
-        $request = $this->makeRequest();
+        $request    = $this->makeRequest();
         $controller = new HomeController();
 
         $response = $controller->home($request);

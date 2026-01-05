@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Shared\Infrastructure\Http\Controllers;
 
 use AqHub\Core\Infrastructure\Http\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\{RedirectResponse, Request};
 
 class HomeController
 {
