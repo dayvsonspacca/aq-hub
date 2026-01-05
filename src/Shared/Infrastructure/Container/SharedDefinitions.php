@@ -6,6 +6,7 @@ namespace AqHub\Shared\Infrastructure\Container;
 
 use AqHub\Core\Infrastructure\Database\PgsqlConnection;
 use AqHub\Core\Interfaces\DefinitionsInterface;
+use AqHub\Shared\Infrastructure\Http\Controllers\HomeController;
 use AqHub\Shared\Infrastructure\Http\Controllers\Rest\ApiAuthController;
 use AqHub\Shared\Infrastructure\Http\Middlewares\JwtAuthMiddleware;
 use AqHub\Shared\Infrastructure\Http\Services\JwtAuthService;
@@ -19,8 +20,11 @@ class SharedDefinitions implements DefinitionsInterface
     {
         return [
             ApiAuthController::class => autowire(),
+            HomeController::class => autowire(),
+
             'Controllers.Rest' => add([
-                get(ApiAuthController::class)
+                get(ApiAuthController::class),
+                get(HomeController::class)
             ]),
             JwtAuthService::class => autowire(),
             JwtAuthMiddleware::class => autowire(),
