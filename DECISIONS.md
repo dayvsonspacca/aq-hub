@@ -114,3 +114,18 @@ To solve this, I decided to adopt a clear separation of concerns by splitting Us
 This approach prevents the "Input -> Process -> Output" flow from becoming cluttered with unnecessary logic. Queries become straightforward data fetchers, while Commands become the dedicated gatekeepers of the project's business rules.
 
 > **Conclusion:** We will separate Use Cases into **Queries** and **Commands**. This ensures a cleaner architecture where read and write responsibilities are decoupled, making the system easier to maintain, test, and optimize independently.
+
+# #10 Should All Repository Methods Return a Result? (Revisiting #4)
+2026-01-05
+
+After implementing the `Result` pattern across all repository methods as decided in Decision #4, I realized that applying this rule to every operation introduced unnecessary complexity, especially in **Queries**.
+
+When performing a search or fetching a record by ID, a "failure" (like a record not being found) is often a valid functional outcome, not necessarily an exceptional error that requires a `Result` wrapper. In these cases, returning `null` or an empty `List` is more idiomatic and simplifies the consumer logic.
+
+However, for **Commands** (persistence, updates, or deletions), the `Result` pattern remains essential. These operations are much more prone to infrastructure failures, constraint violations, or business logic errors that need to be explicitly handled and communicated back to the Use Case.
+
+Therefore, I am refining the previous rule:
+- **Queries:** Will return the `DataObject` directly (or `null`/empty collection) to keep the data flow lean.
+- **Commands:** Will continue to return `Result<T>` to ensure that side effects and potential failures are explicitly managed.
+
+> **Conclusion:** We will no longer return `Result` for all repository methods. Instead, we will use `Result` only for operations that modify data (Commands). Queries will return raw DataObjects or null, reducing boilerplate and keeping the read-flow straightforward.
