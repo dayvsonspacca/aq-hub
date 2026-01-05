@@ -7,19 +7,24 @@ namespace AqHub\Tests\Integration\Core\Infrastructure\Database;
 use AqHub\Core\Env;
 use AqHub\Core\Infrastructure\Database\PgsqlConnection;
 use AqHub\Tests\TestCase;
-use AqHub\Tests\Traits\HasContainer;
 use PHPUnit\Framework\Attributes\Test;
 use RuntimeException;
 
 final class PgsqlConnectionTest extends TestCase
 {
-    use HasContainer;
-
     #[Test]
     public function should_return_same_instance()
     {
-        $container = $this->container();
-        $env       = $container->get(Env::class);
+        $env = Env::load(
+            [
+                'DB_HOST' => 'db',
+                'DB_PORT' => 5432,
+                'DB_NAME' => 'postgres',
+                'DB_USER' => 'aqhub',
+                'DB_PASSWORD' => 'aqhub'
+            ],
+            forceReload: true
+        );
 
         $connection1 = PgsqlConnection::instance($env);
         $connection2 = PgsqlConnection::instance($env);
