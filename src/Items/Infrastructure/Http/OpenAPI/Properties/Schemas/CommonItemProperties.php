@@ -20,7 +20,7 @@ trait CommonItemProperties
         property: 'name',
         type: 'string',
         description: 'The name of the item.',
-        example: 'ArchPaladin Armor'
+        example: 'Awe'
     )]
     public string $name;
 

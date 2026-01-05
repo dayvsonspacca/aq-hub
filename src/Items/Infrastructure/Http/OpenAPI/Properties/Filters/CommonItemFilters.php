@@ -20,17 +20,9 @@ trait CommonItemFilters
         property: 'name',
         type: 'string',
         description: 'The name of the item.',
-        example: 'ArchPaladin Armor'
+        example: 'Awe'
     )]
     public string $name;
-
-    #[OA\Property(
-        property: 'description',
-        type: 'string',
-        description: 'The full description of the item.',
-        example: 'A legendary item found in the depths of Lore.'
-    )]
-    public string $description;
 
     #[OA\Property(
         property: 'registered_at',
