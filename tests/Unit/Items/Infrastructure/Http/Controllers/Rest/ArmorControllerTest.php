@@ -132,4 +132,37 @@ class ArmorControllerTest extends TestCase
         $decodedContent = json_decode($response->getContent(), true);
         $this->assertSame('Armor saved successfully.', $decodedContent['message']);
     }
+
+
+    #[Test]
+    public function should_fail_when_armor_with_same_identifier()
+    {
+        $content = [
+            'name' => 'Awesome armor',
+            'description' => 'A legendary armor.',
+            'rarity' => 'Legendary',
+            'tags' => []
+        ];
+
+        $result = Result::error('An item with same identifier already exists.', null);
+
+        $this->addCommandMock
+            ->expects($this->once())
+            ->method('execute')
+            ->with($this->isInstanceOf(ItemInfo::class))
+            ->willReturn($result);
+
+        $request = $this->makeRequest(
+            method: 'POST',
+            uri: '/amors/add',
+            content: $content
+        );
+
+        $response = $this->controller->add($request);
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertSame(Response::HTTP_UNPROCESSABLE_ENTITY, $response->getStatusCode());
+
+        $decodedContent = json_decode($response->getContent(), true);
+        $this->assertSame('An item with same identifier already exists.', $decodedContent['message']);
+    }
 }
