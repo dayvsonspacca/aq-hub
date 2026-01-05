@@ -37,7 +37,7 @@ final class AddArmorFormTest extends TestCase
         );
 
         $result = AddArmorForm::fromRequest($request);
-        
+
         $this->assertTrue($result->isSuccess());
 
         $itemInfo = $result->getData();
@@ -46,5 +46,44 @@ final class AddArmorFormTest extends TestCase
         $this->assertSame($itemInfo->getDescription(), $armor->description->value);
         $this->assertSame($itemInfo->getRarity(), $armor->rarity);
         $this->assertEquals($itemInfo->tags, new ItemTags([ItemTag::AdventureCoins, ItemTag::Legend]));
+    }
+
+    #[Test]
+    public function should_result_error_when_payload_is_invalid()
+    {
+        $request = $this->makeRequest(
+            method: 'POST',
+            uri: '/armors/add',
+            content: [
+                'name' => '',
+                'description' => 'Some description'
+            ]
+        );
+
+        $result = AddArmorForm::fromRequest($request);
+
+        $this->assertTrue($result->isError());
+        $this->assertNotEmpty($result->getMessage());
+    }
+
+    #[Test]
+    public function should_handle_missing_optional_fields()
+    {
+        $request = $this->makeRequest(
+            method: 'POST',
+            uri: '/armors/add',
+            content: [
+                'name' => 'Big armor',
+                'description' => 'Its big',
+            ]
+        );
+
+        $result = AddArmorForm::fromRequest($request);
+
+        $this->assertTrue($result->isSuccess());
+        $itemInfo = $result->getData();
+
+        $this->assertNull($itemInfo->getRarity());
+        $this->assertCount(0, $itemInfo->tags);
     }
 }

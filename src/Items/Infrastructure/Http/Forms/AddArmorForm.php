@@ -41,7 +41,5 @@ class AddArmorForm
         } catch (Exception $e) {
             return Result::error($e->getMessage(), null);
         }
-
-
     }
 }
