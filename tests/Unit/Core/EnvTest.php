@@ -15,7 +15,7 @@ final class EnvTest extends TestCase
     {
         $env = Env::load(
             [
-                'APP_MODE'  => 'dev'
+                'APP_MODE' => 'dev'
             ],
             forceReload: true
         );

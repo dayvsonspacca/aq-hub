@@ -21,7 +21,7 @@ final class JwtAuthMiddlewareTest extends TestCase
 
     protected function setUp(): void
     {
-        $jwtAuthService = new JwtAuthService(Env::load(['API_JWT_SECRET_TOKEN' => 'SUPER_SECRET_WAS_TOO_LOW_SO_I_INCRESEAD_A_BIT'], forceReload: true));
+        $jwtAuthService   = new JwtAuthService(Env::load(['API_JWT_SECRET_TOKEN' => 'SUPER_SECRET_WAS_TOO_LOW_SO_I_INCRESEAD_A_BIT'], forceReload: true));
         $this->middleware = new JwtAuthMiddleware($jwtAuthService);
 
         $this->token = $jwtAuthService->sign(['username' => 'Hilise']);
@@ -30,8 +30,8 @@ final class JwtAuthMiddlewareTest extends TestCase
     #[Test]
     public function should_return_response_unauthorized_when_bearer_auth_not_present()
     {
-        $request = $this->makeRequest();
-        $response = $this->middleware->handle($request, fn() => new Response());
+        $request  = $this->makeRequest();
+        $response = $this->middleware->handle($request, fn () => new Response());
 
         $this->assertSame(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
         $this->assertSame('Unauthorized', $response->getContent());
@@ -42,7 +42,7 @@ final class JwtAuthMiddlewareTest extends TestCase
     {
         $request = $this->makeRequest();
         $request->headers->set('Authorization', 'Bearer invalidtoken');
-        $response = $this->middleware->handle($request, fn() => new Response());
+        $response = $this->middleware->handle($request, fn () => new Response());
 
         $this->assertSame(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
         $this->assertSame('Invalid or expired token.', $response->getContent());
@@ -54,13 +54,13 @@ final class JwtAuthMiddlewareTest extends TestCase
     {
         $request = $this->makeRequest();
         $request->headers->set('Authorization', 'Bearer ' . $this->token);
-        $response = $this->middleware->handle($request, fn() => new Response(
+        $response = $this->middleware->handle($request, fn () => new Response(
             content: 'You shall pass'
         ));
 
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
         $this->assertSame('You shall pass', $response->getContent());
-        
+
         $this->assertTrue($request->attributes->has('auth_user'));
         $this->assertSame($request->attributes->get('auth_user')['username'], 'Hilise');
     }
