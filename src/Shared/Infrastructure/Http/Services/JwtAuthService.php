@@ -6,13 +6,13 @@ namespace AqHub\Shared\Infrastructure\Http\Services;
 
 use AqHub\Core\Env;
 use AqHub\Core\Result;
-use Exception;
 use Firebase\JWT\{JWT, Key};
 use RuntimeException;
+use Throwable;
 
 class JwtAuthService
 {
-    private string $secret;
+    private $secret;
 
     public function __construct(private Env $env)
     {
@@ -23,14 +23,20 @@ class JwtAuthService
         $this->secret = $this->env->vars['API_JWT_SECRET_TOKEN'];
     }
 
-    public function sign(array $payload, int $expiresIn = 3600): string
+    /** @return Result<string> */
+    public function sign(array $payload, int $expiresIn = 3600): Result
     {
         $payload['iss'] = 'aqhub-api';
         $payload['aud'] = 'aqhub-client';
         $payload['iat'] = time();
         $payload['exp'] = time() + $expiresIn;
 
-        return JWT::encode($payload, $this->secret, 'HS256');
+        try {
+            $token = JWT::encode($payload, $this->secret, 'HS256');
+            return Result::success(null, $token);
+        } catch (Throwable $th) {
+            return Result::error($th->getMessage(), null);
+        }
     }
 
     /** @return Result<array> */
@@ -39,8 +45,8 @@ class JwtAuthService
         try {
             $decoded = JWT::decode($token, new Key($this->secret, 'HS256'));
             return Result::success(null, (array) $decoded);
-        } catch (Exception $e) {
-            return Result::error($e->getMessage(), null);
+        } catch (Throwable $th) {
+            return Result::error($th->getMessage(), null);
         }
     }
 }

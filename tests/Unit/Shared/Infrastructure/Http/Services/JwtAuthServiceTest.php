@@ -31,7 +31,7 @@ final class JwtAuthServiceTest extends TestCase
     #[Test]
     public function should_sign_with_default_fields()
     {
-        $token = $this->jwtAuthService->sign(['username' => 'Hilise']);
+        $token = $this->jwtAuthService->sign(['username' => 'Hilise'])->unwrap();
 
         $this->assertNotEmpty($token);
 
@@ -51,5 +51,14 @@ final class JwtAuthServiceTest extends TestCase
         $this->assertSame($decoded['aud'], 'aqhub-client');
         $this->assertSame($decoded['iss'], 'aqhub-api');
         $this->assertSame($decoded['username'], 'Hilise');
+    }
+
+    #[Test]
+    public function should_result_error_when_exception_in_sign()
+    {
+        $jwtAuthService = new JwtAuthService(Env::load(['API_JWT_SECRET_TOKEN' => 100], forceReload: true));
+
+        $token = $jwtAuthService->sign(['username' => 'Hilise']);
+        $this->assertTrue($token->isError());
     }
 }

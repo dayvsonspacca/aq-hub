@@ -24,7 +24,7 @@ final class JwtAuthMiddlewareTest extends TestCase
         $jwtAuthService   = new JwtAuthService(Env::load(['API_JWT_SECRET_TOKEN' => 'SUPER_SECRET_WAS_TOO_LOW_SO_I_INCRESEAD_A_BIT'], forceReload: true));
         $this->middleware = new JwtAuthMiddleware($jwtAuthService);
 
-        $this->token = $jwtAuthService->sign(['username' => 'Hilise']);
+        $this->token = $jwtAuthService->sign(['username' => 'Hilise'])->unwrap();
     }
 
     #[Test]
