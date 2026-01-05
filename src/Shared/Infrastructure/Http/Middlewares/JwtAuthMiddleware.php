@@ -25,7 +25,7 @@ class JwtAuthMiddleware implements Middleware
         }
 
         $token    = str_replace('Bearer ', '', $authHeader);
-        $result = $this->jwtService->validate($token);
+        $result   = $this->jwtService->validate($token);
 
         if ($result->isError()) {
             return new Response('Invalid or expired token.', Response::HTTP_UNAUTHORIZED);

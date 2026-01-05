@@ -15,7 +15,7 @@ final class CapeFilterTest extends TestCase
     {
         $filter = new CapeFilter();
         $filter->setCanAccessBank(false);
-        
+
         $this->assertCount(6, get_object_vars($filter));
 
         $this->assertObjectHasProperty('name', $filter);

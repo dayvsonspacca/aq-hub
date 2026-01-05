@@ -4,15 +4,11 @@ declare(strict_types=1);
 
 namespace AqHub\Tests\Unit\Items\Infrastructure\Http\Controllers\Rest;
 
-use AqHub\Core\Result;
 use AqHub\Items\Application\Capes\Queries\FindAll;
 use AqHub\Items\Application\Capes\Queries\Outputs\FindAllOutput;
-use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
-use AqHub\Items\Domain\Repositories\Filters\CapeFilter;
-use AqHub\Items\Domain\ValueObjects\ItemInfo;
+use AqHub\Items\Domain\Repositories\Filters\{CapeFilter};
 use AqHub\Items\Infrastructure\Http\Controllers\Rest\CapeController;
-use AqHub\Tests\DataProviders\ArmorDataProvider;
-use AqHub\Tests\DataProviders\CapeDataProvider;
+use AqHub\Tests\DataProviders\{CapeDataProvider};
 use AqHub\Tests\TestCase;
 use AqHub\Tests\Traits\DoRequests;
 use PHPUnit\Framework\Attributes\Test;

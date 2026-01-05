@@ -9,8 +9,7 @@ use AqHub\Core\Infrastructure\Http\{HttpDefinitions, HttpHandler};
 use AqHub\Tests\TestCase;
 use AqHub\Tests\Traits\DoRequests;
 
-use function DI\add;
-use function DI\autowire;
+use function DI\{add, autowire};
 
 use DI\Container;
 use PHPUnit\Framework\Attributes\Test;

@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace AqHub\Shared\Infrastructure\Http\Services;
 
-use AqHub\Core\Env;
-use AqHub\Core\Result;
+use AqHub\Core\{Env, Result};
 use Firebase\JWT\{JWT, Key};
 use RuntimeException;
 use Throwable;

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AqHub\Tests\Unit\Items\Infrastructure\Http\Forms;
 
-use AqHub\Items\Infrastructure\Http\Forms\ListAllCapesForm;
 use AqHub\Items\Domain\Repositories\Filters\CapeFilter;
+use AqHub\Items\Infrastructure\Http\Forms\ListAllCapesForm;
 use AqHub\Tests\TestCase;
 use AqHub\Tests\Traits\DoRequests;
 use PHPUnit\Framework\Attributes\Test;
@@ -37,7 +37,7 @@ final class ListAllCapesFormTest extends TestCase
         $this->assertSame(2, $filter->page);
         $this->assertSame(15, $filter->pageSize);
         $this->assertTrue($filter->canAccessBank);
-        
+
         $this->assertCount(2, $filter->rarities);
         $this->assertCount(2, $filter->tags);
     }
@@ -46,11 +46,11 @@ final class ListAllCapesFormTest extends TestCase
     public function should_handle_can_access_bank_boolean_mapping()
     {
         $requestNo = $this->makeRequest(method: 'GET', uri: '/capes', query: ['can_access_bank' => 'n']);
-        $filterNo = ListAllCapesForm::fromRequest($requestNo);
+        $filterNo  = ListAllCapesForm::fromRequest($requestNo);
         $this->assertFalse($filterNo->canAccessBank);
 
         $requestInvalid = $this->makeRequest(method: 'GET', uri: '/capes', query: ['can_access_bank' => 'maybe']);
-        $filterInvalid = ListAllCapesForm::fromRequest($requestInvalid);
+        $filterInvalid  = ListAllCapesForm::fromRequest($requestInvalid);
         $this->assertNull($filterInvalid->canAccessBank);
     }
 }

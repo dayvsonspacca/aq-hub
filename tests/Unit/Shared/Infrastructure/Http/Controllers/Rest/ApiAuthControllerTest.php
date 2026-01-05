@@ -12,9 +12,7 @@ use AqHub\Tests\TestCase;
 use AqHub\Tests\Traits\DoRequests;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
-use RuntimeException;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{JsonResponse, Response};
 
 class ApiAuthControllerTest extends TestCase
 {
@@ -29,7 +27,7 @@ class ApiAuthControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->repositoryMock = $this->createMock(PgsqlUsersApiRepository::class);
+        $this->repositoryMock       = $this->createMock(PgsqlUsersApiRepository::class);
         $this->jtwAuthServiceMock   = $this->createMock(JwtAuthService::class);
 
         $this->controller = new ApiAuthController(

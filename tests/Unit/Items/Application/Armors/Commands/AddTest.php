@@ -8,9 +8,7 @@ use AqHub\Core\Infrastructure\Cache\FileCache;
 use AqHub\Core\Result;
 use AqHub\Items\Application\Armors\Commands\Add;
 use AqHub\Items\Domain\Repositories\ArmorRepository;
-use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
-use AqHub\Items\Domain\ValueObjects\ItemInfo;
-use AqHub\Items\Domain\ValueObjects\Name;
+use AqHub\Items\Domain\ValueObjects\{ItemInfo};
 use AqHub\Tests\DataProviders\ArmorDataProvider;
 use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
@@ -49,15 +47,15 @@ class AddTest extends TestCase
             ->method('save')
             ->with($this->isInstanceOf(ItemInfo::class))
             ->willReturn($result);
-        
+
         $this->cacheMock
             ->expects($this->once())
             ->method('invalidateTags')
             ->with(['new-armor'])
             ->willReturn(true);
-        
+
         $armorData = (new ArmorDataProvider())->build();
-        $itemInfo = ItemInfo::create($armorData->name, $armorData->description, $armorData->tags, $armorData->rarity)->unwrap();
+        $itemInfo  = ItemInfo::create($armorData->name, $armorData->description, $armorData->tags, $armorData->rarity)->unwrap();
 
         $this->addCommand->execute($itemInfo);
     }
