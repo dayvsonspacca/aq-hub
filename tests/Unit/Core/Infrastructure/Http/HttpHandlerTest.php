@@ -10,6 +10,7 @@ use AqHub\Tests\TestCase;
 use AqHub\Tests\Traits\DoRequests;
 
 use function DI\add;
+use function DI\autowire;
 
 use DI\Container;
 use PHPUnit\Framework\Attributes\Test;
@@ -28,6 +29,9 @@ final class HttpHandlerTest extends TestCase
             HttpDefinitions::dependencies(),
             [
                 'Controllers.Rest' => add([RestControllerStub::class])
+            ],
+            [
+                MiddlewareStub::class => autowire()
             ]
         ]);
     }
@@ -94,5 +98,23 @@ final class HttpHandlerTest extends TestCase
         $this->assertSame('*', $response->headers->get('Access-Control-Allow-Origin'));
         $this->assertSame('GET', $response->headers->get('Access-Control-Allow-Methods'));
         $this->assertSame('Content-Type, Authorization', $response->headers->get('Access-Control-Allow-Headers'));
+    }
+
+
+    #[Test]
+    public function should_pass_by_middlewares()
+    {
+        $httpHandler = $this->container->get(HttpHandler::class);
+        $request     = $this->makeRequest(
+            uri: '/api/middleware'
+        );
+
+        /** @var Response $response */
+        $response = $httpHandler->handle($request);
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertTrue($request->attributes->has('pass'));
+        $this->assertTrue($request->attributes->get('pass'));
     }
 }
