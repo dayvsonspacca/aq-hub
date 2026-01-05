@@ -18,7 +18,7 @@ class RaritiesProperty extends OA\Property
             type: 'array',
             description: 'The requested items rarities.',
             items: new OA\Items(type: 'string'),
-            example: array_map(fn($rarity) => $rarity->toString(), ItemRarity::cases()),
+            example: array_map(fn ($rarity) => $rarity->toString(), ItemRarity::cases()),
             nullable: true
         );
     }

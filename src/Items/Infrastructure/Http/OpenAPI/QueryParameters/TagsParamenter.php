@@ -16,7 +16,7 @@ class TagsParamenter extends OA\Parameter
             name: 'tags',
             in: 'query',
             description: 'A list of tags associated to the item separed by comma',
-            example: join(',', array_map(fn($tag) => $tag->toString(), ItemTag::cases()))
+            example: join(',', array_map(fn ($tag) => $tag->toString(), ItemTag::cases()))
         );
     }
 }

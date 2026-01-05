@@ -16,7 +16,7 @@ class RaritiesParameter extends OA\Parameter
             name: 'rarities',
             in: 'query',
             description: 'A list of items rarities separeted by comma.',
-            example: join(',', array_map(fn($rarity) => $rarity->toString(), ItemRarity::cases()))
+            example: join(',', array_map(fn ($rarity) => $rarity->toString(), ItemRarity::cases()))
         );
     }
 }

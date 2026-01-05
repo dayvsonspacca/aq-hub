@@ -18,7 +18,7 @@ class TagsProperty extends OA\Property
             type: 'array',
             description: 'List of tags associated with the item.',
             items: new OA\Items(type: 'string'),
-            example: array_map(fn($tag) => $tag->toString(), ItemTag::cases()),
+            example: array_map(fn ($tag) => $tag->toString(), ItemTag::cases()),
             nullable: false
         );
     }

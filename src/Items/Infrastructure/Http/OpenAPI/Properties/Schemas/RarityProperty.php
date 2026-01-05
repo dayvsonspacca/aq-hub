@@ -17,8 +17,8 @@ class RarityProperty extends OA\Property
             property: 'rarity',
             type: 'string',
             description: 'The rarity of an item.',
-            enum: array_map(fn($rarity) => $rarity->toString(), ItemRarity::cases()),
-            example: ItemRarity::Awesome->toString(), 
+            enum: array_map(fn ($rarity) => $rarity->toString(), ItemRarity::cases()),
+            example: ItemRarity::Awesome->toString(),
             nullable: true
         );
     }

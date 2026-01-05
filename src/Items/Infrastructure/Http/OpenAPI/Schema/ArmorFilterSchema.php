@@ -11,7 +11,7 @@ use OpenApi\Attributes as OA;
     schema: 'ArmorFilterSchema',
     title: 'Armor Filters Details',
     description: 'The armor requested filter.'
-    )]
+)]
 class ArmorFilterSchema
 {
     use CommonItemFilters;
