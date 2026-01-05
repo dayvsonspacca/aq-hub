@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Shared\Infrastructure\Http\Services;
 
 use AqHub\Core\Env;
+use AqHub\Core\Result;
 use Exception;
 use Firebase\JWT\{JWT, Key};
 use RuntimeException;
@@ -32,13 +33,14 @@ class JwtAuthService
         return JWT::encode($payload, $this->secret, 'HS256');
     }
 
-    public function validate(string $token): ?array
+    /** @return Result<array> */
+    public function validate(string $token): Result
     {
         try {
             $decoded = JWT::decode($token, new Key($this->secret, 'HS256'));
-            return (array) $decoded;
-        } catch (Exception) {
-            return null;
+            return Result::success(null, (array) $decoded);
+        } catch (Exception $e) {
+            return Result::error($e->getMessage(), null);
         }
     }
 }
