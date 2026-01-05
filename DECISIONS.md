@@ -100,3 +100,32 @@ While the ultimate goal is to extract high-fidelity data directly from the game'
 The AQW Wiki, despite not having all the technical parameters I eventually want to store, provides a structured and comprehensive base of items.  
 
 > **Conclusion:** For now, the system's data will come exclusively from **Web Scraping the official AQW Wiki**. This allows for a faster initial release of the API. The integration of more precise data directly from the game via [aqw-miner](https://github.com/dayvsonspacca/aqw-miner) will be treated as a future enhancement to enrich the existing records.
+
+# #9 How Should Use Cases Be Separated?  
+2026-01-05  
+
+As the project grew, the `UseCase` layer started to handle two very different types of responsibilities: retrieving data for display and performing complex business logic to modify the system state. Mixing these two often leads to bloated classes and difficulty in applying optimizations—such as caching—that usually only apply to one side of the operation.
+
+To solve this, I decided to adopt a clear separation of concerns by splitting Use Cases into:
+
+1. **Queries:** Use Cases focused strictly on fetching and filtering data. They are "read-only" operations where the main priority is speed and returning the data in the format the consumer needs.
+2. **Commands:** Use Cases that represent an action or a change in the system state (e.g., adding a new `Armor`). These contain the core business rules, validations, and ensure the system's integrity.
+
+This approach prevents the "Input -> Process -> Output" flow from becoming cluttered with unnecessary logic. Queries become straightforward data fetchers, while Commands become the dedicated gatekeepers of the project's business rules.
+
+> **Conclusion:** We will separate Use Cases into **Queries** and **Commands**. This ensures a cleaner architecture where read and write responsibilities are decoupled, making the system easier to maintain, test, and optimize independently.
+
+# #10 Should All Repository Methods Return a Result? (Revisiting #4)
+2026-01-05
+
+After implementing the `Result` pattern across all repository methods as decided in Decision #4, I realized that applying this rule to every operation introduced unnecessary complexity, especially in **Queries**.
+
+When performing a search or fetching a record by ID, a "failure" (like a record not being found) is often a valid functional outcome, not necessarily an exceptional error that requires a `Result` wrapper. In these cases, returning `null` or an empty `List` is more idiomatic and simplifies the consumer logic.
+
+However, for **Commands** (persistence, updates, or deletions), the `Result` pattern remains essential. These operations are much more prone to infrastructure failures, constraint violations, or business logic errors that need to be explicitly handled and communicated back to the Use Case.
+
+Therefore, I am refining the previous rule:
+- **Queries:** Will return the `DataObject` directly (or `null`/empty collection) to keep the data flow lean.
+- **Commands:** Will continue to return `Result<T>` to ensure that side effects and potential failures are explicitly managed.
+
+> **Conclusion:** We will no longer return `Result` for all repository methods. Instead, we will use `Result` only for operations that modify data (Commands). Queries will return raw DataObjects or null, reducing boilerplate and keeping the read-flow straightforward.

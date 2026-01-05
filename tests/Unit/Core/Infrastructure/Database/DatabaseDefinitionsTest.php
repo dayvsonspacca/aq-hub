@@ -16,7 +16,7 @@ final class DatabaseDefinitionsTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->container = ContainerFactory::make(DatabaseDefinitions::dependencies());
+        $this->container = ContainerFactory::make([DatabaseDefinitions::dependencies()]);
     }
 
     #[Test]

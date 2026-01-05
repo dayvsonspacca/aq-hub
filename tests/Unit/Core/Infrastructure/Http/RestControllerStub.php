@@ -22,4 +22,10 @@ final class RestControllerStub implements RestController
     {
         throw new DomainException('Forced error');
     }
+
+    #[Route(path: '/api/middleware', methods: ['GET'], middlewares: [MiddlewareStub::class])]
+    public function middleware()
+    {
+        return new Response(status: 200);
+    }
 }

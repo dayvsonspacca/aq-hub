@@ -179,13 +179,11 @@ class PgsqlArmorRepository implements ArmorRepository
             $statement->execute($insert->getBindValues());
 
             $this->db->connection->commit();
-            return Result::success(null, 'Armor saved successfully.');
+            return Result::success('Armor saved successfully.', null);
         } catch (PDOException $e) {
             $this->db->connection->rollBack();
             return Result::error('Database error: ' . $e->getMessage(), null);
         }
-
-        return Result::success(null, null);
     }
 
     /**

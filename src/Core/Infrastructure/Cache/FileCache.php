@@ -58,6 +58,6 @@ class FileCache
 
     public function invalidateTags(array $tags): bool
     {
-        return $this->cache->invalidateTags([$tags]);
+        return $this->cache->invalidateTags($tags);
     }
 }

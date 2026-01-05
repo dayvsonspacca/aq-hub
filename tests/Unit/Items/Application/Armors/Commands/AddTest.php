@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace AqHub\Tests\Unit\Items\Application\Armors\Queries;
 
 use AqHub\Core\Infrastructure\Cache\FileCache;
+use AqHub\Core\Result;
 use AqHub\Items\Application\Armors\Commands\Add;
 use AqHub\Items\Domain\Repositories\ArmorRepository;
-use AqHub\Items\Domain\Repositories\Filters\ArmorFilter;
+use AqHub\Items\Domain\ValueObjects\{ItemInfo};
 use AqHub\Tests\DataProviders\ArmorDataProvider;
 use AqHub\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
@@ -36,34 +37,26 @@ class AddTest extends TestCase
         $this->assertInstanceOf(Add::class, $this->addCommand);
     }
 
-    // #[Test]
-    // public function should_call_cache_with_correct_parameters_and_callback()
-    // {
-    //     $filter = $this->createMock(ArmorFilter::class);
-    //     $filter->method('generateUniqueKey')->willReturn('mock-cache-key');
+    #[Test]
+    public function should_call_add_command_and_invalidate_tags()
+    {
+        $result = Result::success('Armor saved successfully.', null);
 
-    //     $expectedArmors = ArmorDataProvider::make()->buildCollection(3);
+        $this->repositoryMock
+            ->expects($this->once())
+            ->method('save')
+            ->with($this->isInstanceOf(ItemInfo::class))
+            ->willReturn($result);
 
-    //     $this->cacheMock
-    //         ->expects($this->once())
-    //         ->method('get')
-    //         ->with(
-    //             $this->equalTo('mock-cache-key'),
-    //             $this->isCallable('callable'),
-    //             $this->isNull(),
-    //             $this->equalTo(['new-armor'])
-    //         )
-    //         ->willReturnCallback(
-    //             fn ($key, $callback, $expiresAfter, $tags) => $callback()
-    //         );
+        $this->cacheMock
+            ->expects($this->once())
+            ->method('invalidateTags')
+            ->with(['new-armor'])
+            ->willReturn(true);
 
-    //     $this->repositoryMock
-    //         ->expects($this->once())
-    //         ->method('findAll')
-    //         ->willReturn($expectedArmors);
+        $armorData = (new ArmorDataProvider())->build();
+        $itemInfo  = ItemInfo::create($armorData->name, $armorData->description, $armorData->tags, $armorData->rarity)->unwrap();
 
-    //     $actualArmors = $this->findAllQuery->execute($filter);
-
-    //     $this->assertSame($expectedArmors, $actualArmors);
-    // }
+        $this->addCommand->execute($itemInfo);
+    }
 }

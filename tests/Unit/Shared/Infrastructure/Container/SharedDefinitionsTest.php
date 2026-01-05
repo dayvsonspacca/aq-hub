@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Tests\Unit\Core\Infrastructure\Database;
+namespace AqHub\Tests\Unit\Shared\Infrastructure\Container;
 
 use AqHub\Shared\Infrastructure\Container\SharedDefinitions;
 use AqHub\Tests\TestCase;

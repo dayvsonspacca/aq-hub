@@ -14,6 +14,7 @@ final class CapeFilterTest extends TestCase
     public function should_create_cape_filter_with_default_values()
     {
         $filter = new CapeFilter();
+        $filter->setCanAccessBank(false);
 
         $this->assertCount(6, get_object_vars($filter));
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AqHub\Items\Infrastructure\Http\Forms;
 
 use AqHub\Items\Domain\Repositories\Filters\CapeFilter;
-use AqHub\Items\Infrastructure\Http\Forms\Traits\{MapsName, MapsPagination, MapsRarities, MapsTags};
+use AqHub\Items\Infrastructure\Http\Forms\QueryTraits\{MapsName, MapsPagination, MapsRarities, MapsTags};
 use Symfony\Component\HttpFoundation\Request;
 
 class ListAllCapesForm

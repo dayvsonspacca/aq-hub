@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AqHub\Tests\Unit\Items\Infrastructure\Http\Controllers\Forms;
+namespace AqHub\Tests\Unit\Items\Infrastructure\Http\Forms;
 
 use AqHub\Items\Domain\ValueObjects\Name;
 use AqHub\Items\Infrastructure\Http\Forms\ListAllArmorsForm;

@@ -21,7 +21,8 @@ class ItemsDefinitions implements DefinitionsInterface
         return array_merge(
             self::repositories(),
             self::queries(),
-            self::controllers()
+            self::controllers(),
+            self::commands()
         );
     }
 
@@ -59,6 +60,17 @@ class ItemsDefinitions implements DefinitionsInterface
             Capes\Queries\FindAll::class => autowire()->constructor(
                 get(CapeRepository::class),
                 factory([FileCacheFactory::class, 'capes'])
+                    ->parameter('cachePath', get('Path.Cache'))
+            ),
+        ];
+    }
+
+    private static function commands(): array
+    {
+        return [
+            Armors\Commands\Add::class => autowire()->constructor(
+                get(ArmorRepository::class),
+                factory([FileCacheFactory::class, 'armors'])
                     ->parameter('cachePath', get('Path.Cache'))
             ),
         ];

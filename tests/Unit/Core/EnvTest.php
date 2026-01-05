@@ -6,19 +6,19 @@ namespace AqHub\Tests\Unit\Core;
 
 use AqHub\Core\Env;
 use AqHub\Tests\TestCase;
-use AqHub\Tests\Traits\HasContainer;
 use PHPUnit\Framework\Attributes\Test;
 
 final class EnvTest extends TestCase
 {
-    use HasContainer;
-
     #[Test]
-    public function should_load_via_container()
+    public function should_load_with_vars()
     {
-        $container = $this->container();
-
-        $env = $container->get(Env::class);
+        $env = Env::load(
+            [
+                'APP_MODE' => 'dev'
+            ],
+            forceReload: true
+        );
 
         $this->assertInstanceOf(Env::class, $env);
         $this->assertNotEmpty($env->vars);
