@@ -124,11 +124,7 @@ components:
         name:
           description: 'The name of the item.'
           type: string
-          example: 'ArchPaladin Armor'
-        description:
-          description: 'The full description of the item.'
-          type: string
-          example: 'A legendary item found in the depths of Lore.'
+          example: Awe
         registered_at:
           description: 'Date and time the item was registered in AQHub APi (Y-m-d H:i:s).'
           type: string
@@ -178,7 +174,7 @@ components:
         name:
           description: 'The name of the item.'
           type: string
-          example: 'ArchPaladin Armor'
+          example: Awe
         description:
           description: 'The full description of the item.'
           type: string
@@ -236,11 +232,7 @@ components:
         name:
           description: 'The name of the item.'
           type: string
-          example: 'ArchPaladin Armor'
-        description:
-          description: 'The full description of the item.'
-          type: string
-          example: 'A legendary item found in the depths of Lore.'
+          example: Awe
         registered_at:
           description: 'Date and time the item was registered in AQHub APi (Y-m-d H:i:s).'
           type: string
@@ -283,6 +275,11 @@ components:
       title: 'Cape Details'
       description: 'The complete structure of a cape item returned by the API.'
       properties:
+        can_access_bank:
+          description: 'Item can access bank.'
+          type: boolean
+          example: true
+          nullable: true
         id:
           description: 'The unique identifier of the item.'
           type: string
@@ -290,7 +287,7 @@ components:
         name:
           description: 'The name of the item.'
           type: string
-          example: 'ArchPaladin Armor'
+          example: Awe
         description:
           description: 'The full description of the item.'
           type: string
