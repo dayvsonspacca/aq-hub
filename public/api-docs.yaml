@@ -95,10 +95,10 @@ paths:
           description: 'A list of tags associated to the item separed by comma'
           example: 'Legend,Adventure Coins,Rare,Pseudo Rare,Seasonal,Special Offer'
         -
-          parameter: page_size
+          parameter: can_access_bank
           name: can_access_bank
           in: query
-          description: 'The cape can access bank (Y or N).'
+          description: 'The item can access bank (Y or N).'
           example: 'Y'
       responses:
         '200':
