@@ -8,7 +8,7 @@ use AqHub\Core\Infrastructure\Http\Interfaces\RestController;
 use AqHub\Core\Infrastructure\Http\Route;
 use AqHub\Items\Application\Capes\Queries\FindAll;
 use AqHub\Items\Infrastructure\Http\Forms\ListAllCapesForm;
-use AqHub\Items\Infrastructure\Http\OpenAPI\QueryParameters\{NameParameter, RaritiesParameter, TagsParamenter};
+use AqHub\Items\Infrastructure\Http\OpenAPI\QueryParameters\{CanAccessBankParameter, NameParameter, RaritiesParameter, TagsParamenter};
 use AqHub\Items\Infrastructure\Http\OpenAPI\Response\ListCapesResponse;
 use AqHub\Shared\Domain\Helpers\ArrayPresenter;
 use AqHub\Shared\Infrastructure\Http\OpenAPI\QueryParameters\{PageParameter, PageSizeParameter};
@@ -25,7 +25,7 @@ class CapeController implements RestController
         path: '/capes/list',
         summary: 'List capes',
         tags: ['Capes'],
-        parameters: [new PageParameter(), new PageSizeParameter(), new NameParameter(), new RaritiesParameter(), new TagsParamenter(), new OA\Parameter(parameter: 'page_size', name: 'can_access_bank', in: 'query', description: 'The cape can access bank (Y or N).', example: 'Y')],
+        parameters: [new PageParameter(), new PageSizeParameter(), new NameParameter(), new RaritiesParameter(), new TagsParamenter(), new CanAccessBankParameter()],
         responses: [new ListCapesResponse()]
     )]
     #[Route(path: '/capes/list', methods: ['GET'])]
